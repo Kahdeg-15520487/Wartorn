@@ -67,7 +67,7 @@ namespace Wartorn
         {
             Label label1 = new Label()
             {
-                Text = "lala",
+                Text = "1",
                 Position = new Point(50,50),
                 Size = new Vector2(100,50),
                 font = defaultFont,
@@ -124,6 +124,15 @@ namespace Wartorn
                 Scale = 1
             };
 
+            button1.MouseUp += delegate (object sender, UIEventArgs e)
+            {
+                int temp;
+                if (int.TryParse(label1.Text,out temp))
+                {
+                    label1.Text = (temp + 1).ToString();
+                }
+            };
+
             canvas.AddElement("label1", label1);
             canvas.AddElement("label2", label2);
             canvas.AddElement("label3", label3);
@@ -153,8 +162,7 @@ namespace Wartorn
             inputState = new InputState(Mouse.GetState(), Keyboard.GetState());
 
             canvas.GetElement("label2").Text = inputState.mouseState.Position.ToString();
-            var label1 = canvas.GetElement("label1");
-            label1.Text = (new Rectangle(label1.Position, label1.Size.ToPoint())).Contains(inputState.mouseState.Position).ToString();
+            
             canvas.Update(inputState, lastInputState);
 
             lastInputState = inputState;

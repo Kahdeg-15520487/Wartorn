@@ -75,13 +75,26 @@ namespace Wartorn
                 };
             }
 
+            public override void Update(InputState inputState, InputState lastInputState)
+            {
+                if (isPressed)
+                {
+                    OnButtonPressed(this, new UIEventArgs(inputState.mouseState));
+                }
+                base.Update(inputState, lastInputState);
+            }
+
             public override void Draw(SpriteBatch spriteBatch)
             {
                 DrawingHelper.DrawRectangle(internalRect, isPressed ? buttonColorPressed : buttonColorReleased, true);
                 base.Draw(spriteBatch);
             }
 
-            public EventHandler<UIEventArgs> Pressed;
+            public EventHandler<UIEventArgs> ButtonPressed;
+            protected virtual void OnButtonPressed(object sender,UIEventArgs e)
+            {
+                ButtonPressed?.Invoke(sender, e);
+            }
         }
     }
 }
