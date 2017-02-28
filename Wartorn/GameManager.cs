@@ -101,6 +101,18 @@ namespace Wartorn
                 Scale = 1
             };
 
+            Label labelTime = new Label()
+            {
+                Text = string.Empty,
+                Position = new Point(5,5),
+                Size = new Vector2(100, 30),
+                font = defaultFont,
+                backgroundColor = Color.White,
+                foregroundColor = Color.White,
+                rotation = 0f,
+                Scale = 1
+            };
+
             label1.MouseEnter += delegate (object sender, UIEventArgs e)
             {
                 label3.Text = "enter";
@@ -133,10 +145,24 @@ namespace Wartorn
                 }
             };
 
+            InputBox inputbox1 = new InputBox()
+            {
+                Text = "test",
+                Position = new Point(300, 200),
+                Size = new Vector2(50, 50),
+                font = defaultFont,
+                backgroundColor = Color.White,
+                foregroundColor = Color.White,
+                rotation = 0f,
+                Scale = 1
+            };
+
             canvas.AddElement("label1", label1);
             canvas.AddElement("label2", label2);
             canvas.AddElement("label3", label3);
             canvas.AddElement("button1", button1);
+            canvas.AddElement("labelTime", labelTime);
+            canvas.AddElement("inputbox1", inputbox1);
         }
 
         /// <summary>
@@ -157,11 +183,12 @@ namespace Wartorn
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-
+            
             // TODO: Add your update logic here
             inputState = new InputState(Mouse.GetState(), Keyboard.GetState());
 
             canvas.GetElement("label2").Text = inputState.mouseState.Position.ToString();
+            canvas.GetElement("labelTime").Text = gameTime.TotalGameTime.ToString();
             
             canvas.Update(inputState, lastInputState);
 

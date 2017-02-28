@@ -74,6 +74,8 @@ namespace Wartorn.UIClass
         public event EventHandler<UIEventArgs> MouseHover;
         public event EventHandler<UIEventArgs> MouseEnter;
         public event EventHandler<UIEventArgs> MouseLeave;
+        public event EventHandler<UIEventArgs> GotFocus;
+        public event EventHandler<UIEventArgs> LostFocus;
 
         protected virtual void OnMouseClick(object sender, UIEventArgs e)
         {
@@ -104,6 +106,16 @@ namespace Wartorn.UIClass
         {
             MouseLeave?.Invoke(this, e);
         }
+
+        protected virtual void OnGotFocus(object sender, UIEventArgs e)
+        {
+            GotFocus?.Invoke(this, e);
+        }
+
+        protected virtual void OnLostFocus(object sender, UIEventArgs e)
+        {
+            LostFocus?.Invoke(this, e);
+        }
     }
 
     interface IUIEvent
@@ -114,6 +126,8 @@ namespace Wartorn.UIClass
         event EventHandler<UIEventArgs> MouseHover;
         event EventHandler<UIEventArgs> MouseEnter;
         event EventHandler<UIEventArgs> MouseLeave;
+        event EventHandler<UIEventArgs> GotFocus;
+        event EventHandler<UIEventArgs> LostFocus;
     }
 
     public class UIEventArgs : EventArgs
