@@ -72,7 +72,7 @@ namespace Wartorn
                 Size = new Vector2(100,50),
                 font = defaultFont,
                 backgroundColor = Color.White,
-                foregroundColor = Color.White,
+                foregroundColor = Color.Black,
                 rotation = 0f,
                 Scale = 2
             };
@@ -187,8 +187,8 @@ namespace Wartorn
             // TODO: Add your update logic here
             inputState = new InputState(Mouse.GetState(), Keyboard.GetState());
 
-            canvas.GetElement("label2").Text = inputState.mouseState.Position.ToString();
-            canvas.GetElement("labelTime").Text = gameTime.TotalGameTime.ToString();
+            ((Label)canvas.GetElement("label2")).Text = inputState.mouseState.Position.ToString();
+            ((Label)canvas.GetElement("labelTime")).Text = gameTime.TotalGameTime.ToString();
             
             canvas.Update(inputState, lastInputState);
 

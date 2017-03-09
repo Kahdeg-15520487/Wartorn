@@ -12,8 +12,11 @@ namespace Wartorn.UIClass
     abstract class UIObject:IUIEvent
     {
         protected Rectangle rect = new Rectangle();
-        protected string text;
+        
         protected Vector2 origin;
+        /// <summary>
+        /// The position of the UI element a.k.a where the top left corner of this element should be
+        /// </summary>
         public virtual Point Position
         {
             get
@@ -25,6 +28,9 @@ namespace Wartorn.UIClass
                 rect.Location = value;
             }
         }
+        /// <summary>
+        /// The size of the UI element a.k.a where the bottom right corner of this element should be offset by the position
+        /// </summary>
         public virtual Vector2 Size {
             get
             {
@@ -35,21 +41,46 @@ namespace Wartorn.UIClass
                 rect.Size = (value.X > 0 && value.Y > 0) ? value.ToPoint() : rect.Size;
             }
         }
-        public virtual string Text
+
+        protected virtual bool isFocused { get; set; }
+        /// <summary>
+        /// Check if the UI element get focus
+        /// </summary>
+        public bool IsFocused
         {
             get
             {
-                return text;
-            }
-            set
-            {
-                text = string.IsNullOrEmpty(value) ? text : value;
+                return isFocused;
             }
         }
 
+        /// <summary>
+        /// This must be assign with a font
+        /// </summary>
         public SpriteFont font { get; set; }
-        public Color backgroundColor { get; set; }
-        public Color foregroundColor { get; set; }
+        /// <summary>
+        /// Default color is Transparent
+        /// </summary>
+        public Color backgroundColor = Color.Transparent;
+        /// <summary>
+        /// Default color is Black
+        /// </summary>
+        public Color foregroundColor = Color.Black;
+        /// <summary>
+        /// Default color is Transparent
+        /// </summary>
+        public Color borderColor = Color.Transparent;
+        /// <summary>
+        /// Default color is Transparent
+        /// </summary>
+        public Color gotfocusColor = Color.Transparent;
+        /// <summary>
+        /// Default color is Transparent
+        /// </summary>
+        public Color lostfocusColor = Color.Transparent;
+        /// <summary>
+        /// Rotation calculated in radiant
+        /// </summary>
         public float rotation { get; set; }
         protected int scale;
         public virtual int Scale
@@ -65,7 +96,67 @@ namespace Wartorn.UIClass
             }
         }
 
-        public abstract void Update(InputState inputState, InputState lastInputState);
+        public virtual void Update(InputState inputState, InputState lastInputState)
+        {
+            UIEventArgs arg = new UIEventArgs(inputState.mouseState);
+
+            //LostFocus
+            if (!rect.Contains(inputState.mouseState.Position) && inputState.mouseState.LeftButton == ButtonState.Pressed)
+            {
+                isFocused = false;
+                OnLostFocus(this, arg);
+            }
+
+            //GotFocus
+            if (rect.Contains(inputState.mouseState.Position) && inputState.mouseState.LeftButton == ButtonState.Pressed)
+            {
+                isFocused = true;
+                OnGotFocus(this, arg);
+            }
+
+            //MouseClick
+            if (rect.Contains(inputState.mouseState.Position)
+                && (lastInputState.mouseState.LeftButton == ButtonState.Released
+                    && inputState.mouseState.LeftButton == ButtonState.Pressed))
+            {
+                OnMouseClick(this, arg);
+            }
+
+            //MouseDown
+            if (rect.Contains(inputState.mouseState.Position)
+                && inputState.mouseState.LeftButton == ButtonState.Pressed)
+            {
+                OnMouseDown(this, arg);
+            }
+
+            //MouseUp
+            if (rect.Contains(inputState.mouseState.Position)
+                && (lastInputState.mouseState.LeftButton == ButtonState.Pressed
+                    && inputState.mouseState.LeftButton == ButtonState.Released))
+            {
+                OnMouseUp(this, arg);
+            }
+
+            //MouseEnter
+            if (rect.Contains(inputState.mouseState.Position)
+                && !rect.Contains(lastInputState.mouseState.Position))
+            {
+                OnMouseEnter(this, arg);
+            }
+
+            //MouseLeave
+            if (!rect.Contains(inputState.mouseState.Position)
+                && rect.Contains(lastInputState.mouseState.Position))
+            {
+                OnMouseLeave(this, arg);
+            }
+
+            //MouseHover
+            if (rect.Contains(inputState.mouseState.Position))
+            {
+                OnMouseHover(this, arg);
+            }
+        }
         public abstract void Draw(SpriteBatch spriteBatch);
 
         public event EventHandler<UIEventArgs> MouseClick;

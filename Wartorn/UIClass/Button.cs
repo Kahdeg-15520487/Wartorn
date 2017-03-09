@@ -77,17 +77,19 @@ namespace Wartorn
 
             public override void Update(InputState inputState, InputState lastInputState)
             {
+                base.Update(inputState, lastInputState);
                 if (isPressed)
                 {
                     OnButtonPressed(this, new UIEventArgs(inputState.mouseState));
                 }
-                base.Update(inputState, lastInputState);
             }
 
             public override void Draw(SpriteBatch spriteBatch)
             {
+                spriteBatch.DrawString(font, (string.IsNullOrEmpty(text)) ? "" : text, new Vector2(rect.X, rect.Y) + Size / 4, foregroundColor, rotation, Vector2.Zero, scale, SpriteEffects.None, 0f);
                 DrawingHelper.DrawRectangle(internalRect, isPressed ? buttonColorPressed : buttonColorReleased, true);
-                base.Draw(spriteBatch);
+                DrawingHelper.DrawRectangle(rect, borderColor, false);
+                //base.Draw(spriteBatch);
             }
 
             public EventHandler<UIEventArgs> ButtonPressed;

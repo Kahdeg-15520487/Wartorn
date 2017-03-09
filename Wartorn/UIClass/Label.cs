@@ -10,63 +10,29 @@ namespace Wartorn
     {
         class Label : UIObject
         {
-            public Label()
+            protected string text;
+            public virtual string Text
             {
-
+                get
+                {
+                    return text;
+                }
+                set
+                {
+                    text = string.IsNullOrEmpty(value) ? text : value;
+                }
             }
 
-            public override void Update(InputState inputState, InputState lastInputState)
+            public Label()
             {
-                UIEventArgs arg = new UIEventArgs(inputState.mouseState);
-
-                //MouseClick
-                if (rect.Contains(inputState.mouseState.Position)
-                    && (lastInputState.mouseState.LeftButton == ButtonState.Released
-                        && inputState.mouseState.LeftButton == ButtonState.Pressed))
-                {
-                    OnMouseClick(this, arg);
-                }
-
-                //MouseDown
-                if (rect.Contains(inputState.mouseState.Position)
-                    && inputState.mouseState.LeftButton == ButtonState.Pressed)
-                {
-                    OnMouseDown(this, arg);
-                }
-
-                //MouseUp
-                if (rect.Contains(inputState.mouseState.Position)
-                    && (lastInputState.mouseState.LeftButton == ButtonState.Pressed 
-                        && inputState.mouseState.LeftButton == ButtonState.Released))
-                {
-                    OnMouseUp(this, arg);
-                }
-
-                //MouseEnter
-                if (rect.Contains(inputState.mouseState.Position)
-                    && !rect.Contains(lastInputState.mouseState.Position))
-                {
-                    OnMouseEnter(this, arg);
-                }
-
-                //MouseLeave
-                if (!rect.Contains(inputState.mouseState.Position)
-                    && rect.Contains(lastInputState.mouseState.Position))
-                {
-                    OnMouseLeave(this, arg);
-                }
-
-                //MouseHover
-                if (rect.Contains(inputState.mouseState.Position))
-                {
-                    OnMouseHover(this,arg);
-                }
+                
             }
 
             public override void Draw(SpriteBatch spriteBatch)
             {
                 spriteBatch.DrawString(font, (string.IsNullOrEmpty(text)) ? "" : text, new Vector2(rect.X, rect.Y) + Size / 4, foregroundColor, rotation, Vector2.Zero, scale, SpriteEffects.None, 0f);
-                DrawingHelper.DrawRectangle(rect, backgroundColor, false);
+                DrawingHelper.DrawRectangle(rect, backgroundColor, true);
+                DrawingHelper.DrawRectangle(rect, borderColor, false);
             }
         }
     }

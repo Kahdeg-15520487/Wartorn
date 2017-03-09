@@ -13,7 +13,10 @@ namespace Wartorn.UIClass
     class InputBox : UIObject
     {
         StringBuilder textBuffer = new StringBuilder();
-        public override string Text
+        /// <summary>
+        /// The current text in the buffer. Assign text to this will clear the buffer.
+        /// </summary>
+        public virtual string Text
         {
             get
             {
@@ -26,28 +29,11 @@ namespace Wartorn.UIClass
             }
         }
 
-        bool isFocused;
-        public bool IsFocused
-        {
-            get
-            {
-                return isFocused;
-            }
-        }
+        
 
         public override void Update(InputState inputState, InputState lastInputState)
         {
-            UIEventArgs args = new UIEventArgs(inputState.mouseState);
-            if (!rect.Contains(inputState.mouseState.Position) && inputState.mouseState.LeftButton == ButtonState.Pressed)
-            {
-                isFocused = false;
-                OnLostFocus(this, args);
-            }
-            if (rect.Contains(inputState.mouseState.Position) && inputState.mouseState.LeftButton == ButtonState.Pressed)
-            {
-                isFocused = true;
-                OnGotFocus(this, args);
-            }
+            base.Update(inputState, lastInputState);
 
             var keyboardState = inputState.keyboardState;
             var lastKeyboardState = lastInputState.keyboardState;
@@ -57,12 +43,97 @@ namespace Wartorn.UIClass
                 {
                     if (textBuffer.Length > 0)
                     {
-                        //textBuffer.Remove(textBuffer.Length - 1, 1);
-                        textBuffer.Append(textBuffer[textBuffer.Length - 1]);
-                        //textBuffer.Append(textBuffer.Length);
+                        textBuffer.Remove(textBuffer.Length - 1, 1);
+                    }
+
+                    Keys[] keyInput = keyboardState.GetPressedKeys();
+                    foreach (var key in keyInput)
+                    {
+                        textBuffer.Append(GetCharKey(key));
                     }
                 }
             }
+        }
+
+        protected string GetCharKey(Keys key)
+        {
+            string result=" ";
+            switch (key)
+            {
+                case Keys.A:
+                case Keys.B:
+                case Keys.C:
+                case Keys.D:
+                case Keys.E:
+                case Keys.F:
+                case Keys.G:
+                case Keys.H:
+                case Keys.I:
+                case Keys.J:
+                case Keys.K:
+                case Keys.L:
+                case Keys.M:
+                case Keys.N:
+                case Keys.O:
+                case Keys.P:
+                case Keys.Q:
+                case Keys.R:
+                case Keys.S:
+                case Keys.T:
+                case Keys.U:
+                case Keys.V:
+                case Keys.W:
+                case Keys.X:
+                case Keys.Y:
+                case Keys.Z:
+                    result = key.ToString();
+                    break;
+                case Keys.NumPad0:
+                    result = "0";
+                    break;
+                case Keys.NumPad1:
+                    result = "1";
+                    break;
+                case Keys.NumPad2:
+                    result = "2";
+                    break;
+                case Keys.NumPad3:
+                    result = "3";
+                    break;
+                case Keys.NumPad4:
+                    result = "4";
+                    break;
+                case Keys.NumPad5:
+                    result = "5";
+                    break;
+                case Keys.NumPad6:
+                    result = "6";
+                    break;
+                case Keys.NumPad7:
+                    result = "7";
+                    break;
+                case Keys.NumPad8:
+                    result = "8";
+                    break;
+                case Keys.NumPad9:
+                    result = "9";
+                    break;
+                case Keys.Multiply:
+                    result = "*";
+                    break;
+                case Keys.Add:
+                    result = "+";
+                    break;
+                case Keys.Subtract:
+                    result = "-";
+                    break;
+                case Keys.Divide:
+                    result = "/";
+                    break;
+                default:
+                    break;
+            }
+            return result;
         }
 
         public override void Draw(SpriteBatch spriteBatch)
