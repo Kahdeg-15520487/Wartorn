@@ -45,11 +45,15 @@ namespace Wartorn.UIClass
                     {
                         textBuffer.Remove(textBuffer.Length - 1, 1);
                     }
-
+                }
+                else
+                {
                     Keys[] keyInput = keyboardState.GetPressedKeys();
+                    Keys[] lastKeyInput = lastKeyboardState.GetPressedKeys();
                     foreach (var key in keyInput)
                     {
-                        textBuffer.Append(GetCharKey(key));
+                        if (!lastKeyInput.Contains(key))
+                            textBuffer.Append(GetCharKey(key));
                     }
                 }
             }

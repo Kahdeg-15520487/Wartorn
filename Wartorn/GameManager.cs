@@ -84,7 +84,7 @@ namespace Wartorn
                 Size = new Vector2(100, 30),
                 font = defaultFont,
                 backgroundColor = Color.White,
-                foregroundColor = Color.White,
+                foregroundColor = Color.Black,
                 rotation = 0f,
                 Scale = 1
             };
@@ -96,7 +96,7 @@ namespace Wartorn
                 Size = new Vector2(100, 30),
                 font = defaultFont,
                 backgroundColor = Color.White,
-                foregroundColor = Color.White,
+                foregroundColor = Color.Black,
                 rotation = 0f,
                 Scale = 1
             };
@@ -108,7 +108,7 @@ namespace Wartorn
                 Size = new Vector2(100, 30),
                 font = defaultFont,
                 backgroundColor = Color.White,
-                foregroundColor = Color.White,
+                foregroundColor = Color.Black,
                 rotation = 0f,
                 Scale = 1
             };
@@ -152,7 +152,7 @@ namespace Wartorn
                 Size = new Vector2(50, 50),
                 font = defaultFont,
                 backgroundColor = Color.White,
-                foregroundColor = Color.White,
+                foregroundColor = Color.Black,
                 rotation = 0f,
                 Scale = 1
             };

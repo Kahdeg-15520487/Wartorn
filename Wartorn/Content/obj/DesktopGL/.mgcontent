@@ -4,6 +4,6 @@
   <Platform>DesktopGL</Platform>
   <Config />
   <SourceFiles>
-    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/defaultfont.spritefont</File>
+    <File>D:/workspace/Wartorn/Wartorn/Content/defaultfont.spritefont</File>
   </SourceFiles>
 </SourceFileCollection>
