@@ -39,17 +39,23 @@ namespace Wartorn.UIClass
             var lastKeyboardState = lastInputState.keyboardState;
             if (isFocused)
             {
-                if (keyboardState.IsKeyDown(Keys.Back))
+                if (keyboardState.IsKeyDown(Keys.Back) && lastKeyboardState.IsKeyUp(Keys.Back))
                 {
                     if (textBuffer.Length > 0)
                     {
                         textBuffer.Remove(textBuffer.Length - 1, 1);
                     }
-
+                }
+                else
+                {
                     Keys[] keyInput = keyboardState.GetPressedKeys();
+                    Keys[] lastKeyInput = lastKeyboardState.GetPressedKeys();
                     foreach (var key in keyInput)
                     {
-                        textBuffer.Append(GetCharKey(key));
+                        if (!lastKeyInput.Contains(key) && GetCharKey(key) != null)
+                        {
+                            textBuffer.Append(GetCharKey(key));
+                        }
                     }
                 }
             }
@@ -57,7 +63,7 @@ namespace Wartorn.UIClass
 
         protected string GetCharKey(Keys key)
         {
-            string result=" ";
+            string result=null;
             switch (key)
             {
                 case Keys.A:

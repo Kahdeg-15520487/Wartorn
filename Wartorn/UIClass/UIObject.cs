@@ -59,22 +59,27 @@ namespace Wartorn.UIClass
         /// </summary>
         public SpriteFont font { get; set; }
         /// <summary>
+        /// Color of the background of the control.
         /// Default color is Transparent
         /// </summary>
         public Color backgroundColor = Color.Transparent;
         /// <summary>
+        /// Color of the text that the control displays.
         /// Default color is Black
         /// </summary>
         public Color foregroundColor = Color.Black;
         /// <summary>
+        /// Color of the control's border.
         /// Default color is Transparent
         /// </summary>
         public Color borderColor = Color.Transparent;
         /// <summary>
+        /// Background color of the control when got focus.
         /// Default color is Transparent
         /// </summary>
         public Color gotfocusColor = Color.Transparent;
         /// <summary>
+        /// Background color of the control when lost focus.
         /// Default color is Transparent
         /// </summary>
         public Color lostfocusColor = Color.Transparent;
@@ -82,8 +87,12 @@ namespace Wartorn.UIClass
         /// Rotation calculated in radiant
         /// </summary>
         public float rotation { get; set; }
-        protected int scale;
-        public virtual int Scale
+        protected float scale;
+        /// <summary>
+        /// Scale of the control.
+        /// Default scale is 1.0f
+        /// </summary>
+        public virtual float Scale
         {
             get
             {

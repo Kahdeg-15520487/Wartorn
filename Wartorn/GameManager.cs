@@ -71,7 +71,6 @@ namespace Wartorn
                 Position = new Point(50,50),
                 Size = new Vector2(100,50),
                 font = defaultFont,
-                backgroundColor = Color.White,
                 foregroundColor = Color.Black,
                 rotation = 0f,
                 Scale = 2
@@ -83,7 +82,6 @@ namespace Wartorn
                 Position = new Point(10, 400),
                 Size = new Vector2(100, 30),
                 font = defaultFont,
-                backgroundColor = Color.White,
                 foregroundColor = Color.White,
                 rotation = 0f,
                 Scale = 1
@@ -95,7 +93,6 @@ namespace Wartorn
                 Position = new Point(10, 440),
                 Size = new Vector2(100, 30),
                 font = defaultFont,
-                backgroundColor = Color.White,
                 foregroundColor = Color.White,
                 rotation = 0f,
                 Scale = 1
@@ -107,7 +104,6 @@ namespace Wartorn
                 Position = new Point(5,5),
                 Size = new Vector2(100, 30),
                 font = defaultFont,
-                backgroundColor = Color.White,
                 foregroundColor = Color.White,
                 rotation = 0f,
                 Scale = 1
