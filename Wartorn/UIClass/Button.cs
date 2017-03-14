@@ -86,7 +86,7 @@ namespace Wartorn
 
             public override void Draw(SpriteBatch spriteBatch)
             {
-                spriteBatch.DrawString(font, (string.IsNullOrEmpty(text)) ? "" : text, new Vector2(rect.X, rect.Y) + Size / 4, foregroundColor, rotation, Vector2.Zero, scale, SpriteEffects.None, 0f);
+                spriteBatch.DrawString(font, (string.IsNullOrEmpty(text)) ? "" : text, new Vector2(rect.X, rect.Y) + Size / 4, foregroundColor, Rotation, Vector2.Zero, scale, SpriteEffects.None, 0f);
                 DrawingHelper.DrawRectangle(internalRect, isPressed ? buttonColorPressed : buttonColorReleased, true);
                 DrawingHelper.DrawRectangle(rect, borderColor, false);
                 //base.Draw(spriteBatch);

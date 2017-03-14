@@ -55,7 +55,10 @@ namespace Wartorn
             {
                 foreach (var element in UIelements.Values)
                 {
-                    element.Draw(spriteBatch);
+                    if (element.IsVisible)
+                    {
+                        element.Draw(spriteBatch);
+                    }
                 }
             }
         }

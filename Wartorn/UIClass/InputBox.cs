@@ -95,33 +95,43 @@ namespace Wartorn.UIClass
                     result = key.ToString();
                     break;
                 case Keys.NumPad0:
+                case Keys.D0:
                     result = "0";
                     break;
                 case Keys.NumPad1:
+                case Keys.D1:
                     result = "1";
                     break;
                 case Keys.NumPad2:
+                case Keys.D2:
                     result = "2";
                     break;
                 case Keys.NumPad3:
+                case Keys.D3:
                     result = "3";
                     break;
                 case Keys.NumPad4:
+                case Keys.D4:
                     result = "4";
                     break;
                 case Keys.NumPad5:
+                case Keys.D5:
                     result = "5";
                     break;
                 case Keys.NumPad6:
+                case Keys.D6:
                     result = "6";
                     break;
                 case Keys.NumPad7:
+                case Keys.D7:
                     result = "7";
                     break;
                 case Keys.NumPad8:
+                case Keys.D8:
                     result = "8";
                     break;
                 case Keys.NumPad9:
+                case Keys.D9:
                     result = "9";
                     break;
                 case Keys.Multiply:
@@ -144,7 +154,7 @@ namespace Wartorn.UIClass
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.DrawString(font, textBuffer, rect.Location.ToVector2(), foregroundColor, rotation, Vector2.Zero, scale, SpriteEffects.None, 0f);
+            spriteBatch.DrawString(font, textBuffer, rect.Location.ToVector2(), foregroundColor, Rotation, Vector2.Zero, scale, SpriteEffects.None, 0f);
             DrawingHelper.DrawRectangle(rect, backgroundColor, false);
         }
     }

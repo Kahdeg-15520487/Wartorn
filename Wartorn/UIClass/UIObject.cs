@@ -42,7 +42,7 @@ namespace Wartorn.UIClass
             }
         }
 
-        protected virtual bool isFocused { get; set; }
+        protected bool isFocused = false;
         /// <summary>
         /// Check if the UI element get focus
         /// </summary>
@@ -51,6 +51,22 @@ namespace Wartorn.UIClass
             get
             {
                 return isFocused;
+            }
+        }
+
+        protected bool isVisible = true;
+        /// <summary>
+        /// To draw the controle or not.
+        /// </summary>
+        public bool IsVisible
+        {
+            get
+            {
+                return isVisible;
+            }
+            set
+            {
+                isVisible = value;
             }
         }
 
@@ -83,11 +99,23 @@ namespace Wartorn.UIClass
         /// Default color is Transparent
         /// </summary>
         public Color lostfocusColor = Color.Transparent;
+
+        protected float rotation = 0f;
         /// <summary>
         /// Rotation calculated in radiant
         /// </summary>
-        public float rotation { get; set; }
-        protected float scale;
+        public float Rotation
+        {
+            get
+            {
+                return rotation;
+            }
+            set
+            {
+                rotation = value;
+            }
+        }
+        protected float scale = 1.0f;
         /// <summary>
         /// Scale of the control.
         /// Default scale is 1.0f

@@ -1,9 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System;
 using Wartorn.Utility.Drawing;
 using Wartorn.UIClass;
+using System.Linq;
 
 namespace Wartorn
 {
@@ -72,7 +72,6 @@ namespace Wartorn
                 Size = new Vector2(100,50),
                 font = defaultFont,
                 foregroundColor = Color.Black,
-                rotation = 0f,
                 Scale = 2
             };
 
@@ -82,9 +81,7 @@ namespace Wartorn
                 Position = new Point(10, 400),
                 Size = new Vector2(100, 30),
                 font = defaultFont,
-                foregroundColor = Color.White,
-                rotation = 0f,
-                Scale = 1
+                foregroundColor = Color.White
             };
 
             Label label3 = new Label()
@@ -93,9 +90,7 @@ namespace Wartorn
                 Position = new Point(10, 440),
                 Size = new Vector2(100, 30),
                 font = defaultFont,
-                foregroundColor = Color.White,
-                rotation = 0f,
-                Scale = 1
+                foregroundColor = Color.White
             };
 
             Label labelTime = new Label()
@@ -104,9 +99,7 @@ namespace Wartorn
                 Position = new Point(5,5),
                 Size = new Vector2(100, 30),
                 font = defaultFont,
-                foregroundColor = Color.White,
-                rotation = 0f,
-                Scale = 1
+                foregroundColor = Color.White
             };
 
             label1.MouseEnter += delegate (object sender, UIEventArgs e)
@@ -127,9 +120,7 @@ namespace Wartorn
                 backgroundColor = Color.White,
                 foregroundColor = Color.Black,
                 ButtonColorPressed = Color.LightSlateGray,
-                ButtonColorReleased = Color.LightGray,
-                rotation = 0f,
-                Scale = 1
+                ButtonColorReleased = Color.LightGray
             };
 
             button1.MouseUp += delegate (object sender, UIEventArgs e)
@@ -148,10 +139,18 @@ namespace Wartorn
                 Size = new Vector2(50, 50),
                 font = defaultFont,
                 backgroundColor = Color.White,
-                foregroundColor = Color.White,
-                rotation = 0f,
-                Scale = 1
+                foregroundColor = Color.White
             };
+
+            Console testconsole = new Console()
+            {
+                Position = new Point(400,200),
+                Size = new Vector2(100,200),
+                font = defaultFont,
+                backgroundColor = Color.LightGray,
+                foregroundColor = Color.White
+            };
+            testconsole.inputbox.font = defaultFont;
 
             canvas.AddElement("label1", label1);
             canvas.AddElement("label2", label2);
@@ -159,6 +158,7 @@ namespace Wartorn
             canvas.AddElement("button1", button1);
             canvas.AddElement("labelTime", labelTime);
             canvas.AddElement("inputbox1", inputbox1);
+            canvas.AddElement("testconsole", testconsole);
         }
 
         /// <summary>
@@ -184,12 +184,27 @@ namespace Wartorn
             inputState = new InputState(Mouse.GetState(), Keyboard.GetState());
 
             ((Label)canvas.GetElement("label2")).Text = inputState.mouseState.Position.ToString();
-            ((Label)canvas.GetElement("labelTime")).Text = gameTime.TotalGameTime.ToString();
+
+            ((Label)canvas.GetElement("labelTime")).Text = lala();
             
             canvas.Update(inputState, lastInputState);
 
             lastInputState = inputState;
             base.Update(gameTime);
+        }
+
+        string lala()
+        {
+            var keyInput = inputState.keyboardState.GetPressedKeys();
+            var lastKeyInput = lastInputState.keyboardState.GetPressedKeys();
+            foreach (var key in keyInput)
+            {
+                if (!lastKeyInput.Contains(key))
+                {
+                    return key.ToString();
+                }
+            }
+            return "";
         }
 
         /// <summary>

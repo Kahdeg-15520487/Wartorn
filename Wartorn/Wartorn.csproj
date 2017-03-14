@@ -43,6 +43,7 @@
     <Compile Include="GameManager.cs" />
     <Compile Include="Drawing\PrimitiveBatch.cs" />
     <Compile Include="UIClass\Button.cs" />
+    <Compile Include="UIClass\Console.cs" />
     <Compile Include="UIClass\InputBox.cs" />
     <Compile Include="UIClass\Label.cs" />
     <Compile Include="Program.cs" />
