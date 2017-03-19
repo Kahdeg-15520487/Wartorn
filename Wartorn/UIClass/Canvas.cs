@@ -4,6 +4,8 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Content;
+using System.IO;
+using System.Text;
 
 namespace Wartorn
 {
@@ -23,6 +25,10 @@ namespace Wartorn
                 if (!UIelements.ContainsKey(uiName))
                 {
                     UIelements.Add(uiName, element);
+                    if (element.font == null && element.fontname == "defaultfont")
+                    {
+                        element.font = this.font;
+                    }
                     return true;
                 }
                 else return false;

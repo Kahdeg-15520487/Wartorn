@@ -7,6 +7,7 @@ using System.Linq;
 using Newtonsoft.Json;
 using System.Text;
 using System.IO;
+//using System;
 
 namespace Wartorn
 {
@@ -66,19 +67,36 @@ namespace Wartorn
             InitializeUI();
         }
 
-        string serializeui(UIObject ui)
+        string serializeui(string name,UIObject ui)
         {
+            canvas.font = defaultFont;
+
             StringBuilder output = new StringBuilder();
 
-            output.Append(ui.GetType());
-            output.Append("|");
+            output.Append(ui.GetType().Name);
+            output.Append('|');
+            output.Append(name);
+            output.Append('|');
             output.Append(JsonConvert.SerializeObject(ui, Formatting.Indented, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
-            output.Append("|");
+            output.Append('\n');
             return output.ToString();
         }
 
+        /*
+         * i	(i*3)	(i*3+1) (i*3+2)
+         * id   type    name    data
+         * 0	0		1		2
+         * 1	3		4		5
+         * 2	6		7		8
+         * 3	9		10		11
+         * 4    12      13      14
+         * 5    15      16      17
+         * 6    18(|)   19(-1)
+         */
+
         void InitializeUI()
         {
+            System.EventHandler<UIEventArgs> anonymousemethod;
             StringBuilder jsonoutput = new StringBuilder();
             Label label1 = new Label()
             {
@@ -89,7 +107,7 @@ namespace Wartorn
                 foregroundColor = Color.Black,
                 Scale = 2
             };
-            jsonoutput.Append(serializeui(label1));
+            jsonoutput.Append(serializeui("label1",label1));
 
             Label label2 = new Label()
             {
@@ -99,7 +117,7 @@ namespace Wartorn
                 font = defaultFont,
                 foregroundColor = Color.White
             };
-            jsonoutput.Append(serializeui(label2));
+            jsonoutput.Append(serializeui("label2", label2));
 
             Label label3 = new Label()
             {
@@ -109,7 +127,7 @@ namespace Wartorn
                 font = defaultFont,
                 foregroundColor = Color.White
             };
-            jsonoutput.Append(serializeui(label3));
+            jsonoutput.Append(serializeui("label3",label3));
 
             Label labelTime = new Label()
             {
@@ -119,16 +137,20 @@ namespace Wartorn
                 font = defaultFont,
                 foregroundColor = Color.White
             };
-            jsonoutput.Append(serializeui(labelTime));
+            jsonoutput.Append(serializeui("labelTime",labelTime));
 
-            label1.MouseEnter += delegate (object sender, UIEventArgs e)
+            anonymousemethod = delegate (object sender, UIEventArgs e)
             {
                 label3.Text = "enter";
             };
-            label1.MouseLeave += delegate (object sender, UIEventArgs e)
+            label1.MouseEnter += anonymousemethod;
+
+            anonymousemethod = delegate (object sender, UIEventArgs e)
             {
                 label3.Text = "leave";
             };
+
+            label1.MouseLeave += anonymousemethod;
 
             Button button1 = new Button()
             {
@@ -141,9 +163,9 @@ namespace Wartorn
                 ButtonColorPressed = Color.LightSlateGray,
                 ButtonColorReleased = Color.LightGray
             };
-            jsonoutput.Append(serializeui(button1));
+            jsonoutput.Append(serializeui("button1",button1));
 
-            button1.MouseUp += delegate (object sender, UIEventArgs e)
+            anonymousemethod = delegate (object sender, UIEventArgs e)
             {
                 int temp;
                 if (int.TryParse(label1.Text,out temp))
@@ -151,6 +173,7 @@ namespace Wartorn
                     label1.Text = (temp + 1).ToString();
                 }
             };
+            button1.MouseUp += anonymousemethod;
 
             InputBox inputbox1 = new InputBox()
             {
@@ -161,7 +184,7 @@ namespace Wartorn
                 backgroundColor = Color.White,
                 foregroundColor = Color.White
             };
-            jsonoutput.Append(serializeui(inputbox1));
+            jsonoutput.Append(serializeui("inputbox1",inputbox1));
 
             Console testconsole = new Console()
             {
@@ -175,12 +198,40 @@ namespace Wartorn
 
             File.WriteAllText("ui.uis", jsonoutput.ToString());
 
-            canvas.AddElement("label1", label1);
-            canvas.AddElement("label2", label2);
-            canvas.AddElement("label3", label3);
-            canvas.AddElement("button1", button1);
-            canvas.AddElement("labelTime", labelTime);
-            canvas.AddElement("inputbox1", inputbox1);
+            string jsonstring = File.ReadAllText("ui.uis");
+            var jsons = jsonstring.Split('\n');
+            for (int i = 0; i < jsons.GetLength(0); i++)
+            {
+                var obj = jsons[i].Split('|');
+                string type = obj[0];
+                string name = obj[1];
+                string data = obj[2];
+                //File.WriteAllText("log.txt", type + '\n' + name + '\n' + data + '\n');
+                File.WriteAllText("log.txt", ((char)179).ToString());
+                //switch (type)
+                //{
+                //    case "Label":
+                //        canvas.AddElement(name, JsonConvert.DeserializeObject<Label>(data));
+                //        break;
+                //    case "Button":
+                //        canvas.AddElement(name, JsonConvert.DeserializeObject<Button>(data));
+                //        break;
+                //    case "InputBox":
+                //        canvas.AddElement(name, JsonConvert.DeserializeObject<InputBox>(data));
+                //        break;
+
+                //    default:
+                //        break;
+                //}
+            }
+
+            //canvas.AddElement("label1", label1);
+            //canvas.AddElement("label2", label2);
+            //canvas.AddElement("label3", label3);
+            //canvas.AddElement("button1", button1);
+            //canvas.AddElement("labelTime", labelTime);
+            //canvas.AddElement("inputbox1", inputbox1);
+
             canvas.AddElement("testconsole", testconsole);
         }
 
