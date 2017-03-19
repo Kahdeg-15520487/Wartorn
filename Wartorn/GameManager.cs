@@ -4,6 +4,9 @@ using Microsoft.Xna.Framework.Input;
 using Wartorn.Utility.Drawing;
 using Wartorn.UIClass;
 using System.Linq;
+using Newtonsoft.Json;
+using System.Text;
+using System.IO;
 
 namespace Wartorn
 {
@@ -63,8 +66,20 @@ namespace Wartorn
             InitializeUI();
         }
 
+        string serializeui(UIObject ui)
+        {
+            StringBuilder output = new StringBuilder();
+
+            output.Append(ui.GetType());
+            output.Append("|");
+            output.Append(JsonConvert.SerializeObject(ui, Formatting.Indented, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
+            output.Append("|");
+            return output.ToString();
+        }
+
         void InitializeUI()
         {
+            StringBuilder jsonoutput = new StringBuilder();
             Label label1 = new Label()
             {
                 Text = "1",
@@ -74,6 +89,7 @@ namespace Wartorn
                 foregroundColor = Color.Black,
                 Scale = 2
             };
+            jsonoutput.Append(serializeui(label1));
 
             Label label2 = new Label()
             {
@@ -83,6 +99,7 @@ namespace Wartorn
                 font = defaultFont,
                 foregroundColor = Color.White
             };
+            jsonoutput.Append(serializeui(label2));
 
             Label label3 = new Label()
             {
@@ -92,6 +109,7 @@ namespace Wartorn
                 font = defaultFont,
                 foregroundColor = Color.White
             };
+            jsonoutput.Append(serializeui(label3));
 
             Label labelTime = new Label()
             {
@@ -101,6 +119,7 @@ namespace Wartorn
                 font = defaultFont,
                 foregroundColor = Color.White
             };
+            jsonoutput.Append(serializeui(labelTime));
 
             label1.MouseEnter += delegate (object sender, UIEventArgs e)
             {
@@ -122,6 +141,7 @@ namespace Wartorn
                 ButtonColorPressed = Color.LightSlateGray,
                 ButtonColorReleased = Color.LightGray
             };
+            jsonoutput.Append(serializeui(button1));
 
             button1.MouseUp += delegate (object sender, UIEventArgs e)
             {
@@ -141,6 +161,7 @@ namespace Wartorn
                 backgroundColor = Color.White,
                 foregroundColor = Color.White
             };
+            jsonoutput.Append(serializeui(inputbox1));
 
             Console testconsole = new Console()
             {
@@ -151,6 +172,8 @@ namespace Wartorn
                 foregroundColor = Color.White
             };
             testconsole.inputbox.font = defaultFont;
+
+            File.WriteAllText("ui.uis", jsonoutput.ToString());
 
             canvas.AddElement("label1", label1);
             canvas.AddElement("label2", label2);
@@ -186,7 +209,7 @@ namespace Wartorn
             ((Label)canvas.GetElement("label2")).Text = inputState.mouseState.Position.ToString();
 
             ((Label)canvas.GetElement("labelTime")).Text = lala();
-            
+
             canvas.Update(inputState, lastInputState);
 
             lastInputState = inputState;

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace Wartorn.UIClass
 {
@@ -73,7 +74,12 @@ namespace Wartorn.UIClass
         /// <summary>
         /// This must be assign with a font
         /// </summary>
+        [JsonIgnore]
         public SpriteFont font { get; set; }
+        /// <summary>
+        /// font name
+        /// </summary>
+        public string fontname = "defaultfont";
         /// <summary>
         /// Color of the background of the control.
         /// Default color is Transparent
