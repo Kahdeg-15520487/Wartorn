@@ -7,6 +7,7 @@ using System.Linq;
 using Newtonsoft.Json;
 using System.Text;
 using System.IO;
+using System.Xml;
 //using System;
 
 namespace Wartorn
@@ -77,7 +78,7 @@ namespace Wartorn
             output.Append('|');
             output.Append(name);
             output.Append('|');
-            output.Append(JsonConvert.SerializeObject(ui, Formatting.Indented, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
+            output.Append(JsonConvert.SerializeObject(ui, Newtonsoft.Json.Formatting.None, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
             output.Append('\n');
             return output.ToString();
         }
@@ -96,6 +97,10 @@ namespace Wartorn
 
         void InitializeUI()
         {
+
+            XmlTextReader test = new XmlTextReader(new FileStream("ui.txt", FileMode.Open));
+            
+
             System.EventHandler<UIEventArgs> anonymousemethod;
             StringBuilder jsonoutput = new StringBuilder();
             Label label1 = new Label()
@@ -200,29 +205,29 @@ namespace Wartorn
 
             string jsonstring = File.ReadAllText("ui.uis");
             var jsons = jsonstring.Split('\n');
-            for (int i = 0; i < jsons.GetLength(0); i++)
+            for (int i = 0; i < jsons.GetLength(0)-1; i++)
             {
                 var obj = jsons[i].Split('|');
                 string type = obj[0];
                 string name = obj[1];
                 string data = obj[2];
                 //File.WriteAllText("log.txt", type + '\n' + name + '\n' + data + '\n');
-                File.WriteAllText("log.txt", ((char)179).ToString());
-                //switch (type)
-                //{
-                //    case "Label":
-                //        canvas.AddElement(name, JsonConvert.DeserializeObject<Label>(data));
-                //        break;
-                //    case "Button":
-                //        canvas.AddElement(name, JsonConvert.DeserializeObject<Button>(data));
-                //        break;
-                //    case "InputBox":
-                //        canvas.AddElement(name, JsonConvert.DeserializeObject<InputBox>(data));
-                //        break;
+                //File.WriteAllText("log.txt", ((char)179).ToString());
+                switch (type)
+                {
+                    case "Label":
+                        canvas.AddElement(name, JsonConvert.DeserializeObject<Label>(data));
+                        break;
+                    case "Button":
+                        canvas.AddElement(name, JsonConvert.DeserializeObject<Button>(data));
+                        break;
+                    case "InputBox":
+                        canvas.AddElement(name, JsonConvert.DeserializeObject<InputBox>(data));
+                        break;
 
-                //    default:
-                //        break;
-                //}
+                    default:
+                        break;
+                }
             }
 
             //canvas.AddElement("label1", label1);
