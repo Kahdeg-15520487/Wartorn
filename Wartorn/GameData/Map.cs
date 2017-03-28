@@ -1,0 +1,33 @@
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Wartorn.GameData
+{
+    class Map
+    {
+        MapCell[,] map;
+        public int Width { get { return map.GetLength(0); } }
+        public int Height { get { return map.GetLength(1); } }
+
+        public MapCell this[int x, int y] { get { return map[x, y]; } set { map[x, y] = value; } }
+
+        //constructor
+        public Map()
+        {
+            map = new MapCell[20,20];
+        }
+        public Map(int w,int h)
+        {
+            map = new MapCell[w, h];
+        }
+
+        public MapCell getMapCell(int x,int y)
+        {
+            return map[x, y];
+        }
+    }
+}
