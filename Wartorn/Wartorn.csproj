@@ -40,6 +40,9 @@
   <ItemGroup>
     <Compile Include="Constants.cs" />
     <Compile Include="Drawing\DrawingHelper.cs" />
+    <Compile Include="GameData\Map.cs" />
+    <Compile Include="GameData\MapCell.cs" />
+    <Compile Include="GameData\Session.cs" />
     <Compile Include="GameManager.cs" />
     <Compile Include="Drawing\PrimitiveBatch.cs" />
     <Compile Include="UIClass\Button.cs" />

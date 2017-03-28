@@ -142,23 +142,12 @@ namespace Wartorn
                 foregroundColor = Color.White
             };
 
-            Console testconsole = new Console()
-            {
-                Position = new Point(400,200),
-                Size = new Vector2(100,200),
-                font = defaultFont,
-                backgroundColor = Color.LightGray,
-                foregroundColor = Color.White
-            };
-            testconsole.inputbox.font = defaultFont;
-
             canvas.AddElement("label1", label1);
             canvas.AddElement("label2", label2);
             canvas.AddElement("label3", label3);
             canvas.AddElement("button1", button1);
             canvas.AddElement("labelTime", labelTime);
             canvas.AddElement("inputbox1", inputbox1);
-            canvas.AddElement("testconsole", testconsole);
         }
 
         /// <summary>
