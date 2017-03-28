@@ -24,6 +24,7 @@ namespace Wartorn
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            CONTENT_MANAGER.Content = Content;
             IsMouseVisible = true;
             lastInputState = new InputState();       
         }
@@ -57,8 +58,8 @@ namespace Wartorn
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
-            canvas.LoadContent(Content);
-            defaultFont = Content.Load<SpriteFont>("defaultfont");
+            canvas.LoadContent();
+            defaultFont = CONTENT_MANAGER.Content.Load<SpriteFont>("defaultfont");
 
             InitializeUI();
         }
@@ -171,29 +172,10 @@ namespace Wartorn
             
             // TODO: Add your update logic here
             inputState = new InputState(Mouse.GetState(), Keyboard.GetState());
-
-            ((Label)canvas.GetElement("label2")).Text = inputState.mouseState.Position.ToString();
-
-            ((Label)canvas.GetElement("labelTime")).Text = lala();
-            
             canvas.Update(inputState, lastInputState);
 
             lastInputState = inputState;
             base.Update(gameTime);
-        }
-
-        string lala()
-        {
-            var keyInput = inputState.keyboardState.GetPressedKeys();
-            var lastKeyInput = lastInputState.keyboardState.GetPressedKeys();
-            foreach (var key in keyInput)
-            {
-                if (!lastKeyInput.Contains(key))
-                {
-                    return key.ToString();
-                }
-            }
-            return "";
         }
 
         /// <summary>

@@ -37,7 +37,7 @@ namespace Wartorn
                 else return null;
             }
 
-            public void LoadContent(ContentManager content)
+            public void LoadContent()
             {
                 //UIspritesheet = content.Load<Texture2D>("sprite\\UIspritesheet");
             }

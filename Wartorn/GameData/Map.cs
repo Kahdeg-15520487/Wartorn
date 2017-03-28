@@ -4,12 +4,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace Wartorn.GameData
 {
+    [JsonObject(MemberSerialization.OptIn)]
     class Map
     {
+        [JsonProperty]
         MapCell[,] map;
+
         public int Width { get { return map.GetLength(0); } }
         public int Height { get { return map.GetLength(1); } }
 

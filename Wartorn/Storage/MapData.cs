@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Wartorn.GameData;
+using Newtonsoft.Json;
 
 namespace Wartorn.Storage
 {
@@ -20,6 +21,19 @@ namespace Wartorn.Storage
 
             Map output = new Map();
             return output;
+        }
+
+        public static string SaveMap(Map map)
+        {
+            StringBuilder output = new StringBuilder();
+
+            output.Append(JsonConvert.SerializeObject(map.Width));
+            output.Append('|');
+            output.Append(JsonConvert.SerializeObject(map.Height));
+            output.Append('|');
+            output.Append(JsonConvert.SerializeObject(map));
+
+            return output.ToString();
         }
     }
 }
