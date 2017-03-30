@@ -5,5 +5,12 @@
   <Config />
   <SourceFiles>
     <File>G:/Workspace/c#/Wartorn/Wartorn/Content/defaultfont.spritefont</File>
+    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/animation/Soldier_down.png</File>
+    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/animation/Soldier_idle.png</File>
+    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/animation/Soldier_ready.png</File>
+    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/animation/Soldier_run.png</File>
+    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/animation/Soldier_up.png</File>
+    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/sprite_sheet.png</File>
+    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/ui_sprite_sheet.png</File>
   </SourceFiles>
 </SourceFileCollection>

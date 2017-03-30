@@ -12,6 +12,7 @@ namespace Wartorn
         {
             bool isPressed = false;
             Rectangle internalRect;
+            Rectangle spriteSourceRectangle = new Rectangle(0,0,0,0);
 
             public override Point Position
             {
@@ -38,8 +39,8 @@ namespace Wartorn
                 }
             }
 
-            Color buttonColorPressed;
-            Color buttonColorReleased;
+            Color buttonColorPressed = Color.LightSlateGray;
+            Color buttonColorReleased = Color.LightGray;
             public Color ButtonColorPressed
             {
                 get
@@ -65,6 +66,24 @@ namespace Wartorn
 
             public Button()
             {
+                Init();
+            }
+            public Button(string text,Point position,Vector2 size,SpriteFont font)
+            {
+                Text = text;
+                Position = position;
+                Size = size;
+                this.font = font;
+            }
+            public Button(Rectangle sprite,Point position,float scale)
+            {
+                spriteSourceRectangle = sprite;
+                Position = position;
+                Scale = scale;
+            }
+
+            private void Init()
+            {
                 MouseDown += delegate (object sender, UIEventArgs e)
                 {
                     isPressed = true;
@@ -86,9 +105,16 @@ namespace Wartorn
 
             public override void Draw(SpriteBatch spriteBatch)
             {
-                spriteBatch.DrawString(font, (string.IsNullOrEmpty(text)) ? "" : text, new Vector2(rect.X, rect.Y) + Size / 4, foregroundColor, Rotation, Vector2.Zero, scale, SpriteEffects.None, 0f);
-                DrawingHelper.DrawRectangle(internalRect, isPressed ? buttonColorPressed : buttonColorReleased, true);
-                DrawingHelper.DrawRectangle(rect, borderColor, false);
+                if (spriteSourceRectangle != null)
+                {
+                    spriteBatch.DrawString(font != null ? font : CONTENT_MANAGER.defaultfont, (string.IsNullOrEmpty(text)) ? "" : text, new Vector2(rect.X, rect.Y) + Size / 4, foregroundColor, Rotation, Vector2.Zero, scale, SpriteEffects.None, 0f);
+                    DrawingHelper.DrawRectangle(internalRect, isPressed ? buttonColorPressed : buttonColorReleased, true);
+                    DrawingHelper.DrawRectangle(rect, borderColor, false);
+                }
+                else
+                {
+                    spriteBatch.Draw(CONTENT_MANAGER.UIspriteSheet, Position.ToVector2(), spriteSourceRectangle, Color.White, Rotation, Vector2.Zero, Scale, SpriteEffects.None, LayerDepth.Gui);
+                }
                 //base.Draw(spriteBatch);
             }
 

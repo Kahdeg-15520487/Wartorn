@@ -9,15 +9,17 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Wartorn
 {
-    namespace Utility
+    static class LayerDepth
     {
-        static class Constants
-        {
-            public static int Width { get; set; }
-            public static int Height { get; set; }
-            public static SpriteFont defaultFont { get; set; }
-            public static Texture2D spriteSheet { get; set; }
-            public static Texture2D UIspriteSheet { get; set; }
-        }
+        public static float Gui = 1.0f;
+        public static float BackGround = 0.0f;
+        public static float Terrain = 0.1f;
+        public static float Unit = 0.2f;
+    }
+
+    static class Constants
+    {
+        public static int Width { get; set; }
+        public static int Height { get; set; }
     }
 }

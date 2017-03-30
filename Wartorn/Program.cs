@@ -15,8 +15,8 @@ namespace Wartorn
         {
             using (var game = new GameManager())
             {
-                Utility.Constants.Width = 800;
-                Utility.Constants.Height = 600;
+                Constants.Width = 720;
+                Constants.Height = 480;
                 game.Run();
             }
         }

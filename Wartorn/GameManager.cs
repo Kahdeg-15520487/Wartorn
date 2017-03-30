@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Wartorn.Utility.Drawing;
 using Wartorn.UIClass;
+using Wartorn.ScreenManager;
 using System.Linq;
 
 namespace Wartorn
@@ -13,9 +14,6 @@ namespace Wartorn
     public class GameManager : Game
     {
         GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
-        Canvas canvas;
-        SpriteFont defaultFont;
 
         InputState inputState;
         InputState lastInputState;
@@ -42,9 +40,12 @@ namespace Wartorn
             graphics.PreferredBackBufferHeight = Utility.Constants.Height;  // set this value to the desired height of your window
             graphics.ApplyChanges();
 
-            canvas = new Canvas();
+            SCREEN_MANAGER.add_screen(new Screens.RedScreen(GraphicsDevice));
+            SCREEN_MANAGER.add_screen(new Screens.BlueScreen(GraphicsDevice));
 
-            DrawingHelper.Initialize(base.GraphicsDevice);
+            SCREEN_MANAGER.goto_screen("BlueScreen");
+
+            DrawingHelper.Initialize(GraphicsDevice);
             base.Initialize();
         }
 
@@ -55,15 +56,19 @@ namespace Wartorn
         protected override void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures.
-            spriteBatch = new SpriteBatch(GraphicsDevice);
+            CONTENT_MANAGER.spriteBatch = new SpriteBatch(GraphicsDevice);
+            CONTENT_MANAGER.inputState = new InputState(Mouse.GetState(), Keyboard.GetState());
 
             // TODO: use this.Content to load your game content here
-            canvas.LoadContent();
-            defaultFont = CONTENT_MANAGER.Content.Load<SpriteFont>("defaultfont");
+            CONTENT_MANAGER.defaultfont = CONTENT_MANAGER.Content.Load<SpriteFont>("defaultfont");
+            CONTENT_MANAGER.spriteSheet = CONTENT_MANAGER.Content.Load<Texture2D>(@"sprite\sprite_sheet");
+            CONTENT_MANAGER.UIspriteSheet = CONTENT_MANAGER.Content.Load<Texture2D>(@"sprite\ui_sprite_sheet");
 
-            InitializeUI();
+            SCREEN_MANAGER.Init();
+            //InitializeUI();
         }
 
+        /*
         void InitializeUI()
         {
             Label label1 = new Label()
@@ -150,6 +155,7 @@ namespace Wartorn
             canvas.AddElement("labelTime", labelTime);
             canvas.AddElement("inputbox1", inputbox1);
         }
+        */
 
         /// <summary>
         /// UnloadContent will be called once per game and is the place to unload
@@ -169,10 +175,11 @@ namespace Wartorn
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-            
+
             // TODO: Add your update logic here
-            inputState = new InputState(Mouse.GetState(), Keyboard.GetState());
-            canvas.Update(inputState, lastInputState);
+            CONTENT_MANAGER.inputState = new InputState(Mouse.GetState(), Keyboard.GetState());
+
+            SCREEN_MANAGER.Update(gameTime);
 
             lastInputState = inputState;
             base.Update(gameTime);
@@ -187,11 +194,11 @@ namespace Wartorn
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
-            spriteBatch.Begin(SpriteSortMode.FrontToBack);
+            CONTENT_MANAGER.spriteBatch.Begin(SpriteSortMode.BackToFront);
             {
-                canvas.Draw(spriteBatch);
+                SCREEN_MANAGER.Draw(gameTime);
             }
-            spriteBatch.End();
+            CONTENT_MANAGER.spriteBatch.End();
 
             base.Draw(gameTime);
         }
