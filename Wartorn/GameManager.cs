@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Input;
 using Wartorn.Utility.Drawing;
 using Wartorn.UIClass;
 using Wartorn.ScreenManager;
+using Wartorn.Screens;
 using System.Linq;
 
 namespace Wartorn
@@ -36,14 +37,13 @@ namespace Wartorn
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            graphics.PreferredBackBufferWidth = Utility.Constants.Width;    // set this value to the desired width of your window
-            graphics.PreferredBackBufferHeight = Utility.Constants.Height;  // set this value to the desired height of your window
+            graphics.PreferredBackBufferWidth = Constants.Width;    // set this value to the desired width of your window
+            graphics.PreferredBackBufferHeight = Constants.Height;  // set this value to the desired height of your window
             graphics.ApplyChanges();
 
-            SCREEN_MANAGER.add_screen(new Screens.RedScreen(GraphicsDevice));
-            SCREEN_MANAGER.add_screen(new Screens.BlueScreen(GraphicsDevice));
+            SCREEN_MANAGER.add_screen(new EditorScreen(GraphicsDevice));
 
-            SCREEN_MANAGER.goto_screen("BlueScreen");
+            SCREEN_MANAGER.goto_screen("EditorScreen");
 
             DrawingHelper.Initialize(GraphicsDevice);
             base.Initialize();
@@ -185,6 +185,7 @@ namespace Wartorn
             base.Update(gameTime);
         }
 
+
         /// <summary>
         /// This is called when the game should draw itself.
         /// </summary>
@@ -194,7 +195,7 @@ namespace Wartorn
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
-            CONTENT_MANAGER.spriteBatch.Begin(SpriteSortMode.BackToFront);
+            CONTENT_MANAGER.spriteBatch.Begin(SpriteSortMode.FrontToBack);
             {
                 SCREEN_MANAGER.Draw(gameTime);
             }

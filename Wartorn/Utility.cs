@@ -22,6 +22,11 @@ namespace Wartorn
             {
                 return (float)(Math.PI * angle / 180.0f);
             }
+
+            public static bool IsKeyPress(Keys k)
+            {
+                return CONTENT_MANAGER.inputState.keyboardState.IsKeyUp(k) && CONTENT_MANAGER.lastInputState.keyboardState.IsKeyDown(k);
+            }
         }
     }
 }

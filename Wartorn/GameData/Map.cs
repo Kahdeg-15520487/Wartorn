@@ -13,7 +13,7 @@ using Wartorn.Utility.Drawing;
 namespace Wartorn.GameData
 {
     [JsonObject(MemberSerialization.OptIn)]
-    class Map
+    class Map : IEnumerable
     {
         [JsonProperty]
         MapCell[,] map;
@@ -36,6 +36,11 @@ namespace Wartorn.GameData
         public MapCell getMapCell(int x,int y)
         {
             return map[x, y];
+        }
+
+        public IEnumerator GetEnumerator()
+        {
+            return map.GetEnumerator();
         }
     }
 }

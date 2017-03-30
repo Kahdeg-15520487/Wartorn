@@ -16,5 +16,17 @@ namespace Wartorn.GameData
         public bool isFog;
         public Unit unit;
         public int unitId;
+
+        public MapCell(Terrain t)
+        {
+            terrain = t;
+        }
+
+        public MapCell(Terrain t, Unit u, int unitId)
+        {
+            terrain = t;
+            unit = u;
+            this.unitId = unitId;
+        }
     }
 }

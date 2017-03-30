@@ -25,12 +25,20 @@ namespace Wartorn
 
             public Label()
             {
-                
+
+            }
+
+            public Label(string text, Point position, Vector2 size, SpriteFont font)
+            {
+                Text = text;
+                Position = position;
+                Size = size;
+                this.font = font;
             }
 
             public override void Draw(SpriteBatch spriteBatch)
             {
-                spriteBatch.DrawString(font, (string.IsNullOrEmpty(text)) ? "" : text, new Vector2(rect.X, rect.Y) + Size / 4, foregroundColor, Rotation, Vector2.Zero, scale, SpriteEffects.None, 0f);
+                spriteBatch.DrawString(font!= null?font:CONTENT_MANAGER.defaultfont, (string.IsNullOrEmpty(text)) ? "" : text, new Vector2(rect.X, rect.Y) + Size / 4, foregroundColor, Rotation, Vector2.Zero, scale, SpriteEffects.None, LayerDepth.Gui);
                 DrawingHelper.DrawRectangle(rect, backgroundColor, true);
                 DrawingHelper.DrawRectangle(rect, borderColor, false);
             }

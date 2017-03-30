@@ -13,6 +13,14 @@ namespace Wartorn
         {
             Dictionary<string, UIObject> UIelements;
 
+            public UIObject this[string uiname]
+            {
+                get
+                {
+                    return UIelements[uiname];
+                }
+            }
+
             public Canvas()
             {
                 UIelements = new Dictionary<string, UIObject>();

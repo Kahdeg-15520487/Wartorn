@@ -12,7 +12,7 @@ namespace Wartorn
         {
             bool isPressed = false;
             Rectangle internalRect;
-            Rectangle spriteSourceRectangle = new Rectangle(0,0,0,0);
+            Rectangle spriteSourceRectangle = Rectangle.Empty;
 
             public override Point Position
             {
@@ -74,12 +74,15 @@ namespace Wartorn
                 Position = position;
                 Size = size;
                 this.font = font;
+                Init();
             }
             public Button(Rectangle sprite,Point position,float scale)
             {
                 spriteSourceRectangle = sprite;
                 Position = position;
+                Size = spriteSourceRectangle.Size.ToVector2();
                 Scale = scale;
+                Init();
             }
 
             private void Init()
@@ -105,20 +108,19 @@ namespace Wartorn
 
             public override void Draw(SpriteBatch spriteBatch)
             {
-                if (spriteSourceRectangle != null)
+                if (spriteSourceRectangle == Rectangle.Empty)
                 {
-                    spriteBatch.DrawString(font != null ? font : CONTENT_MANAGER.defaultfont, (string.IsNullOrEmpty(text)) ? "" : text, new Vector2(rect.X, rect.Y) + Size / 4, foregroundColor, Rotation, Vector2.Zero, scale, SpriteEffects.None, 0f);
+                    spriteBatch.DrawString(font != null ? font : CONTENT_MANAGER.defaultfont, (string.IsNullOrEmpty(text)) ? "" : text, new Vector2(rect.X, rect.Y) + Size / 4, foregroundColor, Rotation, Vector2.Zero, scale, SpriteEffects.None, LayerDepth.Gui);
                     DrawingHelper.DrawRectangle(internalRect, isPressed ? buttonColorPressed : buttonColorReleased, true);
                     DrawingHelper.DrawRectangle(rect, borderColor, false);
                 }
                 else
                 {
-                    spriteBatch.Draw(CONTENT_MANAGER.UIspriteSheet, Position.ToVector2(), spriteSourceRectangle, Color.White, Rotation, Vector2.Zero, Scale, SpriteEffects.None, LayerDepth.Gui);
+                    spriteBatch.Draw(CONTENT_MANAGER.spriteSheet, Position.ToVector2(), spriteSourceRectangle, isPressed ? buttonColorPressed : buttonColorReleased, Rotation, Vector2.Zero, Scale, SpriteEffects.None, LayerDepth.Gui);
                 }
-                //base.Draw(spriteBatch);
             }
 
-            public EventHandler<UIEventArgs> ButtonPressed;
+            public event EventHandler<UIEventArgs> ButtonPressed;
             protected virtual void OnButtonPressed(object sender,UIEventArgs e)
             {
                 ButtonPressed?.Invoke(sender, e);
