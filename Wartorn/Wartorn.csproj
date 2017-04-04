@@ -40,6 +40,7 @@
   <ItemGroup>
     <Compile Include="Constants.cs" />
     <Compile Include="CONTENT_MANAGER.cs" />
+    <Compile Include="Drawing\Camera.cs" />
     <Compile Include="Drawing\DrawingHelper.cs" />
     <Compile Include="GameData\Constants.cs" />
     <Compile Include="GameData\Map.cs" />
@@ -52,6 +53,7 @@
     <Compile Include="ScreenManager\ScreenManager.cs" />
     <Compile Include="Screens\BlueScreen.cs" />
     <Compile Include="Screens\EditorScreen.cs" />
+    <Compile Include="Screens\MainMenuScreen.cs" />
     <Compile Include="Screens\RedScreen.cs" />
     <Compile Include="SpriteSheetSourceRectangle.cs" />
     <Compile Include="Storage\MapData.cs" />

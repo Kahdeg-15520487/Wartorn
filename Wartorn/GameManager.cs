@@ -19,13 +19,15 @@ namespace Wartorn
         InputState inputState;
         InputState lastInputState;
 
-        public GameManager()
+    public GameManager()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             CONTENT_MANAGER.Content = Content;
             IsMouseVisible = true;
-            lastInputState = new InputState();       
+            lastInputState = new InputState();
+
+            graphics.PreferMultiSampling = true;
         }
 
         /// <summary>
@@ -42,8 +44,9 @@ namespace Wartorn
             graphics.ApplyChanges();
 
             SCREEN_MANAGER.add_screen(new EditorScreen(GraphicsDevice));
+            SCREEN_MANAGER.add_screen(new MainMenuScreen(GraphicsDevice));
 
-            SCREEN_MANAGER.goto_screen("EditorScreen");
+            SCREEN_MANAGER.goto_screen("MainMenuScreen");
 
             DrawingHelper.Initialize(GraphicsDevice);
             base.Initialize();

@@ -16,6 +16,8 @@ namespace Wartorn
         public static Texture2D spriteSheet;
         public static Texture2D UIspriteSheet;
 
+        public static RasterizerState antialiasing = new RasterizerState { MultiSampleAntiAlias = true };
+
         private static InputState _inputState;
         public static InputState inputState
         {

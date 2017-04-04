@@ -10,6 +10,8 @@ using Wartorn.ScreenManager;
 using Wartorn.Storage;
 using Wartorn.GameData;
 using Wartorn.UIClass;
+using Wartorn.Utility;
+using Wartorn.Drawing;
 
 namespace Wartorn.Screens
 {
@@ -17,14 +19,19 @@ namespace Wartorn.Screens
     {
         private Map map;
         private Canvas canvas;
-        private Vector3 viewport = new Vector3(0, 0, 0);
+        private Camera camera;
+
         private Point selectedMapCell = new Point(0, 0);
         private Vector2 offset = new Vector2(70, 70);
+        private Vector2 mapcellsize = new Vector2(60, 60);
+
+        private Terrain currentlySelectedTerrain = Terrain.Plain;
 
         public EditorScreen(GraphicsDevice device) : base(device, "EditorScreen")
         {
             map = new Map();
             canvas = new Canvas();
+            camera = new Camera(_device.Viewport);
             InitUI();
             InitMap();
         }
@@ -33,9 +40,11 @@ namespace Wartorn.Screens
         {
             //declare ui element
             Button button_airport = new Button(SpriteSheetSourceRectangle.AirPort, new Point(20, 20), 0.5f);
+            button_airport.Text = Terrain.AirPort.ToString();
             Label label_info = new Label("0", new Point(20, 100), new Vector2(100, 20), CONTENT_MANAGER.defaultfont);
+            Label label_fps = new Label(" ", new Point(1, 1), new Vector2(50, 20), CONTENT_MANAGER.defaultfont);
 
-            //bind action to event
+            //bind action to ui event
             button_airport.MouseClick += delegate (object sender, UIEventArgs e)
             {
                 int temp;
@@ -52,6 +61,7 @@ namespace Wartorn.Screens
             //add ui element to canvas
             canvas.AddElement("button_airport", button_airport);
             canvas.AddElement("label_info", label_info);
+            canvas.AddElement("label_fps", label_fps);
         }
 
         private void InitMap()
@@ -72,33 +82,57 @@ namespace Wartorn.Screens
             //simulate scrolling
             if (Utility.HelperFunction.IsKeyPress(Keys.Left))
             {
-                viewport += Vector3.Left * 10;
+                camera.Location += new Vector2(-1, 0) * 10;
             }
             if (Utility.HelperFunction.IsKeyPress(Keys.Right))
             {
-                viewport += Vector3.Right * 10;
+                camera.Location += new Vector2(1, 0) * 10;
             }
             if (Utility.HelperFunction.IsKeyPress(Keys.Up))
             {
-                viewport -= Vector3.Up * 10;
+                camera.Location += new Vector2(0, -1) * 10;
             }
             if (Utility.HelperFunction.IsKeyPress(Keys.Down))
             {
-                viewport -= Vector3.Down * 10;
+                camera.Location += new Vector2(0, +1) * 10;
             }
 
+            int mouseScrollAmount = GetMouseScrollAmount();
+            if ((mouseScrollAmount > 0) && (camera.Zoom < 1))
+            {
+                camera.Zoom += 0.1f;
+            }
+
+            if ((mouseScrollAmount < 0) && (camera.Zoom > 0.1f))
+            {
+                camera.Zoom -= 0.1f;
+            }
+
+
+            ((Label)canvas["label_info"]).Text = camera.Zoom.ToString();
+
+            selectedMapCell = TranslateMousePosToMapCellPos(CONTENT_MANAGER.inputState.mouseState.Position);
+
+            int frameRate = (int)(1 / gameTime.ElapsedGameTime.TotalSeconds);
+            ((Label)canvas["label_fps"]).Text = frameRate.ToString();
+        }
+
+        private Point TranslateMousePosToMapCellPos(Point mousepos)
+        {
             //calculate currently selected mapcell
-            Vector2 temp = CONTENT_MANAGER.inputState.mouseState.Position.ToVector2();
+            Vector2 temp = camera.TranslateFromScreenToWorld(mousepos.ToVector2());
             temp -= offset;
-            temp -= new Vector2(viewport.X,viewport.Y);
+            temp.X = (int)(temp.X / mapcellsize.X);       //mapcell size
+            temp.Y = (int)(temp.Y / mapcellsize.Y);
 
-            temp.X = (int)(temp.X / 30f);
-            temp.Y = (int)(temp.Y / 30f);
+            if (temp.X >= 0 && temp.X < map.Width && temp.Y >= 0 && temp.Y < map.Height)
+                return temp.ToPoint();
+            return Point.Zero;
+        }
 
-            if (temp.X>=0 && temp.X<map.Width && temp.Y>=0 && temp.Y<map.Height)
-                selectedMapCell = temp.ToPoint();
-
-            ((Label)canvas["label_info"]).Text = selectedMapCell.ToString();
+        private int GetMouseScrollAmount()
+        {
+            return CONTENT_MANAGER.inputState.mouseState.ScrollWheelValue - CONTENT_MANAGER.lastInputState.mouseState.ScrollWheelValue;
         }
 
         public override void Draw(GameTime gameTime)
@@ -112,16 +146,16 @@ namespace Wartorn.Screens
             //end that batch since the map will be render diffrently
             spriteBatch.End();
             //begin a new batch with translated matrix to simulate scrolling
-            spriteBatch.Begin(SpriteSortMode.FrontToBack, transformMatrix: Matrix.CreateTranslation(viewport));
+            spriteBatch.Begin(SpriteSortMode.FrontToBack, transformMatrix: camera.TransformMatrix);
             for (int i = 0; i < map.Width; i++)
             {
                 for (int j = 0; j < map.Height; j++)
                 {
-                    spriteBatch.Draw(CONTENT_MANAGER.spriteSheet, new Vector2(i * 30, j * 30) + offset, SpriteSheetSourceRectangle.GetSpriteRectangle(map[i, j].terrain), Color.White, 0f, Vector2.Zero, 0.5f, SpriteEffects.None, LayerDepth.Terrain);
+                    spriteBatch.Draw(CONTENT_MANAGER.spriteSheet, new Vector2(i * mapcellsize.X, j * mapcellsize.Y) + offset, SpriteSheetSourceRectangle.GetSpriteRectangle(map[i, j].terrain), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.Terrain);
                 }
             }
 
-            spriteBatch.Draw(CONTENT_MANAGER.UIspriteSheet, new Vector2(selectedMapCell.X * 30, selectedMapCell.Y * 30) + offset, new Rectangle(0, 0, 60, 60), Color.White, 0f, Vector2.Zero, 0.5f, SpriteEffects.None, LayerDepth.Gui);
+            spriteBatch.Draw(CONTENT_MANAGER.UIspriteSheet, new Vector2(selectedMapCell.X * mapcellsize.X, selectedMapCell.Y * mapcellsize.Y) + offset, new Rectangle(0, 0, 60, 60), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.Gui);
             //end this batch
             spriteBatch.End();
             //start a new batch for whatever come after

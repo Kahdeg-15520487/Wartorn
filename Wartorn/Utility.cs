@@ -27,6 +27,11 @@ namespace Wartorn
             {
                 return CONTENT_MANAGER.inputState.keyboardState.IsKeyUp(k) && CONTENT_MANAGER.lastInputState.keyboardState.IsKeyDown(k);
             }
+            public static T ToEnum<T>(this string value)
+            {
+                return (T)Enum.Parse(typeof(T), value, true);
+            }
+
         }
     }
 }
