@@ -23,7 +23,7 @@ namespace Wartorn.Screens
 
         private Point selectedMapCell = new Point(0, 0);
         private Vector2 offset = new Vector2(70, 70);
-        private Vector2 mapcellsize = new Vector2(60, 60);
+        private Vector2 mapcellsize = new Vector2(48, 48);
 
         private Terrain currentlySelectedTerrain = Terrain.Plain;
 
@@ -39,7 +39,7 @@ namespace Wartorn.Screens
         private void InitUI()
         {
             //declare ui element
-            Button button_airport = new Button(SpriteSheetSourceRectangle.AirPort, new Point(20, 20), 0.5f);
+            Button button_airport = new Button(SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.AirPort), new Point(20, 20), 0.5f);
             button_airport.Text = Terrain.AirPort.ToString();
             Label label_info = new Label("0", new Point(20, 100), new Vector2(100, 20), CONTENT_MANAGER.defaultfont);
             Label label_fps = new Label(" ", new Point(1, 1), new Vector2(50, 20), CONTENT_MANAGER.defaultfont);
@@ -151,7 +151,7 @@ namespace Wartorn.Screens
             {
                 for (int j = 0; j < map.Height; j++)
                 {
-                    spriteBatch.Draw(CONTENT_MANAGER.spriteSheet, new Vector2(i * mapcellsize.X, j * mapcellsize.Y) + offset, SpriteSheetSourceRectangle.GetSpriteRectangle(map[i, j].terrain), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.Terrain);
+                    spriteBatch.Draw(CONTENT_MANAGER.spriteSheet, new Vector2(i * mapcellsize.X, j * mapcellsize.Y) + offset, SpriteSheetSourceRectangle.GetSpriteRectangle(map[i, j].terrain.ToString()), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.Terrain);
                 }
             }
 
@@ -159,7 +159,7 @@ namespace Wartorn.Screens
             //end this batch
             spriteBatch.End();
             //start a new batch for whatever come after
-            spriteBatch.Begin(SpriteSortMode.BackToFront);
+            spriteBatch.Begin(SpriteSortMode.FrontToBack);
         }
     }
 }

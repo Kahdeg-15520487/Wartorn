@@ -8,11 +8,19 @@ namespace Wartorn
 {
     namespace UIClass
     {
+        enum ButtonContentType
+        {
+            Text,
+            SpriteFromSheet,
+            Sprite
+        }
         class Button : Label
         {
             bool isPressed = false;
             Rectangle internalRect;
+            ButtonContentType contentType;
             Rectangle spriteSourceRectangle = Rectangle.Empty;
+            Texture2D sprite;
 
             public override Point Position
             {
@@ -70,6 +78,7 @@ namespace Wartorn
             }
             public Button(string text,Point position,Vector2 size,SpriteFont font)
             {
+                contentType = ButtonContentType.Text;
                 Text = text;
                 Position = position;
                 Size = size;
@@ -78,9 +87,19 @@ namespace Wartorn
             }
             public Button(Rectangle sprite,Point position,float scale)
             {
+                contentType = ButtonContentType.SpriteFromSheet;
                 spriteSourceRectangle = sprite;
                 Position = position;
                 Size = spriteSourceRectangle.Size.ToVector2();
+                Scale = scale;
+                Init();
+            }
+            public Button(string spritename, Point position, float scale)
+            {
+                contentType = ButtonContentType.Sprite;
+                sprite = CONTENT_MANAGER.Content.Load<Texture2D>(spritename);
+                Position = position;
+                Size = sprite.Bounds.Size.ToVector2();
                 Scale = scale;
                 Init();
             }
@@ -108,15 +127,21 @@ namespace Wartorn
 
             public override void Draw(SpriteBatch spriteBatch)
             {
-                if (spriteSourceRectangle == Rectangle.Empty)
+                switch (contentType)
                 {
-                    spriteBatch.DrawString(font != null ? font : CONTENT_MANAGER.defaultfont, (string.IsNullOrEmpty(text)) ? "" : text, new Vector2(rect.X, rect.Y) + Size / 4, foregroundColor, Rotation, Vector2.Zero, scale, SpriteEffects.None, LayerDepth.Gui);
-                    DrawingHelper.DrawRectangle(internalRect, isPressed ? buttonColorPressed : buttonColorReleased, true);
-                    DrawingHelper.DrawRectangle(rect, borderColor, false);
-                }
-                else
-                {
-                    spriteBatch.Draw(CONTENT_MANAGER.spriteSheet, Position.ToVector2(), spriteSourceRectangle, isPressed ? buttonColorPressed : buttonColorReleased, Rotation, Vector2.Zero, Scale, SpriteEffects.None, LayerDepth.Gui);
+                    case ButtonContentType.Text:
+                        spriteBatch.DrawString(font != null ? font : CONTENT_MANAGER.defaultfont, (string.IsNullOrEmpty(text)) ? "" : text, new Vector2(rect.X, rect.Y) + Size / 4, foregroundColor, Rotation, Vector2.Zero, scale, SpriteEffects.None, LayerDepth.Gui);
+                        DrawingHelper.DrawRectangle(internalRect, isPressed ? buttonColorPressed : buttonColorReleased, true);
+                        DrawingHelper.DrawRectangle(rect, borderColor, false);
+                        break;
+                    case ButtonContentType.SpriteFromSheet:
+                        spriteBatch.Draw(CONTENT_MANAGER.spriteSheet, Position.ToVector2(), spriteSourceRectangle, isPressed ? buttonColorPressed : buttonColorReleased, Rotation, Vector2.Zero, Scale, SpriteEffects.None, LayerDepth.Gui);
+                        break;
+                    case ButtonContentType.Sprite:
+                        spriteBatch.Draw(sprite,Position.ToVector2(),null, isPressed ? buttonColorPressed : buttonColorReleased, Rotation, Vector2.Zero, Scale, SpriteEffects.None, LayerDepth.Gui);
+                        break;
+                    default:
+                        break;
                 }
             }
 

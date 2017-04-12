@@ -39,6 +39,8 @@ namespace Wartorn
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+            SpriteSheetSourceRectangle.LoadSprite();
+
             graphics.PreferredBackBufferWidth = Constants.Width;    // set this value to the desired width of your window
             graphics.PreferredBackBufferHeight = Constants.Height;  // set this value to the desired height of your window
             graphics.ApplyChanges();
@@ -46,7 +48,8 @@ namespace Wartorn
             SCREEN_MANAGER.add_screen(new EditorScreen(GraphicsDevice));
             SCREEN_MANAGER.add_screen(new MainMenuScreen(GraphicsDevice));
 
-            SCREEN_MANAGER.goto_screen("MainMenuScreen");
+            //SCREEN_MANAGER.goto_screen("MainMenuScreen");
+            SCREEN_MANAGER.goto_screen("EditorScreen");
 
             DrawingHelper.Initialize(GraphicsDevice);
             base.Initialize();
@@ -64,7 +67,7 @@ namespace Wartorn
 
             // TODO: use this.Content to load your game content here
             CONTENT_MANAGER.defaultfont = CONTENT_MANAGER.Content.Load<SpriteFont>("defaultfont");
-            CONTENT_MANAGER.spriteSheet = CONTENT_MANAGER.Content.Load<Texture2D>(@"sprite\sprite_sheet");
+            CONTENT_MANAGER.spriteSheet = CONTENT_MANAGER.Content.Load<Texture2D>(@"sprite\Static_terrain");
             CONTENT_MANAGER.UIspriteSheet = CONTENT_MANAGER.Content.Load<Texture2D>(@"sprite\ui_sprite_sheet");
 
             SCREEN_MANAGER.Init();

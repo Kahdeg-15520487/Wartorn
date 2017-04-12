@@ -13,10 +13,16 @@
     <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/sprite_sheet.png</File>
     <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/ui_sprite_sheet.png</File>
     <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/GUI/intro.mp4</File>
-    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/GUI/Main Font.png</File>
-    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/GUI/Menuscreen.png</File>
     <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/GUI/Startscreen.png</File>
     <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/GUI/Title.png</File>
     <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/GUI/menufont.spritefont</File>
+    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/GUI/Select_screen.png</File>
+    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/GUI/Startscreen_Airstrike.png</File>
+    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/GUI/Startscreen_Battleship.png</File>
+    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/GUI/Startscreen_Wartorn.png</File>
+    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/GUI/Mode_select_light.png</File>
+    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/GUI/Mode_select_dark.png</File>
+    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/GUI/Main_Font.png</File>
+    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/Static_terrain.png</File>
   </SourceFiles>
 </SourceFileCollection>

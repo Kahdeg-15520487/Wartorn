@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,79 +10,44 @@ using Wartorn.GameData;
 
 namespace Wartorn
 {
-    class SpriteSheetSourceRectangle
     {
-        public static readonly Rectangle
-            AirPort = new Rectangle(0, 0, 60, 60),
-            City = new Rectangle(60, 0, 60, 60),
-            Factory = new Rectangle(120, 0, 60, 60),
-            Plain = new Rectangle(180, 0, 60, 60);
-        public static Rectangle GetSpriteRectangle(Terrain t)
-        {
-            Rectangle result = Rectangle.Empty;
-            switch (t)
-            {
-                case GameData.Terrain.Plain:
-                    result = Plain;
-                    break;
-                case GameData.Terrain.Dessert:
-                    break;
-                case GameData.Terrain.Forest:
-                    break;
-                case GameData.Terrain.Mountain:
-                    break;
-                case GameData.Terrain.River:
-                    break;
-                case GameData.Terrain.Coast:
-                    break;
-                case GameData.Terrain.Road:
-                    break;
-                case GameData.Terrain.Ocean:
-                    break;
-                case GameData.Terrain.Reef:
-                    break;
-                case GameData.Terrain.Waterfall:
-                    break;
-                case GameData.Terrain.Cliff:
-                    break;
-                case GameData.Terrain.Tropical_Plain:
-                    break;
-                case GameData.Terrain.Bridge:
-                    break;
-                case GameData.Terrain.Ruin:
-                    break;
-                case GameData.Terrain.Barricade:
-                    break;
-                case GameData.Terrain.Bunker:
-                    break;
-                case GameData.Terrain.Turret:
-                    break;
-                case GameData.Terrain.City:
-                    result = City;
-                    break;
-                case GameData.Terrain.Factory:
-                    result = Factory;
-                    break;
-                case GameData.Terrain.AirPort:
-                    result = AirPort;
-                    break;
-                case GameData.Terrain.Supply_Base:
-                    break;
-                case GameData.Terrain.Town:
-                    break;
-                case GameData.Terrain.Missle_Silo:
-                    break;
-                case GameData.Terrain.Navy_Fort:
-                    break;
-                case GameData.Terrain.Control_Point:
-                    break;
-                case GameData.Terrain.Radar_Station:
-                    break;
-                default:
-                    break;
+        RoadTurn1,  RoadTurn2,  RoadInter31,RoadInter32,    Road1,  RoadInter4,     blank1,         Bridge1,
+        RoadTurn3,  RoadTurn4,  RoadInter33,RoadInter34,    Road2,  Plain,          blank2,         Bridge2,
+        blank3,     blank4,     blank5,     blank6,         blank7, blank8,         blank9,         blank10,
+        City,       Factory,    AirPort,    Harbor,         Silo1,   Radar,          SupplyBase,     Silo2,
+        Tree1,      Tree2,      blank13,    blank14,        blank15,blank16,        blank17,        blank18,
+        Forest1,    Forest2,    Forest3,    Forest4,        blank19,blank20,        blank21,        blank22,
+        blank23,    blank24,    blank25,    blank26,        blank27,DenseForest1,   DenseForest2,   DenseForest3,
+        HighMountain,filler1,   blank28,    blank29,        blank30,DenseForest4,   DenseForest5,   DenseForest6,
+        Mountain,   filler2,    blank31,    blank32,        blank33, DenseForest7,  DenseForest8,   DenseForest9,
+    }
 
+    static class SpriteSheetSourceRectangle
+    {
+        private static Dictionary<string,Rectangle> TerrainSprite;
+
+        public static void LoadSprite()
+        {
+            TerrainSprite = new Dictionary<string, Rectangle>();
+            int c = 0;
+            for (int i = 0; i < 8; i++)
+            {
+                for (int j = 0; j < 10; j++)
+                {
+                    c++;
+                }
             }
-            return result;
+            string log = JsonConvert.SerializeObject(TerrainSprite, Formatting.Indented);
+            File.WriteAllText("log.txt", log);
+        }
+
+        public static Rectangle GetSpriteRectangle(string str)
+        {
+            return TerrainSprite[str];
+        }
+
+        {
+            return TerrainSprite[t.ToString()];
         }
     }
 }

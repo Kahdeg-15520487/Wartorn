@@ -40,8 +40,12 @@
   <ItemGroup>
     <Compile Include="Constants.cs" />
     <Compile Include="CONTENT_MANAGER.cs" />
+    <Compile Include="Drawing\Animation\AnimatedEntity.cs" />
+    <Compile Include="Drawing\Animation\Animation.cs" />
+    <Compile Include="Drawing\Animation\Frame.cs" />
     <Compile Include="Drawing\Camera.cs" />
     <Compile Include="Drawing\DrawingHelper.cs" />
+    <Compile Include="Drawing\MapRenderer.cs" />
     <Compile Include="GameData\Constants.cs" />
     <Compile Include="GameData\Map.cs" />
     <Compile Include="GameData\MapCell.cs" />
