@@ -12,17 +12,17 @@ namespace Wartorn.GameData
 {
     class MapCell
     {
-        public Terrain terrain;
+        public SpriteSheetTerrain terrain;
         public bool isFog;
         public Unit unit;
         public int unitId;
 
-        public MapCell(Terrain t)
+        public MapCell(SpriteSheetTerrain t)
         {
             terrain = t;
         }
 
-        public MapCell(Terrain t, Unit u, int unitId)
+        public MapCell(SpriteSheetTerrain t, Unit u, int unitId)
         {
             terrain = t;
             unit = u;

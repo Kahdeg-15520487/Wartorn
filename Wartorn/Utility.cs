@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.IO;
 
 namespace Wartorn
 {
@@ -32,6 +33,10 @@ namespace Wartorn
                 return (T)Enum.Parse(typeof(T), value, true);
             }
 
+            public static void Log(Exception e)
+            {
+                File.WriteAllText("crashlog.txt",e.Message+Environment.NewLine+e.StackTrace+Environment.NewLine+e.TargetSite);
+            }
         }
     }
 }

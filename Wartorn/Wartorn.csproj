@@ -59,8 +59,10 @@
     <Compile Include="Screens\EditorScreen.cs" />
     <Compile Include="Screens\MainMenuScreen.cs" />
     <Compile Include="Screens\RedScreen.cs" />
+    <Compile Include="UISpriteSheetSourceRectangle.cs" />
     <Compile Include="SpriteSheetSourceRectangle.cs" />
     <Compile Include="Storage\MapData.cs" />
+    <Compile Include="Storage\NoiseGenerator.cs" />
     <Compile Include="Storage\SessionData.cs" />
     <Compile Include="UIClass\Button.cs" />
     <Compile Include="UIClass\Console.cs" />

@@ -22,6 +22,7 @@ namespace Wartorn.GameData
         public int Height { get { return map.GetLength(1); } }
 
         public MapCell this[int x, int y] { get { return map[x, y]; } set { map[x, y] = value; } }
+        public MapCell this[Point p] { get { return map[p.X, p.Y]; } set { map[p.X, p.Y] = value; } }
 
         //constructor
         public Map()
