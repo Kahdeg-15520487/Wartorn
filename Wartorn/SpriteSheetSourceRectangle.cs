@@ -10,16 +10,14 @@ using Wartorn.GameData;
 
 namespace Wartorn
 {
+    //only water
+    enum SpriteSheetTerrain
     {
-        RoadTurn1,  RoadTurn2,  RoadInter31,RoadInter32,    Road1,  RoadInter4,     blank1,         Bridge1,
-        RoadTurn3,  RoadTurn4,  RoadInter33,RoadInter34,    Road2,  Plain,          blank2,         Bridge2,
-        blank3,     blank4,     blank5,     blank6,         blank7, blank8,         blank9,         blank10,
-        City,       Factory,    AirPort,    Harbor,         Silo1,   Radar,          SupplyBase,     Silo2,
-        Tree1,      Tree2,      blank13,    blank14,        blank15,blank16,        blank17,        blank18,
-        Forest1,    Forest2,    Forest3,    Forest4,        blank19,blank20,        blank21,        blank22,
-        blank23,    blank24,    blank25,    blank26,        blank27,DenseForest1,   DenseForest2,   DenseForest3,
-        HighMountain,filler1,   blank28,    blank29,        blank30,DenseForest4,   DenseForest5,   DenseForest6,
-        Mountain,   filler2,    blank31,    blank32,        blank33, DenseForest7,  DenseForest8,   DenseForest9,
+        Min,
+        Reef,Sea,River_hor,River_ver,River_Inter3_l,River_Inter3_r,River_Inter3_u,River_Inter3_d,River_Turn_u_r,River_Turn_u_l,River_Turn_d_r,River_Turn_d_l,River_Flow_l,River_Flow_u,River_Flow_d,
+        Coast_u_l,Coast_u,Coast_u_r,Coast_l,Coast_r,Coast_d_l,Coast_d,Coast_d_r,Cliff_u_l,Cliff_u,Cliff_u_r,Cliff_d_l,Cliff_d,Cliff_d_r,River_Flow_r,
+        Isle_Coast_u_l,Isle_Coast_u_r,Isle_Coast_side_l_u,Isle_Coast_side_l_d,Isle_Coast_side_r_u,Isle_Coast_side_r_d,Isle_Coast_d_l,Isle_Coast_d_r,Isle_Cliff_u_r,Isle_Cliff_u_l,Isle_Cliff_d_r,Isle_Cliff_d_l,Cliff_l,Cliff_r,River_Cross,
+        Max
     }
 
     static class SpriteSheetSourceRectangle
@@ -29,16 +27,17 @@ namespace Wartorn
         public static void LoadSprite()
         {
             TerrainSprite = new Dictionary<string, Rectangle>();
-            int c = 0;
-            for (int i = 0; i < 8; i++)
+            int c = 1;
+            for (int i = 0; i < 3; i++)
             {
-                for (int j = 0; j < 10; j++)
+                for (int j = 0; j < 15; j++)
                 {
+                    TerrainSprite.Add(((SpriteSheetTerrain)c).ToString(), new Rectangle(j*48,i*48,48,48));
                     c++;
                 }
             }
-            string log = JsonConvert.SerializeObject(TerrainSprite, Formatting.Indented);
-            File.WriteAllText("log.txt", log);
+            //string log = JsonConvert.SerializeObject(TerrainSprite, Formatting.Indented);
+            //File.WriteAllText("log.txt", log);
         }
 
         public static Rectangle GetSpriteRectangle(string str)
@@ -46,6 +45,7 @@ namespace Wartorn
             return TerrainSprite[str];
         }
 
+        public static Rectangle GetSpriteRectangle(SpriteSheetTerrain t)
         {
             return TerrainSprite[t.ToString()];
         }

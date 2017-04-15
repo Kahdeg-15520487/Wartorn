@@ -76,6 +76,14 @@ namespace Wartorn
             {
                 Init();
             }
+
+            /// <summary>
+            /// Text button
+            /// </summary>
+            /// <param name="text">The text to display</param>
+            /// <param name="position">Position of the top left corner</param>
+            /// <param name="size">Size of the button</param>
+            /// <param name="font">Font to use</param>
             public Button(string text,Point position,Vector2 size,SpriteFont font)
             {
                 contentType = ButtonContentType.Text;
@@ -85,6 +93,13 @@ namespace Wartorn
                 this.font = font;
                 Init();
             }
+
+            /// <summary>
+            /// Sprite button
+            /// </summary>
+            /// <param name="sprite">The source rectangle of the sprite in UISpriteSheet</param>
+            /// <param name="position">Position of the top left corner</param>
+            /// <param name="scale">Scale of the button</param>
             public Button(Rectangle sprite,Point position,float scale)
             {
                 contentType = ButtonContentType.SpriteFromSheet;
@@ -94,6 +109,13 @@ namespace Wartorn
                 Scale = scale;
                 Init();
             }
+
+            /// <summary>
+            /// Sprite button
+            /// </summary>
+            /// <param name="spritename">The sprite sheet to load</param>
+            /// <param name="position">Position of the top left corner</param>
+            /// <param name="scale">Scale of the button</param>
             public Button(string spritename, Point position, float scale)
             {
                 contentType = ButtonContentType.Sprite;
@@ -135,7 +157,7 @@ namespace Wartorn
                         DrawingHelper.DrawRectangle(rect, borderColor, false);
                         break;
                     case ButtonContentType.SpriteFromSheet:
-                        spriteBatch.Draw(CONTENT_MANAGER.spriteSheet, Position.ToVector2(), spriteSourceRectangle, isPressed ? buttonColorPressed : buttonColorReleased, Rotation, Vector2.Zero, Scale, SpriteEffects.None, LayerDepth.Gui);
+                        spriteBatch.Draw(CONTENT_MANAGER.UIspriteSheet, Position.ToVector2(), spriteSourceRectangle, isPressed ? buttonColorPressed : buttonColorReleased, Rotation, Vector2.Zero, Scale, SpriteEffects.None, LayerDepth.Gui);
                         break;
                     case ButtonContentType.Sprite:
                         spriteBatch.Draw(sprite,Position.ToVector2(),null, isPressed ? buttonColorPressed : buttonColorReleased, Rotation, Vector2.Zero, Scale, SpriteEffects.None, LayerDepth.Gui);
