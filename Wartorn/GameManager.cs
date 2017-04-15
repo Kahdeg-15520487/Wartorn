@@ -5,7 +5,7 @@ using Wartorn.Utility.Drawing;
 using Wartorn.UIClass;
 using Wartorn.ScreenManager;
 using Wartorn.Screens;
-using System.Linq;
+using System;
 
 namespace Wartorn
 {
@@ -19,7 +19,7 @@ namespace Wartorn
         InputState inputState;
         InputState lastInputState;
 
-    public GameManager()
+        public GameManager()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";

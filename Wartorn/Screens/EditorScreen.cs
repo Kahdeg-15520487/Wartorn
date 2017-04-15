@@ -88,6 +88,8 @@ namespace Wartorn.Screens
                 {
                     Utility.HelperFunction.Log(er);
                 }
+
+                CONTENT_MANAGER.OnHandle("map saved");
             };
 
             //add ui element to canvas

@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Input;
 using Wartorn.Utility.Drawing;
 using Wartorn.UIClass;
 using System.Linq;
+using System;
 
 namespace Wartorn
 {
@@ -33,5 +34,11 @@ namespace Wartorn
         }
         public static InputState lastInputState { get; private set; }
 
+        public static event EventHandler<MessageEventArgs> handler;
+
+        public static void OnHandle(string e)
+        {
+            handler?.Invoke(null,new MessageEventArgs(e));
+        }
     }
 }
