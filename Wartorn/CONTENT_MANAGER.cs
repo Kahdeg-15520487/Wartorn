@@ -5,6 +5,8 @@ using Wartorn.Utility.Drawing;
 using Wartorn.UIClass;
 using System.Linq;
 using System;
+using System.IO;
+using System.Reflection;
 
 namespace Wartorn
 {
@@ -16,6 +18,8 @@ namespace Wartorn
         public static SpriteFont defaultfont;
         public static Texture2D spriteSheet;
         public static Texture2D UIspriteSheet;
+
+        public static string LocalRootPath = Path.GetDirectoryName(Assembly.GetAssembly(typeof(Program)).Location);
 
         public static RasterizerState antialiasing = new RasterizerState { MultiSampleAntiAlias = true };
 
@@ -34,11 +38,19 @@ namespace Wartorn
         }
         public static InputState lastInputState { get; private set; }
 
-        public static event EventHandler<MessageEventArgs> handler;
+        public static event EventHandler<MessageEventArgs> messagebox;
+        public static event EventHandler<MessageEventArgs> fileopendialog;
 
-        public static void OnHandle(string e)
+        public static void ShowMessageBox(string e)
         {
-            handler?.Invoke(null,new MessageEventArgs(e));
+            messagebox?.Invoke(null,new MessageEventArgs(e));
+        }
+
+        public static string ShowFileOpenDialog(string rootpath)
+        {
+            MessageEventArgs e = new MessageEventArgs(rootpath);
+            fileopendialog?.Invoke(null, e);
+            return e.message;
         }
     }
 }

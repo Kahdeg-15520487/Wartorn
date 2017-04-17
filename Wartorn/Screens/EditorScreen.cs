@@ -63,21 +63,24 @@ namespace Wartorn.Screens
             //declare ui element
             Button button_Undo = new Button(UISpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetUI.Undo), new Point(20, 20), 0.5f);
             Button button_Save = new Button(UISpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetUI.Save), new Point(50, 20), 0.5f);
+            Button button_Open = new Button(UISpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetUI.Open), new Point(80, 20), 0.5f);
 
-            Label label_info = new Label("0", new Point(20, 100), new Vector2(100, 20), CONTENT_MANAGER.defaultfont);
+            Label label_info = new Label("0", new Point(0, 100), new Vector2(50, 20), CONTENT_MANAGER.defaultfont);
             Label label_fps = new Label(" ", new Point(1, 1), new Vector2(50, 20), CONTENT_MANAGER.defaultfont);
 
+            Label label_info2 = new Label(" ", new Point(0, 150), new Vector2(50, 20), CONTENT_MANAGER.defaultfont);
+
             //bind action to ui event
-            button_Undo.MouseClick += delegate (object sender, UIEventArgs e)
+            button_Undo.MouseClick += (sender, e) =>
             {
-                if (undostack.Count>0)
+                if (undostack.Count > 0)
                 {
                     var lastaction = undostack.Pop();
                     map[lastaction.selectedMapCell].terrain = lastaction.selectedMapCellTerrain;
                 }
             };
 
-            button_Save.MouseClick += delegate (object sender, UIEventArgs e)
+            button_Save.MouseClick += (sender, e) =>
             {
                 var savedata = MapData.SaveMap(map);
                 try
@@ -86,17 +89,40 @@ namespace Wartorn.Screens
                 }
                 catch (Exception er)
                 {
+                    HelperFunction.Log(er);
+                }
+
+                //CONTENT_MANAGER.ShowMessageBox("map saved");
+                label_info.Text = "map saved";
+            };
+
+            button_Open.MouseClick += (sender, e) =>
+            {
+                string path = CONTENT_MANAGER.ShowFileOpenDialog(CONTENT_MANAGER.LocalRootPath);
+                string content = string.Empty;
+                try
+                {
+                    content = File.ReadAllText(path);
+                }
+                catch (Exception er)
+                {
                     Utility.HelperFunction.Log(er);
                 }
 
-                CONTENT_MANAGER.OnHandle("map saved");
+                if (!string.IsNullOrEmpty(content))
+                {
+                    map = Storage.MapData.LoadMap(content);
+                    label_info.Text = "map loaded";
+                }
             };
 
             //add ui element to canvas
             canvas.AddElement("button_Undo", button_Undo);
             canvas.AddElement("button_Save", button_Save);
+            canvas.AddElement("button_Open", button_Open);
             canvas.AddElement("label_info", label_info);
             canvas.AddElement("label_fps", label_fps);
+            canvas.AddElement("label_info2", label_info2);
         }
 
         private void InitMap()
@@ -134,6 +160,7 @@ namespace Wartorn.Screens
                         {
                             undostack.Push(new Action(selectedMapCell, map[selectedMapCell].terrain));
                             map[selectedMapCell].terrain = currentlySelectedTerrain;
+                            ((Label)canvas["label_info"]).Text = "map not saved";
                         }
                     }
                 }
@@ -141,17 +168,27 @@ namespace Wartorn.Screens
 
             //rotate through terrain sprite
             if (HelperFunction.IsKeyPress(Keys.E))
+            //if (keyboardInputState.IsKeyDown(Keys.E))
             {
-                if (currentlySelectedTerrain.CompareTo((SpriteSheetTerrain)((int)SpriteSheetTerrain.Max-1))<0)
+                if ((int)currentlySelectedTerrain < ((int)SpriteSheetTerrain.Max - 1))
                 {
                     currentlySelectedTerrain = (SpriteSheetTerrain)((int)currentlySelectedTerrain + 1);
                 }
+                else
+                {
+                    currentlySelectedTerrain = (SpriteSheetTerrain)((int)SpriteSheetTerrain.Min + 1);
+                }
             }
             if (HelperFunction.IsKeyPress(Keys.Q))
+            //if (keyboardInputState.IsKeyDown(Keys.Q))
             {
-                if (currentlySelectedTerrain.CompareTo((SpriteSheetTerrain)((int)SpriteSheetTerrain.Min+1)) > 0)
+                if ((int)currentlySelectedTerrain > ((int)SpriteSheetTerrain.Min + 1))
                 {
                     currentlySelectedTerrain = (SpriteSheetTerrain)((int)currentlySelectedTerrain - 1);
+                }
+                else
+                {
+                    currentlySelectedTerrain = (SpriteSheetTerrain)((int)SpriteSheetTerrain.Max - 1);
                 }
             }
 
@@ -189,6 +226,8 @@ namespace Wartorn.Screens
 
             int frameRate = (int)(1 / gameTime.ElapsedGameTime.TotalSeconds);
             ((Label)canvas["label_fps"]).Text = frameRate.ToString();
+
+            ((Label)canvas["label_info2"]).Text = currentlySelectedTerrain.ToString();
         }
 
         private Point TranslateMousePosToMapCellPos(Point mousepos)

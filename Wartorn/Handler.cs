@@ -26,7 +26,8 @@ namespace Wartorn
             {
                 Constants.Width = 720;
                 Constants.Height = 480;
-                CONTENT_MANAGER.handler += MessageShow;
+                CONTENT_MANAGER.messagebox += MessageShow;
+                CONTENT_MANAGER.fileopendialog += OpenFile;
                 game.Run();
             }
         }
@@ -41,6 +42,24 @@ namespace Wartorn
         private static void MessageShow(object sender, MessageEventArgs e)
         {
             MessageBox.Show(e.message);
+        }
+
+        private static void OpenFile(object sender,MessageEventArgs e)
+        {
+            var lala = new OpenFileDialog();
+            lala.InitialDirectory = e.message;
+            if (lala.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    e.message = lala.FileName;
+                }
+                catch (Exception er)
+                {
+                    e.message = string.Empty;
+                    Utility.HelperFunction.Log(er);
+                }
+            }
         }
     }
 

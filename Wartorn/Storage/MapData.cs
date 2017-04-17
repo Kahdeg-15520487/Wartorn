@@ -21,16 +21,6 @@ namespace Wartorn.Storage
             var mapdata = data.Split('|');
             int w, h;
 
-            try
-            {
-
-            }
-            catch (Exception)
-            {
-
-                Environment.Exit(0);
-            }
-
             Map output = new Map();
 
             try
