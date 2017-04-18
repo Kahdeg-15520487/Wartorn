@@ -1,4 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
 
 namespace Wartorn
 {
@@ -10,15 +19,10 @@ namespace Wartorn
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
-        [STAThread]
+        //[STAThread]
         static void Main()
         {
-            using (var game = new GameManager())
-            {
-                Constants.Width = 720;
-                Constants.Height = 480;
-                game.Run();
-            }
+            Application.Run(new Handler());
         }
     }
 }

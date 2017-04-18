@@ -28,6 +28,7 @@ namespace Wartorn
             {
                 return CONTENT_MANAGER.inputState.keyboardState.IsKeyUp(k) && CONTENT_MANAGER.lastInputState.keyboardState.IsKeyDown(k);
             }
+
             public static T ToEnum<T>(this string value)
             {
                 return (T)Enum.Parse(typeof(T), value, true);
@@ -36,6 +37,16 @@ namespace Wartorn
             public static void Log(Exception e)
             {
                 File.WriteAllText("crashlog.txt",e.Message+Environment.NewLine+e.StackTrace+Environment.NewLine+e.TargetSite);
+            }
+
+            public static int Clamp(int value,int max,int min)
+            {
+                return value >= max ? max : value <= min ? min : value;
+            }
+
+            public static bool Between(this int value,int max,int min)
+            {
+                return value <= max && value >= min;
             }
         }
     }

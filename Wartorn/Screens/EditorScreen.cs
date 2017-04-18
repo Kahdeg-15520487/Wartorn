@@ -17,11 +17,18 @@ using System.IO;
 
 namespace Wartorn.Screens
 {
+    enum Side
+    {
+        Left,Right
+    }
+
     class EditorScreen : Screen
     {
         private Map map;
         private Canvas canvas;
         private Camera camera;
+
+        private Texture2D showtile;
 
         private Point selectedMapCell = new Point(0, 0);
         private Vector2 offset = new Vector2(70, 70);
@@ -30,7 +37,10 @@ namespace Wartorn.Screens
 
         private SpriteSheetTerrain currentlySelectedTerrain = (SpriteSheetTerrain)1;
 
-        //maybe use stack to save last action
+        private Side GuiSide = Side.Left;
+        private bool isMenuOpen = false;
+
+        //represent a changing map cell action
         struct Action
         {
             public Point selectedMapCell;
@@ -46,38 +56,59 @@ namespace Wartorn.Screens
 
         public EditorScreen(GraphicsDevice device) : base(device, "EditorScreen")
         {
+            LoadContent();
+
             map = new Map(50, 30);
             mapArea = new Rectangle(0, 0, (int)(map.Width*mapcellsize.X), (int)(map.Height*mapcellsize.Y));
             canvas = new Canvas();
             camera = new Camera(_device.Viewport);
-            camera.Location -= offset;
+            //camera.Location -= offset;
 
             undostack = new Stack<Action>();
-
+            
             InitUI();
             InitMap();
         }
 
+        private void LoadContent()
+        {
+            showtile = CONTENT_MANAGER.Content.Load<Texture2D>(@"sprite\showtile");
+        }
+
+        #region InitUI
         private void InitUI()
         {
             //declare ui element
+            Canvas canvas_Menu = new Canvas();
             Button button_Undo = new Button(UISpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetUI.Undo), new Point(20, 20), 0.5f);
             Button button_Save = new Button(UISpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetUI.Save), new Point(50, 20), 0.5f);
+            Button button_Open = new Button(UISpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetUI.Open), new Point(80, 20), 0.5f);
+            Button button_Exit = new Button(UISpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetUI.Exit), new Point(110, 20), 0.5f);
+            canvas_Menu.AddElement("button_Undo", button_Undo);
+            canvas_Menu.AddElement("button_Save", button_Save);
+            canvas_Menu.AddElement("button_Open", button_Open);
+            canvas_Menu.AddElement("button_Exit", button_Exit);
+            canvas_Menu.IsVisible = false;
 
-            Label label_info = new Label("0", new Point(20, 100), new Vector2(100, 20), CONTENT_MANAGER.defaultfont);
-            Label label_fps = new Label(" ", new Point(1, 1), new Vector2(50, 20), CONTENT_MANAGER.defaultfont);
+            Label label1 = new Label("Hor" + Environment.NewLine + "Ver", new Point(0, 0), new Vector2(30, 20), CONTENT_MANAGER.defaultfont);
+            label1.Scale = 1.2f;
+            Label label_Horizontal = new Label("1", new Point(40, 0), new Vector2(20, 20), CONTENT_MANAGER.defaultfont);
+            label_Horizontal.Scale = 1.2f;
+            Label label_Vertical = new Label("1", new Point(40, 20), new Vector2(20, 20), CONTENT_MANAGER.defaultfont);
+            label_Vertical.Scale = 1.2f;
+            //label1.foregroundColor = Color.White;
 
             //bind action to ui event
-            button_Undo.MouseClick += delegate (object sender, UIEventArgs e)
+            button_Undo.MouseClick += (sender, e) =>
             {
-                if (undostack.Count>0)
+                if (undostack.Count > 0)
                 {
                     var lastaction = undostack.Pop();
                     map[lastaction.selectedMapCell].terrain = lastaction.selectedMapCellTerrain;
                 }
             };
 
-            button_Save.MouseClick += delegate (object sender, UIEventArgs e)
+            button_Save.MouseClick += (sender, e) =>
             {
                 var savedata = MapData.SaveMap(map);
                 try
@@ -86,16 +117,42 @@ namespace Wartorn.Screens
                 }
                 catch (Exception er)
                 {
-                    Utility.HelperFunction.Log(er);
+                    HelperFunction.Log(er);
                 }
             };
 
+            button_Open.MouseClick += (sender, e) =>
+            {
+                string path = CONTENT_MANAGER.ShowFileOpenDialog(CONTENT_MANAGER.LocalRootPath);
+                string content = string.Empty;
+                try
+                {
+                    content = File.ReadAllText(path);
+                }
+                catch (Exception er)
+                {
+                    Utility.HelperFunction.Log(er);
+                }
+
+                if (!string.IsNullOrEmpty(content))
+                {
+                    map.Clone(Storage.MapData.LoadMap(content));
+                }
+            };
+
+            button_Exit.MouseClick += (sender, e) =>
+            {
+                Environment.Exit(0);
+            };
+
             //add ui element to canvas
-            canvas.AddElement("button_Undo", button_Undo);
-            canvas.AddElement("button_Save", button_Save);
-            canvas.AddElement("label_info", label_info);
-            canvas.AddElement("label_fps", label_fps);
+            canvas.AddElement("canvas_Menu", canvas_Menu);
+
+            canvas.AddElement("label1", label1);
+            canvas.AddElement("label_Horizontal", label_Horizontal);
+            canvas.AddElement("label_Vertical", label_Vertical);
         }
+        #endregion
 
         private void InitMap()
         {
@@ -116,16 +173,63 @@ namespace Wartorn.Screens
             var lastMouseInputState = CONTENT_MANAGER.lastInputState.mouseState;
             var keyboardInputState = CONTENT_MANAGER.inputState.keyboardState;
             var lastKeyboardInputState = CONTENT_MANAGER.lastInputState.keyboardState;
+            
+            selectedMapCell = TranslateMousePosToMapCellPos(CONTENT_MANAGER.inputState.mouseState.Position);
+            ((Label)canvas.GetElement("label_Horizontal")).Text = (selectedMapCell.X + 1).ToString();
+            ((Label)canvas.GetElement("label_Vertical")).Text = (selectedMapCell.Y + 1).ToString();
 
-            //check if mouse click
+            OpenHideMenu();
+            MoveGuiToAvoidMouse(mouseInputState);
+
+            if (!isMenuOpen)
+            {
+                PlaceTile(mouseInputState);
+                RotateThroughTerrain();
+            }
+            MoveCamera(keyboardInputState, mouseInputState);
+            //ZoomCamera();
+        }
+
+        #region Update's sub method
+        private void OpenHideMenu()
+        {
+            if (Utility.HelperFunction.IsKeyPress(Keys.Escape))
+            {
+                isMenuOpen = !isMenuOpen;
+                ((Canvas)canvas.GetElement("canvas_Menu")).IsVisible = isMenuOpen;
+            }
+        }
+
+        private void MoveGuiToAvoidMouse(MouseState mouseInputState)
+        {
+            //move gui around to avoid mouse
+            if (mouseInputState.Position.X < 100 && GuiSide == Side.Left)
+            {
+                GuiSide = Side.Right;
+                ((Label)canvas.GetElement("label1")).Position = new Point(670, 0);
+                ((Label)canvas.GetElement("label_Horizontal")).Position = new Point(655, 0);
+                ((Label)canvas.GetElement("label_Vertical")).Position = new Point(655, 20);
+            }
+            if (mouseInputState.Position.X > 620 && GuiSide == Side.Right)
+            {
+                GuiSide = Side.Left;
+                ((Label)canvas.GetElement("label1")).Position = new Point(0, 0);
+                ((Label)canvas.GetElement("label_Horizontal")).Position = new Point(40, 0);
+                ((Label)canvas.GetElement("label_Vertical")).Position = new Point(40, 20);
+            }
+        }
+
+        private void PlaceTile(MouseState mouseInputState)
+        {
+            
+            var mouseLocationInMap = camera.TranslateFromScreenToWorld(mouseInputState.Position.ToVector2());
+            //check if left mouse click
             if (mouseInputState.LeftButton == ButtonState.Pressed)
             {
                 //check mouse pos
-                var mouseLocationInMap = camera.TranslateFromScreenToWorld(mouseInputState.Position.ToVector2());
-                
                 if (mapArea.Contains(mouseLocationInMap))
                 {
-                    //check if not any cell is seleted
+                    //check if not any cell is selected
                     if (selectedMapCell != null)
                     {
                         if (map[selectedMapCell].terrain != currentlySelectedTerrain)
@@ -137,40 +241,75 @@ namespace Wartorn.Screens
                 }
             }
 
+            //check if right mouse click
+            if (mouseInputState.RightButton == ButtonState.Pressed)
+            {
+                //check mouse pos
+                if (mapArea.Contains(mouseLocationInMap))
+                {
+                    //check if not any cell is selected
+                    if (selectedMapCell != null)
+                    {
+                        if (map[selectedMapCell].terrain != currentlySelectedTerrain)
+                        {
+                            currentlySelectedTerrain = map[selectedMapCell].terrain;
+                        }
+                    }
+                }
+            }
+        }
+
+        private void RotateThroughTerrain()
+        {
             //rotate through terrain sprite
             if (HelperFunction.IsKeyPress(Keys.E))
             {
-                if (currentlySelectedTerrain.CompareTo((SpriteSheetTerrain)((int)SpriteSheetTerrain.Max-1))<0)
+                if ((int)currentlySelectedTerrain < ((int)SpriteSheetTerrain.Max - 1))
                 {
                     currentlySelectedTerrain = (SpriteSheetTerrain)((int)currentlySelectedTerrain + 1);
+                }
+                else
+                {
+                    currentlySelectedTerrain = (SpriteSheetTerrain)((int)SpriteSheetTerrain.Min + 1);
                 }
             }
             if (HelperFunction.IsKeyPress(Keys.Q))
             {
-                if (currentlySelectedTerrain.CompareTo((SpriteSheetTerrain)((int)SpriteSheetTerrain.Min+1)) > 0)
+                if ((int)currentlySelectedTerrain > ((int)SpriteSheetTerrain.Min + 1))
                 {
                     currentlySelectedTerrain = (SpriteSheetTerrain)((int)currentlySelectedTerrain - 1);
                 }
+                else
+                {
+                    currentlySelectedTerrain = (SpriteSheetTerrain)((int)SpriteSheetTerrain.Max - 1);
+                }
             }
+        }
 
+        private void MoveCamera(KeyboardState keyboardInputState, MouseState mouseInputState)
+        {
             //simulate scrolling
-            if (keyboardInputState.IsKeyDown(Keys.Left))
+            if (keyboardInputState.IsKeyDown(Keys.Left) || mouseInputState.Position.X.Between(100, 0))
             {
                 camera.Location += new Vector2(-1, 0) * 10;
             }
-            if (keyboardInputState.IsKeyDown(Keys.Right))
+            if (keyboardInputState.IsKeyDown(Keys.Right) || mouseInputState.Position.X.Between(720, 620))
             {
                 camera.Location += new Vector2(1, 0) * 10;
             }
-            if (keyboardInputState.IsKeyDown(Keys.Up))
+            if (keyboardInputState.IsKeyDown(Keys.Up) || mouseInputState.Position.Y.Between(50, 0))
             {
                 camera.Location += new Vector2(0, -1) * 10;
             }
-            if (keyboardInputState.IsKeyDown(Keys.Down))
+            if (keyboardInputState.IsKeyDown(Keys.Down) || mouseInputState.Position.Y.Between(480, 430))
             {
                 camera.Location += new Vector2(0, +1) * 10;
             }
+            camera.Location = new Vector2(Utility.HelperFunction.Clamp((int)camera.Location.X, 1680, 0), Utility.HelperFunction.Clamp((int)camera.Location.Y, 960, 0));
+        }
 
+        private void ZoomCamera()
+        {
             int mouseScrollAmount = GetMouseScrollAmount();
             if ((mouseScrollAmount > 0) && (camera.Zoom < 1))
             {
@@ -181,13 +320,8 @@ namespace Wartorn.Screens
             {
                 camera.Zoom -= 0.1f;
             }
-
-
-            selectedMapCell = TranslateMousePosToMapCellPos(CONTENT_MANAGER.inputState.mouseState.Position);
-
-            int frameRate = (int)(1 / gameTime.ElapsedGameTime.TotalSeconds);
-            ((Label)canvas["label_fps"]).Text = frameRate.ToString();
         }
+        #endregion
 
         private Point TranslateMousePosToMapCellPos(Point mousepos)
         {
@@ -210,6 +344,8 @@ namespace Wartorn.Screens
         {
             DrawMap(CONTENT_MANAGER.spriteBatch);
             canvas.Draw(CONTENT_MANAGER.spriteBatch);
+            CONTENT_MANAGER.spriteBatch.Draw(showtile, GuiSide == Side.Left ? new Vector2(0, 350) : new Vector2(630, 350), null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.Terrain);
+            CONTENT_MANAGER.spriteBatch.Draw(CONTENT_MANAGER.spriteSheet, GuiSide == Side.Left ? new Vector2(10, 380) : new Vector2(660, 380), SpriteSheetSourceRectangle.GetSpriteRectangle(currentlySelectedTerrain), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.Terrain);
         }
 
         private void DrawMap(SpriteBatch spriteBatch)
@@ -231,7 +367,6 @@ namespace Wartorn.Screens
             spriteBatch.End();
             //start a new batch for whatever come after
             spriteBatch.Begin(SpriteSortMode.FrontToBack);
-            spriteBatch.Draw(CONTENT_MANAGER.spriteSheet, new Vector2(0,50), SpriteSheetSourceRectangle.GetSpriteRectangle(currentlySelectedTerrain), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.Terrain);
         }
     }
 }

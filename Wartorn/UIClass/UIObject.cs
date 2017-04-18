@@ -132,7 +132,7 @@ namespace Wartorn.UIClass
                 Size = new Vector2(Size.X, Size.Y) * scale;
             }
         }
-
+        
         public virtual void Update(InputState inputState, InputState lastInputState)
         {
             UIEventArgs arg = new UIEventArgs(inputState.mouseState);

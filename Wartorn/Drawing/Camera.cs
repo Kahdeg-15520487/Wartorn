@@ -19,7 +19,7 @@ namespace Wartorn.Drawing
     {
         private float _zoom = 1f;
         private Vector2 _location = Vector2.Zero;
-        public float _rotation = 0f;
+        private float _rotation = 0f;
 
         /// <summary>
         /// Zoom ratio. default value is 1f
