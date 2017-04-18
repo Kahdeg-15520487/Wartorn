@@ -6,6 +6,7 @@ using Wartorn.UIClass;
 using Wartorn.ScreenManager;
 using Wartorn.Screens;
 using System;
+using Microsoft.Xna.Framework.Media;
 
 namespace Wartorn
 {
@@ -70,6 +71,7 @@ namespace Wartorn
             CONTENT_MANAGER.defaultfont = CONTENT_MANAGER.Content.Load<SpriteFont>("defaultfont");
             CONTENT_MANAGER.spriteSheet = CONTENT_MANAGER.Content.Load<Texture2D>(@"sprite\terrainspritesheet");
             CONTENT_MANAGER.UIspriteSheet = CONTENT_MANAGER.Content.Load<Texture2D>(@"sprite\ui_sprite_sheet");
+
 
             SCREEN_MANAGER.Init();
             //InitializeUI();
