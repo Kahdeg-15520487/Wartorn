@@ -21,6 +21,7 @@ namespace Wartorn
             ButtonContentType contentType;
             Rectangle spriteSourceRectangle = Rectangle.Empty;
             Texture2D sprite;
+            public Texture2D Sprite { set { sprite = value; contentType = ButtonContentType.Sprite; } }
 
             public override Point Position
             {
@@ -84,7 +85,7 @@ namespace Wartorn
             /// <param name="position">Position of the top left corner</param>
             /// <param name="size">Size of the button</param>
             /// <param name="font">Font to use</param>
-            public Button(string text,Point position,Vector2 size,SpriteFont font)
+            public Button(string text, Point position, Vector2 size, SpriteFont font)
             {
                 contentType = ButtonContentType.Text;
                 Text = text;
@@ -100,7 +101,7 @@ namespace Wartorn
             /// <param name="sprite">The source rectangle of the sprite in UISpriteSheet</param>
             /// <param name="position">Position of the top left corner</param>
             /// <param name="scale">Scale of the button</param>
-            public Button(Rectangle sprite,Point position,float scale)
+            public Button(Rectangle sprite, Point position, float scale = 1)
             {
                 contentType = ButtonContentType.SpriteFromSheet;
                 spriteSourceRectangle = sprite;
@@ -116,7 +117,7 @@ namespace Wartorn
             /// <param name="spritename">The sprite sheet to load</param>
             /// <param name="position">Position of the top left corner</param>
             /// <param name="scale">Scale of the button</param>
-            public Button(string spritename, Point position, float scale)
+            public Button(string spritename, Point position, float scale = 1)
             {
                 contentType = ButtonContentType.Sprite;
                 sprite = CONTENT_MANAGER.Content.Load<Texture2D>(spritename);
@@ -126,13 +127,27 @@ namespace Wartorn
                 Init();
             }
 
+            public Button(Texture2D sprite, Point position, float scale = 1)
+            {
+                contentType = ButtonContentType.Sprite;
+                this.sprite = sprite;
+                Position = position;
+                Size = sprite.Bounds.Size.ToVector2();
+                Scale = scale;
+                Init();
+            }
+
             private void Init()
             {
-                MouseDown += delegate (object sender, UIEventArgs e)
+                MouseDown += (sender, e) =>
                 {
                     isPressed = true;
                 };
-                MouseUp += delegate (object sender, UIEventArgs e)
+                MouseUp += (sender, e) =>
+                {
+                    isPressed = false;
+                };
+                MouseLeave += (sender, e) =>
                 {
                     isPressed = false;
                 };
@@ -160,7 +175,7 @@ namespace Wartorn
                         spriteBatch.Draw(CONTENT_MANAGER.UIspriteSheet, Position.ToVector2(), spriteSourceRectangle, isPressed ? buttonColorPressed : buttonColorReleased, Rotation, Vector2.Zero, Scale, SpriteEffects.None, LayerDepth.Gui);
                         break;
                     case ButtonContentType.Sprite:
-                        spriteBatch.Draw(sprite,Position.ToVector2(),null, isPressed ? buttonColorPressed : buttonColorReleased, Rotation, Vector2.Zero, Scale, SpriteEffects.None, LayerDepth.Gui);
+                        spriteBatch.Draw(sprite, Position.ToVector2(), null, isPressed ? buttonColorPressed : buttonColorReleased, Rotation, Vector2.Zero, Scale, SpriteEffects.None, LayerDepth.Gui);
                         break;
                     default:
                         break;
@@ -168,7 +183,7 @@ namespace Wartorn
             }
 
             public event EventHandler<UIEventArgs> ButtonPressed;
-            protected virtual void OnButtonPressed(object sender,UIEventArgs e)
+            protected virtual void OnButtonPressed(object sender, UIEventArgs e)
             {
                 ButtonPressed?.Invoke(sender, e);
             }

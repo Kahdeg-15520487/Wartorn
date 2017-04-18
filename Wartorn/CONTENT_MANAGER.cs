@@ -7,6 +7,7 @@ using System.Linq;
 using System;
 using System.IO;
 using System.Reflection;
+using Microsoft.Xna.Framework;
 
 namespace Wartorn
 {
@@ -43,7 +44,7 @@ namespace Wartorn
 
         public static void ShowMessageBox(string e)
         {
-            messagebox?.Invoke(null,new MessageEventArgs(e));
+            messagebox?.Invoke(null, new MessageEventArgs(e));
         }
 
         public static string ShowFileOpenDialog(string rootpath)
@@ -51,6 +52,12 @@ namespace Wartorn
             MessageEventArgs e = new MessageEventArgs(rootpath);
             fileopendialog?.Invoke(null, e);
             return e.message;
+        }
+
+        public static void ShowFPS(GameTime gameTime)
+        {
+            int frameRate = (int)(1 / gameTime.ElapsedGameTime.TotalSeconds);
+            spriteBatch.DrawString(defaultfont, frameRate.ToString(), new Vector2(0, 0), Color.Black);
         }
     }
 }

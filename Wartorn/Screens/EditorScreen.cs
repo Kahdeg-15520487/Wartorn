@@ -19,7 +19,7 @@ namespace Wartorn.Screens
 {
     enum Side
     {
-        Left,Right
+        Left, Right
     }
 
     class EditorScreen : Screen
@@ -35,7 +35,7 @@ namespace Wartorn.Screens
         private Vector2 mapcellsize = new Vector2(48, 48);
         private Rectangle mapArea;
 
-        private SpriteSheetTerrain currentlySelectedTerrain = (SpriteSheetTerrain)1;
+        private SpriteSheetTerrain currentlySelectedTerrain = SpriteSheetTerrain.Blue_HeadQuarter_Upper;
 
         private Side GuiSide = Side.Left;
         private bool isMenuOpen = false;
@@ -46,7 +46,7 @@ namespace Wartorn.Screens
             public Point selectedMapCell;
             public SpriteSheetTerrain selectedMapCellTerrain;
 
-            public Action(Point p,SpriteSheetTerrain t)
+            public Action(Point p, SpriteSheetTerrain t)
             {
                 selectedMapCell = p;
                 selectedMapCellTerrain = t;
@@ -59,13 +59,13 @@ namespace Wartorn.Screens
             LoadContent();
 
             map = new Map(50, 30);
-            mapArea = new Rectangle(0, 0, (int)(map.Width*mapcellsize.X), (int)(map.Height*mapcellsize.Y));
+            mapArea = new Rectangle(0, 0, (int)(map.Width * mapcellsize.X), (int)(map.Height * mapcellsize.Y));
             canvas = new Canvas();
             camera = new Camera(_device.Viewport);
             //camera.Location -= offset;
 
             undostack = new Stack<Action>();
-            
+
             InitUI();
             InitMap();
         }
@@ -79,6 +79,8 @@ namespace Wartorn.Screens
         private void InitUI()
         {
             //declare ui element
+
+            //escape menu
             Canvas canvas_Menu = new Canvas();
             Button button_Undo = new Button(UISpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetUI.Undo), new Point(20, 20), 0.5f);
             Button button_Save = new Button(UISpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetUI.Save), new Point(50, 20), 0.5f);
@@ -89,6 +91,10 @@ namespace Wartorn.Screens
             canvas_Menu.AddElement("button_Open", button_Open);
             canvas_Menu.AddElement("button_Exit", button_Exit);
             canvas_Menu.IsVisible = false;
+
+            //terrain selection menu
+            Canvas canvas_terrain_selection = new Canvas();
+
 
             Label label1 = new Label("Hor" + Environment.NewLine + "Ver", new Point(0, 0), new Vector2(30, 20), CONTENT_MANAGER.defaultfont);
             label1.Scale = 1.2f;
@@ -173,7 +179,7 @@ namespace Wartorn.Screens
             var lastMouseInputState = CONTENT_MANAGER.lastInputState.mouseState;
             var keyboardInputState = CONTENT_MANAGER.inputState.keyboardState;
             var lastKeyboardInputState = CONTENT_MANAGER.lastInputState.keyboardState;
-            
+
             selectedMapCell = TranslateMousePosToMapCellPos(CONTENT_MANAGER.inputState.mouseState.Position);
             ((Label)canvas.GetElement("label_Horizontal")).Text = (selectedMapCell.X + 1).ToString();
             ((Label)canvas.GetElement("label_Vertical")).Text = (selectedMapCell.Y + 1).ToString();
@@ -221,7 +227,7 @@ namespace Wartorn.Screens
 
         private void PlaceTile(MouseState mouseInputState)
         {
-            
+
             var mouseLocationInMap = camera.TranslateFromScreenToWorld(mouseInputState.Position.ToVector2());
             //check if left mouse click
             if (mouseInputState.LeftButton == ButtonState.Pressed)
@@ -344,8 +350,9 @@ namespace Wartorn.Screens
         {
             DrawMap(CONTENT_MANAGER.spriteBatch);
             canvas.Draw(CONTENT_MANAGER.spriteBatch);
-            CONTENT_MANAGER.spriteBatch.Draw(showtile, GuiSide == Side.Left ? new Vector2(0, 350) : new Vector2(630, 350), null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.Terrain);
-            CONTENT_MANAGER.spriteBatch.Draw(CONTENT_MANAGER.spriteSheet, GuiSide == Side.Left ? new Vector2(10, 380) : new Vector2(660, 380), SpriteSheetSourceRectangle.GetSpriteRectangle(currentlySelectedTerrain), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.Terrain);
+            CONTENT_MANAGER.spriteBatch.Draw(showtile, GuiSide == Side.Left ? new Vector2(0, 350) : new Vector2(630, 350), null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.Gui);
+            CONTENT_MANAGER.spriteBatch.DrawString(CONTENT_MANAGER.defaultfont, currentlySelectedTerrain.ToString(), GuiSide == Side.Left? new Vector2(0, 200):new Vector2(650,200), Color.Black, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.Gui);
+            CONTENT_MANAGER.spriteBatch.Draw(CONTENT_MANAGER.spriteSheet, GuiSide == Side.Left ? new Vector2(10, 380) : new Vector2(660, 380), SpriteSheetSourceRectangle.GetSpriteRectangle(currentlySelectedTerrain), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.Gui);
         }
 
         private void DrawMap(SpriteBatch spriteBatch)

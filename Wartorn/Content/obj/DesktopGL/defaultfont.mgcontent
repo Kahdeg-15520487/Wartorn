@@ -3,11 +3,11 @@
   <SourceFile>G:/Workspace/c#/Wartorn/Wartorn/Content/defaultfont.spritefont</SourceFile>
   <SourceTime>2016-03-30T13:36:08+07:00</SourceTime>
   <DestFile>G:/Workspace/c#/Wartorn/Wartorn/Content/bin/DesktopGL/defaultfont.xnb</DestFile>
-  <DestTime>2017-04-18T08:29:18.5297968+07:00</DestTime>
+  <DestTime>2017-04-18T17:54:32.0280868+07:00</DestTime>
   <Importer>FontDescriptionImporter</Importer>
-  <ImporterTime>2016-03-30T13:36:08+07:00</ImporterTime>
+  <ImporterTime>2017-03-01T22:05:36+07:00</ImporterTime>
   <Processor>FontDescriptionProcessor</Processor>
-  <ProcessorTime>2016-03-30T13:36:08+07:00</ProcessorTime>
+  <ProcessorTime>2017-03-01T22:05:36+07:00</ProcessorTime>
   <Parameters>
     <Key>TextureFormat</Key>
     <Value>Compressed</Value>

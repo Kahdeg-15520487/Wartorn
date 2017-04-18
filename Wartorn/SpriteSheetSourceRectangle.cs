@@ -16,8 +16,11 @@ namespace Wartorn
         Min,
         //water related tile
         Reef, Sea, River_hor, River_ver, River_Inter3_l, River_Inter3_r, River_Inter3_u, River_Inter3_d, River_Turn_u_r, River_Turn_u_l, River_Turn_d_r, River_Turn_d_l, River_Flow_l, River_Flow_u, River_Flow_d, River_Flow_r,
+
         Coast_u_l, Coast_u, Coast_u_r, Coast_l, Coast_r, Coast_d_l, Coast_d, Coast_d_r, Cliff_u_l, Cliff_u, Cliff_u_r, Cliff_d_l, Cliff_d, Cliff_d_r,
+
         Isle_Coast_u_l, Isle_Coast_u_r, Isle_Coast_side_l_u, Isle_Coast_side_l_d, Isle_Coast_side_r_u, Isle_Coast_side_r_d, Isle_Coast_d_l, Isle_Coast_d_r, Isle_Cliff_u_r, Isle_Cliff_u_l, Isle_Cliff_d_r, Isle_Cliff_d_l, Cliff_l, Cliff_r, River_Cross,
+
         Lone_Coast_u_l, Lone_Coast_u_r, Lone_Coast_d_l, Lone_Coast_d_r, Lone_Coast_u, Lone_Coast_d, Lone_Coast_r, Lone_Coast_l, Invert_Coast_d_l, Invert_Coast_d_r, Invert_Coast_u_l, Invert_Coast_u_r, Invert_Coast_l_d, Invert_Coast_l_u, Invert_Coast_r_u, Invert_Coast_r_d,
 
         //road related tile
@@ -30,8 +33,8 @@ namespace Wartorn
         Mountain_Low, Mountain_High_Upper, Mountain_High_Lower,
 
         //neutral building
-        City_Upper, City_Lower, Factory, AirPort_Upper, AirPort_Lower, Harbor_Upper, Harbor_Lower, Radar_Upper, Radar_Lower, SupplyBase_Upper, SupplyBase_Lower, Silo_HaveMissile_Upper, Silo_HaveMissile_Lower,
-        
+        City_Upper, City_Lower, Factory, AirPort_Upper, AirPort_Lower, Harbor_Upper, Harbor_Lower, Radar_Upper, Radar_Lower, SupplyBase_Upper, SupplyBase_Lower, Silo_HaveMissile_Upper, Silo_HaveMissile_Lower, Silo_MissileLaunched,
+
         //Red-captured building
         Red_City_Upper, Red_City_Lower, Red_Factory, Red_AirPort_Upper, Red_AirPort_Lower, Red_Harbor_Upper, Red_Harbor_Lower, Red_Radar_Upper, Red_Radar_Lower, Red_SupplyBase_Upper, Red_SupplyBase_Lower,
 
@@ -45,14 +48,14 @@ namespace Wartorn
 
     static class SpriteSheetSourceRectangle
     {
-        private static Dictionary<string,Rectangle> TerrainSprite;
+        private static Dictionary<string, Rectangle> TerrainSprite;
 
         public static void LoadSprite()
         {
             TerrainSprite = new Dictionary<string, Rectangle>();
-            for (int i = 0; i < ((int)SpriteSheetTerrain.Max-1); i++)
+            for (int i = 0; i < ((int)SpriteSheetTerrain.Max - 1); i++)
             {
-                TerrainSprite.Add(((SpriteSheetTerrain)i+1).ToString(), new Rectangle(i * 48, 0, 48, 48));
+                TerrainSprite.Add(((SpriteSheetTerrain)i + 1).ToString(), new Rectangle(i * 48, 0, 48, 48));
             }
             //string log = JsonConvert.SerializeObject(TerrainSprite, Formatting.Indented);
             //File.WriteAllText("log.txt", log);
