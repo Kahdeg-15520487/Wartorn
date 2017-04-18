@@ -350,9 +350,9 @@ namespace Wartorn.Screens
         {
             DrawMap(CONTENT_MANAGER.spriteBatch);
             canvas.Draw(CONTENT_MANAGER.spriteBatch);
-            CONTENT_MANAGER.spriteBatch.Draw(showtile, GuiSide == Side.Left ? new Vector2(0, 350) : new Vector2(630, 350), null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.Gui);
-            CONTENT_MANAGER.spriteBatch.DrawString(CONTENT_MANAGER.defaultfont, currentlySelectedTerrain.ToString(), GuiSide == Side.Left? new Vector2(0, 200):new Vector2(650,200), Color.Black, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.Gui);
-            CONTENT_MANAGER.spriteBatch.Draw(CONTENT_MANAGER.spriteSheet, GuiSide == Side.Left ? new Vector2(10, 380) : new Vector2(660, 380), SpriteSheetSourceRectangle.GetSpriteRectangle(currentlySelectedTerrain), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.Gui);
+            CONTENT_MANAGER.spriteBatch.Draw(showtile, GuiSide == Side.Left ? new Vector2(0, 350) : new Vector2(630, 350), null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.Gui-0.1f);
+            CONTENT_MANAGER.spriteBatch.DrawString(CONTENT_MANAGER.defaultfont, map[selectedMapCell].terrain.ToString(), GuiSide == Side.Left ? new Vector2(0, 360) : new Vector2(650, 360), Color.Black, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.Gui);
+            CONTENT_MANAGER.spriteBatch.Draw(CONTENT_MANAGER.spriteSheet, GuiSide == Side.Left ? new Vector2(10, 380) : new Vector2(660, 380), SpriteSheetSourceRectangle.GetSpriteRectangle(map[selectedMapCell].terrain), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.Gui);
         }
 
         private void DrawMap(SpriteBatch spriteBatch)
@@ -369,6 +369,7 @@ namespace Wartorn.Screens
                 }
             }
 
+            spriteBatch.Draw(CONTENT_MANAGER.spriteSheet, new Vector2(selectedMapCell.X * mapcellsize.X, selectedMapCell.Y * mapcellsize.Y), SpriteSheetSourceRectangle.GetSpriteRectangle(currentlySelectedTerrain), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.Gui - 0.1f);
             spriteBatch.Draw(CONTENT_MANAGER.UIspriteSheet, new Vector2(selectedMapCell.X * mapcellsize.X, selectedMapCell.Y * mapcellsize.Y), new Rectangle(0, 0, 48, 48), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.Gui);
             //end this batch
             spriteBatch.End();
