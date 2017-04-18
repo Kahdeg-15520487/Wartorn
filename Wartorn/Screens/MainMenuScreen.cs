@@ -16,12 +16,6 @@ using Wartorn.Drawing;
 
 namespace Wartorn.Screens
 {
-    enum ButtonSelected
-    {
-        None,
-        Campaign,
-        MapEditor
-    }
     class MainMenuScreen : Screen
     {
         private Canvas canvas;
@@ -29,12 +23,9 @@ namespace Wartorn.Screens
 
         private Texture2D SelectScreenBackground;
         private Texture2D TitleBackground;
-        private Texture2D ModeSelectDark;
-        private Texture2D ModeSelectLight;
         private SpriteFont menufont;
 
         private int maxXoffset, maxYoffset;
-        private ButtonSelected selectedbutton = ButtonSelected.None;
 
         public MainMenuScreen(GraphicsDevice device) : base(device, "MainMenuScreen")
         {
@@ -47,66 +38,27 @@ namespace Wartorn.Screens
 
         private void LoadContent()
         {
-            // cái này là cái background lúc vào menu
             SelectScreenBackground = CONTENT_MANAGER.Content.Load<Texture2D>(@"sprite\GUI\Select_screen");
             maxXoffset = 1000;
             maxYoffset = 1000;
 
-            //cái này là cái tựa đề tên game, để vẽ đè lên cái background ở trên
             TitleBackground = CONTENT_MANAGER.Content.Load<Texture2D>(@"sprite\GUI\Title");
-
-            ModeSelectDark = CONTENT_MANAGER.Content.Load<Texture2D>(@"sprite\GUI\Mode_select_dark");
-            ModeSelectLight = CONTENT_MANAGER.Content.Load<Texture2D>(@"sprite\GUI\Mode_select_light");
-
-            //cái này là cái font sử dụng trong menu
             menufont = CONTENT_MANAGER.Content.Load<SpriteFont>(@"sprite\GUI\menufont");
         }
 
         private void InitUI()
         {
             //declare ui element
-
-            //khai báo 1 cái label để hiển thị fps
-            Label label_fps = new Label(" ", new Point(0, 0), new Vector2(100, 50), CONTENT_MANAGER.defaultfont);
-            label_fps.foregroundColor = Color.DarkBlue;
+            Label labelfps = new Label(" ",new Point(50,50),new Vector2(100,50),CONTENT_MANAGER.defaultfont);
+            labelfps.foregroundColor = Color.DarkBlue;
 
             //TODO make button for main menu
-            Button button_Campaign = new Button(ModeSelectDark, new Point(100, 100), 2);
-            Button button_MapEditor = new Button(ModeSelectDark, new Point(300, 100), 2);
+            //Button buttonCampaign = new Button(@"sprite\GUI\")
 
             //bind action to ui event
-            button_Campaign.MouseClick += (sender, e) =>
-            {
-                if (selectedbutton!= ButtonSelected.Campaign)
-                {
-                    selectedbutton = ButtonSelected.Campaign;
-                    button_Campaign.Sprite = ModeSelectLight;
-                    button_MapEditor.Sprite = ModeSelectDark;
-                }
-                else
-                {
-                    //SCREEN_MANAGER.goto_screen("Campaign");
-                }
-            };
-
-            button_MapEditor.MouseClick += (sender, e) =>
-            {
-                if (selectedbutton != ButtonSelected.MapEditor)
-                {
-                    selectedbutton = ButtonSelected.MapEditor;
-                    button_MapEditor.Sprite = ModeSelectLight;
-                    button_Campaign.Sprite = ModeSelectDark;
-                }
-                else
-                {
-                    SCREEN_MANAGER.goto_screen("EditorScreen");
-                }
-            };
 
             //add ui element to canvas
-            canvas.AddElement("label_fps",label_fps);
-            canvas.AddElement("button_Campaign", button_Campaign);
-            canvas.AddElement("button_MapEditor", button_MapEditor);
+            canvas.AddElement("labelfps",labelfps);
         }
 
         public override void Shutdown()
@@ -117,13 +69,19 @@ namespace Wartorn.Screens
         public override void Update(GameTime gameTime)
         {
             canvas.Update(CONTENT_MANAGER.inputState, CONTENT_MANAGER.lastInputState);
+
+            ((Label)canvas["labelfps"]).Text = maxXoffset.ToString() + " " + offset.Size.X.ToString() + '\n' + maxYoffset.ToString() + " " + offset.Size.Y.ToString();
+
+            if (Utility.HelperFunction.IsKeyPress(Keys.A))
+            {
+                SCREEN_MANAGER.goto_screen("EditorScreen");
+            }
         }
 
         public override void Draw(GameTime gameTime)
         {
             DrawMenuBackground(CONTENT_MANAGER.spriteBatch);
             canvas.Draw(CONTENT_MANAGER.spriteBatch);
-            CONTENT_MANAGER.ShowFPS(gameTime);
         }
 
         private Rectangle offset = new Rectangle(0, 0, 720, 480);

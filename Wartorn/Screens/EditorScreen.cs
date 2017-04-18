@@ -79,8 +79,6 @@ namespace Wartorn.Screens
         private void InitUI()
         {
             //declare ui element
-
-            //escape menu
             Canvas canvas_Menu = new Canvas();
             Button button_Undo = new Button(UISpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetUI.Undo), new Point(20, 20), 0.5f);
             Button button_Save = new Button(UISpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetUI.Save), new Point(50, 20), 0.5f);
@@ -91,10 +89,6 @@ namespace Wartorn.Screens
             canvas_Menu.AddElement("button_Open", button_Open);
             canvas_Menu.AddElement("button_Exit", button_Exit);
             canvas_Menu.IsVisible = false;
-
-            //terrain selection menu
-            Canvas canvas_terrain_selection = new Canvas();
-
 
             Label label1 = new Label("Hor" + Environment.NewLine + "Ver", new Point(0, 0), new Vector2(30, 20), CONTENT_MANAGER.defaultfont);
             label1.Scale = 1.2f;

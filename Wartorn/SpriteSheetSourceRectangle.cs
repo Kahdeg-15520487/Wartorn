@@ -16,11 +16,8 @@ namespace Wartorn
         Min,
         //water related tile
         Reef, Sea, River_hor, River_ver, River_Inter3_l, River_Inter3_r, River_Inter3_u, River_Inter3_d, River_Turn_u_r, River_Turn_u_l, River_Turn_d_r, River_Turn_d_l, River_Flow_l, River_Flow_u, River_Flow_d, River_Flow_r,
-
         Coast_u_l, Coast_u, Coast_u_r, Coast_l, Coast_r, Coast_d_l, Coast_d, Coast_d_r, Cliff_u_l, Cliff_u, Cliff_u_r, Cliff_d_l, Cliff_d, Cliff_d_r,
-
         Isle_Coast_u_l, Isle_Coast_u_r, Isle_Coast_side_l_u, Isle_Coast_side_l_d, Isle_Coast_side_r_u, Isle_Coast_side_r_d, Isle_Coast_d_l, Isle_Coast_d_r, Isle_Cliff_u_r, Isle_Cliff_u_l, Isle_Cliff_d_r, Isle_Cliff_d_l, Cliff_l, Cliff_r, River_Cross,
-
         Lone_Coast_u_l, Lone_Coast_u_r, Lone_Coast_d_l, Lone_Coast_d_r, Lone_Coast_u, Lone_Coast_d, Lone_Coast_r, Lone_Coast_l, Invert_Coast_d_l, Invert_Coast_d_r, Invert_Coast_u_l, Invert_Coast_u_r, Invert_Coast_l_d, Invert_Coast_l_u, Invert_Coast_r_u, Invert_Coast_r_d,
 
         //road related tile

@@ -21,7 +21,6 @@ namespace Wartorn
             ButtonContentType contentType;
             Rectangle spriteSourceRectangle = Rectangle.Empty;
             Texture2D sprite;
-            public Texture2D Sprite { set { sprite = value; contentType = ButtonContentType.Sprite; } }
 
             public override Point Position
             {
@@ -101,7 +100,7 @@ namespace Wartorn
             /// <param name="sprite">The source rectangle of the sprite in UISpriteSheet</param>
             /// <param name="position">Position of the top left corner</param>
             /// <param name="scale">Scale of the button</param>
-            public Button(Rectangle sprite, Point position, float scale = 1)
+            public Button(Rectangle sprite,Point position,float scale)
             {
                 contentType = ButtonContentType.SpriteFromSheet;
                 spriteSourceRectangle = sprite;
@@ -117,7 +116,7 @@ namespace Wartorn
             /// <param name="spritename">The sprite sheet to load</param>
             /// <param name="position">Position of the top left corner</param>
             /// <param name="scale">Scale of the button</param>
-            public Button(string spritename, Point position, float scale = 1)
+            public Button(string spritename, Point position, float scale)
             {
                 contentType = ButtonContentType.Sprite;
                 sprite = CONTENT_MANAGER.Content.Load<Texture2D>(spritename);
@@ -127,27 +126,13 @@ namespace Wartorn
                 Init();
             }
 
-            public Button (Texture2D sprite,Point position,float scale = 1)
-            {
-                contentType = ButtonContentType.Sprite;
-                this.sprite = sprite;
-                Position = position;
-                Size = sprite.Bounds.Size.ToVector2();
-                Scale = scale;
-                Init();
-            }
-
             private void Init()
             {
-                MouseDown += (sender, e) =>
+                MouseDown += delegate (object sender, UIEventArgs e)
                 {
                     isPressed = true;
                 };
-                MouseUp += (sender, e) =>
-                {
-                    isPressed = false;
-                };
-                MouseLeave += (sender, e) =>
+                MouseUp += delegate (object sender, UIEventArgs e)
                 {
                     isPressed = false;
                 };
