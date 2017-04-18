@@ -18,7 +18,8 @@ namespace Wartorn
         Redo,
         New,
         Save,
-        Open
+        Open,
+        Exit
     }
 
     static class UISpriteSheetSourceRectangle
@@ -28,11 +29,9 @@ namespace Wartorn
         public static void LoadSprite()
         {
             UISprite = new Dictionary<string, Rectangle>();
-            int c = 0;
-            for (int i = 0; i < 6; i++)
+            for (int i = 0; i < 7; i++)
             {
-                UISprite.Add(((SpriteSheetUI)c).ToString(), new Rectangle(i * 48, 0, 48, 48));
-                c++;
+                UISprite.Add(((SpriteSheetUI)i).ToString(), new Rectangle(i * 48, 0, 48, 48));
             }
             //string log = JsonConvert.SerializeObject(UISprite, Formatting.Indented);
             //File.WriteAllText("log.txt", log);

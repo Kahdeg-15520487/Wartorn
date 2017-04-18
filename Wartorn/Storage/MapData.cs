@@ -9,7 +9,7 @@ using System.IO;
 
 namespace Wartorn.Storage
 {
-    class MapData
+    static class MapData
     {
         /* a map file data structure
          * basically it's a json file serialize from the class Map
@@ -21,21 +21,12 @@ namespace Wartorn.Storage
             var mapdata = data.Split('|');
             int w, h;
 
-            try
-            {
-
-            }
-            catch (Exception)
-            {
-
-                Environment.Exit(0);
-            }
-
             Map output = new Map();
 
             try
             {
-                output = JsonConvert.DeserializeObject(mapdata[2]) as Map;
+                output = JsonConvert.DeserializeObject<Map>(mapdata[2]);
+                Utility.HelperFunction.Log(new Exception(JsonConvert.SerializeObject(output, Formatting.Indented)));
             }
             catch (Exception er)
             {
@@ -43,7 +34,16 @@ namespace Wartorn.Storage
                 Environment.Exit(0);
             }
 
-            return output;
+            if (output!=null)
+            {
+                return output;
+            }
+            else
+            {
+                Utility.HelperFunction.Log(new Exception(output?.ToString()));
+                Environment.Exit(0);
+                throw new NullReferenceException();
+            }
         }
 
         public static string SaveMap(Map map)
