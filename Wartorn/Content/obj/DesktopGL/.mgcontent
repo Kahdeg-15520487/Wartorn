@@ -10,7 +10,6 @@
     <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/animation/Soldier_ready.png</File>
     <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/animation/Soldier_run.png</File>
     <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/animation/Soldier_up.png</File>
-    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/sprite_sheet.png</File>
     <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/ui_sprite_sheet.png</File>
     <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/GUI/intro.mp4</File>
     <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/GUI/Startscreen.png</File>
@@ -23,8 +22,8 @@
     <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/GUI/Mode_select_light.png</File>
     <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/GUI/Mode_select_dark.png</File>
     <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/GUI/Main_Font.png</File>
-    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/Static_terrain.png</File>
-    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/Water.png</File>
-    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/terrain_sprite_sheet.png</File>
+    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/spritesheet_4lines.png</File>
+    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/terrainspritesheet.png</File>
+    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/showtile.png</File>
   </SourceFiles>
 </SourceFileCollection>

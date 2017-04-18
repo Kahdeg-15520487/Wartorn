@@ -39,6 +39,11 @@ namespace Wartorn.GameData
             return map[x, y];
         }
 
+        public void Clone(Map m)
+        {
+            map = m.map;
+        }
+
         public IEnumerator GetEnumerator()
         {
             return map.GetEnumerator();

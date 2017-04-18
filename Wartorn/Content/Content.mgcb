@@ -79,18 +79,6 @@
 /processorParam:TextureFormat=Color
 /build:sprite/animation/Soldier_up.png
 
-#begin sprite/sprite_sheet.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:sprite/sprite_sheet.png
-
 #begin sprite/ui_sprite_sheet.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -222,7 +210,7 @@
 /processorParam:TextureFormat=Color
 /build:sprite\GUI\Main_Font.png
 
-#begin sprite/Static_terrain.png
+#begin sprite/spritesheet_4lines.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -232,9 +220,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:sprite/Static_terrain.png
+/build:sprite/spritesheet_4lines.png
 
-#begin sprite/Water.png
+#begin sprite\terrainspritesheet.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -244,9 +232,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:sprite/Water.png
+/build:sprite\terrainspritesheet.png
 
-#begin sprite/terrain_sprite_sheet.png
+#begin sprite/showtile.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -256,5 +244,5 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:sprite/terrain_sprite_sheet.png
+/build:sprite/showtile.png
 

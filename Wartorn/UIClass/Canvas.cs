@@ -33,7 +33,11 @@ namespace Wartorn
                     UIelements.Add(uiName, element);
                     return true;
                 }
-                else return false;
+                else
+                {
+                    Utility.HelperFunction.Log(new Exception(uiName + " existed"));
+                    return false;
+                }
             }
 
             public UIObject GetElement(string uiName)
@@ -42,7 +46,11 @@ namespace Wartorn
                 {
                     return UIelements[uiName];
                 }
-                else return null;
+                else
+                {
+                    Utility.HelperFunction.Log(new Exception(uiName + " not found"));
+                    return null;
+                }
             }
 
             public void LoadContent()
@@ -52,6 +60,9 @@ namespace Wartorn
 
             public override void Update(InputState inputState, InputState lastInputState)
             {
+                if (!this.IsVisible)
+                    return;
+
                 foreach (var element in UIelements.Values)
                 {
                     element.Update(inputState, lastInputState);
@@ -61,6 +72,9 @@ namespace Wartorn
 
             public override void Draw(SpriteBatch spriteBatch)
             {
+                if (!this.IsVisible)
+                    return;
+
                 foreach (var element in UIelements.Values)
                 {
                     if (element.IsVisible)
