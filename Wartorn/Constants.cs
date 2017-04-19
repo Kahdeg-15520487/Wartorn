@@ -11,10 +11,12 @@ namespace Wartorn
 {
     static class LayerDepth
     {
-        public static float Gui = 1.0f;
         public static float BackGround = 0.0f;
-        public static float Terrain = 0.1f;
-        public static float Unit = 0.2f;
+        public static float TerrainLower = 0.1f;
+        public static float TerrainUpper = 0.2f;
+        public static float Unit = 0.3f;
+        public static float GuiLower = 0.9f;
+        public static float GuiUpper = 1.0f;
     }
 
     static class Constants

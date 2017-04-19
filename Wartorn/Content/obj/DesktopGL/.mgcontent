@@ -22,8 +22,9 @@
     <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/GUI/Mode_select_light.png</File>
     <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/GUI/Mode_select_dark.png</File>
     <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/GUI/Main_Font.png</File>
-    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/spritesheet_4lines.png</File>
     <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/terrainspritesheet.png</File>
     <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/showtile.png</File>
+    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/terrainspritesheet13x35.png</File>
+    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/terrainspritesheet1line.png</File>
   </SourceFiles>
 </SourceFileCollection>

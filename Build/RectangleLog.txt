@@ -1,0 +1,10467 @@
+{
+  "Reef": {
+    "X": 0,
+    "Y": 0,
+    "Width": 48,
+    "Height": 48,
+    "Left": 0,
+    "Right": 48,
+    "Top": 0,
+    "Bottom": 48,
+    "IsEmpty": false,
+    "Location": {
+      "X": 0,
+      "Y": 0
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 24,
+      "Y": 24
+    }
+  },
+  "Sea": {
+    "X": 48,
+    "Y": 0,
+    "Width": 48,
+    "Height": 48,
+    "Left": 48,
+    "Right": 96,
+    "Top": 0,
+    "Bottom": 48,
+    "IsEmpty": false,
+    "Location": {
+      "X": 48,
+      "Y": 0
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 72,
+      "Y": 24
+    }
+  },
+  "River_ver": {
+    "X": 96,
+    "Y": 0,
+    "Width": 48,
+    "Height": 48,
+    "Left": 96,
+    "Right": 144,
+    "Top": 0,
+    "Bottom": 48,
+    "IsEmpty": false,
+    "Location": {
+      "X": 96,
+      "Y": 0
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 120,
+      "Y": 24
+    }
+  },
+  "River_hor": {
+    "X": 144,
+    "Y": 0,
+    "Width": 48,
+    "Height": 48,
+    "Left": 144,
+    "Right": 192,
+    "Top": 0,
+    "Bottom": 48,
+    "IsEmpty": false,
+    "Location": {
+      "X": 144,
+      "Y": 0
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 168,
+      "Y": 24
+    }
+  },
+  "River_Inter3_right": {
+    "X": 192,
+    "Y": 0,
+    "Width": 48,
+    "Height": 48,
+    "Left": 192,
+    "Right": 240,
+    "Top": 0,
+    "Bottom": 48,
+    "IsEmpty": false,
+    "Location": {
+      "X": 192,
+      "Y": 0
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 216,
+      "Y": 24
+    }
+  },
+  "River_Inter3_left": {
+    "X": 240,
+    "Y": 0,
+    "Width": 48,
+    "Height": 48,
+    "Left": 240,
+    "Right": 288,
+    "Top": 0,
+    "Bottom": 48,
+    "IsEmpty": false,
+    "Location": {
+      "X": 240,
+      "Y": 0
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 264,
+      "Y": 24
+    }
+  },
+  "River_Inter3_up": {
+    "X": 288,
+    "Y": 0,
+    "Width": 48,
+    "Height": 48,
+    "Left": 288,
+    "Right": 336,
+    "Top": 0,
+    "Bottom": 48,
+    "IsEmpty": false,
+    "Location": {
+      "X": 288,
+      "Y": 0
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 312,
+      "Y": 24
+    }
+  },
+  "River_Inter3_down": {
+    "X": 336,
+    "Y": 0,
+    "Width": 48,
+    "Height": 48,
+    "Left": 336,
+    "Right": 384,
+    "Top": 0,
+    "Bottom": 48,
+    "IsEmpty": false,
+    "Location": {
+      "X": 336,
+      "Y": 0
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 360,
+      "Y": 24
+    }
+  },
+  "River_Cross": {
+    "X": 384,
+    "Y": 0,
+    "Width": 48,
+    "Height": 48,
+    "Left": 384,
+    "Right": 432,
+    "Top": 0,
+    "Bottom": 48,
+    "IsEmpty": false,
+    "Location": {
+      "X": 384,
+      "Y": 0
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 408,
+      "Y": 24
+    }
+  },
+  "River_Turn_up_right": {
+    "X": 432,
+    "Y": 0,
+    "Width": 48,
+    "Height": 48,
+    "Left": 432,
+    "Right": 480,
+    "Top": 0,
+    "Bottom": 48,
+    "IsEmpty": false,
+    "Location": {
+      "X": 432,
+      "Y": 0
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 456,
+      "Y": 24
+    }
+  },
+  "River_Turn_up_left": {
+    "X": 480,
+    "Y": 0,
+    "Width": 48,
+    "Height": 48,
+    "Left": 480,
+    "Right": 528,
+    "Top": 0,
+    "Bottom": 48,
+    "IsEmpty": false,
+    "Location": {
+      "X": 480,
+      "Y": 0
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 504,
+      "Y": 24
+    }
+  },
+  "River_Turn_down_right": {
+    "X": 528,
+    "Y": 0,
+    "Width": 48,
+    "Height": 48,
+    "Left": 528,
+    "Right": 576,
+    "Top": 0,
+    "Bottom": 48,
+    "IsEmpty": false,
+    "Location": {
+      "X": 528,
+      "Y": 0
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 552,
+      "Y": 24
+    }
+  },
+  "River_Turn_down_left": {
+    "X": 576,
+    "Y": 0,
+    "Width": 48,
+    "Height": 48,
+    "Left": 576,
+    "Right": 624,
+    "Top": 0,
+    "Bottom": 48,
+    "IsEmpty": false,
+    "Location": {
+      "X": 576,
+      "Y": 0
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 600,
+      "Y": 24
+    }
+  },
+  "River_Flow_left": {
+    "X": 624,
+    "Y": 0,
+    "Width": 48,
+    "Height": 48,
+    "Left": 624,
+    "Right": 672,
+    "Top": 0,
+    "Bottom": 48,
+    "IsEmpty": false,
+    "Location": {
+      "X": 624,
+      "Y": 0
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 648,
+      "Y": 24
+    }
+  },
+  "River_Flow_up": {
+    "X": 672,
+    "Y": 0,
+    "Width": 48,
+    "Height": 48,
+    "Left": 672,
+    "Right": 720,
+    "Top": 0,
+    "Bottom": 48,
+    "IsEmpty": false,
+    "Location": {
+      "X": 672,
+      "Y": 0
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 696,
+      "Y": 24
+    }
+  },
+  "River_Flow_down": {
+    "X": 720,
+    "Y": 0,
+    "Width": 48,
+    "Height": 48,
+    "Left": 720,
+    "Right": 768,
+    "Top": 0,
+    "Bottom": 48,
+    "IsEmpty": false,
+    "Location": {
+      "X": 720,
+      "Y": 0
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 744,
+      "Y": 24
+    }
+  },
+  "River_Flow_right": {
+    "X": 768,
+    "Y": 0,
+    "Width": 48,
+    "Height": 48,
+    "Left": 768,
+    "Right": 816,
+    "Top": 0,
+    "Bottom": 48,
+    "IsEmpty": false,
+    "Location": {
+      "X": 768,
+      "Y": 0
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 792,
+      "Y": 24
+    }
+  },
+  "Coast_up_left": {
+    "X": 816,
+    "Y": 0,
+    "Width": 48,
+    "Height": 48,
+    "Left": 816,
+    "Right": 864,
+    "Top": 0,
+    "Bottom": 48,
+    "IsEmpty": false,
+    "Location": {
+      "X": 816,
+      "Y": 0
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 840,
+      "Y": 24
+    }
+  },
+  "Coast_up": {
+    "X": 864,
+    "Y": 0,
+    "Width": 48,
+    "Height": 48,
+    "Left": 864,
+    "Right": 912,
+    "Top": 0,
+    "Bottom": 48,
+    "IsEmpty": false,
+    "Location": {
+      "X": 864,
+      "Y": 0
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 888,
+      "Y": 24
+    }
+  },
+  "Coast_up_right": {
+    "X": 912,
+    "Y": 0,
+    "Width": 48,
+    "Height": 48,
+    "Left": 912,
+    "Right": 960,
+    "Top": 0,
+    "Bottom": 48,
+    "IsEmpty": false,
+    "Location": {
+      "X": 912,
+      "Y": 0
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 936,
+      "Y": 24
+    }
+  },
+  "Coast_left": {
+    "X": 960,
+    "Y": 0,
+    "Width": 48,
+    "Height": 48,
+    "Left": 960,
+    "Right": 1008,
+    "Top": 0,
+    "Bottom": 48,
+    "IsEmpty": false,
+    "Location": {
+      "X": 960,
+      "Y": 0
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 984,
+      "Y": 24
+    }
+  },
+  "Coast_right": {
+    "X": 1008,
+    "Y": 0,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1008,
+    "Right": 1056,
+    "Top": 0,
+    "Bottom": 48,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1008,
+      "Y": 0
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1032,
+      "Y": 24
+    }
+  },
+  "Coast_down_left": {
+    "X": 1056,
+    "Y": 0,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1056,
+    "Right": 1104,
+    "Top": 0,
+    "Bottom": 48,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1056,
+      "Y": 0
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1080,
+      "Y": 24
+    }
+  },
+  "Coast_down": {
+    "X": 1104,
+    "Y": 0,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1104,
+    "Right": 1152,
+    "Top": 0,
+    "Bottom": 48,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1104,
+      "Y": 0
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1128,
+      "Y": 24
+    }
+  },
+  "Coast_d_right": {
+    "X": 1152,
+    "Y": 0,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1152,
+    "Right": 1200,
+    "Top": 0,
+    "Bottom": 48,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1152,
+      "Y": 0
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1176,
+      "Y": 24
+    }
+  },
+  "Cliff_up_left": {
+    "X": 1200,
+    "Y": 0,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1200,
+    "Right": 1248,
+    "Top": 0,
+    "Bottom": 48,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1200,
+      "Y": 0
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1224,
+      "Y": 24
+    }
+  },
+  "Cliff_u": {
+    "X": 1248,
+    "Y": 0,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1248,
+    "Right": 1296,
+    "Top": 0,
+    "Bottom": 48,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1248,
+      "Y": 0
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1272,
+      "Y": 24
+    }
+  },
+  "Cliff_up_right": {
+    "X": 1296,
+    "Y": 0,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1296,
+    "Right": 1344,
+    "Top": 0,
+    "Bottom": 48,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1296,
+      "Y": 0
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1320,
+      "Y": 24
+    }
+  },
+  "Cliff_down_left": {
+    "X": 1344,
+    "Y": 0,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1344,
+    "Right": 1392,
+    "Top": 0,
+    "Bottom": 48,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1344,
+      "Y": 0
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1368,
+      "Y": 24
+    }
+  },
+  "Cliff_down": {
+    "X": 1392,
+    "Y": 0,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1392,
+    "Right": 1440,
+    "Top": 0,
+    "Bottom": 48,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1392,
+      "Y": 0
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1416,
+      "Y": 24
+    }
+  },
+  "Cliff_down_right": {
+    "X": 1440,
+    "Y": 0,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1440,
+    "Right": 1488,
+    "Top": 0,
+    "Bottom": 48,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1440,
+      "Y": 0
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1464,
+      "Y": 24
+    }
+  },
+  "Isle_Coast_up_left": {
+    "X": 1488,
+    "Y": 0,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1488,
+    "Right": 1536,
+    "Top": 0,
+    "Bottom": 48,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1488,
+      "Y": 0
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1512,
+      "Y": 24
+    }
+  },
+  "Isle_Coast_up_right": {
+    "X": 1536,
+    "Y": 0,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1536,
+    "Right": 1584,
+    "Top": 0,
+    "Bottom": 48,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1536,
+      "Y": 0
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1560,
+      "Y": 24
+    }
+  },
+  "Isle_Coast_side_right_up": {
+    "X": 1584,
+    "Y": 0,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1584,
+    "Right": 1632,
+    "Top": 0,
+    "Bottom": 48,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1584,
+      "Y": 0
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1608,
+      "Y": 24
+    }
+  },
+  "Isle_Coast_side_right_down": {
+    "X": 1632,
+    "Y": 0,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1632,
+    "Right": 1680,
+    "Top": 0,
+    "Bottom": 48,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1632,
+      "Y": 0
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1656,
+      "Y": 24
+    }
+  },
+  "Isle_Coast_side_left_up": {
+    "X": 0,
+    "Y": 48,
+    "Width": 48,
+    "Height": 48,
+    "Left": 0,
+    "Right": 48,
+    "Top": 48,
+    "Bottom": 96,
+    "IsEmpty": false,
+    "Location": {
+      "X": 0,
+      "Y": 48
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 24,
+      "Y": 72
+    }
+  },
+  "Isle_Coast_side_left_down": {
+    "X": 48,
+    "Y": 48,
+    "Width": 48,
+    "Height": 48,
+    "Left": 48,
+    "Right": 96,
+    "Top": 48,
+    "Bottom": 96,
+    "IsEmpty": false,
+    "Location": {
+      "X": 48,
+      "Y": 48
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 72,
+      "Y": 72
+    }
+  },
+  "Isle_Coast_down_left": {
+    "X": 96,
+    "Y": 48,
+    "Width": 48,
+    "Height": 48,
+    "Left": 96,
+    "Right": 144,
+    "Top": 48,
+    "Bottom": 96,
+    "IsEmpty": false,
+    "Location": {
+      "X": 96,
+      "Y": 48
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 120,
+      "Y": 72
+    }
+  },
+  "Isle_Coast_down_right": {
+    "X": 144,
+    "Y": 48,
+    "Width": 48,
+    "Height": 48,
+    "Left": 144,
+    "Right": 192,
+    "Top": 48,
+    "Bottom": 96,
+    "IsEmpty": false,
+    "Location": {
+      "X": 144,
+      "Y": 48
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 168,
+      "Y": 72
+    }
+  },
+  "Isle_Cliff_down_left": {
+    "X": 192,
+    "Y": 48,
+    "Width": 48,
+    "Height": 48,
+    "Left": 192,
+    "Right": 240,
+    "Top": 48,
+    "Bottom": 96,
+    "IsEmpty": false,
+    "Location": {
+      "X": 192,
+      "Y": 48
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 216,
+      "Y": 72
+    }
+  },
+  "Isle_Cliff_down_right": {
+    "X": 240,
+    "Y": 48,
+    "Width": 48,
+    "Height": 48,
+    "Left": 240,
+    "Right": 288,
+    "Top": 48,
+    "Bottom": 96,
+    "IsEmpty": false,
+    "Location": {
+      "X": 240,
+      "Y": 48
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 264,
+      "Y": 72
+    }
+  },
+  "Isle_Cliff_up_left": {
+    "X": 288,
+    "Y": 48,
+    "Width": 48,
+    "Height": 48,
+    "Left": 288,
+    "Right": 336,
+    "Top": 48,
+    "Bottom": 96,
+    "IsEmpty": false,
+    "Location": {
+      "X": 288,
+      "Y": 48
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 312,
+      "Y": 72
+    }
+  },
+  "Isle_Cliff_up_right": {
+    "X": 336,
+    "Y": 48,
+    "Width": 48,
+    "Height": 48,
+    "Left": 336,
+    "Right": 384,
+    "Top": 48,
+    "Bottom": 96,
+    "IsEmpty": false,
+    "Location": {
+      "X": 336,
+      "Y": 48
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 360,
+      "Y": 72
+    }
+  },
+  "Cliff_left": {
+    "X": 384,
+    "Y": 48,
+    "Width": 48,
+    "Height": 48,
+    "Left": 384,
+    "Right": 432,
+    "Top": 48,
+    "Bottom": 96,
+    "IsEmpty": false,
+    "Location": {
+      "X": 384,
+      "Y": 48
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 408,
+      "Y": 72
+    }
+  },
+  "Cliff_right": {
+    "X": 432,
+    "Y": 48,
+    "Width": 48,
+    "Height": 48,
+    "Left": 432,
+    "Right": 480,
+    "Top": 48,
+    "Bottom": 96,
+    "IsEmpty": false,
+    "Location": {
+      "X": 432,
+      "Y": 48
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 456,
+      "Y": 72
+    }
+  },
+  "Lone_Coast_up_left": {
+    "X": 480,
+    "Y": 48,
+    "Width": 48,
+    "Height": 48,
+    "Left": 480,
+    "Right": 528,
+    "Top": 48,
+    "Bottom": 96,
+    "IsEmpty": false,
+    "Location": {
+      "X": 480,
+      "Y": 48
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 504,
+      "Y": 72
+    }
+  },
+  "Lone_Coast_up_right": {
+    "X": 528,
+    "Y": 48,
+    "Width": 48,
+    "Height": 48,
+    "Left": 528,
+    "Right": 576,
+    "Top": 48,
+    "Bottom": 96,
+    "IsEmpty": false,
+    "Location": {
+      "X": 528,
+      "Y": 48
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 552,
+      "Y": 72
+    }
+  },
+  "Lone_Coast_down_left": {
+    "X": 576,
+    "Y": 48,
+    "Width": 48,
+    "Height": 48,
+    "Left": 576,
+    "Right": 624,
+    "Top": 48,
+    "Bottom": 96,
+    "IsEmpty": false,
+    "Location": {
+      "X": 576,
+      "Y": 48
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 600,
+      "Y": 72
+    }
+  },
+  "Lone_Coast_down_right": {
+    "X": 624,
+    "Y": 48,
+    "Width": 48,
+    "Height": 48,
+    "Left": 624,
+    "Right": 672,
+    "Top": 48,
+    "Bottom": 96,
+    "IsEmpty": false,
+    "Location": {
+      "X": 624,
+      "Y": 48
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 648,
+      "Y": 72
+    }
+  },
+  "Lone_Coast_up": {
+    "X": 672,
+    "Y": 48,
+    "Width": 48,
+    "Height": 48,
+    "Left": 672,
+    "Right": 720,
+    "Top": 48,
+    "Bottom": 96,
+    "IsEmpty": false,
+    "Location": {
+      "X": 672,
+      "Y": 48
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 696,
+      "Y": 72
+    }
+  },
+  "Lone_Coast_down": {
+    "X": 720,
+    "Y": 48,
+    "Width": 48,
+    "Height": 48,
+    "Left": 720,
+    "Right": 768,
+    "Top": 48,
+    "Bottom": 96,
+    "IsEmpty": false,
+    "Location": {
+      "X": 720,
+      "Y": 48
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 744,
+      "Y": 72
+    }
+  },
+  "Lone_Coast_right": {
+    "X": 768,
+    "Y": 48,
+    "Width": 48,
+    "Height": 48,
+    "Left": 768,
+    "Right": 816,
+    "Top": 48,
+    "Bottom": 96,
+    "IsEmpty": false,
+    "Location": {
+      "X": 768,
+      "Y": 48
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 792,
+      "Y": 72
+    }
+  },
+  "Lone_Coast_left": {
+    "X": 816,
+    "Y": 48,
+    "Width": 48,
+    "Height": 48,
+    "Left": 816,
+    "Right": 864,
+    "Top": 48,
+    "Bottom": 96,
+    "IsEmpty": false,
+    "Location": {
+      "X": 816,
+      "Y": 48
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 840,
+      "Y": 72
+    }
+  },
+  "Invert_Coast_down_left": {
+    "X": 864,
+    "Y": 48,
+    "Width": 48,
+    "Height": 48,
+    "Left": 864,
+    "Right": 912,
+    "Top": 48,
+    "Bottom": 96,
+    "IsEmpty": false,
+    "Location": {
+      "X": 864,
+      "Y": 48
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 888,
+      "Y": 72
+    }
+  },
+  "Invert_Coast_down_right": {
+    "X": 912,
+    "Y": 48,
+    "Width": 48,
+    "Height": 48,
+    "Left": 912,
+    "Right": 960,
+    "Top": 48,
+    "Bottom": 96,
+    "IsEmpty": false,
+    "Location": {
+      "X": 912,
+      "Y": 48
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 936,
+      "Y": 72
+    }
+  },
+  "Invert_Coast_up_left": {
+    "X": 960,
+    "Y": 48,
+    "Width": 48,
+    "Height": 48,
+    "Left": 960,
+    "Right": 1008,
+    "Top": 48,
+    "Bottom": 96,
+    "IsEmpty": false,
+    "Location": {
+      "X": 960,
+      "Y": 48
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 984,
+      "Y": 72
+    }
+  },
+  "Invert_Coast_up_right": {
+    "X": 1008,
+    "Y": 48,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1008,
+    "Right": 1056,
+    "Top": 48,
+    "Bottom": 96,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1008,
+      "Y": 48
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1032,
+      "Y": 72
+    }
+  },
+  "Invert_Coast_left_down": {
+    "X": 1056,
+    "Y": 48,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1056,
+    "Right": 1104,
+    "Top": 48,
+    "Bottom": 96,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1056,
+      "Y": 48
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1080,
+      "Y": 72
+    }
+  },
+  "Invert_Coast_left_up": {
+    "X": 1104,
+    "Y": 48,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1104,
+    "Right": 1152,
+    "Top": 48,
+    "Bottom": 96,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1104,
+      "Y": 48
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1128,
+      "Y": 72
+    }
+  },
+  "Invert_Coast_right_up": {
+    "X": 1152,
+    "Y": 48,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1152,
+    "Right": 1200,
+    "Top": 48,
+    "Bottom": 96,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1152,
+      "Y": 48
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1176,
+      "Y": 72
+    }
+  },
+  "Invert_Coast_right_down": {
+    "X": 1200,
+    "Y": 48,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1200,
+    "Right": 1248,
+    "Top": 48,
+    "Bottom": 96,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1200,
+      "Y": 48
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1224,
+      "Y": 72
+    }
+  },
+  "Rain_Reef": {
+    "X": 1248,
+    "Y": 48,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1248,
+    "Right": 1296,
+    "Top": 48,
+    "Bottom": 96,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1248,
+      "Y": 48
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1272,
+      "Y": 72
+    }
+  },
+  "Rain_Sea": {
+    "X": 1296,
+    "Y": 48,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1296,
+    "Right": 1344,
+    "Top": 48,
+    "Bottom": 96,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1296,
+      "Y": 48
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1320,
+      "Y": 72
+    }
+  },
+  "Rain_River_ver": {
+    "X": 1344,
+    "Y": 48,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1344,
+    "Right": 1392,
+    "Top": 48,
+    "Bottom": 96,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1344,
+      "Y": 48
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1368,
+      "Y": 72
+    }
+  },
+  "Rain_River_hor": {
+    "X": 1392,
+    "Y": 48,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1392,
+    "Right": 1440,
+    "Top": 48,
+    "Bottom": 96,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1392,
+      "Y": 48
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1416,
+      "Y": 72
+    }
+  },
+  "Rain_River_Inter3_right": {
+    "X": 1440,
+    "Y": 48,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1440,
+    "Right": 1488,
+    "Top": 48,
+    "Bottom": 96,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1440,
+      "Y": 48
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1464,
+      "Y": 72
+    }
+  },
+  "Rain_River_Inter3_left": {
+    "X": 1488,
+    "Y": 48,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1488,
+    "Right": 1536,
+    "Top": 48,
+    "Bottom": 96,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1488,
+      "Y": 48
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1512,
+      "Y": 72
+    }
+  },
+  "Rain_River_Inter3_up": {
+    "X": 1536,
+    "Y": 48,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1536,
+    "Right": 1584,
+    "Top": 48,
+    "Bottom": 96,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1536,
+      "Y": 48
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1560,
+      "Y": 72
+    }
+  },
+  "Rain_River_Inter3_down": {
+    "X": 1584,
+    "Y": 48,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1584,
+    "Right": 1632,
+    "Top": 48,
+    "Bottom": 96,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1584,
+      "Y": 48
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1608,
+      "Y": 72
+    }
+  },
+  "Rain_River_Cross": {
+    "X": 1632,
+    "Y": 48,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1632,
+    "Right": 1680,
+    "Top": 48,
+    "Bottom": 96,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1632,
+      "Y": 48
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1656,
+      "Y": 72
+    }
+  },
+  "Rain_River_Turn_up_right": {
+    "X": 0,
+    "Y": 96,
+    "Width": 48,
+    "Height": 48,
+    "Left": 0,
+    "Right": 48,
+    "Top": 96,
+    "Bottom": 144,
+    "IsEmpty": false,
+    "Location": {
+      "X": 0,
+      "Y": 96
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 24,
+      "Y": 120
+    }
+  },
+  "Rain_River_Turn_up_left": {
+    "X": 48,
+    "Y": 96,
+    "Width": 48,
+    "Height": 48,
+    "Left": 48,
+    "Right": 96,
+    "Top": 96,
+    "Bottom": 144,
+    "IsEmpty": false,
+    "Location": {
+      "X": 48,
+      "Y": 96
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 72,
+      "Y": 120
+    }
+  },
+  "Rain_River_Turn_down_right": {
+    "X": 96,
+    "Y": 96,
+    "Width": 48,
+    "Height": 48,
+    "Left": 96,
+    "Right": 144,
+    "Top": 96,
+    "Bottom": 144,
+    "IsEmpty": false,
+    "Location": {
+      "X": 96,
+      "Y": 96
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 120,
+      "Y": 120
+    }
+  },
+  "Rain_River_Turn_down_left": {
+    "X": 144,
+    "Y": 96,
+    "Width": 48,
+    "Height": 48,
+    "Left": 144,
+    "Right": 192,
+    "Top": 96,
+    "Bottom": 144,
+    "IsEmpty": false,
+    "Location": {
+      "X": 144,
+      "Y": 96
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 168,
+      "Y": 120
+    }
+  },
+  "Rain_River_Flow_left": {
+    "X": 192,
+    "Y": 96,
+    "Width": 48,
+    "Height": 48,
+    "Left": 192,
+    "Right": 240,
+    "Top": 96,
+    "Bottom": 144,
+    "IsEmpty": false,
+    "Location": {
+      "X": 192,
+      "Y": 96
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 216,
+      "Y": 120
+    }
+  },
+  "Rain_River_Flow_up": {
+    "X": 240,
+    "Y": 96,
+    "Width": 48,
+    "Height": 48,
+    "Left": 240,
+    "Right": 288,
+    "Top": 96,
+    "Bottom": 144,
+    "IsEmpty": false,
+    "Location": {
+      "X": 240,
+      "Y": 96
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 264,
+      "Y": 120
+    }
+  },
+  "Rain_River_Flow_down": {
+    "X": 288,
+    "Y": 96,
+    "Width": 48,
+    "Height": 48,
+    "Left": 288,
+    "Right": 336,
+    "Top": 96,
+    "Bottom": 144,
+    "IsEmpty": false,
+    "Location": {
+      "X": 288,
+      "Y": 96
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 312,
+      "Y": 120
+    }
+  },
+  "Rain_River_Flow_right": {
+    "X": 336,
+    "Y": 96,
+    "Width": 48,
+    "Height": 48,
+    "Left": 336,
+    "Right": 384,
+    "Top": 96,
+    "Bottom": 144,
+    "IsEmpty": false,
+    "Location": {
+      "X": 336,
+      "Y": 96
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 360,
+      "Y": 120
+    }
+  },
+  "Rain_Coast_up_left": {
+    "X": 384,
+    "Y": 96,
+    "Width": 48,
+    "Height": 48,
+    "Left": 384,
+    "Right": 432,
+    "Top": 96,
+    "Bottom": 144,
+    "IsEmpty": false,
+    "Location": {
+      "X": 384,
+      "Y": 96
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 408,
+      "Y": 120
+    }
+  },
+  "Rain_Coast_up": {
+    "X": 432,
+    "Y": 96,
+    "Width": 48,
+    "Height": 48,
+    "Left": 432,
+    "Right": 480,
+    "Top": 96,
+    "Bottom": 144,
+    "IsEmpty": false,
+    "Location": {
+      "X": 432,
+      "Y": 96
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 456,
+      "Y": 120
+    }
+  },
+  "Rain_Coast_up_right": {
+    "X": 480,
+    "Y": 96,
+    "Width": 48,
+    "Height": 48,
+    "Left": 480,
+    "Right": 528,
+    "Top": 96,
+    "Bottom": 144,
+    "IsEmpty": false,
+    "Location": {
+      "X": 480,
+      "Y": 96
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 504,
+      "Y": 120
+    }
+  },
+  "Rain_Coast_left": {
+    "X": 528,
+    "Y": 96,
+    "Width": 48,
+    "Height": 48,
+    "Left": 528,
+    "Right": 576,
+    "Top": 96,
+    "Bottom": 144,
+    "IsEmpty": false,
+    "Location": {
+      "X": 528,
+      "Y": 96
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 552,
+      "Y": 120
+    }
+  },
+  "Rain_Coast_right": {
+    "X": 576,
+    "Y": 96,
+    "Width": 48,
+    "Height": 48,
+    "Left": 576,
+    "Right": 624,
+    "Top": 96,
+    "Bottom": 144,
+    "IsEmpty": false,
+    "Location": {
+      "X": 576,
+      "Y": 96
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 600,
+      "Y": 120
+    }
+  },
+  "Rain_Coast_down_left": {
+    "X": 624,
+    "Y": 96,
+    "Width": 48,
+    "Height": 48,
+    "Left": 624,
+    "Right": 672,
+    "Top": 96,
+    "Bottom": 144,
+    "IsEmpty": false,
+    "Location": {
+      "X": 624,
+      "Y": 96
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 648,
+      "Y": 120
+    }
+  },
+  "Rain_Coast_down": {
+    "X": 672,
+    "Y": 96,
+    "Width": 48,
+    "Height": 48,
+    "Left": 672,
+    "Right": 720,
+    "Top": 96,
+    "Bottom": 144,
+    "IsEmpty": false,
+    "Location": {
+      "X": 672,
+      "Y": 96
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 696,
+      "Y": 120
+    }
+  },
+  "Rain_Coast_d_right": {
+    "X": 720,
+    "Y": 96,
+    "Width": 48,
+    "Height": 48,
+    "Left": 720,
+    "Right": 768,
+    "Top": 96,
+    "Bottom": 144,
+    "IsEmpty": false,
+    "Location": {
+      "X": 720,
+      "Y": 96
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 744,
+      "Y": 120
+    }
+  },
+  "Rain_Cliff_up_left": {
+    "X": 768,
+    "Y": 96,
+    "Width": 48,
+    "Height": 48,
+    "Left": 768,
+    "Right": 816,
+    "Top": 96,
+    "Bottom": 144,
+    "IsEmpty": false,
+    "Location": {
+      "X": 768,
+      "Y": 96
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 792,
+      "Y": 120
+    }
+  },
+  "Rain_Cliff_u": {
+    "X": 816,
+    "Y": 96,
+    "Width": 48,
+    "Height": 48,
+    "Left": 816,
+    "Right": 864,
+    "Top": 96,
+    "Bottom": 144,
+    "IsEmpty": false,
+    "Location": {
+      "X": 816,
+      "Y": 96
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 840,
+      "Y": 120
+    }
+  },
+  "Rain_Cliff_up_right": {
+    "X": 864,
+    "Y": 96,
+    "Width": 48,
+    "Height": 48,
+    "Left": 864,
+    "Right": 912,
+    "Top": 96,
+    "Bottom": 144,
+    "IsEmpty": false,
+    "Location": {
+      "X": 864,
+      "Y": 96
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 888,
+      "Y": 120
+    }
+  },
+  "Rain_Cliff_down_left": {
+    "X": 912,
+    "Y": 96,
+    "Width": 48,
+    "Height": 48,
+    "Left": 912,
+    "Right": 960,
+    "Top": 96,
+    "Bottom": 144,
+    "IsEmpty": false,
+    "Location": {
+      "X": 912,
+      "Y": 96
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 936,
+      "Y": 120
+    }
+  },
+  "Rain_Cliff_down": {
+    "X": 960,
+    "Y": 96,
+    "Width": 48,
+    "Height": 48,
+    "Left": 960,
+    "Right": 1008,
+    "Top": 96,
+    "Bottom": 144,
+    "IsEmpty": false,
+    "Location": {
+      "X": 960,
+      "Y": 96
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 984,
+      "Y": 120
+    }
+  },
+  "Rain_Cliff_down_right": {
+    "X": 1008,
+    "Y": 96,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1008,
+    "Right": 1056,
+    "Top": 96,
+    "Bottom": 144,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1008,
+      "Y": 96
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1032,
+      "Y": 120
+    }
+  },
+  "Rain_Isle_Coast_up_left": {
+    "X": 1056,
+    "Y": 96,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1056,
+    "Right": 1104,
+    "Top": 96,
+    "Bottom": 144,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1056,
+      "Y": 96
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1080,
+      "Y": 120
+    }
+  },
+  "Rain_Isle_Coast_up_right": {
+    "X": 1104,
+    "Y": 96,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1104,
+    "Right": 1152,
+    "Top": 96,
+    "Bottom": 144,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1104,
+      "Y": 96
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1128,
+      "Y": 120
+    }
+  },
+  "Rain_Isle_Coast_side_right_up": {
+    "X": 1152,
+    "Y": 96,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1152,
+    "Right": 1200,
+    "Top": 96,
+    "Bottom": 144,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1152,
+      "Y": 96
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1176,
+      "Y": 120
+    }
+  },
+  "Rain_Isle_Coast_side_right_down": {
+    "X": 1200,
+    "Y": 96,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1200,
+    "Right": 1248,
+    "Top": 96,
+    "Bottom": 144,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1200,
+      "Y": 96
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1224,
+      "Y": 120
+    }
+  },
+  "Rain_Isle_Coast_side_left_up": {
+    "X": 1248,
+    "Y": 96,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1248,
+    "Right": 1296,
+    "Top": 96,
+    "Bottom": 144,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1248,
+      "Y": 96
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1272,
+      "Y": 120
+    }
+  },
+  "Rain_Isle_Coast_side_left_down": {
+    "X": 1296,
+    "Y": 96,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1296,
+    "Right": 1344,
+    "Top": 96,
+    "Bottom": 144,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1296,
+      "Y": 96
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1320,
+      "Y": 120
+    }
+  },
+  "Rain_Isle_Coast_down_left": {
+    "X": 1344,
+    "Y": 96,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1344,
+    "Right": 1392,
+    "Top": 96,
+    "Bottom": 144,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1344,
+      "Y": 96
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1368,
+      "Y": 120
+    }
+  },
+  "Rain_Isle_Coast_down_right": {
+    "X": 1392,
+    "Y": 96,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1392,
+    "Right": 1440,
+    "Top": 96,
+    "Bottom": 144,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1392,
+      "Y": 96
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1416,
+      "Y": 120
+    }
+  },
+  "Rain_Isle_Cliff_down_left": {
+    "X": 1440,
+    "Y": 96,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1440,
+    "Right": 1488,
+    "Top": 96,
+    "Bottom": 144,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1440,
+      "Y": 96
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1464,
+      "Y": 120
+    }
+  },
+  "Rain_Isle_Cliff_down_right": {
+    "X": 1488,
+    "Y": 96,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1488,
+    "Right": 1536,
+    "Top": 96,
+    "Bottom": 144,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1488,
+      "Y": 96
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1512,
+      "Y": 120
+    }
+  },
+  "Rain_Isle_Cliff_up_left": {
+    "X": 1536,
+    "Y": 96,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1536,
+    "Right": 1584,
+    "Top": 96,
+    "Bottom": 144,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1536,
+      "Y": 96
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1560,
+      "Y": 120
+    }
+  },
+  "Rain_Isle_Cliff_up_right": {
+    "X": 1584,
+    "Y": 96,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1584,
+    "Right": 1632,
+    "Top": 96,
+    "Bottom": 144,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1584,
+      "Y": 96
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1608,
+      "Y": 120
+    }
+  },
+  "Rain_Cliff_left": {
+    "X": 1632,
+    "Y": 96,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1632,
+    "Right": 1680,
+    "Top": 96,
+    "Bottom": 144,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1632,
+      "Y": 96
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1656,
+      "Y": 120
+    }
+  },
+  "Rain_Cliff_right": {
+    "X": 0,
+    "Y": 144,
+    "Width": 48,
+    "Height": 48,
+    "Left": 0,
+    "Right": 48,
+    "Top": 144,
+    "Bottom": 192,
+    "IsEmpty": false,
+    "Location": {
+      "X": 0,
+      "Y": 144
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 24,
+      "Y": 168
+    }
+  },
+  "Rain_Lone_Coast_up_left": {
+    "X": 48,
+    "Y": 144,
+    "Width": 48,
+    "Height": 48,
+    "Left": 48,
+    "Right": 96,
+    "Top": 144,
+    "Bottom": 192,
+    "IsEmpty": false,
+    "Location": {
+      "X": 48,
+      "Y": 144
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 72,
+      "Y": 168
+    }
+  },
+  "Rain_Lone_Coast_up_right": {
+    "X": 96,
+    "Y": 144,
+    "Width": 48,
+    "Height": 48,
+    "Left": 96,
+    "Right": 144,
+    "Top": 144,
+    "Bottom": 192,
+    "IsEmpty": false,
+    "Location": {
+      "X": 96,
+      "Y": 144
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 120,
+      "Y": 168
+    }
+  },
+  "Rain_Lone_Coast_down_left": {
+    "X": 144,
+    "Y": 144,
+    "Width": 48,
+    "Height": 48,
+    "Left": 144,
+    "Right": 192,
+    "Top": 144,
+    "Bottom": 192,
+    "IsEmpty": false,
+    "Location": {
+      "X": 144,
+      "Y": 144
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 168,
+      "Y": 168
+    }
+  },
+  "Rain_Lone_Coast_down_right": {
+    "X": 192,
+    "Y": 144,
+    "Width": 48,
+    "Height": 48,
+    "Left": 192,
+    "Right": 240,
+    "Top": 144,
+    "Bottom": 192,
+    "IsEmpty": false,
+    "Location": {
+      "X": 192,
+      "Y": 144
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 216,
+      "Y": 168
+    }
+  },
+  "Rain_Lone_Coast_up": {
+    "X": 240,
+    "Y": 144,
+    "Width": 48,
+    "Height": 48,
+    "Left": 240,
+    "Right": 288,
+    "Top": 144,
+    "Bottom": 192,
+    "IsEmpty": false,
+    "Location": {
+      "X": 240,
+      "Y": 144
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 264,
+      "Y": 168
+    }
+  },
+  "Rain_Lone_Coast_down": {
+    "X": 288,
+    "Y": 144,
+    "Width": 48,
+    "Height": 48,
+    "Left": 288,
+    "Right": 336,
+    "Top": 144,
+    "Bottom": 192,
+    "IsEmpty": false,
+    "Location": {
+      "X": 288,
+      "Y": 144
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 312,
+      "Y": 168
+    }
+  },
+  "Rain_Lone_Coast_right": {
+    "X": 336,
+    "Y": 144,
+    "Width": 48,
+    "Height": 48,
+    "Left": 336,
+    "Right": 384,
+    "Top": 144,
+    "Bottom": 192,
+    "IsEmpty": false,
+    "Location": {
+      "X": 336,
+      "Y": 144
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 360,
+      "Y": 168
+    }
+  },
+  "Rain_Lone_Coast_left": {
+    "X": 384,
+    "Y": 144,
+    "Width": 48,
+    "Height": 48,
+    "Left": 384,
+    "Right": 432,
+    "Top": 144,
+    "Bottom": 192,
+    "IsEmpty": false,
+    "Location": {
+      "X": 384,
+      "Y": 144
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 408,
+      "Y": 168
+    }
+  },
+  "Rain_Invert_Coast_down_left": {
+    "X": 432,
+    "Y": 144,
+    "Width": 48,
+    "Height": 48,
+    "Left": 432,
+    "Right": 480,
+    "Top": 144,
+    "Bottom": 192,
+    "IsEmpty": false,
+    "Location": {
+      "X": 432,
+      "Y": 144
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 456,
+      "Y": 168
+    }
+  },
+  "Rain_Invert_Coast_down_right": {
+    "X": 480,
+    "Y": 144,
+    "Width": 48,
+    "Height": 48,
+    "Left": 480,
+    "Right": 528,
+    "Top": 144,
+    "Bottom": 192,
+    "IsEmpty": false,
+    "Location": {
+      "X": 480,
+      "Y": 144
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 504,
+      "Y": 168
+    }
+  },
+  "Rain_Invert_Coast_up_left": {
+    "X": 528,
+    "Y": 144,
+    "Width": 48,
+    "Height": 48,
+    "Left": 528,
+    "Right": 576,
+    "Top": 144,
+    "Bottom": 192,
+    "IsEmpty": false,
+    "Location": {
+      "X": 528,
+      "Y": 144
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 552,
+      "Y": 168
+    }
+  },
+  "Rain_Invert_Coast_up_right": {
+    "X": 576,
+    "Y": 144,
+    "Width": 48,
+    "Height": 48,
+    "Left": 576,
+    "Right": 624,
+    "Top": 144,
+    "Bottom": 192,
+    "IsEmpty": false,
+    "Location": {
+      "X": 576,
+      "Y": 144
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 600,
+      "Y": 168
+    }
+  },
+  "Rain_Invert_Coast_left_down": {
+    "X": 624,
+    "Y": 144,
+    "Width": 48,
+    "Height": 48,
+    "Left": 624,
+    "Right": 672,
+    "Top": 144,
+    "Bottom": 192,
+    "IsEmpty": false,
+    "Location": {
+      "X": 624,
+      "Y": 144
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 648,
+      "Y": 168
+    }
+  },
+  "Rain_Invert_Coast_left_up": {
+    "X": 672,
+    "Y": 144,
+    "Width": 48,
+    "Height": 48,
+    "Left": 672,
+    "Right": 720,
+    "Top": 144,
+    "Bottom": 192,
+    "IsEmpty": false,
+    "Location": {
+      "X": 672,
+      "Y": 144
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 696,
+      "Y": 168
+    }
+  },
+  "Rain_Invert_Coast_right_up": {
+    "X": 720,
+    "Y": 144,
+    "Width": 48,
+    "Height": 48,
+    "Left": 720,
+    "Right": 768,
+    "Top": 144,
+    "Bottom": 192,
+    "IsEmpty": false,
+    "Location": {
+      "X": 720,
+      "Y": 144
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 744,
+      "Y": 168
+    }
+  },
+  "Rain_Invert_Coast_right_down": {
+    "X": 768,
+    "Y": 144,
+    "Width": 48,
+    "Height": 48,
+    "Left": 768,
+    "Right": 816,
+    "Top": 144,
+    "Bottom": 192,
+    "IsEmpty": false,
+    "Location": {
+      "X": 768,
+      "Y": 144
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 792,
+      "Y": 168
+    }
+  },
+  "Snow_Reef": {
+    "X": 816,
+    "Y": 144,
+    "Width": 48,
+    "Height": 48,
+    "Left": 816,
+    "Right": 864,
+    "Top": 144,
+    "Bottom": 192,
+    "IsEmpty": false,
+    "Location": {
+      "X": 816,
+      "Y": 144
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 840,
+      "Y": 168
+    }
+  },
+  "Snow_Sea": {
+    "X": 864,
+    "Y": 144,
+    "Width": 48,
+    "Height": 48,
+    "Left": 864,
+    "Right": 912,
+    "Top": 144,
+    "Bottom": 192,
+    "IsEmpty": false,
+    "Location": {
+      "X": 864,
+      "Y": 144
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 888,
+      "Y": 168
+    }
+  },
+  "Snow_River_ver": {
+    "X": 912,
+    "Y": 144,
+    "Width": 48,
+    "Height": 48,
+    "Left": 912,
+    "Right": 960,
+    "Top": 144,
+    "Bottom": 192,
+    "IsEmpty": false,
+    "Location": {
+      "X": 912,
+      "Y": 144
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 936,
+      "Y": 168
+    }
+  },
+  "Snow_River_hor": {
+    "X": 960,
+    "Y": 144,
+    "Width": 48,
+    "Height": 48,
+    "Left": 960,
+    "Right": 1008,
+    "Top": 144,
+    "Bottom": 192,
+    "IsEmpty": false,
+    "Location": {
+      "X": 960,
+      "Y": 144
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 984,
+      "Y": 168
+    }
+  },
+  "Snow_River_Inter3_right": {
+    "X": 1008,
+    "Y": 144,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1008,
+    "Right": 1056,
+    "Top": 144,
+    "Bottom": 192,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1008,
+      "Y": 144
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1032,
+      "Y": 168
+    }
+  },
+  "Snow_River_Inter3_left": {
+    "X": 1056,
+    "Y": 144,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1056,
+    "Right": 1104,
+    "Top": 144,
+    "Bottom": 192,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1056,
+      "Y": 144
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1080,
+      "Y": 168
+    }
+  },
+  "Snow_River_Inter3_up": {
+    "X": 1104,
+    "Y": 144,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1104,
+    "Right": 1152,
+    "Top": 144,
+    "Bottom": 192,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1104,
+      "Y": 144
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1128,
+      "Y": 168
+    }
+  },
+  "Snow_River_Inter3_down": {
+    "X": 1152,
+    "Y": 144,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1152,
+    "Right": 1200,
+    "Top": 144,
+    "Bottom": 192,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1152,
+      "Y": 144
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1176,
+      "Y": 168
+    }
+  },
+  "Snow_River_Cross": {
+    "X": 1200,
+    "Y": 144,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1200,
+    "Right": 1248,
+    "Top": 144,
+    "Bottom": 192,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1200,
+      "Y": 144
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1224,
+      "Y": 168
+    }
+  },
+  "Snow_River_Turn_up_right": {
+    "X": 1248,
+    "Y": 144,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1248,
+    "Right": 1296,
+    "Top": 144,
+    "Bottom": 192,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1248,
+      "Y": 144
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1272,
+      "Y": 168
+    }
+  },
+  "Snow_River_Turn_up_left": {
+    "X": 1296,
+    "Y": 144,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1296,
+    "Right": 1344,
+    "Top": 144,
+    "Bottom": 192,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1296,
+      "Y": 144
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1320,
+      "Y": 168
+    }
+  },
+  "Snow_River_Turn_down_right": {
+    "X": 1344,
+    "Y": 144,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1344,
+    "Right": 1392,
+    "Top": 144,
+    "Bottom": 192,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1344,
+      "Y": 144
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1368,
+      "Y": 168
+    }
+  },
+  "Snow_River_Turn_down_left": {
+    "X": 1392,
+    "Y": 144,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1392,
+    "Right": 1440,
+    "Top": 144,
+    "Bottom": 192,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1392,
+      "Y": 144
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1416,
+      "Y": 168
+    }
+  },
+  "Snow_River_Flow_left": {
+    "X": 1440,
+    "Y": 144,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1440,
+    "Right": 1488,
+    "Top": 144,
+    "Bottom": 192,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1440,
+      "Y": 144
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1464,
+      "Y": 168
+    }
+  },
+  "Snow_River_Flow_up": {
+    "X": 1488,
+    "Y": 144,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1488,
+    "Right": 1536,
+    "Top": 144,
+    "Bottom": 192,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1488,
+      "Y": 144
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1512,
+      "Y": 168
+    }
+  },
+  "Snow_River_Flow_down": {
+    "X": 1536,
+    "Y": 144,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1536,
+    "Right": 1584,
+    "Top": 144,
+    "Bottom": 192,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1536,
+      "Y": 144
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1560,
+      "Y": 168
+    }
+  },
+  "Snow_River_Flow_right": {
+    "X": 1584,
+    "Y": 144,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1584,
+    "Right": 1632,
+    "Top": 144,
+    "Bottom": 192,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1584,
+      "Y": 144
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1608,
+      "Y": 168
+    }
+  },
+  "Snow_Coast_up_left": {
+    "X": 1632,
+    "Y": 144,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1632,
+    "Right": 1680,
+    "Top": 144,
+    "Bottom": 192,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1632,
+      "Y": 144
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1656,
+      "Y": 168
+    }
+  },
+  "Snow_Coast_up": {
+    "X": 0,
+    "Y": 192,
+    "Width": 48,
+    "Height": 48,
+    "Left": 0,
+    "Right": 48,
+    "Top": 192,
+    "Bottom": 240,
+    "IsEmpty": false,
+    "Location": {
+      "X": 0,
+      "Y": 192
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 24,
+      "Y": 216
+    }
+  },
+  "Snow_Coast_up_right": {
+    "X": 48,
+    "Y": 192,
+    "Width": 48,
+    "Height": 48,
+    "Left": 48,
+    "Right": 96,
+    "Top": 192,
+    "Bottom": 240,
+    "IsEmpty": false,
+    "Location": {
+      "X": 48,
+      "Y": 192
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 72,
+      "Y": 216
+    }
+  },
+  "Snow_Coast_left": {
+    "X": 96,
+    "Y": 192,
+    "Width": 48,
+    "Height": 48,
+    "Left": 96,
+    "Right": 144,
+    "Top": 192,
+    "Bottom": 240,
+    "IsEmpty": false,
+    "Location": {
+      "X": 96,
+      "Y": 192
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 120,
+      "Y": 216
+    }
+  },
+  "Snow_Coast_right": {
+    "X": 144,
+    "Y": 192,
+    "Width": 48,
+    "Height": 48,
+    "Left": 144,
+    "Right": 192,
+    "Top": 192,
+    "Bottom": 240,
+    "IsEmpty": false,
+    "Location": {
+      "X": 144,
+      "Y": 192
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 168,
+      "Y": 216
+    }
+  },
+  "Snow_Coast_down_left": {
+    "X": 192,
+    "Y": 192,
+    "Width": 48,
+    "Height": 48,
+    "Left": 192,
+    "Right": 240,
+    "Top": 192,
+    "Bottom": 240,
+    "IsEmpty": false,
+    "Location": {
+      "X": 192,
+      "Y": 192
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 216,
+      "Y": 216
+    }
+  },
+  "Snow_Coast_down": {
+    "X": 240,
+    "Y": 192,
+    "Width": 48,
+    "Height": 48,
+    "Left": 240,
+    "Right": 288,
+    "Top": 192,
+    "Bottom": 240,
+    "IsEmpty": false,
+    "Location": {
+      "X": 240,
+      "Y": 192
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 264,
+      "Y": 216
+    }
+  },
+  "Snow_Coast_d_right": {
+    "X": 288,
+    "Y": 192,
+    "Width": 48,
+    "Height": 48,
+    "Left": 288,
+    "Right": 336,
+    "Top": 192,
+    "Bottom": 240,
+    "IsEmpty": false,
+    "Location": {
+      "X": 288,
+      "Y": 192
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 312,
+      "Y": 216
+    }
+  },
+  "Snow_Cliff_up_left": {
+    "X": 336,
+    "Y": 192,
+    "Width": 48,
+    "Height": 48,
+    "Left": 336,
+    "Right": 384,
+    "Top": 192,
+    "Bottom": 240,
+    "IsEmpty": false,
+    "Location": {
+      "X": 336,
+      "Y": 192
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 360,
+      "Y": 216
+    }
+  },
+  "Snow_Cliff_u": {
+    "X": 384,
+    "Y": 192,
+    "Width": 48,
+    "Height": 48,
+    "Left": 384,
+    "Right": 432,
+    "Top": 192,
+    "Bottom": 240,
+    "IsEmpty": false,
+    "Location": {
+      "X": 384,
+      "Y": 192
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 408,
+      "Y": 216
+    }
+  },
+  "Snow_Cliff_up_right": {
+    "X": 432,
+    "Y": 192,
+    "Width": 48,
+    "Height": 48,
+    "Left": 432,
+    "Right": 480,
+    "Top": 192,
+    "Bottom": 240,
+    "IsEmpty": false,
+    "Location": {
+      "X": 432,
+      "Y": 192
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 456,
+      "Y": 216
+    }
+  },
+  "Snow_Cliff_down_left": {
+    "X": 480,
+    "Y": 192,
+    "Width": 48,
+    "Height": 48,
+    "Left": 480,
+    "Right": 528,
+    "Top": 192,
+    "Bottom": 240,
+    "IsEmpty": false,
+    "Location": {
+      "X": 480,
+      "Y": 192
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 504,
+      "Y": 216
+    }
+  },
+  "Snow_Cliff_down": {
+    "X": 528,
+    "Y": 192,
+    "Width": 48,
+    "Height": 48,
+    "Left": 528,
+    "Right": 576,
+    "Top": 192,
+    "Bottom": 240,
+    "IsEmpty": false,
+    "Location": {
+      "X": 528,
+      "Y": 192
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 552,
+      "Y": 216
+    }
+  },
+  "Snow_Cliff_down_right": {
+    "X": 576,
+    "Y": 192,
+    "Width": 48,
+    "Height": 48,
+    "Left": 576,
+    "Right": 624,
+    "Top": 192,
+    "Bottom": 240,
+    "IsEmpty": false,
+    "Location": {
+      "X": 576,
+      "Y": 192
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 600,
+      "Y": 216
+    }
+  },
+  "Snow_Isle_Coast_up_left": {
+    "X": 624,
+    "Y": 192,
+    "Width": 48,
+    "Height": 48,
+    "Left": 624,
+    "Right": 672,
+    "Top": 192,
+    "Bottom": 240,
+    "IsEmpty": false,
+    "Location": {
+      "X": 624,
+      "Y": 192
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 648,
+      "Y": 216
+    }
+  },
+  "Snow_Isle_Coast_up_right": {
+    "X": 672,
+    "Y": 192,
+    "Width": 48,
+    "Height": 48,
+    "Left": 672,
+    "Right": 720,
+    "Top": 192,
+    "Bottom": 240,
+    "IsEmpty": false,
+    "Location": {
+      "X": 672,
+      "Y": 192
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 696,
+      "Y": 216
+    }
+  },
+  "Snow_Isle_Coast_side_right_up": {
+    "X": 720,
+    "Y": 192,
+    "Width": 48,
+    "Height": 48,
+    "Left": 720,
+    "Right": 768,
+    "Top": 192,
+    "Bottom": 240,
+    "IsEmpty": false,
+    "Location": {
+      "X": 720,
+      "Y": 192
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 744,
+      "Y": 216
+    }
+  },
+  "Snow_Isle_Coast_side_right_down": {
+    "X": 768,
+    "Y": 192,
+    "Width": 48,
+    "Height": 48,
+    "Left": 768,
+    "Right": 816,
+    "Top": 192,
+    "Bottom": 240,
+    "IsEmpty": false,
+    "Location": {
+      "X": 768,
+      "Y": 192
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 792,
+      "Y": 216
+    }
+  },
+  "Snow_Isle_Coast_side_left_up": {
+    "X": 816,
+    "Y": 192,
+    "Width": 48,
+    "Height": 48,
+    "Left": 816,
+    "Right": 864,
+    "Top": 192,
+    "Bottom": 240,
+    "IsEmpty": false,
+    "Location": {
+      "X": 816,
+      "Y": 192
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 840,
+      "Y": 216
+    }
+  },
+  "Snow_Isle_Coast_side_left_down": {
+    "X": 864,
+    "Y": 192,
+    "Width": 48,
+    "Height": 48,
+    "Left": 864,
+    "Right": 912,
+    "Top": 192,
+    "Bottom": 240,
+    "IsEmpty": false,
+    "Location": {
+      "X": 864,
+      "Y": 192
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 888,
+      "Y": 216
+    }
+  },
+  "Snow_Isle_Coast_down_left": {
+    "X": 912,
+    "Y": 192,
+    "Width": 48,
+    "Height": 48,
+    "Left": 912,
+    "Right": 960,
+    "Top": 192,
+    "Bottom": 240,
+    "IsEmpty": false,
+    "Location": {
+      "X": 912,
+      "Y": 192
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 936,
+      "Y": 216
+    }
+  },
+  "Snow_Isle_Coast_down_right": {
+    "X": 960,
+    "Y": 192,
+    "Width": 48,
+    "Height": 48,
+    "Left": 960,
+    "Right": 1008,
+    "Top": 192,
+    "Bottom": 240,
+    "IsEmpty": false,
+    "Location": {
+      "X": 960,
+      "Y": 192
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 984,
+      "Y": 216
+    }
+  },
+  "Snow_Isle_Cliff_down_left": {
+    "X": 1008,
+    "Y": 192,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1008,
+    "Right": 1056,
+    "Top": 192,
+    "Bottom": 240,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1008,
+      "Y": 192
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1032,
+      "Y": 216
+    }
+  },
+  "Snow_Isle_Cliff_down_right": {
+    "X": 1056,
+    "Y": 192,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1056,
+    "Right": 1104,
+    "Top": 192,
+    "Bottom": 240,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1056,
+      "Y": 192
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1080,
+      "Y": 216
+    }
+  },
+  "Snow_Isle_Cliff_up_left": {
+    "X": 1104,
+    "Y": 192,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1104,
+    "Right": 1152,
+    "Top": 192,
+    "Bottom": 240,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1104,
+      "Y": 192
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1128,
+      "Y": 216
+    }
+  },
+  "Snow_Isle_Cliff_up_right": {
+    "X": 1152,
+    "Y": 192,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1152,
+    "Right": 1200,
+    "Top": 192,
+    "Bottom": 240,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1152,
+      "Y": 192
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1176,
+      "Y": 216
+    }
+  },
+  "Snow_Cliff_left": {
+    "X": 1200,
+    "Y": 192,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1200,
+    "Right": 1248,
+    "Top": 192,
+    "Bottom": 240,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1200,
+      "Y": 192
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1224,
+      "Y": 216
+    }
+  },
+  "Snow_Cliff_right": {
+    "X": 1248,
+    "Y": 192,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1248,
+    "Right": 1296,
+    "Top": 192,
+    "Bottom": 240,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1248,
+      "Y": 192
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1272,
+      "Y": 216
+    }
+  },
+  "Snow_Lone_Coast_up_left": {
+    "X": 1296,
+    "Y": 192,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1296,
+    "Right": 1344,
+    "Top": 192,
+    "Bottom": 240,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1296,
+      "Y": 192
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1320,
+      "Y": 216
+    }
+  },
+  "Snow_Lone_Coast_up_right": {
+    "X": 1344,
+    "Y": 192,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1344,
+    "Right": 1392,
+    "Top": 192,
+    "Bottom": 240,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1344,
+      "Y": 192
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1368,
+      "Y": 216
+    }
+  },
+  "Snow_Lone_Coast_down_left": {
+    "X": 1392,
+    "Y": 192,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1392,
+    "Right": 1440,
+    "Top": 192,
+    "Bottom": 240,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1392,
+      "Y": 192
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1416,
+      "Y": 216
+    }
+  },
+  "Snow_Lone_Coast_down_right": {
+    "X": 1440,
+    "Y": 192,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1440,
+    "Right": 1488,
+    "Top": 192,
+    "Bottom": 240,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1440,
+      "Y": 192
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1464,
+      "Y": 216
+    }
+  },
+  "Snow_Lone_Coast_up": {
+    "X": 1488,
+    "Y": 192,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1488,
+    "Right": 1536,
+    "Top": 192,
+    "Bottom": 240,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1488,
+      "Y": 192
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1512,
+      "Y": 216
+    }
+  },
+  "Snow_Lone_Coast_down": {
+    "X": 1536,
+    "Y": 192,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1536,
+    "Right": 1584,
+    "Top": 192,
+    "Bottom": 240,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1536,
+      "Y": 192
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1560,
+      "Y": 216
+    }
+  },
+  "Snow_Lone_Coast_right": {
+    "X": 1584,
+    "Y": 192,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1584,
+    "Right": 1632,
+    "Top": 192,
+    "Bottom": 240,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1584,
+      "Y": 192
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1608,
+      "Y": 216
+    }
+  },
+  "Snow_Lone_Coast_left": {
+    "X": 1632,
+    "Y": 192,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1632,
+    "Right": 1680,
+    "Top": 192,
+    "Bottom": 240,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1632,
+      "Y": 192
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1656,
+      "Y": 216
+    }
+  },
+  "Snow_Invert_Coast_down_left": {
+    "X": 0,
+    "Y": 240,
+    "Width": 48,
+    "Height": 48,
+    "Left": 0,
+    "Right": 48,
+    "Top": 240,
+    "Bottom": 288,
+    "IsEmpty": false,
+    "Location": {
+      "X": 0,
+      "Y": 240
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 24,
+      "Y": 264
+    }
+  },
+  "Snow_Invert_Coast_down_right": {
+    "X": 48,
+    "Y": 240,
+    "Width": 48,
+    "Height": 48,
+    "Left": 48,
+    "Right": 96,
+    "Top": 240,
+    "Bottom": 288,
+    "IsEmpty": false,
+    "Location": {
+      "X": 48,
+      "Y": 240
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 72,
+      "Y": 264
+    }
+  },
+  "Snow_Invert_Coast_up_left": {
+    "X": 96,
+    "Y": 240,
+    "Width": 48,
+    "Height": 48,
+    "Left": 96,
+    "Right": 144,
+    "Top": 240,
+    "Bottom": 288,
+    "IsEmpty": false,
+    "Location": {
+      "X": 96,
+      "Y": 240
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 120,
+      "Y": 264
+    }
+  },
+  "Snow_Invert_Coast_up_right": {
+    "X": 144,
+    "Y": 240,
+    "Width": 48,
+    "Height": 48,
+    "Left": 144,
+    "Right": 192,
+    "Top": 240,
+    "Bottom": 288,
+    "IsEmpty": false,
+    "Location": {
+      "X": 144,
+      "Y": 240
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 168,
+      "Y": 264
+    }
+  },
+  "Snow_Invert_Coast_left_down": {
+    "X": 192,
+    "Y": 240,
+    "Width": 48,
+    "Height": 48,
+    "Left": 192,
+    "Right": 240,
+    "Top": 240,
+    "Bottom": 288,
+    "IsEmpty": false,
+    "Location": {
+      "X": 192,
+      "Y": 240
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 216,
+      "Y": 264
+    }
+  },
+  "Snow_Invert_Coast_left_up": {
+    "X": 240,
+    "Y": 240,
+    "Width": 48,
+    "Height": 48,
+    "Left": 240,
+    "Right": 288,
+    "Top": 240,
+    "Bottom": 288,
+    "IsEmpty": false,
+    "Location": {
+      "X": 240,
+      "Y": 240
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 264,
+      "Y": 264
+    }
+  },
+  "Snow_Invert_Coast_right_up": {
+    "X": 288,
+    "Y": 240,
+    "Width": 48,
+    "Height": 48,
+    "Left": 288,
+    "Right": 336,
+    "Top": 240,
+    "Bottom": 288,
+    "IsEmpty": false,
+    "Location": {
+      "X": 288,
+      "Y": 240
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 312,
+      "Y": 264
+    }
+  },
+  "Snow_Invert_Coast_right_down": {
+    "X": 336,
+    "Y": 240,
+    "Width": 48,
+    "Height": 48,
+    "Left": 336,
+    "Right": 384,
+    "Top": 240,
+    "Bottom": 288,
+    "IsEmpty": false,
+    "Location": {
+      "X": 336,
+      "Y": 240
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 360,
+      "Y": 264
+    }
+  },
+  "Desert_Reef": {
+    "X": 384,
+    "Y": 240,
+    "Width": 48,
+    "Height": 48,
+    "Left": 384,
+    "Right": 432,
+    "Top": 240,
+    "Bottom": 288,
+    "IsEmpty": false,
+    "Location": {
+      "X": 384,
+      "Y": 240
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 408,
+      "Y": 264
+    }
+  },
+  "Desert_Sea": {
+    "X": 432,
+    "Y": 240,
+    "Width": 48,
+    "Height": 48,
+    "Left": 432,
+    "Right": 480,
+    "Top": 240,
+    "Bottom": 288,
+    "IsEmpty": false,
+    "Location": {
+      "X": 432,
+      "Y": 240
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 456,
+      "Y": 264
+    }
+  },
+  "Desert_River_ver": {
+    "X": 480,
+    "Y": 240,
+    "Width": 48,
+    "Height": 48,
+    "Left": 480,
+    "Right": 528,
+    "Top": 240,
+    "Bottom": 288,
+    "IsEmpty": false,
+    "Location": {
+      "X": 480,
+      "Y": 240
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 504,
+      "Y": 264
+    }
+  },
+  "Desert_River_hor": {
+    "X": 528,
+    "Y": 240,
+    "Width": 48,
+    "Height": 48,
+    "Left": 528,
+    "Right": 576,
+    "Top": 240,
+    "Bottom": 288,
+    "IsEmpty": false,
+    "Location": {
+      "X": 528,
+      "Y": 240
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 552,
+      "Y": 264
+    }
+  },
+  "Desert_River_Inter3_right": {
+    "X": 576,
+    "Y": 240,
+    "Width": 48,
+    "Height": 48,
+    "Left": 576,
+    "Right": 624,
+    "Top": 240,
+    "Bottom": 288,
+    "IsEmpty": false,
+    "Location": {
+      "X": 576,
+      "Y": 240
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 600,
+      "Y": 264
+    }
+  },
+  "Desert_River_Inter3_left": {
+    "X": 624,
+    "Y": 240,
+    "Width": 48,
+    "Height": 48,
+    "Left": 624,
+    "Right": 672,
+    "Top": 240,
+    "Bottom": 288,
+    "IsEmpty": false,
+    "Location": {
+      "X": 624,
+      "Y": 240
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 648,
+      "Y": 264
+    }
+  },
+  "Desert_River_Inter3_up": {
+    "X": 672,
+    "Y": 240,
+    "Width": 48,
+    "Height": 48,
+    "Left": 672,
+    "Right": 720,
+    "Top": 240,
+    "Bottom": 288,
+    "IsEmpty": false,
+    "Location": {
+      "X": 672,
+      "Y": 240
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 696,
+      "Y": 264
+    }
+  },
+  "Desert_River_Inter3_down": {
+    "X": 720,
+    "Y": 240,
+    "Width": 48,
+    "Height": 48,
+    "Left": 720,
+    "Right": 768,
+    "Top": 240,
+    "Bottom": 288,
+    "IsEmpty": false,
+    "Location": {
+      "X": 720,
+      "Y": 240
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 744,
+      "Y": 264
+    }
+  },
+  "Desert_River_Cross": {
+    "X": 768,
+    "Y": 240,
+    "Width": 48,
+    "Height": 48,
+    "Left": 768,
+    "Right": 816,
+    "Top": 240,
+    "Bottom": 288,
+    "IsEmpty": false,
+    "Location": {
+      "X": 768,
+      "Y": 240
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 792,
+      "Y": 264
+    }
+  },
+  "Desert_River_Turn_up_right": {
+    "X": 816,
+    "Y": 240,
+    "Width": 48,
+    "Height": 48,
+    "Left": 816,
+    "Right": 864,
+    "Top": 240,
+    "Bottom": 288,
+    "IsEmpty": false,
+    "Location": {
+      "X": 816,
+      "Y": 240
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 840,
+      "Y": 264
+    }
+  },
+  "Desert_River_Turn_up_left": {
+    "X": 864,
+    "Y": 240,
+    "Width": 48,
+    "Height": 48,
+    "Left": 864,
+    "Right": 912,
+    "Top": 240,
+    "Bottom": 288,
+    "IsEmpty": false,
+    "Location": {
+      "X": 864,
+      "Y": 240
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 888,
+      "Y": 264
+    }
+  },
+  "Desert_River_Turn_down_right": {
+    "X": 912,
+    "Y": 240,
+    "Width": 48,
+    "Height": 48,
+    "Left": 912,
+    "Right": 960,
+    "Top": 240,
+    "Bottom": 288,
+    "IsEmpty": false,
+    "Location": {
+      "X": 912,
+      "Y": 240
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 936,
+      "Y": 264
+    }
+  },
+  "Desert_River_Turn_down_left": {
+    "X": 960,
+    "Y": 240,
+    "Width": 48,
+    "Height": 48,
+    "Left": 960,
+    "Right": 1008,
+    "Top": 240,
+    "Bottom": 288,
+    "IsEmpty": false,
+    "Location": {
+      "X": 960,
+      "Y": 240
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 984,
+      "Y": 264
+    }
+  },
+  "Desert_River_Flow_left": {
+    "X": 1008,
+    "Y": 240,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1008,
+    "Right": 1056,
+    "Top": 240,
+    "Bottom": 288,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1008,
+      "Y": 240
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1032,
+      "Y": 264
+    }
+  },
+  "Desert_River_Flow_up": {
+    "X": 1056,
+    "Y": 240,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1056,
+    "Right": 1104,
+    "Top": 240,
+    "Bottom": 288,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1056,
+      "Y": 240
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1080,
+      "Y": 264
+    }
+  },
+  "Desert_River_Flow_down": {
+    "X": 1104,
+    "Y": 240,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1104,
+    "Right": 1152,
+    "Top": 240,
+    "Bottom": 288,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1104,
+      "Y": 240
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1128,
+      "Y": 264
+    }
+  },
+  "Desert_River_Flow_right": {
+    "X": 1152,
+    "Y": 240,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1152,
+    "Right": 1200,
+    "Top": 240,
+    "Bottom": 288,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1152,
+      "Y": 240
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1176,
+      "Y": 264
+    }
+  },
+  "Desert_Coast_up_left": {
+    "X": 1200,
+    "Y": 240,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1200,
+    "Right": 1248,
+    "Top": 240,
+    "Bottom": 288,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1200,
+      "Y": 240
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1224,
+      "Y": 264
+    }
+  },
+  "Desert_Coast_up": {
+    "X": 1248,
+    "Y": 240,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1248,
+    "Right": 1296,
+    "Top": 240,
+    "Bottom": 288,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1248,
+      "Y": 240
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1272,
+      "Y": 264
+    }
+  },
+  "Desert_Coast_up_right": {
+    "X": 1296,
+    "Y": 240,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1296,
+    "Right": 1344,
+    "Top": 240,
+    "Bottom": 288,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1296,
+      "Y": 240
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1320,
+      "Y": 264
+    }
+  },
+  "Desert_Coast_left": {
+    "X": 1344,
+    "Y": 240,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1344,
+    "Right": 1392,
+    "Top": 240,
+    "Bottom": 288,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1344,
+      "Y": 240
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1368,
+      "Y": 264
+    }
+  },
+  "Desert_Coast_right": {
+    "X": 1392,
+    "Y": 240,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1392,
+    "Right": 1440,
+    "Top": 240,
+    "Bottom": 288,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1392,
+      "Y": 240
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1416,
+      "Y": 264
+    }
+  },
+  "Desert_Coast_down_left": {
+    "X": 1440,
+    "Y": 240,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1440,
+    "Right": 1488,
+    "Top": 240,
+    "Bottom": 288,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1440,
+      "Y": 240
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1464,
+      "Y": 264
+    }
+  },
+  "Desert_Coast_down": {
+    "X": 1488,
+    "Y": 240,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1488,
+    "Right": 1536,
+    "Top": 240,
+    "Bottom": 288,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1488,
+      "Y": 240
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1512,
+      "Y": 264
+    }
+  },
+  "Desert_Coast_d_right": {
+    "X": 1536,
+    "Y": 240,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1536,
+    "Right": 1584,
+    "Top": 240,
+    "Bottom": 288,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1536,
+      "Y": 240
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1560,
+      "Y": 264
+    }
+  },
+  "Desert_Cliff_up_left": {
+    "X": 1584,
+    "Y": 240,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1584,
+    "Right": 1632,
+    "Top": 240,
+    "Bottom": 288,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1584,
+      "Y": 240
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1608,
+      "Y": 264
+    }
+  },
+  "Desert_Cliff_u": {
+    "X": 1632,
+    "Y": 240,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1632,
+    "Right": 1680,
+    "Top": 240,
+    "Bottom": 288,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1632,
+      "Y": 240
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1656,
+      "Y": 264
+    }
+  },
+  "Desert_Cliff_up_right": {
+    "X": 0,
+    "Y": 288,
+    "Width": 48,
+    "Height": 48,
+    "Left": 0,
+    "Right": 48,
+    "Top": 288,
+    "Bottom": 336,
+    "IsEmpty": false,
+    "Location": {
+      "X": 0,
+      "Y": 288
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 24,
+      "Y": 312
+    }
+  },
+  "Desert_Cliff_down_left": {
+    "X": 48,
+    "Y": 288,
+    "Width": 48,
+    "Height": 48,
+    "Left": 48,
+    "Right": 96,
+    "Top": 288,
+    "Bottom": 336,
+    "IsEmpty": false,
+    "Location": {
+      "X": 48,
+      "Y": 288
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 72,
+      "Y": 312
+    }
+  },
+  "Desert_Cliff_down": {
+    "X": 96,
+    "Y": 288,
+    "Width": 48,
+    "Height": 48,
+    "Left": 96,
+    "Right": 144,
+    "Top": 288,
+    "Bottom": 336,
+    "IsEmpty": false,
+    "Location": {
+      "X": 96,
+      "Y": 288
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 120,
+      "Y": 312
+    }
+  },
+  "Desert_Cliff_down_right": {
+    "X": 144,
+    "Y": 288,
+    "Width": 48,
+    "Height": 48,
+    "Left": 144,
+    "Right": 192,
+    "Top": 288,
+    "Bottom": 336,
+    "IsEmpty": false,
+    "Location": {
+      "X": 144,
+      "Y": 288
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 168,
+      "Y": 312
+    }
+  },
+  "Desert_Isle_Coast_up_left": {
+    "X": 192,
+    "Y": 288,
+    "Width": 48,
+    "Height": 48,
+    "Left": 192,
+    "Right": 240,
+    "Top": 288,
+    "Bottom": 336,
+    "IsEmpty": false,
+    "Location": {
+      "X": 192,
+      "Y": 288
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 216,
+      "Y": 312
+    }
+  },
+  "Desert_Isle_Coast_up_right": {
+    "X": 240,
+    "Y": 288,
+    "Width": 48,
+    "Height": 48,
+    "Left": 240,
+    "Right": 288,
+    "Top": 288,
+    "Bottom": 336,
+    "IsEmpty": false,
+    "Location": {
+      "X": 240,
+      "Y": 288
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 264,
+      "Y": 312
+    }
+  },
+  "Desert_Isle_Coast_side_right_up": {
+    "X": 288,
+    "Y": 288,
+    "Width": 48,
+    "Height": 48,
+    "Left": 288,
+    "Right": 336,
+    "Top": 288,
+    "Bottom": 336,
+    "IsEmpty": false,
+    "Location": {
+      "X": 288,
+      "Y": 288
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 312,
+      "Y": 312
+    }
+  },
+  "Desert_Isle_Coast_side_right_down": {
+    "X": 336,
+    "Y": 288,
+    "Width": 48,
+    "Height": 48,
+    "Left": 336,
+    "Right": 384,
+    "Top": 288,
+    "Bottom": 336,
+    "IsEmpty": false,
+    "Location": {
+      "X": 336,
+      "Y": 288
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 360,
+      "Y": 312
+    }
+  },
+  "Desert_Isle_Coast_side_left_up": {
+    "X": 384,
+    "Y": 288,
+    "Width": 48,
+    "Height": 48,
+    "Left": 384,
+    "Right": 432,
+    "Top": 288,
+    "Bottom": 336,
+    "IsEmpty": false,
+    "Location": {
+      "X": 384,
+      "Y": 288
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 408,
+      "Y": 312
+    }
+  },
+  "Desert_Isle_Coast_side_left_down": {
+    "X": 432,
+    "Y": 288,
+    "Width": 48,
+    "Height": 48,
+    "Left": 432,
+    "Right": 480,
+    "Top": 288,
+    "Bottom": 336,
+    "IsEmpty": false,
+    "Location": {
+      "X": 432,
+      "Y": 288
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 456,
+      "Y": 312
+    }
+  },
+  "Desert_Isle_Coast_down_left": {
+    "X": 480,
+    "Y": 288,
+    "Width": 48,
+    "Height": 48,
+    "Left": 480,
+    "Right": 528,
+    "Top": 288,
+    "Bottom": 336,
+    "IsEmpty": false,
+    "Location": {
+      "X": 480,
+      "Y": 288
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 504,
+      "Y": 312
+    }
+  },
+  "Desert_Isle_Coast_down_right": {
+    "X": 528,
+    "Y": 288,
+    "Width": 48,
+    "Height": 48,
+    "Left": 528,
+    "Right": 576,
+    "Top": 288,
+    "Bottom": 336,
+    "IsEmpty": false,
+    "Location": {
+      "X": 528,
+      "Y": 288
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 552,
+      "Y": 312
+    }
+  },
+  "Desert_Isle_Cliff_down_left": {
+    "X": 576,
+    "Y": 288,
+    "Width": 48,
+    "Height": 48,
+    "Left": 576,
+    "Right": 624,
+    "Top": 288,
+    "Bottom": 336,
+    "IsEmpty": false,
+    "Location": {
+      "X": 576,
+      "Y": 288
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 600,
+      "Y": 312
+    }
+  },
+  "Desert_Isle_Cliff_down_right": {
+    "X": 624,
+    "Y": 288,
+    "Width": 48,
+    "Height": 48,
+    "Left": 624,
+    "Right": 672,
+    "Top": 288,
+    "Bottom": 336,
+    "IsEmpty": false,
+    "Location": {
+      "X": 624,
+      "Y": 288
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 648,
+      "Y": 312
+    }
+  },
+  "Desert_Isle_Cliff_up_left": {
+    "X": 672,
+    "Y": 288,
+    "Width": 48,
+    "Height": 48,
+    "Left": 672,
+    "Right": 720,
+    "Top": 288,
+    "Bottom": 336,
+    "IsEmpty": false,
+    "Location": {
+      "X": 672,
+      "Y": 288
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 696,
+      "Y": 312
+    }
+  },
+  "Desert_Isle_Cliff_up_right": {
+    "X": 720,
+    "Y": 288,
+    "Width": 48,
+    "Height": 48,
+    "Left": 720,
+    "Right": 768,
+    "Top": 288,
+    "Bottom": 336,
+    "IsEmpty": false,
+    "Location": {
+      "X": 720,
+      "Y": 288
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 744,
+      "Y": 312
+    }
+  },
+  "Desert_Cliff_left": {
+    "X": 768,
+    "Y": 288,
+    "Width": 48,
+    "Height": 48,
+    "Left": 768,
+    "Right": 816,
+    "Top": 288,
+    "Bottom": 336,
+    "IsEmpty": false,
+    "Location": {
+      "X": 768,
+      "Y": 288
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 792,
+      "Y": 312
+    }
+  },
+  "Desert_Cliff_right": {
+    "X": 816,
+    "Y": 288,
+    "Width": 48,
+    "Height": 48,
+    "Left": 816,
+    "Right": 864,
+    "Top": 288,
+    "Bottom": 336,
+    "IsEmpty": false,
+    "Location": {
+      "X": 816,
+      "Y": 288
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 840,
+      "Y": 312
+    }
+  },
+  "Desert_Lone_Coast_up_left": {
+    "X": 864,
+    "Y": 288,
+    "Width": 48,
+    "Height": 48,
+    "Left": 864,
+    "Right": 912,
+    "Top": 288,
+    "Bottom": 336,
+    "IsEmpty": false,
+    "Location": {
+      "X": 864,
+      "Y": 288
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 888,
+      "Y": 312
+    }
+  },
+  "Desert_Lone_Coast_up_right": {
+    "X": 912,
+    "Y": 288,
+    "Width": 48,
+    "Height": 48,
+    "Left": 912,
+    "Right": 960,
+    "Top": 288,
+    "Bottom": 336,
+    "IsEmpty": false,
+    "Location": {
+      "X": 912,
+      "Y": 288
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 936,
+      "Y": 312
+    }
+  },
+  "Desert_Lone_Coast_down_left": {
+    "X": 960,
+    "Y": 288,
+    "Width": 48,
+    "Height": 48,
+    "Left": 960,
+    "Right": 1008,
+    "Top": 288,
+    "Bottom": 336,
+    "IsEmpty": false,
+    "Location": {
+      "X": 960,
+      "Y": 288
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 984,
+      "Y": 312
+    }
+  },
+  "Desert_Lone_Coast_down_right": {
+    "X": 1008,
+    "Y": 288,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1008,
+    "Right": 1056,
+    "Top": 288,
+    "Bottom": 336,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1008,
+      "Y": 288
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1032,
+      "Y": 312
+    }
+  },
+  "Desert_Lone_Coast_up": {
+    "X": 1056,
+    "Y": 288,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1056,
+    "Right": 1104,
+    "Top": 288,
+    "Bottom": 336,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1056,
+      "Y": 288
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1080,
+      "Y": 312
+    }
+  },
+  "Desert_Lone_Coast_down": {
+    "X": 1104,
+    "Y": 288,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1104,
+    "Right": 1152,
+    "Top": 288,
+    "Bottom": 336,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1104,
+      "Y": 288
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1128,
+      "Y": 312
+    }
+  },
+  "Desert_Lone_Coast_right": {
+    "X": 1152,
+    "Y": 288,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1152,
+    "Right": 1200,
+    "Top": 288,
+    "Bottom": 336,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1152,
+      "Y": 288
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1176,
+      "Y": 312
+    }
+  },
+  "Desert_Lone_Coast_left": {
+    "X": 1200,
+    "Y": 288,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1200,
+    "Right": 1248,
+    "Top": 288,
+    "Bottom": 336,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1200,
+      "Y": 288
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1224,
+      "Y": 312
+    }
+  },
+  "Desert_Invert_Coast_down_left": {
+    "X": 1248,
+    "Y": 288,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1248,
+    "Right": 1296,
+    "Top": 288,
+    "Bottom": 336,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1248,
+      "Y": 288
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1272,
+      "Y": 312
+    }
+  },
+  "Desert_Invert_Coast_down_right": {
+    "X": 1296,
+    "Y": 288,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1296,
+    "Right": 1344,
+    "Top": 288,
+    "Bottom": 336,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1296,
+      "Y": 288
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1320,
+      "Y": 312
+    }
+  },
+  "Desert_Invert_Coast_up_left": {
+    "X": 1344,
+    "Y": 288,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1344,
+    "Right": 1392,
+    "Top": 288,
+    "Bottom": 336,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1344,
+      "Y": 288
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1368,
+      "Y": 312
+    }
+  },
+  "Desert_Invert_Coast_up_right": {
+    "X": 1392,
+    "Y": 288,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1392,
+    "Right": 1440,
+    "Top": 288,
+    "Bottom": 336,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1392,
+      "Y": 288
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1416,
+      "Y": 312
+    }
+  },
+  "Desert_Invert_Coast_left_down": {
+    "X": 1440,
+    "Y": 288,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1440,
+    "Right": 1488,
+    "Top": 288,
+    "Bottom": 336,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1440,
+      "Y": 288
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1464,
+      "Y": 312
+    }
+  },
+  "Desert_Invert_Coast_left_up": {
+    "X": 1488,
+    "Y": 288,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1488,
+    "Right": 1536,
+    "Top": 288,
+    "Bottom": 336,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1488,
+      "Y": 288
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1512,
+      "Y": 312
+    }
+  },
+  "Desert_Invert_Coast_right_up": {
+    "X": 1536,
+    "Y": 288,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1536,
+    "Right": 1584,
+    "Top": 288,
+    "Bottom": 336,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1536,
+      "Y": 288
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1560,
+      "Y": 312
+    }
+  },
+  "Desert_Invert_Coast_right_down": {
+    "X": 1584,
+    "Y": 288,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1584,
+    "Right": 1632,
+    "Top": 288,
+    "Bottom": 336,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1584,
+      "Y": 288
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1608,
+      "Y": 312
+    }
+  },
+  "Road_turn_up_right": {
+    "X": 1632,
+    "Y": 288,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1632,
+    "Right": 1680,
+    "Top": 288,
+    "Bottom": 336,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1632,
+      "Y": 288
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1656,
+      "Y": 312
+    }
+  },
+  "Road_Turn_up_left": {
+    "X": 0,
+    "Y": 336,
+    "Width": 48,
+    "Height": 48,
+    "Left": 0,
+    "Right": 48,
+    "Top": 336,
+    "Bottom": 384,
+    "IsEmpty": false,
+    "Location": {
+      "X": 0,
+      "Y": 336
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 24,
+      "Y": 360
+    }
+  },
+  "Road_Inter3_right": {
+    "X": 48,
+    "Y": 336,
+    "Width": 48,
+    "Height": 48,
+    "Left": 48,
+    "Right": 96,
+    "Top": 336,
+    "Bottom": 384,
+    "IsEmpty": false,
+    "Location": {
+      "X": 48,
+      "Y": 336
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 72,
+      "Y": 360
+    }
+  },
+  "Road_Inter3_down": {
+    "X": 96,
+    "Y": 336,
+    "Width": 48,
+    "Height": 48,
+    "Left": 96,
+    "Right": 144,
+    "Top": 336,
+    "Bottom": 384,
+    "IsEmpty": false,
+    "Location": {
+      "X": 96,
+      "Y": 336
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 120,
+      "Y": 360
+    }
+  },
+  "Road_hor": {
+    "X": 144,
+    "Y": 336,
+    "Width": 48,
+    "Height": 48,
+    "Left": 144,
+    "Right": 192,
+    "Top": 336,
+    "Bottom": 384,
+    "IsEmpty": false,
+    "Location": {
+      "X": 144,
+      "Y": 336
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 168,
+      "Y": 360
+    }
+  },
+  "Road_Cross": {
+    "X": 192,
+    "Y": 336,
+    "Width": 48,
+    "Height": 48,
+    "Left": 192,
+    "Right": 240,
+    "Top": 336,
+    "Bottom": 384,
+    "IsEmpty": false,
+    "Location": {
+      "X": 192,
+      "Y": 336
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 216,
+      "Y": 360
+    }
+  },
+  "Bridge_hor": {
+    "X": 240,
+    "Y": 336,
+    "Width": 48,
+    "Height": 48,
+    "Left": 240,
+    "Right": 288,
+    "Top": 336,
+    "Bottom": 384,
+    "IsEmpty": false,
+    "Location": {
+      "X": 240,
+      "Y": 336
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 264,
+      "Y": 360
+    }
+  },
+  "Road_Turn_down_right": {
+    "X": 288,
+    "Y": 336,
+    "Width": 48,
+    "Height": 48,
+    "Left": 288,
+    "Right": 336,
+    "Top": 336,
+    "Bottom": 384,
+    "IsEmpty": false,
+    "Location": {
+      "X": 288,
+      "Y": 336
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 312,
+      "Y": 360
+    }
+  },
+  "Road_Turn_down_left": {
+    "X": 336,
+    "Y": 336,
+    "Width": 48,
+    "Height": 48,
+    "Left": 336,
+    "Right": 384,
+    "Top": 336,
+    "Bottom": 384,
+    "IsEmpty": false,
+    "Location": {
+      "X": 336,
+      "Y": 336
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 360,
+      "Y": 360
+    }
+  },
+  "Road_Inter3_up": {
+    "X": 384,
+    "Y": 336,
+    "Width": 48,
+    "Height": 48,
+    "Left": 384,
+    "Right": 432,
+    "Top": 336,
+    "Bottom": 384,
+    "IsEmpty": false,
+    "Location": {
+      "X": 384,
+      "Y": 336
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 408,
+      "Y": 360
+    }
+  },
+  "Road_Inter3_left": {
+    "X": 432,
+    "Y": 336,
+    "Width": 48,
+    "Height": 48,
+    "Left": 432,
+    "Right": 480,
+    "Top": 336,
+    "Bottom": 384,
+    "IsEmpty": false,
+    "Location": {
+      "X": 432,
+      "Y": 336
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 456,
+      "Y": 360
+    }
+  },
+  "Road_ver": {
+    "X": 480,
+    "Y": 336,
+    "Width": 48,
+    "Height": 48,
+    "Left": 480,
+    "Right": 528,
+    "Top": 336,
+    "Bottom": 384,
+    "IsEmpty": false,
+    "Location": {
+      "X": 480,
+      "Y": 336
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 504,
+      "Y": 360
+    }
+  },
+  "Plain": {
+    "X": 528,
+    "Y": 336,
+    "Width": 48,
+    "Height": 48,
+    "Left": 528,
+    "Right": 576,
+    "Top": 336,
+    "Bottom": 384,
+    "IsEmpty": false,
+    "Location": {
+      "X": 528,
+      "Y": 336
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 552,
+      "Y": 360
+    }
+  },
+  "Bridge_ver": {
+    "X": 576,
+    "Y": 336,
+    "Width": 48,
+    "Height": 48,
+    "Left": 576,
+    "Right": 624,
+    "Top": 336,
+    "Bottom": 384,
+    "IsEmpty": false,
+    "Location": {
+      "X": 576,
+      "Y": 336
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 600,
+      "Y": 360
+    }
+  },
+  "Tree": {
+    "X": 624,
+    "Y": 336,
+    "Width": 48,
+    "Height": 48,
+    "Left": 624,
+    "Right": 672,
+    "Top": 336,
+    "Bottom": 384,
+    "IsEmpty": false,
+    "Location": {
+      "X": 624,
+      "Y": 336
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 648,
+      "Y": 360
+    }
+  },
+  "Tree_4_1": {
+    "X": 672,
+    "Y": 336,
+    "Width": 48,
+    "Height": 48,
+    "Left": 672,
+    "Right": 720,
+    "Top": 336,
+    "Bottom": 384,
+    "IsEmpty": false,
+    "Location": {
+      "X": 672,
+      "Y": 336
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 696,
+      "Y": 360
+    }
+  },
+  "Tree_4_2": {
+    "X": 720,
+    "Y": 336,
+    "Width": 48,
+    "Height": 48,
+    "Left": 720,
+    "Right": 768,
+    "Top": 336,
+    "Bottom": 384,
+    "IsEmpty": false,
+    "Location": {
+      "X": 720,
+      "Y": 336
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 744,
+      "Y": 360
+    }
+  },
+  "Tree_4_3": {
+    "X": 768,
+    "Y": 336,
+    "Width": 48,
+    "Height": 48,
+    "Left": 768,
+    "Right": 816,
+    "Top": 336,
+    "Bottom": 384,
+    "IsEmpty": false,
+    "Location": {
+      "X": 768,
+      "Y": 336
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 792,
+      "Y": 360
+    }
+  },
+  "Tree_4_4": {
+    "X": 816,
+    "Y": 336,
+    "Width": 48,
+    "Height": 48,
+    "Left": 816,
+    "Right": 864,
+    "Top": 336,
+    "Bottom": 384,
+    "IsEmpty": false,
+    "Location": {
+      "X": 816,
+      "Y": 336
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 840,
+      "Y": 360
+    }
+  },
+  "Tree_9_1": {
+    "X": 864,
+    "Y": 336,
+    "Width": 48,
+    "Height": 48,
+    "Left": 864,
+    "Right": 912,
+    "Top": 336,
+    "Bottom": 384,
+    "IsEmpty": false,
+    "Location": {
+      "X": 864,
+      "Y": 336
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 888,
+      "Y": 360
+    }
+  },
+  "Tree_9_2": {
+    "X": 912,
+    "Y": 336,
+    "Width": 48,
+    "Height": 48,
+    "Left": 912,
+    "Right": 960,
+    "Top": 336,
+    "Bottom": 384,
+    "IsEmpty": false,
+    "Location": {
+      "X": 912,
+      "Y": 336
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 936,
+      "Y": 360
+    }
+  },
+  "Tree_9_3": {
+    "X": 960,
+    "Y": 336,
+    "Width": 48,
+    "Height": 48,
+    "Left": 960,
+    "Right": 1008,
+    "Top": 336,
+    "Bottom": 384,
+    "IsEmpty": false,
+    "Location": {
+      "X": 960,
+      "Y": 336
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 984,
+      "Y": 360
+    }
+  },
+  "Tree_9_4": {
+    "X": 1008,
+    "Y": 336,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1008,
+    "Right": 1056,
+    "Top": 336,
+    "Bottom": 384,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1008,
+      "Y": 336
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1032,
+      "Y": 360
+    }
+  },
+  "Tree_9_5": {
+    "X": 1056,
+    "Y": 336,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1056,
+    "Right": 1104,
+    "Top": 336,
+    "Bottom": 384,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1056,
+      "Y": 336
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1080,
+      "Y": 360
+    }
+  },
+  "Tree_9_6": {
+    "X": 1104,
+    "Y": 336,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1104,
+    "Right": 1152,
+    "Top": 336,
+    "Bottom": 384,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1104,
+      "Y": 336
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1128,
+      "Y": 360
+    }
+  },
+  "Tree_9_7": {
+    "X": 1152,
+    "Y": 336,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1152,
+    "Right": 1200,
+    "Top": 336,
+    "Bottom": 384,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1152,
+      "Y": 336
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1176,
+      "Y": 360
+    }
+  },
+  "Tree_9_8": {
+    "X": 1200,
+    "Y": 336,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1200,
+    "Right": 1248,
+    "Top": 336,
+    "Bottom": 384,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1200,
+      "Y": 336
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1224,
+      "Y": 360
+    }
+  },
+  "Tree_9_9": {
+    "X": 1248,
+    "Y": 336,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1248,
+    "Right": 1296,
+    "Top": 336,
+    "Bottom": 384,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1248,
+      "Y": 336
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1272,
+      "Y": 360
+    }
+  },
+  "Mountain_High_Upper": {
+    "X": 1296,
+    "Y": 336,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1296,
+    "Right": 1344,
+    "Top": 336,
+    "Bottom": 384,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1296,
+      "Y": 336
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1320,
+      "Y": 360
+    }
+  },
+  "Mountain_High_Lower": {
+    "X": 1344,
+    "Y": 336,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1344,
+    "Right": 1392,
+    "Top": 336,
+    "Bottom": 384,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1344,
+      "Y": 336
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1368,
+      "Y": 360
+    }
+  },
+  "Mountain_Low": {
+    "X": 1392,
+    "Y": 336,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1392,
+    "Right": 1440,
+    "Top": 336,
+    "Bottom": 384,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1392,
+      "Y": 336
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1416,
+      "Y": 360
+    }
+  },
+  "Tropical_Road_turn_up_right": {
+    "X": 1440,
+    "Y": 336,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1440,
+    "Right": 1488,
+    "Top": 336,
+    "Bottom": 384,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1440,
+      "Y": 336
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1464,
+      "Y": 360
+    }
+  },
+  "Tropical_Road_Turn_up_left": {
+    "X": 1488,
+    "Y": 336,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1488,
+    "Right": 1536,
+    "Top": 336,
+    "Bottom": 384,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1488,
+      "Y": 336
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1512,
+      "Y": 360
+    }
+  },
+  "Tropical_Road_Inter3_right": {
+    "X": 1536,
+    "Y": 336,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1536,
+    "Right": 1584,
+    "Top": 336,
+    "Bottom": 384,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1536,
+      "Y": 336
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1560,
+      "Y": 360
+    }
+  },
+  "Tropical_Road_Inter3_down": {
+    "X": 1584,
+    "Y": 336,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1584,
+    "Right": 1632,
+    "Top": 336,
+    "Bottom": 384,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1584,
+      "Y": 336
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1608,
+      "Y": 360
+    }
+  },
+  "Tropical_Road_hor": {
+    "X": 1632,
+    "Y": 336,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1632,
+    "Right": 1680,
+    "Top": 336,
+    "Bottom": 384,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1632,
+      "Y": 336
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1656,
+      "Y": 360
+    }
+  },
+  "Tropical_Road_Cross": {
+    "X": 0,
+    "Y": 384,
+    "Width": 48,
+    "Height": 48,
+    "Left": 0,
+    "Right": 48,
+    "Top": 384,
+    "Bottom": 432,
+    "IsEmpty": false,
+    "Location": {
+      "X": 0,
+      "Y": 384
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 24,
+      "Y": 408
+    }
+  },
+  "Tropical_Bridge_hor": {
+    "X": 48,
+    "Y": 384,
+    "Width": 48,
+    "Height": 48,
+    "Left": 48,
+    "Right": 96,
+    "Top": 384,
+    "Bottom": 432,
+    "IsEmpty": false,
+    "Location": {
+      "X": 48,
+      "Y": 384
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 72,
+      "Y": 408
+    }
+  },
+  "Tropical_Road_Turn_down_right": {
+    "X": 96,
+    "Y": 384,
+    "Width": 48,
+    "Height": 48,
+    "Left": 96,
+    "Right": 144,
+    "Top": 384,
+    "Bottom": 432,
+    "IsEmpty": false,
+    "Location": {
+      "X": 96,
+      "Y": 384
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 120,
+      "Y": 408
+    }
+  },
+  "Tropical_Road_Turn_down_left": {
+    "X": 144,
+    "Y": 384,
+    "Width": 48,
+    "Height": 48,
+    "Left": 144,
+    "Right": 192,
+    "Top": 384,
+    "Bottom": 432,
+    "IsEmpty": false,
+    "Location": {
+      "X": 144,
+      "Y": 384
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 168,
+      "Y": 408
+    }
+  },
+  "Tropical_Road_Inter3_up": {
+    "X": 192,
+    "Y": 384,
+    "Width": 48,
+    "Height": 48,
+    "Left": 192,
+    "Right": 240,
+    "Top": 384,
+    "Bottom": 432,
+    "IsEmpty": false,
+    "Location": {
+      "X": 192,
+      "Y": 384
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 216,
+      "Y": 408
+    }
+  },
+  "Tropical_Road_Inter3_left": {
+    "X": 240,
+    "Y": 384,
+    "Width": 48,
+    "Height": 48,
+    "Left": 240,
+    "Right": 288,
+    "Top": 384,
+    "Bottom": 432,
+    "IsEmpty": false,
+    "Location": {
+      "X": 240,
+      "Y": 384
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 264,
+      "Y": 408
+    }
+  },
+  "Tropical_Road_ver": {
+    "X": 288,
+    "Y": 384,
+    "Width": 48,
+    "Height": 48,
+    "Left": 288,
+    "Right": 336,
+    "Top": 384,
+    "Bottom": 432,
+    "IsEmpty": false,
+    "Location": {
+      "X": 288,
+      "Y": 384
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 312,
+      "Y": 408
+    }
+  },
+  "Tropical_Plain": {
+    "X": 336,
+    "Y": 384,
+    "Width": 48,
+    "Height": 48,
+    "Left": 336,
+    "Right": 384,
+    "Top": 384,
+    "Bottom": 432,
+    "IsEmpty": false,
+    "Location": {
+      "X": 336,
+      "Y": 384
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 360,
+      "Y": 408
+    }
+  },
+  "Tropical_Bridge_ver": {
+    "X": 384,
+    "Y": 384,
+    "Width": 48,
+    "Height": 48,
+    "Left": 384,
+    "Right": 432,
+    "Top": 384,
+    "Bottom": 432,
+    "IsEmpty": false,
+    "Location": {
+      "X": 384,
+      "Y": 384
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 408,
+      "Y": 408
+    }
+  },
+  "Tropical_Tree": {
+    "X": 432,
+    "Y": 384,
+    "Width": 48,
+    "Height": 48,
+    "Left": 432,
+    "Right": 480,
+    "Top": 384,
+    "Bottom": 432,
+    "IsEmpty": false,
+    "Location": {
+      "X": 432,
+      "Y": 384
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 456,
+      "Y": 408
+    }
+  },
+  "Tropical_Tree_4_1": {
+    "X": 480,
+    "Y": 384,
+    "Width": 48,
+    "Height": 48,
+    "Left": 480,
+    "Right": 528,
+    "Top": 384,
+    "Bottom": 432,
+    "IsEmpty": false,
+    "Location": {
+      "X": 480,
+      "Y": 384
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 504,
+      "Y": 408
+    }
+  },
+  "Tropical_Tree_4_2": {
+    "X": 528,
+    "Y": 384,
+    "Width": 48,
+    "Height": 48,
+    "Left": 528,
+    "Right": 576,
+    "Top": 384,
+    "Bottom": 432,
+    "IsEmpty": false,
+    "Location": {
+      "X": 528,
+      "Y": 384
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 552,
+      "Y": 408
+    }
+  },
+  "Tropical_Tree_4_3": {
+    "X": 576,
+    "Y": 384,
+    "Width": 48,
+    "Height": 48,
+    "Left": 576,
+    "Right": 624,
+    "Top": 384,
+    "Bottom": 432,
+    "IsEmpty": false,
+    "Location": {
+      "X": 576,
+      "Y": 384
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 600,
+      "Y": 408
+    }
+  },
+  "Tropical_Tree_4_4": {
+    "X": 624,
+    "Y": 384,
+    "Width": 48,
+    "Height": 48,
+    "Left": 624,
+    "Right": 672,
+    "Top": 384,
+    "Bottom": 432,
+    "IsEmpty": false,
+    "Location": {
+      "X": 624,
+      "Y": 384
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 648,
+      "Y": 408
+    }
+  },
+  "Tropical_Tree_9_1": {
+    "X": 672,
+    "Y": 384,
+    "Width": 48,
+    "Height": 48,
+    "Left": 672,
+    "Right": 720,
+    "Top": 384,
+    "Bottom": 432,
+    "IsEmpty": false,
+    "Location": {
+      "X": 672,
+      "Y": 384
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 696,
+      "Y": 408
+    }
+  },
+  "Tropical_Tree_9_2": {
+    "X": 720,
+    "Y": 384,
+    "Width": 48,
+    "Height": 48,
+    "Left": 720,
+    "Right": 768,
+    "Top": 384,
+    "Bottom": 432,
+    "IsEmpty": false,
+    "Location": {
+      "X": 720,
+      "Y": 384
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 744,
+      "Y": 408
+    }
+  },
+  "Tropical_Tree_9_3": {
+    "X": 768,
+    "Y": 384,
+    "Width": 48,
+    "Height": 48,
+    "Left": 768,
+    "Right": 816,
+    "Top": 384,
+    "Bottom": 432,
+    "IsEmpty": false,
+    "Location": {
+      "X": 768,
+      "Y": 384
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 792,
+      "Y": 408
+    }
+  },
+  "Tropical_Tree_9_4": {
+    "X": 816,
+    "Y": 384,
+    "Width": 48,
+    "Height": 48,
+    "Left": 816,
+    "Right": 864,
+    "Top": 384,
+    "Bottom": 432,
+    "IsEmpty": false,
+    "Location": {
+      "X": 816,
+      "Y": 384
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 840,
+      "Y": 408
+    }
+  },
+  "Tropical_Tree_9_5": {
+    "X": 864,
+    "Y": 384,
+    "Width": 48,
+    "Height": 48,
+    "Left": 864,
+    "Right": 912,
+    "Top": 384,
+    "Bottom": 432,
+    "IsEmpty": false,
+    "Location": {
+      "X": 864,
+      "Y": 384
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 888,
+      "Y": 408
+    }
+  },
+  "Tropical_Tree_9_6": {
+    "X": 912,
+    "Y": 384,
+    "Width": 48,
+    "Height": 48,
+    "Left": 912,
+    "Right": 960,
+    "Top": 384,
+    "Bottom": 432,
+    "IsEmpty": false,
+    "Location": {
+      "X": 912,
+      "Y": 384
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 936,
+      "Y": 408
+    }
+  },
+  "Tropical_Tree_9_7": {
+    "X": 960,
+    "Y": 384,
+    "Width": 48,
+    "Height": 48,
+    "Left": 960,
+    "Right": 1008,
+    "Top": 384,
+    "Bottom": 432,
+    "IsEmpty": false,
+    "Location": {
+      "X": 960,
+      "Y": 384
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 984,
+      "Y": 408
+    }
+  },
+  "Tropical_Tree_9_8": {
+    "X": 1008,
+    "Y": 384,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1008,
+    "Right": 1056,
+    "Top": 384,
+    "Bottom": 432,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1008,
+      "Y": 384
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1032,
+      "Y": 408
+    }
+  },
+  "Tropical_Tree_9_9": {
+    "X": 1056,
+    "Y": 384,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1056,
+    "Right": 1104,
+    "Top": 384,
+    "Bottom": 432,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1056,
+      "Y": 384
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1080,
+      "Y": 408
+    }
+  },
+  "Tropical_Mountain_High_Upper": {
+    "X": 1104,
+    "Y": 384,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1104,
+    "Right": 1152,
+    "Top": 384,
+    "Bottom": 432,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1104,
+      "Y": 384
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1128,
+      "Y": 408
+    }
+  },
+  "Tropical_Mountain_High_Lower": {
+    "X": 1152,
+    "Y": 384,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1152,
+    "Right": 1200,
+    "Top": 384,
+    "Bottom": 432,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1152,
+      "Y": 384
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1176,
+      "Y": 408
+    }
+  },
+  "Tropical_Mountain_Low": {
+    "X": 1200,
+    "Y": 384,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1200,
+    "Right": 1248,
+    "Top": 384,
+    "Bottom": 432,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1200,
+      "Y": 384
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1224,
+      "Y": 408
+    }
+  },
+  "Rain_Road_turn_up_right": {
+    "X": 1248,
+    "Y": 384,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1248,
+    "Right": 1296,
+    "Top": 384,
+    "Bottom": 432,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1248,
+      "Y": 384
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1272,
+      "Y": 408
+    }
+  },
+  "Rain_Road_Turn_up_left": {
+    "X": 1296,
+    "Y": 384,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1296,
+    "Right": 1344,
+    "Top": 384,
+    "Bottom": 432,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1296,
+      "Y": 384
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1320,
+      "Y": 408
+    }
+  },
+  "Rain_Road_Inter3_right": {
+    "X": 1344,
+    "Y": 384,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1344,
+    "Right": 1392,
+    "Top": 384,
+    "Bottom": 432,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1344,
+      "Y": 384
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1368,
+      "Y": 408
+    }
+  },
+  "Rain_Road_Inter3_down": {
+    "X": 1392,
+    "Y": 384,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1392,
+    "Right": 1440,
+    "Top": 384,
+    "Bottom": 432,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1392,
+      "Y": 384
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1416,
+      "Y": 408
+    }
+  },
+  "Rain_Road_hor": {
+    "X": 1440,
+    "Y": 384,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1440,
+    "Right": 1488,
+    "Top": 384,
+    "Bottom": 432,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1440,
+      "Y": 384
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1464,
+      "Y": 408
+    }
+  },
+  "Rain_Road_Cross": {
+    "X": 1488,
+    "Y": 384,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1488,
+    "Right": 1536,
+    "Top": 384,
+    "Bottom": 432,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1488,
+      "Y": 384
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1512,
+      "Y": 408
+    }
+  },
+  "Rain_Bridge_hor": {
+    "X": 1536,
+    "Y": 384,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1536,
+    "Right": 1584,
+    "Top": 384,
+    "Bottom": 432,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1536,
+      "Y": 384
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1560,
+      "Y": 408
+    }
+  },
+  "Rain_Road_Turn_down_right": {
+    "X": 1584,
+    "Y": 384,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1584,
+    "Right": 1632,
+    "Top": 384,
+    "Bottom": 432,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1584,
+      "Y": 384
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1608,
+      "Y": 408
+    }
+  },
+  "Rain_Road_Turn_down_left": {
+    "X": 1632,
+    "Y": 384,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1632,
+    "Right": 1680,
+    "Top": 384,
+    "Bottom": 432,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1632,
+      "Y": 384
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1656,
+      "Y": 408
+    }
+  },
+  "Rain_Road_Inter3_up": {
+    "X": 0,
+    "Y": 432,
+    "Width": 48,
+    "Height": 48,
+    "Left": 0,
+    "Right": 48,
+    "Top": 432,
+    "Bottom": 480,
+    "IsEmpty": false,
+    "Location": {
+      "X": 0,
+      "Y": 432
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 24,
+      "Y": 456
+    }
+  },
+  "Rain_Road_Inter3_left": {
+    "X": 48,
+    "Y": 432,
+    "Width": 48,
+    "Height": 48,
+    "Left": 48,
+    "Right": 96,
+    "Top": 432,
+    "Bottom": 480,
+    "IsEmpty": false,
+    "Location": {
+      "X": 48,
+      "Y": 432
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 72,
+      "Y": 456
+    }
+  },
+  "Rain_Road_ver": {
+    "X": 96,
+    "Y": 432,
+    "Width": 48,
+    "Height": 48,
+    "Left": 96,
+    "Right": 144,
+    "Top": 432,
+    "Bottom": 480,
+    "IsEmpty": false,
+    "Location": {
+      "X": 96,
+      "Y": 432
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 120,
+      "Y": 456
+    }
+  },
+  "Rain_Plain": {
+    "X": 144,
+    "Y": 432,
+    "Width": 48,
+    "Height": 48,
+    "Left": 144,
+    "Right": 192,
+    "Top": 432,
+    "Bottom": 480,
+    "IsEmpty": false,
+    "Location": {
+      "X": 144,
+      "Y": 432
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 168,
+      "Y": 456
+    }
+  },
+  "Rain_Bridge_ver": {
+    "X": 192,
+    "Y": 432,
+    "Width": 48,
+    "Height": 48,
+    "Left": 192,
+    "Right": 240,
+    "Top": 432,
+    "Bottom": 480,
+    "IsEmpty": false,
+    "Location": {
+      "X": 192,
+      "Y": 432
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 216,
+      "Y": 456
+    }
+  },
+  "Rain_Tree": {
+    "X": 240,
+    "Y": 432,
+    "Width": 48,
+    "Height": 48,
+    "Left": 240,
+    "Right": 288,
+    "Top": 432,
+    "Bottom": 480,
+    "IsEmpty": false,
+    "Location": {
+      "X": 240,
+      "Y": 432
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 264,
+      "Y": 456
+    }
+  },
+  "Rain_Tree_4_1": {
+    "X": 288,
+    "Y": 432,
+    "Width": 48,
+    "Height": 48,
+    "Left": 288,
+    "Right": 336,
+    "Top": 432,
+    "Bottom": 480,
+    "IsEmpty": false,
+    "Location": {
+      "X": 288,
+      "Y": 432
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 312,
+      "Y": 456
+    }
+  },
+  "Rain_Tree_4_2": {
+    "X": 336,
+    "Y": 432,
+    "Width": 48,
+    "Height": 48,
+    "Left": 336,
+    "Right": 384,
+    "Top": 432,
+    "Bottom": 480,
+    "IsEmpty": false,
+    "Location": {
+      "X": 336,
+      "Y": 432
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 360,
+      "Y": 456
+    }
+  },
+  "Rain_Tree_4_3": {
+    "X": 384,
+    "Y": 432,
+    "Width": 48,
+    "Height": 48,
+    "Left": 384,
+    "Right": 432,
+    "Top": 432,
+    "Bottom": 480,
+    "IsEmpty": false,
+    "Location": {
+      "X": 384,
+      "Y": 432
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 408,
+      "Y": 456
+    }
+  },
+  "Rain_Tree_4_4": {
+    "X": 432,
+    "Y": 432,
+    "Width": 48,
+    "Height": 48,
+    "Left": 432,
+    "Right": 480,
+    "Top": 432,
+    "Bottom": 480,
+    "IsEmpty": false,
+    "Location": {
+      "X": 432,
+      "Y": 432
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 456,
+      "Y": 456
+    }
+  },
+  "Rain_Tree_9_1": {
+    "X": 480,
+    "Y": 432,
+    "Width": 48,
+    "Height": 48,
+    "Left": 480,
+    "Right": 528,
+    "Top": 432,
+    "Bottom": 480,
+    "IsEmpty": false,
+    "Location": {
+      "X": 480,
+      "Y": 432
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 504,
+      "Y": 456
+    }
+  },
+  "Rain_Tree_9_2": {
+    "X": 528,
+    "Y": 432,
+    "Width": 48,
+    "Height": 48,
+    "Left": 528,
+    "Right": 576,
+    "Top": 432,
+    "Bottom": 480,
+    "IsEmpty": false,
+    "Location": {
+      "X": 528,
+      "Y": 432
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 552,
+      "Y": 456
+    }
+  },
+  "Rain_Tree_9_3": {
+    "X": 576,
+    "Y": 432,
+    "Width": 48,
+    "Height": 48,
+    "Left": 576,
+    "Right": 624,
+    "Top": 432,
+    "Bottom": 480,
+    "IsEmpty": false,
+    "Location": {
+      "X": 576,
+      "Y": 432
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 600,
+      "Y": 456
+    }
+  },
+  "Rain_Tree_9_4": {
+    "X": 624,
+    "Y": 432,
+    "Width": 48,
+    "Height": 48,
+    "Left": 624,
+    "Right": 672,
+    "Top": 432,
+    "Bottom": 480,
+    "IsEmpty": false,
+    "Location": {
+      "X": 624,
+      "Y": 432
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 648,
+      "Y": 456
+    }
+  },
+  "Rain_Tree_9_5": {
+    "X": 672,
+    "Y": 432,
+    "Width": 48,
+    "Height": 48,
+    "Left": 672,
+    "Right": 720,
+    "Top": 432,
+    "Bottom": 480,
+    "IsEmpty": false,
+    "Location": {
+      "X": 672,
+      "Y": 432
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 696,
+      "Y": 456
+    }
+  },
+  "Rain_Tree_9_6": {
+    "X": 720,
+    "Y": 432,
+    "Width": 48,
+    "Height": 48,
+    "Left": 720,
+    "Right": 768,
+    "Top": 432,
+    "Bottom": 480,
+    "IsEmpty": false,
+    "Location": {
+      "X": 720,
+      "Y": 432
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 744,
+      "Y": 456
+    }
+  },
+  "Rain_Tree_9_7": {
+    "X": 768,
+    "Y": 432,
+    "Width": 48,
+    "Height": 48,
+    "Left": 768,
+    "Right": 816,
+    "Top": 432,
+    "Bottom": 480,
+    "IsEmpty": false,
+    "Location": {
+      "X": 768,
+      "Y": 432
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 792,
+      "Y": 456
+    }
+  },
+  "Rain_Tree_9_8": {
+    "X": 816,
+    "Y": 432,
+    "Width": 48,
+    "Height": 48,
+    "Left": 816,
+    "Right": 864,
+    "Top": 432,
+    "Bottom": 480,
+    "IsEmpty": false,
+    "Location": {
+      "X": 816,
+      "Y": 432
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 840,
+      "Y": 456
+    }
+  },
+  "Rain_Tree_9_9": {
+    "X": 864,
+    "Y": 432,
+    "Width": 48,
+    "Height": 48,
+    "Left": 864,
+    "Right": 912,
+    "Top": 432,
+    "Bottom": 480,
+    "IsEmpty": false,
+    "Location": {
+      "X": 864,
+      "Y": 432
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 888,
+      "Y": 456
+    }
+  },
+  "Rain_Mountain_High_Upper": {
+    "X": 912,
+    "Y": 432,
+    "Width": 48,
+    "Height": 48,
+    "Left": 912,
+    "Right": 960,
+    "Top": 432,
+    "Bottom": 480,
+    "IsEmpty": false,
+    "Location": {
+      "X": 912,
+      "Y": 432
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 936,
+      "Y": 456
+    }
+  },
+  "Rain_Mountain_High_Lower": {
+    "X": 960,
+    "Y": 432,
+    "Width": 48,
+    "Height": 48,
+    "Left": 960,
+    "Right": 1008,
+    "Top": 432,
+    "Bottom": 480,
+    "IsEmpty": false,
+    "Location": {
+      "X": 960,
+      "Y": 432
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 984,
+      "Y": 456
+    }
+  },
+  "Rain_Mountain_Low": {
+    "X": 1008,
+    "Y": 432,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1008,
+    "Right": 1056,
+    "Top": 432,
+    "Bottom": 480,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1008,
+      "Y": 432
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1032,
+      "Y": 456
+    }
+  },
+  "Snow_Road_turn_up_right": {
+    "X": 1056,
+    "Y": 432,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1056,
+    "Right": 1104,
+    "Top": 432,
+    "Bottom": 480,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1056,
+      "Y": 432
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1080,
+      "Y": 456
+    }
+  },
+  "Snow_Road_Turn_up_left": {
+    "X": 1104,
+    "Y": 432,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1104,
+    "Right": 1152,
+    "Top": 432,
+    "Bottom": 480,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1104,
+      "Y": 432
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1128,
+      "Y": 456
+    }
+  },
+  "Snow_Road_Inter3_right": {
+    "X": 1152,
+    "Y": 432,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1152,
+    "Right": 1200,
+    "Top": 432,
+    "Bottom": 480,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1152,
+      "Y": 432
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1176,
+      "Y": 456
+    }
+  },
+  "Snow_Road_Inter3_down": {
+    "X": 1200,
+    "Y": 432,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1200,
+    "Right": 1248,
+    "Top": 432,
+    "Bottom": 480,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1200,
+      "Y": 432
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1224,
+      "Y": 456
+    }
+  },
+  "Snow_Road_hor": {
+    "X": 1248,
+    "Y": 432,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1248,
+    "Right": 1296,
+    "Top": 432,
+    "Bottom": 480,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1248,
+      "Y": 432
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1272,
+      "Y": 456
+    }
+  },
+  "Snow_Road_Cross": {
+    "X": 1296,
+    "Y": 432,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1296,
+    "Right": 1344,
+    "Top": 432,
+    "Bottom": 480,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1296,
+      "Y": 432
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1320,
+      "Y": 456
+    }
+  },
+  "Snow_Bridge_hor": {
+    "X": 1344,
+    "Y": 432,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1344,
+    "Right": 1392,
+    "Top": 432,
+    "Bottom": 480,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1344,
+      "Y": 432
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1368,
+      "Y": 456
+    }
+  },
+  "Snow_Road_Turn_down_right": {
+    "X": 1392,
+    "Y": 432,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1392,
+    "Right": 1440,
+    "Top": 432,
+    "Bottom": 480,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1392,
+      "Y": 432
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1416,
+      "Y": 456
+    }
+  },
+  "Snow_Road_Turn_down_left": {
+    "X": 1440,
+    "Y": 432,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1440,
+    "Right": 1488,
+    "Top": 432,
+    "Bottom": 480,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1440,
+      "Y": 432
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1464,
+      "Y": 456
+    }
+  },
+  "Snow_Road_Inter3_up": {
+    "X": 1488,
+    "Y": 432,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1488,
+    "Right": 1536,
+    "Top": 432,
+    "Bottom": 480,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1488,
+      "Y": 432
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1512,
+      "Y": 456
+    }
+  },
+  "Snow_Road_Inter3_left": {
+    "X": 1536,
+    "Y": 432,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1536,
+    "Right": 1584,
+    "Top": 432,
+    "Bottom": 480,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1536,
+      "Y": 432
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1560,
+      "Y": 456
+    }
+  },
+  "Snow_Road_ver": {
+    "X": 1584,
+    "Y": 432,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1584,
+    "Right": 1632,
+    "Top": 432,
+    "Bottom": 480,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1584,
+      "Y": 432
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1608,
+      "Y": 456
+    }
+  },
+  "Snow_Plain": {
+    "X": 1632,
+    "Y": 432,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1632,
+    "Right": 1680,
+    "Top": 432,
+    "Bottom": 480,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1632,
+      "Y": 432
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1656,
+      "Y": 456
+    }
+  },
+  "Snow_Bridge_ver": {
+    "X": 0,
+    "Y": 480,
+    "Width": 48,
+    "Height": 48,
+    "Left": 0,
+    "Right": 48,
+    "Top": 480,
+    "Bottom": 528,
+    "IsEmpty": false,
+    "Location": {
+      "X": 0,
+      "Y": 480
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 24,
+      "Y": 504
+    }
+  },
+  "Snow_Tree": {
+    "X": 48,
+    "Y": 480,
+    "Width": 48,
+    "Height": 48,
+    "Left": 48,
+    "Right": 96,
+    "Top": 480,
+    "Bottom": 528,
+    "IsEmpty": false,
+    "Location": {
+      "X": 48,
+      "Y": 480
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 72,
+      "Y": 504
+    }
+  },
+  "Snow_Tree_4_1": {
+    "X": 96,
+    "Y": 480,
+    "Width": 48,
+    "Height": 48,
+    "Left": 96,
+    "Right": 144,
+    "Top": 480,
+    "Bottom": 528,
+    "IsEmpty": false,
+    "Location": {
+      "X": 96,
+      "Y": 480
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 120,
+      "Y": 504
+    }
+  },
+  "Snow_Tree_4_2": {
+    "X": 144,
+    "Y": 480,
+    "Width": 48,
+    "Height": 48,
+    "Left": 144,
+    "Right": 192,
+    "Top": 480,
+    "Bottom": 528,
+    "IsEmpty": false,
+    "Location": {
+      "X": 144,
+      "Y": 480
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 168,
+      "Y": 504
+    }
+  },
+  "Snow_Tree_4_3": {
+    "X": 192,
+    "Y": 480,
+    "Width": 48,
+    "Height": 48,
+    "Left": 192,
+    "Right": 240,
+    "Top": 480,
+    "Bottom": 528,
+    "IsEmpty": false,
+    "Location": {
+      "X": 192,
+      "Y": 480
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 216,
+      "Y": 504
+    }
+  },
+  "Snow_Tree_4_4": {
+    "X": 240,
+    "Y": 480,
+    "Width": 48,
+    "Height": 48,
+    "Left": 240,
+    "Right": 288,
+    "Top": 480,
+    "Bottom": 528,
+    "IsEmpty": false,
+    "Location": {
+      "X": 240,
+      "Y": 480
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 264,
+      "Y": 504
+    }
+  },
+  "Snow_Tree_9_1": {
+    "X": 288,
+    "Y": 480,
+    "Width": 48,
+    "Height": 48,
+    "Left": 288,
+    "Right": 336,
+    "Top": 480,
+    "Bottom": 528,
+    "IsEmpty": false,
+    "Location": {
+      "X": 288,
+      "Y": 480
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 312,
+      "Y": 504
+    }
+  },
+  "Snow_Tree_9_2": {
+    "X": 336,
+    "Y": 480,
+    "Width": 48,
+    "Height": 48,
+    "Left": 336,
+    "Right": 384,
+    "Top": 480,
+    "Bottom": 528,
+    "IsEmpty": false,
+    "Location": {
+      "X": 336,
+      "Y": 480
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 360,
+      "Y": 504
+    }
+  },
+  "Snow_Tree_9_3": {
+    "X": 384,
+    "Y": 480,
+    "Width": 48,
+    "Height": 48,
+    "Left": 384,
+    "Right": 432,
+    "Top": 480,
+    "Bottom": 528,
+    "IsEmpty": false,
+    "Location": {
+      "X": 384,
+      "Y": 480
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 408,
+      "Y": 504
+    }
+  },
+  "Snow_Tree_9_4": {
+    "X": 432,
+    "Y": 480,
+    "Width": 48,
+    "Height": 48,
+    "Left": 432,
+    "Right": 480,
+    "Top": 480,
+    "Bottom": 528,
+    "IsEmpty": false,
+    "Location": {
+      "X": 432,
+      "Y": 480
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 456,
+      "Y": 504
+    }
+  },
+  "Snow_Tree_9_5": {
+    "X": 480,
+    "Y": 480,
+    "Width": 48,
+    "Height": 48,
+    "Left": 480,
+    "Right": 528,
+    "Top": 480,
+    "Bottom": 528,
+    "IsEmpty": false,
+    "Location": {
+      "X": 480,
+      "Y": 480
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 504,
+      "Y": 504
+    }
+  },
+  "Snow_Tree_9_6": {
+    "X": 528,
+    "Y": 480,
+    "Width": 48,
+    "Height": 48,
+    "Left": 528,
+    "Right": 576,
+    "Top": 480,
+    "Bottom": 528,
+    "IsEmpty": false,
+    "Location": {
+      "X": 528,
+      "Y": 480
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 552,
+      "Y": 504
+    }
+  },
+  "Snow_Tree_9_7": {
+    "X": 576,
+    "Y": 480,
+    "Width": 48,
+    "Height": 48,
+    "Left": 576,
+    "Right": 624,
+    "Top": 480,
+    "Bottom": 528,
+    "IsEmpty": false,
+    "Location": {
+      "X": 576,
+      "Y": 480
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 600,
+      "Y": 504
+    }
+  },
+  "Snow_Tree_9_8": {
+    "X": 624,
+    "Y": 480,
+    "Width": 48,
+    "Height": 48,
+    "Left": 624,
+    "Right": 672,
+    "Top": 480,
+    "Bottom": 528,
+    "IsEmpty": false,
+    "Location": {
+      "X": 624,
+      "Y": 480
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 648,
+      "Y": 504
+    }
+  },
+  "Snow_Tree_9_9": {
+    "X": 672,
+    "Y": 480,
+    "Width": 48,
+    "Height": 48,
+    "Left": 672,
+    "Right": 720,
+    "Top": 480,
+    "Bottom": 528,
+    "IsEmpty": false,
+    "Location": {
+      "X": 672,
+      "Y": 480
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 696,
+      "Y": 504
+    }
+  },
+  "Snow_Mountain_High_Upper": {
+    "X": 720,
+    "Y": 480,
+    "Width": 48,
+    "Height": 48,
+    "Left": 720,
+    "Right": 768,
+    "Top": 480,
+    "Bottom": 528,
+    "IsEmpty": false,
+    "Location": {
+      "X": 720,
+      "Y": 480
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 744,
+      "Y": 504
+    }
+  },
+  "Snow_Mountain_High_Lower": {
+    "X": 768,
+    "Y": 480,
+    "Width": 48,
+    "Height": 48,
+    "Left": 768,
+    "Right": 816,
+    "Top": 480,
+    "Bottom": 528,
+    "IsEmpty": false,
+    "Location": {
+      "X": 768,
+      "Y": 480
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 792,
+      "Y": 504
+    }
+  },
+  "Snow_Mountain_Low": {
+    "X": 816,
+    "Y": 480,
+    "Width": 48,
+    "Height": 48,
+    "Left": 816,
+    "Right": 864,
+    "Top": 480,
+    "Bottom": 528,
+    "IsEmpty": false,
+    "Location": {
+      "X": 816,
+      "Y": 480
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 840,
+      "Y": 504
+    }
+  },
+  "Desert_Road_turn_up_right": {
+    "X": 864,
+    "Y": 480,
+    "Width": 48,
+    "Height": 48,
+    "Left": 864,
+    "Right": 912,
+    "Top": 480,
+    "Bottom": 528,
+    "IsEmpty": false,
+    "Location": {
+      "X": 864,
+      "Y": 480
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 888,
+      "Y": 504
+    }
+  },
+  "Desert_Road_Turn_up_left": {
+    "X": 912,
+    "Y": 480,
+    "Width": 48,
+    "Height": 48,
+    "Left": 912,
+    "Right": 960,
+    "Top": 480,
+    "Bottom": 528,
+    "IsEmpty": false,
+    "Location": {
+      "X": 912,
+      "Y": 480
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 936,
+      "Y": 504
+    }
+  },
+  "Desert_Road_Inter3_right": {
+    "X": 960,
+    "Y": 480,
+    "Width": 48,
+    "Height": 48,
+    "Left": 960,
+    "Right": 1008,
+    "Top": 480,
+    "Bottom": 528,
+    "IsEmpty": false,
+    "Location": {
+      "X": 960,
+      "Y": 480
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 984,
+      "Y": 504
+    }
+  },
+  "Desert_Road_Inter3_down": {
+    "X": 1008,
+    "Y": 480,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1008,
+    "Right": 1056,
+    "Top": 480,
+    "Bottom": 528,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1008,
+      "Y": 480
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1032,
+      "Y": 504
+    }
+  },
+  "Desert_Road_hor": {
+    "X": 1056,
+    "Y": 480,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1056,
+    "Right": 1104,
+    "Top": 480,
+    "Bottom": 528,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1056,
+      "Y": 480
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1080,
+      "Y": 504
+    }
+  },
+  "Desert_Road_Cross": {
+    "X": 1104,
+    "Y": 480,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1104,
+    "Right": 1152,
+    "Top": 480,
+    "Bottom": 528,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1104,
+      "Y": 480
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1128,
+      "Y": 504
+    }
+  },
+  "Desert_Bridge_hor": {
+    "X": 1152,
+    "Y": 480,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1152,
+    "Right": 1200,
+    "Top": 480,
+    "Bottom": 528,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1152,
+      "Y": 480
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1176,
+      "Y": 504
+    }
+  },
+  "Desert_Road_Turn_down_right": {
+    "X": 1200,
+    "Y": 480,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1200,
+    "Right": 1248,
+    "Top": 480,
+    "Bottom": 528,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1200,
+      "Y": 480
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1224,
+      "Y": 504
+    }
+  },
+  "Desert_Road_Turn_down_left": {
+    "X": 1248,
+    "Y": 480,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1248,
+    "Right": 1296,
+    "Top": 480,
+    "Bottom": 528,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1248,
+      "Y": 480
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1272,
+      "Y": 504
+    }
+  },
+  "Desert_Road_Inter3_up": {
+    "X": 1296,
+    "Y": 480,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1296,
+    "Right": 1344,
+    "Top": 480,
+    "Bottom": 528,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1296,
+      "Y": 480
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1320,
+      "Y": 504
+    }
+  },
+  "Desert_Road_Inter3_left": {
+    "X": 1344,
+    "Y": 480,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1344,
+    "Right": 1392,
+    "Top": 480,
+    "Bottom": 528,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1344,
+      "Y": 480
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1368,
+      "Y": 504
+    }
+  },
+  "Desert_Road_ver": {
+    "X": 1392,
+    "Y": 480,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1392,
+    "Right": 1440,
+    "Top": 480,
+    "Bottom": 528,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1392,
+      "Y": 480
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1416,
+      "Y": 504
+    }
+  },
+  "Desert_Plain": {
+    "X": 1440,
+    "Y": 480,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1440,
+    "Right": 1488,
+    "Top": 480,
+    "Bottom": 528,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1440,
+      "Y": 480
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1464,
+      "Y": 504
+    }
+  },
+  "Desert_Bridge_ver": {
+    "X": 1488,
+    "Y": 480,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1488,
+    "Right": 1536,
+    "Top": 480,
+    "Bottom": 528,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1488,
+      "Y": 480
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1512,
+      "Y": 504
+    }
+  },
+  "Desert_Tree": {
+    "X": 1536,
+    "Y": 480,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1536,
+    "Right": 1584,
+    "Top": 480,
+    "Bottom": 528,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1536,
+      "Y": 480
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1560,
+      "Y": 504
+    }
+  },
+  "Desert_Mountain_High_Upper": {
+    "X": 1584,
+    "Y": 480,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1584,
+    "Right": 1632,
+    "Top": 480,
+    "Bottom": 528,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1584,
+      "Y": 480
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1608,
+      "Y": 504
+    }
+  },
+  "Desert_Mountain_High_Lower": {
+    "X": 1632,
+    "Y": 480,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1632,
+    "Right": 1680,
+    "Top": 480,
+    "Bottom": 528,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1632,
+      "Y": 480
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1656,
+      "Y": 504
+    }
+  },
+  "City_Upper": {
+    "X": 0,
+    "Y": 528,
+    "Width": 48,
+    "Height": 48,
+    "Left": 0,
+    "Right": 48,
+    "Top": 528,
+    "Bottom": 576,
+    "IsEmpty": false,
+    "Location": {
+      "X": 0,
+      "Y": 528
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 24,
+      "Y": 552
+    }
+  },
+  "City_Lower": {
+    "X": 48,
+    "Y": 528,
+    "Width": 48,
+    "Height": 48,
+    "Left": 48,
+    "Right": 96,
+    "Top": 528,
+    "Bottom": 576,
+    "IsEmpty": false,
+    "Location": {
+      "X": 48,
+      "Y": 528
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 72,
+      "Y": 552
+    }
+  },
+  "Factory": {
+    "X": 96,
+    "Y": 528,
+    "Width": 48,
+    "Height": 48,
+    "Left": 96,
+    "Right": 144,
+    "Top": 528,
+    "Bottom": 576,
+    "IsEmpty": false,
+    "Location": {
+      "X": 96,
+      "Y": 528
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 120,
+      "Y": 552
+    }
+  },
+  "AirPort_Upper": {
+    "X": 144,
+    "Y": 528,
+    "Width": 48,
+    "Height": 48,
+    "Left": 144,
+    "Right": 192,
+    "Top": 528,
+    "Bottom": 576,
+    "IsEmpty": false,
+    "Location": {
+      "X": 144,
+      "Y": 528
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 168,
+      "Y": 552
+    }
+  },
+  "AirPort_Lower": {
+    "X": 192,
+    "Y": 528,
+    "Width": 48,
+    "Height": 48,
+    "Left": 192,
+    "Right": 240,
+    "Top": 528,
+    "Bottom": 576,
+    "IsEmpty": false,
+    "Location": {
+      "X": 192,
+      "Y": 528
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 216,
+      "Y": 552
+    }
+  },
+  "Harbor_Upper": {
+    "X": 240,
+    "Y": 528,
+    "Width": 48,
+    "Height": 48,
+    "Left": 240,
+    "Right": 288,
+    "Top": 528,
+    "Bottom": 576,
+    "IsEmpty": false,
+    "Location": {
+      "X": 240,
+      "Y": 528
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 264,
+      "Y": 552
+    }
+  },
+  "Harbor_Lower": {
+    "X": 288,
+    "Y": 528,
+    "Width": 48,
+    "Height": 48,
+    "Left": 288,
+    "Right": 336,
+    "Top": 528,
+    "Bottom": 576,
+    "IsEmpty": false,
+    "Location": {
+      "X": 288,
+      "Y": 528
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 312,
+      "Y": 552
+    }
+  },
+  "Radar_Upper": {
+    "X": 336,
+    "Y": 528,
+    "Width": 48,
+    "Height": 48,
+    "Left": 336,
+    "Right": 384,
+    "Top": 528,
+    "Bottom": 576,
+    "IsEmpty": false,
+    "Location": {
+      "X": 336,
+      "Y": 528
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 360,
+      "Y": 552
+    }
+  },
+  "Radar_Lower": {
+    "X": 384,
+    "Y": 528,
+    "Width": 48,
+    "Height": 48,
+    "Left": 384,
+    "Right": 432,
+    "Top": 528,
+    "Bottom": 576,
+    "IsEmpty": false,
+    "Location": {
+      "X": 384,
+      "Y": 528
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 408,
+      "Y": 552
+    }
+  },
+  "SupplyBase_Upper": {
+    "X": 432,
+    "Y": 528,
+    "Width": 48,
+    "Height": 48,
+    "Left": 432,
+    "Right": 480,
+    "Top": 528,
+    "Bottom": 576,
+    "IsEmpty": false,
+    "Location": {
+      "X": 432,
+      "Y": 528
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 456,
+      "Y": 552
+    }
+  },
+  "SupplyBase_Lower": {
+    "X": 480,
+    "Y": 528,
+    "Width": 48,
+    "Height": 48,
+    "Left": 480,
+    "Right": 528,
+    "Top": 528,
+    "Bottom": 576,
+    "IsEmpty": false,
+    "Location": {
+      "X": 480,
+      "Y": 528
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 504,
+      "Y": 552
+    }
+  },
+  "Red_City_Upper": {
+    "X": 528,
+    "Y": 528,
+    "Width": 48,
+    "Height": 48,
+    "Left": 528,
+    "Right": 576,
+    "Top": 528,
+    "Bottom": 576,
+    "IsEmpty": false,
+    "Location": {
+      "X": 528,
+      "Y": 528
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 552,
+      "Y": 552
+    }
+  },
+  "Red_City_Lower": {
+    "X": 576,
+    "Y": 528,
+    "Width": 48,
+    "Height": 48,
+    "Left": 576,
+    "Right": 624,
+    "Top": 528,
+    "Bottom": 576,
+    "IsEmpty": false,
+    "Location": {
+      "X": 576,
+      "Y": 528
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 600,
+      "Y": 552
+    }
+  },
+  "Red_Factory": {
+    "X": 624,
+    "Y": 528,
+    "Width": 48,
+    "Height": 48,
+    "Left": 624,
+    "Right": 672,
+    "Top": 528,
+    "Bottom": 576,
+    "IsEmpty": false,
+    "Location": {
+      "X": 624,
+      "Y": 528
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 648,
+      "Y": 552
+    }
+  },
+  "Red_AirPort_Upper": {
+    "X": 672,
+    "Y": 528,
+    "Width": 48,
+    "Height": 48,
+    "Left": 672,
+    "Right": 720,
+    "Top": 528,
+    "Bottom": 576,
+    "IsEmpty": false,
+    "Location": {
+      "X": 672,
+      "Y": 528
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 696,
+      "Y": 552
+    }
+  },
+  "Red_AirPort_Lower": {
+    "X": 720,
+    "Y": 528,
+    "Width": 48,
+    "Height": 48,
+    "Left": 720,
+    "Right": 768,
+    "Top": 528,
+    "Bottom": 576,
+    "IsEmpty": false,
+    "Location": {
+      "X": 720,
+      "Y": 528
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 744,
+      "Y": 552
+    }
+  },
+  "Red_Harbor_Upper": {
+    "X": 768,
+    "Y": 528,
+    "Width": 48,
+    "Height": 48,
+    "Left": 768,
+    "Right": 816,
+    "Top": 528,
+    "Bottom": 576,
+    "IsEmpty": false,
+    "Location": {
+      "X": 768,
+      "Y": 528
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 792,
+      "Y": 552
+    }
+  },
+  "Red_Harbor_Lower": {
+    "X": 816,
+    "Y": 528,
+    "Width": 48,
+    "Height": 48,
+    "Left": 816,
+    "Right": 864,
+    "Top": 528,
+    "Bottom": 576,
+    "IsEmpty": false,
+    "Location": {
+      "X": 816,
+      "Y": 528
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 840,
+      "Y": 552
+    }
+  },
+  "Red_Radar_Upper": {
+    "X": 864,
+    "Y": 528,
+    "Width": 48,
+    "Height": 48,
+    "Left": 864,
+    "Right": 912,
+    "Top": 528,
+    "Bottom": 576,
+    "IsEmpty": false,
+    "Location": {
+      "X": 864,
+      "Y": 528
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 888,
+      "Y": 552
+    }
+  },
+  "Red_Radar_Lower": {
+    "X": 912,
+    "Y": 528,
+    "Width": 48,
+    "Height": 48,
+    "Left": 912,
+    "Right": 960,
+    "Top": 528,
+    "Bottom": 576,
+    "IsEmpty": false,
+    "Location": {
+      "X": 912,
+      "Y": 528
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 936,
+      "Y": 552
+    }
+  },
+  "Red_SupplyBase_Upper": {
+    "X": 960,
+    "Y": 528,
+    "Width": 48,
+    "Height": 48,
+    "Left": 960,
+    "Right": 1008,
+    "Top": 528,
+    "Bottom": 576,
+    "IsEmpty": false,
+    "Location": {
+      "X": 960,
+      "Y": 528
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 984,
+      "Y": 552
+    }
+  },
+  "Red_SupplyBase_Lower": {
+    "X": 1008,
+    "Y": 528,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1008,
+    "Right": 1056,
+    "Top": 528,
+    "Bottom": 576,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1008,
+      "Y": 528
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1032,
+      "Y": 552
+    }
+  },
+  "Red_Headquarter_Upper": {
+    "X": 1056,
+    "Y": 528,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1056,
+    "Right": 1104,
+    "Top": 528,
+    "Bottom": 576,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1056,
+      "Y": 528
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1080,
+      "Y": 552
+    }
+  },
+  "Red_Headquarter_Lower": {
+    "X": 1104,
+    "Y": 528,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1104,
+    "Right": 1152,
+    "Top": 528,
+    "Bottom": 576,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1104,
+      "Y": 528
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1128,
+      "Y": 552
+    }
+  },
+  "Blue_City_Upper": {
+    "X": 1152,
+    "Y": 528,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1152,
+    "Right": 1200,
+    "Top": 528,
+    "Bottom": 576,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1152,
+      "Y": 528
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1176,
+      "Y": 552
+    }
+  },
+  "Blue_City_Lower": {
+    "X": 1200,
+    "Y": 528,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1200,
+    "Right": 1248,
+    "Top": 528,
+    "Bottom": 576,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1200,
+      "Y": 528
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1224,
+      "Y": 552
+    }
+  },
+  "Blue_Factory": {
+    "X": 1248,
+    "Y": 528,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1248,
+    "Right": 1296,
+    "Top": 528,
+    "Bottom": 576,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1248,
+      "Y": 528
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1272,
+      "Y": 552
+    }
+  },
+  "Blue_AirPort_Upper": {
+    "X": 1296,
+    "Y": 528,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1296,
+    "Right": 1344,
+    "Top": 528,
+    "Bottom": 576,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1296,
+      "Y": 528
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1320,
+      "Y": 552
+    }
+  },
+  "Blue_AirPort_Lower": {
+    "X": 1344,
+    "Y": 528,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1344,
+    "Right": 1392,
+    "Top": 528,
+    "Bottom": 576,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1344,
+      "Y": 528
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1368,
+      "Y": 552
+    }
+  },
+  "Blue_Harbor_Upper": {
+    "X": 1392,
+    "Y": 528,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1392,
+    "Right": 1440,
+    "Top": 528,
+    "Bottom": 576,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1392,
+      "Y": 528
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1416,
+      "Y": 552
+    }
+  },
+  "Blue_Harbor_Lower": {
+    "X": 1440,
+    "Y": 528,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1440,
+    "Right": 1488,
+    "Top": 528,
+    "Bottom": 576,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1440,
+      "Y": 528
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1464,
+      "Y": 552
+    }
+  },
+  "Blue_Radar_Upper": {
+    "X": 1488,
+    "Y": 528,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1488,
+    "Right": 1536,
+    "Top": 528,
+    "Bottom": 576,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1488,
+      "Y": 528
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1512,
+      "Y": 552
+    }
+  },
+  "Blue_Radar_Lower": {
+    "X": 1536,
+    "Y": 528,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1536,
+    "Right": 1584,
+    "Top": 528,
+    "Bottom": 576,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1536,
+      "Y": 528
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1560,
+      "Y": 552
+    }
+  },
+  "Blue_SupplyBase_Upper": {
+    "X": 1584,
+    "Y": 528,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1584,
+    "Right": 1632,
+    "Top": 528,
+    "Bottom": 576,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1584,
+      "Y": 528
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1608,
+      "Y": 552
+    }
+  },
+  "Blue_SupplyBase_Lower": {
+    "X": 1632,
+    "Y": 528,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1632,
+    "Right": 1680,
+    "Top": 528,
+    "Bottom": 576,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1632,
+      "Y": 528
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1656,
+      "Y": 552
+    }
+  },
+  "Blue_Headquarter_Upper": {
+    "X": 0,
+    "Y": 576,
+    "Width": 48,
+    "Height": 48,
+    "Left": 0,
+    "Right": 48,
+    "Top": 576,
+    "Bottom": 624,
+    "IsEmpty": false,
+    "Location": {
+      "X": 0,
+      "Y": 576
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 24,
+      "Y": 600
+    }
+  },
+  "Blue_Headquarter_Lower": {
+    "X": 48,
+    "Y": 576,
+    "Width": 48,
+    "Height": 48,
+    "Left": 48,
+    "Right": 96,
+    "Top": 576,
+    "Bottom": 624,
+    "IsEmpty": false,
+    "Location": {
+      "X": 48,
+      "Y": 576
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 72,
+      "Y": 600
+    }
+  },
+  "Green_City_Upper": {
+    "X": 96,
+    "Y": 576,
+    "Width": 48,
+    "Height": 48,
+    "Left": 96,
+    "Right": 144,
+    "Top": 576,
+    "Bottom": 624,
+    "IsEmpty": false,
+    "Location": {
+      "X": 96,
+      "Y": 576
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 120,
+      "Y": 600
+    }
+  },
+  "Green_City_Lower": {
+    "X": 144,
+    "Y": 576,
+    "Width": 48,
+    "Height": 48,
+    "Left": 144,
+    "Right": 192,
+    "Top": 576,
+    "Bottom": 624,
+    "IsEmpty": false,
+    "Location": {
+      "X": 144,
+      "Y": 576
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 168,
+      "Y": 600
+    }
+  },
+  "Green_Factory": {
+    "X": 192,
+    "Y": 576,
+    "Width": 48,
+    "Height": 48,
+    "Left": 192,
+    "Right": 240,
+    "Top": 576,
+    "Bottom": 624,
+    "IsEmpty": false,
+    "Location": {
+      "X": 192,
+      "Y": 576
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 216,
+      "Y": 600
+    }
+  },
+  "Green_AirPort_Upper": {
+    "X": 240,
+    "Y": 576,
+    "Width": 48,
+    "Height": 48,
+    "Left": 240,
+    "Right": 288,
+    "Top": 576,
+    "Bottom": 624,
+    "IsEmpty": false,
+    "Location": {
+      "X": 240,
+      "Y": 576
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 264,
+      "Y": 600
+    }
+  },
+  "Green_AirPort_Lower": {
+    "X": 288,
+    "Y": 576,
+    "Width": 48,
+    "Height": 48,
+    "Left": 288,
+    "Right": 336,
+    "Top": 576,
+    "Bottom": 624,
+    "IsEmpty": false,
+    "Location": {
+      "X": 288,
+      "Y": 576
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 312,
+      "Y": 600
+    }
+  },
+  "Green_Harbor_Upper": {
+    "X": 336,
+    "Y": 576,
+    "Width": 48,
+    "Height": 48,
+    "Left": 336,
+    "Right": 384,
+    "Top": 576,
+    "Bottom": 624,
+    "IsEmpty": false,
+    "Location": {
+      "X": 336,
+      "Y": 576
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 360,
+      "Y": 600
+    }
+  },
+  "Green_Harbor_Lower": {
+    "X": 384,
+    "Y": 576,
+    "Width": 48,
+    "Height": 48,
+    "Left": 384,
+    "Right": 432,
+    "Top": 576,
+    "Bottom": 624,
+    "IsEmpty": false,
+    "Location": {
+      "X": 384,
+      "Y": 576
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 408,
+      "Y": 600
+    }
+  },
+  "Green_Radar_Upper": {
+    "X": 432,
+    "Y": 576,
+    "Width": 48,
+    "Height": 48,
+    "Left": 432,
+    "Right": 480,
+    "Top": 576,
+    "Bottom": 624,
+    "IsEmpty": false,
+    "Location": {
+      "X": 432,
+      "Y": 576
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 456,
+      "Y": 600
+    }
+  },
+  "Green_Radar_Lower": {
+    "X": 480,
+    "Y": 576,
+    "Width": 48,
+    "Height": 48,
+    "Left": 480,
+    "Right": 528,
+    "Top": 576,
+    "Bottom": 624,
+    "IsEmpty": false,
+    "Location": {
+      "X": 480,
+      "Y": 576
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 504,
+      "Y": 600
+    }
+  },
+  "Green_SupplyBase_Upper": {
+    "X": 528,
+    "Y": 576,
+    "Width": 48,
+    "Height": 48,
+    "Left": 528,
+    "Right": 576,
+    "Top": 576,
+    "Bottom": 624,
+    "IsEmpty": false,
+    "Location": {
+      "X": 528,
+      "Y": 576
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 552,
+      "Y": 600
+    }
+  },
+  "Green_SupplyBase_Lower": {
+    "X": 576,
+    "Y": 576,
+    "Width": 48,
+    "Height": 48,
+    "Left": 576,
+    "Right": 624,
+    "Top": 576,
+    "Bottom": 624,
+    "IsEmpty": false,
+    "Location": {
+      "X": 576,
+      "Y": 576
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 600,
+      "Y": 600
+    }
+  },
+  "Green_Headquarter_Upper": {
+    "X": 624,
+    "Y": 576,
+    "Width": 48,
+    "Height": 48,
+    "Left": 624,
+    "Right": 672,
+    "Top": 576,
+    "Bottom": 624,
+    "IsEmpty": false,
+    "Location": {
+      "X": 624,
+      "Y": 576
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 648,
+      "Y": 600
+    }
+  },
+  "Green_Headquarter_Lower": {
+    "X": 672,
+    "Y": 576,
+    "Width": 48,
+    "Height": 48,
+    "Left": 672,
+    "Right": 720,
+    "Top": 576,
+    "Bottom": 624,
+    "IsEmpty": false,
+    "Location": {
+      "X": 672,
+      "Y": 576
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 696,
+      "Y": 600
+    }
+  },
+  "Yellow_City_Upper": {
+    "X": 720,
+    "Y": 576,
+    "Width": 48,
+    "Height": 48,
+    "Left": 720,
+    "Right": 768,
+    "Top": 576,
+    "Bottom": 624,
+    "IsEmpty": false,
+    "Location": {
+      "X": 720,
+      "Y": 576
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 744,
+      "Y": 600
+    }
+  },
+  "Yellow_City_Lower": {
+    "X": 768,
+    "Y": 576,
+    "Width": 48,
+    "Height": 48,
+    "Left": 768,
+    "Right": 816,
+    "Top": 576,
+    "Bottom": 624,
+    "IsEmpty": false,
+    "Location": {
+      "X": 768,
+      "Y": 576
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 792,
+      "Y": 600
+    }
+  },
+  "Yellow_Factory": {
+    "X": 816,
+    "Y": 576,
+    "Width": 48,
+    "Height": 48,
+    "Left": 816,
+    "Right": 864,
+    "Top": 576,
+    "Bottom": 624,
+    "IsEmpty": false,
+    "Location": {
+      "X": 816,
+      "Y": 576
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 840,
+      "Y": 600
+    }
+  },
+  "Yellow_AirPort_Upper": {
+    "X": 864,
+    "Y": 576,
+    "Width": 48,
+    "Height": 48,
+    "Left": 864,
+    "Right": 912,
+    "Top": 576,
+    "Bottom": 624,
+    "IsEmpty": false,
+    "Location": {
+      "X": 864,
+      "Y": 576
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 888,
+      "Y": 600
+    }
+  },
+  "Yellow_AirPort_Lower": {
+    "X": 912,
+    "Y": 576,
+    "Width": 48,
+    "Height": 48,
+    "Left": 912,
+    "Right": 960,
+    "Top": 576,
+    "Bottom": 624,
+    "IsEmpty": false,
+    "Location": {
+      "X": 912,
+      "Y": 576
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 936,
+      "Y": 600
+    }
+  },
+  "Yellow_Harbor_Upper": {
+    "X": 960,
+    "Y": 576,
+    "Width": 48,
+    "Height": 48,
+    "Left": 960,
+    "Right": 1008,
+    "Top": 576,
+    "Bottom": 624,
+    "IsEmpty": false,
+    "Location": {
+      "X": 960,
+      "Y": 576
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 984,
+      "Y": 600
+    }
+  },
+  "Yellow_Harbor_Lower": {
+    "X": 1008,
+    "Y": 576,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1008,
+    "Right": 1056,
+    "Top": 576,
+    "Bottom": 624,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1008,
+      "Y": 576
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1032,
+      "Y": 600
+    }
+  },
+  "Yellow_Radar_Upper": {
+    "X": 1056,
+    "Y": 576,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1056,
+    "Right": 1104,
+    "Top": 576,
+    "Bottom": 624,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1056,
+      "Y": 576
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1080,
+      "Y": 600
+    }
+  },
+  "Yellow_Radar_Lower": {
+    "X": 1104,
+    "Y": 576,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1104,
+    "Right": 1152,
+    "Top": 576,
+    "Bottom": 624,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1104,
+      "Y": 576
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1128,
+      "Y": 600
+    }
+  },
+  "Yellow_SupplyBase_Upper": {
+    "X": 1152,
+    "Y": 576,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1152,
+    "Right": 1200,
+    "Top": 576,
+    "Bottom": 624,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1152,
+      "Y": 576
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1176,
+      "Y": 600
+    }
+  },
+  "Yellow_SupplyBase_Lower": {
+    "X": 1200,
+    "Y": 576,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1200,
+    "Right": 1248,
+    "Top": 576,
+    "Bottom": 624,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1200,
+      "Y": 576
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1224,
+      "Y": 600
+    }
+  },
+  "Yellow_Headquarter_Upper": {
+    "X": 1248,
+    "Y": 576,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1248,
+    "Right": 1296,
+    "Top": 576,
+    "Bottom": 624,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1248,
+      "Y": 576
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1272,
+      "Y": 600
+    }
+  },
+  "Yellow_Headquarter_Lower": {
+    "X": 1296,
+    "Y": 576,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1296,
+    "Right": 1344,
+    "Top": 576,
+    "Bottom": 624,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1296,
+      "Y": 576
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1320,
+      "Y": 600
+    }
+  },
+  "Missile_Silo_Upper": {
+    "X": 1344,
+    "Y": 576,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1344,
+    "Right": 1392,
+    "Top": 576,
+    "Bottom": 624,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1344,
+      "Y": 576
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1368,
+      "Y": 600
+    }
+  },
+  "Missile_Silo_Lower": {
+    "X": 1392,
+    "Y": 576,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1392,
+    "Right": 1440,
+    "Top": 576,
+    "Bottom": 624,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1392,
+      "Y": 576
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1416,
+      "Y": 600
+    }
+  },
+  "Missile_Silo_Launched": {
+    "X": 1440,
+    "Y": 576,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1440,
+    "Right": 1488,
+    "Top": 576,
+    "Bottom": 624,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1440,
+      "Y": 576
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1464,
+      "Y": 600
+    }
+  },
+  "Max": {
+    "X": 1488,
+    "Y": 576,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1488,
+    "Right": 1536,
+    "Top": 576,
+    "Bottom": 624,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1488,
+      "Y": 576
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1512,
+      "Y": 600
+    }
+  },
+  "None": {
+    "X": 1536,
+    "Y": 576,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1536,
+    "Right": 1584,
+    "Top": 576,
+    "Bottom": 624,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1536,
+      "Y": 576
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1560,
+      "Y": 600
+    }
+  },
+  "454": {
+    "X": 1584,
+    "Y": 576,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1584,
+    "Right": 1632,
+    "Top": 576,
+    "Bottom": 624,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1584,
+      "Y": 576
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1608,
+      "Y": 600
+    }
+  },
+  "455": {
+    "X": 1632,
+    "Y": 576,
+    "Width": 48,
+    "Height": 48,
+    "Left": 1632,
+    "Right": 1680,
+    "Top": 576,
+    "Bottom": 624,
+    "IsEmpty": false,
+    "Location": {
+      "X": 1632,
+      "Y": 576
+    },
+    "Size": {
+      "X": 48,
+      "Y": 48
+    },
+    "Center": {
+      "X": 1656,
+      "Y": 600
+    }
+  }
+}

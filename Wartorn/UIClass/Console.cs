@@ -58,7 +58,7 @@ namespace Wartorn.UIClass
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.DrawString(font != null ? font : CONTENT_MANAGER.defaultfont, (string.IsNullOrEmpty(text)) ? "" : text, new Vector2(rect.X, rect.Y) + Size / 4, foregroundColor, Rotation, Vector2.Zero, scale, SpriteEffects.None, LayerDepth.Gui);
+            spriteBatch.DrawString(font != null ? font : CONTENT_MANAGER.defaultfont, (string.IsNullOrEmpty(text)) ? "" : text, new Vector2(rect.X, rect.Y) + Size / 4, foregroundColor, Rotation, Vector2.Zero, scale, SpriteEffects.None, LayerDepth.GuiUpper);
             DrawingHelper.DrawRectangle(Position.ToVector2(), Size, backgroundColor, true);
             inputbox.Draw(spriteBatch);
         }

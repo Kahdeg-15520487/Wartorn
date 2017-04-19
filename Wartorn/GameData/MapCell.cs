@@ -13,7 +13,7 @@ namespace Wartorn.GameData
 {
     class MapCell
     {
-        public SpriteSheetTerrain overlappingsprite;
+        public SpriteSheetTerrain overlappingterrain = SpriteSheetTerrain.None;
         public SpriteSheetTerrain terrain;
         public bool isFog;
         public Unit unit;
@@ -31,10 +31,19 @@ namespace Wartorn.GameData
             this.unitId = unitId;
         }
 
-        [JsonConstructor]
-        public MapCell(SpriteSheetTerrain t, Unit u, int unitId,bool isfog)
+        public MapCell(SpriteSheetTerrain t, Unit u, int unitId, bool isfog)
         {
             terrain = t;
+            unit = u;
+            this.unitId = unitId;
+            isFog = isfog;
+        }
+
+        [JsonConstructor]
+        public MapCell(SpriteSheetTerrain t,SpriteSheetTerrain ot, Unit u, int unitId,bool isfog)
+        {
+            terrain = t;
+            overlappingterrain = ot;
             unit = u;
             this.unitId = unitId;
             isFog = isfog;
