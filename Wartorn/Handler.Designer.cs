@@ -37,6 +37,7 @@
             this.ClientSize = new System.Drawing.Size(285, 210);
             this.Name = "Handler";
             this.Text = "Handler";
+            this.Shown += new System.EventHandler(this.Handler_Shown);
             this.ResumeLayout(false);
 
         }

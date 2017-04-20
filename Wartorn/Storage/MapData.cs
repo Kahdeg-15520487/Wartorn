@@ -19,7 +19,25 @@ namespace Wartorn.Storage
         {
             //TODO: actually load map
             var mapdata = data.Split('|');
-            int w, h;
+            string majorver = string.Empty
+                 , minorver = string.Empty;
+
+            try
+            {
+                majorver = JsonConvert.DeserializeObject<string>(mapdata[0]);
+                minorver = JsonConvert.DeserializeObject<string>(mapdata[1]);
+            }
+            catch (Exception e)
+            {
+                Utility.HelperFunction.Log(e);
+            }
+
+            if (string.Compare(majorver,VersionNumber.MajorVersion) != 0 
+             || string.Compare(minorver, VersionNumber.MinorVersion) != 0)
+            {
+                CONTENT_MANAGER.ShowMessageBox("Cant't load map" + Environment.NewLine + "Version not compatible" + Environment.NewLine + "Game version: " + VersionNumber.GetVersionNumber + Environment.NewLine + "Map version: " + majorver + "." + minorver);
+                return null;
+            }
 
             Map output = new Map();
 
@@ -50,9 +68,9 @@ namespace Wartorn.Storage
         {
             StringBuilder output = new StringBuilder();
 
-            output.Append(JsonConvert.SerializeObject(map.Width));
+            output.Append(JsonConvert.SerializeObject(VersionNumber.MajorVersion));
             output.Append('|');
-            output.Append(JsonConvert.SerializeObject(map.Height));
+            output.Append(JsonConvert.SerializeObject(VersionNumber.MinorVersion));
             output.Append('|');
             output.Append(JsonConvert.SerializeObject(map));
 

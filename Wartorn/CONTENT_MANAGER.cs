@@ -41,6 +41,7 @@ namespace Wartorn
 
         public static event EventHandler<MessageEventArgs> messagebox;
         public static event EventHandler<MessageEventArgs> fileopendialog;
+        public static event EventHandler<MessageEventArgs> togglebackgroundform;
 
         public static void ShowMessageBox(string e)
         {
@@ -52,6 +53,11 @@ namespace Wartorn
             MessageEventArgs e = new MessageEventArgs(rootpath);
             fileopendialog?.Invoke(null, e);
             return e.message;
+        }
+
+        public static void ToggleBackgroundForm(string e)
+        {
+            togglebackgroundform?.Invoke(null, new MessageEventArgs(e));
         }
 
         public static void ShowFPS(GameTime gameTime)

@@ -27,12 +27,14 @@ namespace Wartorn.Screens
         private Canvas canvas;
         private Camera backgroundCamera;
 
+        //sprite
         private Texture2D SelectScreenBackground;
         private Texture2D TitleBackground;
         private Texture2D ModeSelectDark;
         private Texture2D ModeSelectLight;
         private SpriteFont menufont;
 
+        //de phuc vu cho viec ve background quay vong vong
         private int maxXoffset, maxYoffset;
         private ButtonSelected selectedbutton = ButtonSelected.None;
 
@@ -55,6 +57,7 @@ namespace Wartorn.Screens
             //cái này là cái tựa đề tên game, để vẽ đè lên cái background ở trên
             TitleBackground = CONTENT_MANAGER.Content.Load<Texture2D>(@"sprite\GUI\Title");
 
+            //cái này là cái 
             ModeSelectDark = CONTENT_MANAGER.Content.Load<Texture2D>(@"sprite\GUI\Mode_select_dark");
             ModeSelectLight = CONTENT_MANAGER.Content.Load<Texture2D>(@"sprite\GUI\Mode_select_light");
 
@@ -69,6 +72,7 @@ namespace Wartorn.Screens
             //khai báo 1 cái label để hiển thị fps
             Label label_fps = new Label(" ", new Point(0, 0), new Vector2(100, 50), CONTENT_MANAGER.defaultfont);
             label_fps.foregroundColor = Color.DarkBlue;
+            label_fps.IsVisible = false;
 
             //TODO make button for main menu
             Button button_Campaign = new Button(ModeSelectDark, new Point(100, 100), 2);

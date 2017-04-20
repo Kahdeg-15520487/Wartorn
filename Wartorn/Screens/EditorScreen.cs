@@ -38,7 +38,7 @@ namespace Wartorn.Screens
         private SpriteSheetTerrain currentlySelectedTerrain = SpriteSheetTerrain.Reef;
 
         private Side GuiSide = Side.Left;
-        private bool isMenuOpen = false;
+        private bool isMenuOpen = true;
 
         //represent a changing map cell action
         struct Action
@@ -90,7 +90,7 @@ namespace Wartorn.Screens
             canvas_Menu.AddElement("button_Save", button_Save);
             canvas_Menu.AddElement("button_Open", button_Open);
             canvas_Menu.AddElement("button_Exit", button_Exit);
-            canvas_Menu.IsVisible = false;
+            canvas_Menu.IsVisible = isMenuOpen;
 
             //terrain selection menu
             Canvas canvas_terrain_selection = new Canvas();
@@ -142,7 +142,11 @@ namespace Wartorn.Screens
 
                 if (!string.IsNullOrEmpty(content))
                 {
-                    map.Clone(Storage.MapData.LoadMap(content));
+                    var temp = Storage.MapData.LoadMap(content);
+                    if (temp!=null)
+                    {
+                        map.Clone(temp);
+                    }
                 }
             };
 

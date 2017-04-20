@@ -9,6 +9,13 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Wartorn
 {
+    public static class VersionNumber
+    {
+        public static string MajorVersion = "0";
+        public static string MinorVersion = "1";
+        public static string GetVersionNumber { get { return MajorVersion + "." + MinorVersion; } }
+    }
+
     static class LayerDepth
     {
         public static float BackGround = 0.0f;
