@@ -6025,7 +6025,7 @@
       "Y": 216
     }
   },
-  "Tree__bottom_right": {
+  "Tree_bottom_right": {
     "X": 864,
     "Y": 192,
     "Width": 48,
@@ -6048,7 +6048,7 @@
       "Y": 216
     }
   },
-  "Tree_9_1": {
+  "Tree_up_left": {
     "X": 912,
     "Y": 192,
     "Width": 48,
@@ -6071,7 +6071,7 @@
       "Y": 216
     }
   },
-  "Tree_9_2": {
+  "Tree_up_middle": {
     "X": 960,
     "Y": 192,
     "Width": 48,
@@ -6094,7 +6094,7 @@
       "Y": 216
     }
   },
-  "Tree_9_3": {
+  "Tree_up_right": {
     "X": 1008,
     "Y": 192,
     "Width": 48,
@@ -6117,7 +6117,7 @@
       "Y": 216
     }
   },
-  "Tree_9_4": {
+  "Tree_middle_left": {
     "X": 1056,
     "Y": 192,
     "Width": 48,
@@ -6140,7 +6140,7 @@
       "Y": 216
     }
   },
-  "Tree_9_5": {
+  "Tree_middle_middle": {
     "X": 1104,
     "Y": 192,
     "Width": 48,
@@ -6163,7 +6163,7 @@
       "Y": 216
     }
   },
-  "Tree_9_6": {
+  "Tree_middle_right": {
     "X": 1152,
     "Y": 192,
     "Width": 48,
@@ -6186,7 +6186,7 @@
       "Y": 216
     }
   },
-  "Tree_9_7": {
+  "Tree_down_left": {
     "X": 1200,
     "Y": 192,
     "Width": 48,
@@ -6209,7 +6209,7 @@
       "Y": 216
     }
   },
-  "Tree_9_8": {
+  "Tree_down_middle": {
     "X": 1248,
     "Y": 192,
     "Width": 48,
@@ -6232,7 +6232,7 @@
       "Y": 216
     }
   },
-  "Tree_9_9": {
+  "Tree_down_right": {
     "X": 1296,
     "Y": 192,
     "Width": 48,
@@ -6738,7 +6738,7 @@
       "Y": 264
     }
   },
-  "Tropical_Tree__bottom_right": {
+  "Tropical_Tree_bottom_right": {
     "X": 864,
     "Y": 240,
     "Width": 48,
@@ -6761,7 +6761,7 @@
       "Y": 264
     }
   },
-  "Tropical_Tree_9_1": {
+  "Tropical_Tree_up_left": {
     "X": 912,
     "Y": 240,
     "Width": 48,
@@ -6784,7 +6784,7 @@
       "Y": 264
     }
   },
-  "Tropical_Tree_9_2": {
+  "Tropical_Tree_up_middle": {
     "X": 960,
     "Y": 240,
     "Width": 48,
@@ -6807,7 +6807,7 @@
       "Y": 264
     }
   },
-  "Tropical_Tree_9_3": {
+  "Tropical_Tree_up_right": {
     "X": 1008,
     "Y": 240,
     "Width": 48,
@@ -6830,7 +6830,7 @@
       "Y": 264
     }
   },
-  "Tropical_Tree_9_4": {
+  "Tropical_Tree_middle_left": {
     "X": 1056,
     "Y": 240,
     "Width": 48,
@@ -6853,7 +6853,7 @@
       "Y": 264
     }
   },
-  "Tropical_Tree_9_5": {
+  "Tropical_Tree_middle_middle": {
     "X": 1104,
     "Y": 240,
     "Width": 48,
@@ -6876,7 +6876,7 @@
       "Y": 264
     }
   },
-  "Tropical_Tree_9_6": {
+  "Tropical_Tree_middle_right": {
     "X": 1152,
     "Y": 240,
     "Width": 48,
@@ -6899,7 +6899,7 @@
       "Y": 264
     }
   },
-  "Tropical_Tree_9_7": {
+  "Tropical_Tree_down_left": {
     "X": 1200,
     "Y": 240,
     "Width": 48,
@@ -6922,7 +6922,7 @@
       "Y": 264
     }
   },
-  "Tropical_Tree_9_8": {
+  "Tropical_Tree_down_middle": {
     "X": 1248,
     "Y": 240,
     "Width": 48,
@@ -6945,7 +6945,7 @@
       "Y": 264
     }
   },
-  "Tropical_Tree_9_9": {
+  "Tropical_Tree_down_right": {
     "X": 1296,
     "Y": 240,
     "Width": 48,
@@ -7451,7 +7451,7 @@
       "Y": 312
     }
   },
-  "Rain_Tree__bottom_right": {
+  "Rain_Tree_bottom_right": {
     "X": 864,
     "Y": 288,
     "Width": 48,
@@ -7474,7 +7474,7 @@
       "Y": 312
     }
   },
-  "Rain_Tree_9_1": {
+  "Rain_Tree_up_left": {
     "X": 912,
     "Y": 288,
     "Width": 48,
@@ -7497,7 +7497,7 @@
       "Y": 312
     }
   },
-  "Rain_Tree_9_2": {
+  "Rain_Tree_up_middle": {
     "X": 960,
     "Y": 288,
     "Width": 48,
@@ -7520,7 +7520,7 @@
       "Y": 312
     }
   },
-  "Rain_Tree_9_3": {
+  "Rain_Tree_up_right": {
     "X": 1008,
     "Y": 288,
     "Width": 48,
@@ -7543,7 +7543,7 @@
       "Y": 312
     }
   },
-  "Rain_Tree_9_4": {
+  "Rain_Tree_middle_left": {
     "X": 1056,
     "Y": 288,
     "Width": 48,
@@ -7566,7 +7566,7 @@
       "Y": 312
     }
   },
-  "Rain_Tree_9_5": {
+  "Rain_Tree_middle_middle": {
     "X": 1104,
     "Y": 288,
     "Width": 48,
@@ -7589,7 +7589,7 @@
       "Y": 312
     }
   },
-  "Rain_Tree_9_6": {
+  "Rain_Tree_middle_right": {
     "X": 1152,
     "Y": 288,
     "Width": 48,
@@ -7612,7 +7612,7 @@
       "Y": 312
     }
   },
-  "Rain_Tree_9_7": {
+  "Rain_Tree_down_left": {
     "X": 1200,
     "Y": 288,
     "Width": 48,
@@ -7635,7 +7635,7 @@
       "Y": 312
     }
   },
-  "Rain_Tree_9_8": {
+  "Rain_Tree_down_middle": {
     "X": 1248,
     "Y": 288,
     "Width": 48,
@@ -7658,7 +7658,7 @@
       "Y": 312
     }
   },
-  "Rain_Tree_9_9": {
+  "Rain_Tree_down_right": {
     "X": 1296,
     "Y": 288,
     "Width": 48,
@@ -8164,7 +8164,7 @@
       "Y": 360
     }
   },
-  "Snow_Tree__bottom_right": {
+  "Snow_Tree_bottom_right": {
     "X": 864,
     "Y": 336,
     "Width": 48,
@@ -8187,7 +8187,7 @@
       "Y": 360
     }
   },
-  "Snow_Tree_9_1": {
+  "Snow_Tree_up_left": {
     "X": 912,
     "Y": 336,
     "Width": 48,
@@ -8210,7 +8210,7 @@
       "Y": 360
     }
   },
-  "Snow_Tree_9_2": {
+  "Snow_Tree_up_middle": {
     "X": 960,
     "Y": 336,
     "Width": 48,
@@ -8233,7 +8233,7 @@
       "Y": 360
     }
   },
-  "Snow_Tree_9_3": {
+  "Snow_Tree_up_right": {
     "X": 1008,
     "Y": 336,
     "Width": 48,
@@ -8256,7 +8256,7 @@
       "Y": 360
     }
   },
-  "Snow_Tree_9_4": {
+  "Snow_Tree_middle_left": {
     "X": 1056,
     "Y": 336,
     "Width": 48,
@@ -8279,7 +8279,7 @@
       "Y": 360
     }
   },
-  "Snow_Tree_9_5": {
+  "Snow_Tree_middle_middle": {
     "X": 1104,
     "Y": 336,
     "Width": 48,
@@ -8302,7 +8302,7 @@
       "Y": 360
     }
   },
-  "Snow_Tree_9_6": {
+  "Snow_Tree_middle_right": {
     "X": 1152,
     "Y": 336,
     "Width": 48,
@@ -8325,7 +8325,7 @@
       "Y": 360
     }
   },
-  "Snow_Tree_9_7": {
+  "Snow_Tree_down_left": {
     "X": 1200,
     "Y": 336,
     "Width": 48,
@@ -8348,7 +8348,7 @@
       "Y": 360
     }
   },
-  "Snow_Tree_9_8": {
+  "Snow_Tree_down_middle": {
     "X": 1248,
     "Y": 336,
     "Width": 48,
@@ -8371,7 +8371,7 @@
       "Y": 360
     }
   },
-  "Snow_Tree_9_9": {
+  "Snow_Tree_down_right": {
     "X": 1296,
     "Y": 336,
     "Width": 48,

@@ -42,6 +42,12 @@ namespace Wartorn
             }
         }
 
+        private void OnFormLoad(object sender, EventArgs e)
+        {
+            frm.ShowInTaskbar = false;
+            frm.Opacity = 0;
+        }
+
         private static void ToggleForm(object sender, MessageEventArgs e)
         {
             MainThreadOperation temp = frm.ToggleFormMainThread;
@@ -50,17 +56,17 @@ namespace Wartorn
 
         private void ToggleFormMainThread(MessageEventArgs e)
         {
-            this.allowshowdisplay = true;
-            this.Visible = !this.Visible;
+            if (allowshowdisplay)
+            {
+                this.Hide();
+            }
+            else
+            {
+                this.Show();
+            }
+
+            this.allowshowdisplay = !allowshowdisplay;
         }
-
-
-        //protected override void SetVisibleCore(bool value)
-        //{
-        //    //base.SetVisibleCore(allowshowdisplay ? value : allowshowdisplay);
-            
-        //    //MessageBox.Show("lala");
-        //}       
 
         private static void MessageShow(object sender, MessageEventArgs e)
         {
@@ -103,7 +109,6 @@ namespace Wartorn
         private void Handler_Shown(object sender, EventArgs e)
         {
             //MessageBox.Show("lala");
-            this.Hide();
             if (GameThread != null)
             {
 

@@ -53,6 +53,7 @@ namespace Wartorn
             //SCREEN_MANAGER.goto_screen("EditorScreen");
 
             DrawingHelper.Initialize(GraphicsDevice);
+
             base.Initialize();
         }
 
@@ -71,6 +72,8 @@ namespace Wartorn
             CONTENT_MANAGER.spriteSheet = CONTENT_MANAGER.Content.Load<Texture2D>(@"sprite\terrain");
 
             CONTENT_MANAGER.UIspriteSheet = CONTENT_MANAGER.Content.Load<Texture2D>(@"sprite\ui_sprite_sheet");
+
+            CONTENT_MANAGER.ToggleBackgroundForm("lala");
 
             SCREEN_MANAGER.Init();
             //InitializeUI();
