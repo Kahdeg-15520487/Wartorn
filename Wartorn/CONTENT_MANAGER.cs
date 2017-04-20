@@ -8,6 +8,7 @@ using System;
 using System.IO;
 using System.Reflection;
 using Microsoft.Xna.Framework;
+using System.Collections.Generic;
 
 namespace Wartorn
 {
@@ -38,7 +39,7 @@ namespace Wartorn
             }
         }
         public static InputState lastInputState { get; private set; }
-
+        
         public static event EventHandler<MessageEventArgs> messagebox;
         public static event EventHandler<MessageEventArgs> fileopendialog;
         public static event EventHandler<MessageEventArgs> togglebackgroundform;

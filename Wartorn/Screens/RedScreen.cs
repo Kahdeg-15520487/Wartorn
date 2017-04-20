@@ -31,7 +31,7 @@ namespace Wartorn.Screens
             var inputState = CONTENT_MANAGER.inputState;
             var lastInputState = CONTENT_MANAGER.lastInputState;
 
-            if (inputState.keyboardState.IsKeyUp(Keys.E) && lastInputState.keyboardState.IsKeyDown(Keys.E))
+            if (Utility.HelperFunction.IsKeyPress(Keys.E))
             {
                 SCREEN_MANAGER.goto_screen("BlueScreen");
             }

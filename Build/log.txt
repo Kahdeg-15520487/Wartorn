@@ -1,2 +1,0 @@
-Could not find a part of the path 'G:\Workspace\c#\Wartorn\Build\map\6_31 PM.map'.
-map/6:31 PM.map

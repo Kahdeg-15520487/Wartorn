@@ -37,7 +37,6 @@ namespace Wartorn
                 Constants.Height = 480;
                 CONTENT_MANAGER.messagebox += MessageShow;
                 CONTENT_MANAGER.fileopendialog += OpenFile;
-                CONTENT_MANAGER.togglebackgroundform += ToggleForm;
                 game.Run();
             }
         }

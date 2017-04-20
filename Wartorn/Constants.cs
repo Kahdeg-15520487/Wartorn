@@ -12,7 +12,7 @@ namespace Wartorn
     public static class VersionNumber
     {
         public static string MajorVersion = "0";
-        public static string MinorVersion = "1";
+        public static string MinorVersion = "2";
         public static string GetVersionNumber { get { return MajorVersion + "." + MinorVersion; } }
     }
 

@@ -16,8 +16,7 @@ namespace Wartorn
     {
         GraphicsDeviceManager graphics;
 
-        InputState inputState;
-        InputState lastInputState;
+        InputState inputState, lastInputState;
 
         public GameManager()
         {
@@ -48,6 +47,7 @@ namespace Wartorn
 
             SCREEN_MANAGER.add_screen(new EditorScreen(GraphicsDevice));
             SCREEN_MANAGER.add_screen(new MainMenuScreen(GraphicsDevice));
+            
 
             SCREEN_MANAGER.goto_screen("MainMenuScreen");
             //SCREEN_MANAGER.goto_screen("EditorScreen");
@@ -72,8 +72,6 @@ namespace Wartorn
             CONTENT_MANAGER.spriteSheet = CONTENT_MANAGER.Content.Load<Texture2D>(@"sprite\terrain");
 
             CONTENT_MANAGER.UIspriteSheet = CONTENT_MANAGER.Content.Load<Texture2D>(@"sprite\ui_sprite_sheet");
-
-            CONTENT_MANAGER.ToggleBackgroundForm("lala");
 
             SCREEN_MANAGER.Init();
             //InitializeUI();

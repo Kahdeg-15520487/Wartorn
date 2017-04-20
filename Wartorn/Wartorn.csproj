@@ -62,6 +62,7 @@
     <Compile Include="ScreenManager\Screen.cs" />
     <Compile Include="ScreenManager\ScreenManager.cs" />
     <Compile Include="Screens\BlueScreen.cs" />
+    <Compile Include="Screens\Campaign.cs" />
     <Compile Include="Screens\EditorScreen.cs" />
     <Compile Include="Screens\MainMenuScreen.cs" />
     <Compile Include="Screens\RedScreen.cs" />

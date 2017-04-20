@@ -20,7 +20,8 @@ namespace Wartorn.Screens
     {
         None,
         Campaign,
-        MapEditor
+        MapEditor,
+        Other
     }
     class MainMenuScreen : Screen
     {
@@ -75,8 +76,9 @@ namespace Wartorn.Screens
             label_fps.IsVisible = false;
 
             //TODO make button for main menu
-            Button button_Campaign = new Button(ModeSelectDark, new Point(100, 100), 2);
-            Button button_MapEditor = new Button(ModeSelectDark, new Point(300, 100), 2);
+            Button button_Campaign = new Button(ModeSelectDark, new Point(100, 275), 2);
+            Button button_MapEditor = new Button(ModeSelectDark, new Point(300, 275), 2);
+            Button button_OtherGamemode = new Button(ModeSelectDark, new Point(500, 275), 2);
 
             //bind action to ui event
             button_Campaign.MouseClick += (sender, e) =>
@@ -86,6 +88,7 @@ namespace Wartorn.Screens
                     selectedbutton = ButtonSelected.Campaign;
                     button_Campaign.Sprite = ModeSelectLight;
                     button_MapEditor.Sprite = ModeSelectDark;
+                    button_OtherGamemode.Sprite = ModeSelectDark;
                 }
                 else
                 {
@@ -98,8 +101,9 @@ namespace Wartorn.Screens
                 if (selectedbutton != ButtonSelected.MapEditor)
                 {
                     selectedbutton = ButtonSelected.MapEditor;
-                    button_MapEditor.Sprite = ModeSelectLight;
                     button_Campaign.Sprite = ModeSelectDark;
+                    button_MapEditor.Sprite = ModeSelectLight;
+                    button_OtherGamemode.Sprite = ModeSelectDark;
                 }
                 else
                 {
@@ -107,10 +111,26 @@ namespace Wartorn.Screens
                 }
             };
 
+            button_OtherGamemode.MouseClick += (sender, e) =>
+            {
+                if (selectedbutton != ButtonSelected.Other)
+                {
+                    selectedbutton = ButtonSelected.Other;
+                    button_Campaign.Sprite = ModeSelectDark;
+                    button_MapEditor.Sprite = ModeSelectDark;
+                    button_OtherGamemode.Sprite = ModeSelectLight;
+                }
+                else
+                {
+                    //SCREEN_MANAGER.goto_screen("OtherGamemode");
+                }
+            };
+
             //add ui element to canvas
             canvas.AddElement("label_fps", label_fps);
             canvas.AddElement("button_Campaign", button_Campaign);
             canvas.AddElement("button_MapEditor", button_MapEditor);
+            canvas.AddElement("button_OtherGameMode", button_OtherGamemode);
         }
 
         public override void Shutdown()
@@ -126,6 +146,9 @@ namespace Wartorn.Screens
         public override void Draw(GameTime gameTime)
         {
             DrawMenuBackground(CONTENT_MANAGER.spriteBatch);
+
+            CONTENT_MANAGER.spriteBatch.Draw(TitleBackground, new Vector2(0,-20), null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.BackGround);
+
             canvas.Draw(CONTENT_MANAGER.spriteBatch);
             CONTENT_MANAGER.ShowFPS(gameTime);
         }
