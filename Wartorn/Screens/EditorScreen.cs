@@ -15,6 +15,7 @@ using Wartorn.Drawing;
 using Newtonsoft.Json;
 using System.IO;
 
+
 namespace Wartorn.Screens
 {
     enum Side
@@ -252,6 +253,7 @@ namespace Wartorn.Screens
                         {
                             undostack.Push(new Action(selectedMapCell, map[selectedMapCell].terrain));
                             map[selectedMapCell].terrain = currentlySelectedTerrain;
+                            HandleMultiTileSprite(selectedMapCell, currentlySelectedTerrain);
                         }
                     }
                 }
@@ -275,32 +277,321 @@ namespace Wartorn.Screens
             }
         }
 
+        private void HandleMultiTileSprite(Point p,SpriteSheetTerrain t)
+        {
+            var mapcell = map[p];
+
+            switch (t)
+            {
+                case SpriteSheetTerrain.Tree_4_1:
+                    break;
+                case SpriteSheetTerrain.Tree_4_2:
+                    break;
+                case SpriteSheetTerrain.Tree_4_3:
+                    break;
+                case SpriteSheetTerrain.Tree_4_4:
+                    break;
+
+                case SpriteSheetTerrain.Tree_9_1:
+                    break;
+                case SpriteSheetTerrain.Tree_9_2:
+                    break;
+                case SpriteSheetTerrain.Tree_9_3:
+                    break;
+                case SpriteSheetTerrain.Tree_9_4:
+                    break;
+                case SpriteSheetTerrain.Tree_9_5:
+                    break;
+                case SpriteSheetTerrain.Tree_9_6:
+                    break;
+                case SpriteSheetTerrain.Tree_9_7:
+                    break;
+                case SpriteSheetTerrain.Tree_9_8:
+                    break;
+                case SpriteSheetTerrain.Tree_9_9:
+                    break;
+
+                case SpriteSheetTerrain.Mountain_High_Upper:
+                    break;
+                case SpriteSheetTerrain.Mountain_High_Lower:
+                    break;
+                    
+                case SpriteSheetTerrain.Tropical_Tree_4_1:
+                    break;
+                case SpriteSheetTerrain.Tropical_Tree_4_2:
+                    break;
+                case SpriteSheetTerrain.Tropical_Tree_4_3:
+                    break;
+                case SpriteSheetTerrain.Tropical_Tree_4_4:
+                    break;
+
+                case SpriteSheetTerrain.Tropical_Tree_9_1:
+                    break;
+                case SpriteSheetTerrain.Tropical_Tree_9_2:
+                    break;
+                case SpriteSheetTerrain.Tropical_Tree_9_3:
+                    break;
+                case SpriteSheetTerrain.Tropical_Tree_9_4:
+                    break;
+                case SpriteSheetTerrain.Tropical_Tree_9_5:
+                    break;
+                case SpriteSheetTerrain.Tropical_Tree_9_6:
+                    break;
+                case SpriteSheetTerrain.Tropical_Tree_9_7:
+                    break;
+                case SpriteSheetTerrain.Tropical_Tree_9_8:
+                    break;
+                case SpriteSheetTerrain.Tropical_Tree_9_9:
+                    break;
+
+                case SpriteSheetTerrain.Tropical_Mountain_High_Upper:
+                    break;
+                case SpriteSheetTerrain.Tropical_Mountain_High_Lower:
+                    break;
+
+                case SpriteSheetTerrain.Rain_Tree_4_1:
+                    break;
+                case SpriteSheetTerrain.Rain_Tree_4_2:
+                    break;
+                case SpriteSheetTerrain.Rain_Tree_4_3:
+                    break;
+                case SpriteSheetTerrain.Rain_Tree_4_4:
+                    break;
+
+                case SpriteSheetTerrain.Rain_Tree_9_1:
+                    break;
+                case SpriteSheetTerrain.Rain_Tree_9_2:
+                    break;
+                case SpriteSheetTerrain.Rain_Tree_9_3:
+                    break;
+                case SpriteSheetTerrain.Rain_Tree_9_4:
+                    break;
+                case SpriteSheetTerrain.Rain_Tree_9_5:
+                    break;
+                case SpriteSheetTerrain.Rain_Tree_9_6:
+                    break;
+                case SpriteSheetTerrain.Rain_Tree_9_7:
+                    break;
+                case SpriteSheetTerrain.Rain_Tree_9_8:
+                    break;
+                case SpriteSheetTerrain.Rain_Tree_9_9:
+                    break;
+
+                case SpriteSheetTerrain.Rain_Mountain_High_Upper:
+                    break;
+                case SpriteSheetTerrain.Rain_Mountain_High_Lower:
+                    break;
+
+                case SpriteSheetTerrain.Snow_Tree_4_1:
+                    break;
+                case SpriteSheetTerrain.Snow_Tree_4_2:
+                    break;
+                case SpriteSheetTerrain.Snow_Tree_4_3:
+                    break;
+                case SpriteSheetTerrain.Snow_Tree_4_4:
+                    break;
+
+                case SpriteSheetTerrain.Snow_Tree_9_1:
+                    break;
+                case SpriteSheetTerrain.Snow_Tree_9_2:
+                    break;
+                case SpriteSheetTerrain.Snow_Tree_9_3:
+                    break;
+                case SpriteSheetTerrain.Snow_Tree_9_4:
+                    break;
+                case SpriteSheetTerrain.Snow_Tree_9_5:
+                    break;
+                case SpriteSheetTerrain.Snow_Tree_9_6:
+                    break;
+                case SpriteSheetTerrain.Snow_Tree_9_7:
+                    break;
+                case SpriteSheetTerrain.Snow_Tree_9_8:
+                    break;
+                case SpriteSheetTerrain.Snow_Tree_9_9:
+                    break;
+
+                case SpriteSheetTerrain.Snow_Mountain_High_Upper:
+                    break;
+                case SpriteSheetTerrain.Snow_Mountain_High_Lower:
+                    break;
+                    
+                case SpriteSheetTerrain.Desert_Mountain_High_Upper:
+                    break;
+                case SpriteSheetTerrain.Desert_Mountain_High_Lower:
+                    break;
+
+                case SpriteSheetTerrain.City_Upper:
+                    break;
+                case SpriteSheetTerrain.City_Lower:
+                    break;
+                case SpriteSheetTerrain.AirPort_Upper:
+                    break;
+                case SpriteSheetTerrain.AirPort_Lower:
+                    break;
+                case SpriteSheetTerrain.Harbor_Upper:
+                    break;
+                case SpriteSheetTerrain.Harbor_Lower:
+                    break;
+                case SpriteSheetTerrain.Radar_Upper:
+                    break;
+                case SpriteSheetTerrain.Radar_Lower:
+                    break;
+                case SpriteSheetTerrain.SupplyBase_Upper:
+                    break;
+                case SpriteSheetTerrain.SupplyBase_Lower:
+                    break;
+
+                case SpriteSheetTerrain.Red_City_Upper:
+                    break;
+                case SpriteSheetTerrain.Red_City_Lower:
+                    break;
+                case SpriteSheetTerrain.Red_AirPort_Upper:
+                    break;
+                case SpriteSheetTerrain.Red_AirPort_Lower:
+                    break;
+                case SpriteSheetTerrain.Red_Harbor_Upper:
+                    break;
+                case SpriteSheetTerrain.Red_Harbor_Lower:
+                    break;
+                case SpriteSheetTerrain.Red_Radar_Upper:
+                    break;
+                case SpriteSheetTerrain.Red_Radar_Lower:
+                    break;
+                case SpriteSheetTerrain.Red_SupplyBase_Upper:
+                    break;
+                case SpriteSheetTerrain.Red_SupplyBase_Lower:
+                    break;
+                case SpriteSheetTerrain.Red_Headquarter_Upper:
+                    break;
+                case SpriteSheetTerrain.Red_Headquarter_Lower:
+                    break;
+
+                case SpriteSheetTerrain.Blue_City_Upper:
+                    break;
+                case SpriteSheetTerrain.Blue_City_Lower:
+                    break;
+                case SpriteSheetTerrain.Blue_AirPort_Upper:
+                    break;
+                case SpriteSheetTerrain.Blue_AirPort_Lower:
+                    break;
+                case SpriteSheetTerrain.Blue_Harbor_Upper:
+                    break;
+                case SpriteSheetTerrain.Blue_Harbor_Lower:
+                    break;
+                case SpriteSheetTerrain.Blue_Radar_Upper:
+                    break;
+                case SpriteSheetTerrain.Blue_Radar_Lower:
+                    break;
+                case SpriteSheetTerrain.Blue_SupplyBase_Upper:
+                    break;
+                case SpriteSheetTerrain.Blue_SupplyBase_Lower:
+                    break;
+                case SpriteSheetTerrain.Blue_Headquarter_Upper:
+                    break;
+                case SpriteSheetTerrain.Blue_Headquarter_Lower:
+                    break;
+
+                case SpriteSheetTerrain.Green_City_Upper:
+                    break;
+                case SpriteSheetTerrain.Green_City_Lower:
+                    break;
+                case SpriteSheetTerrain.Green_AirPort_Upper:
+                    break;
+                case SpriteSheetTerrain.Green_AirPort_Lower:
+                    break;
+                case SpriteSheetTerrain.Green_Harbor_Upper:
+                    break;
+                case SpriteSheetTerrain.Green_Harbor_Lower:
+                    break;
+                case SpriteSheetTerrain.Green_Radar_Upper:
+                    break;
+                case SpriteSheetTerrain.Green_Radar_Lower:
+                    break;
+                case SpriteSheetTerrain.Green_SupplyBase_Upper:
+                    break;
+                case SpriteSheetTerrain.Green_SupplyBase_Lower:
+                    break;
+                case SpriteSheetTerrain.Green_Headquarter_Upper:
+                    break;
+                case SpriteSheetTerrain.Green_Headquarter_Lower:
+                    break;
+
+                case SpriteSheetTerrain.Yellow_City_Upper:
+                    break;
+                case SpriteSheetTerrain.Yellow_City_Lower:
+                    break;
+                case SpriteSheetTerrain.Yellow_AirPort_Upper:
+                    break;
+                case SpriteSheetTerrain.Yellow_AirPort_Lower:
+                    break;
+                case SpriteSheetTerrain.Yellow_Harbor_Upper:
+                    break;
+                case SpriteSheetTerrain.Yellow_Harbor_Lower:
+                    break;
+                case SpriteSheetTerrain.Yellow_Radar_Upper:
+                    break;
+                case SpriteSheetTerrain.Yellow_Radar_Lower:
+                    break;
+                case SpriteSheetTerrain.Yellow_SupplyBase_Upper:
+                    break;
+                case SpriteSheetTerrain.Yellow_SupplyBase_Lower:
+                    break;
+                case SpriteSheetTerrain.Yellow_Headquarter_Upper:
+                    break;
+                case SpriteSheetTerrain.Yellow_Headquarter_Lower:
+                    break;
+
+                case SpriteSheetTerrain.Missile_Silo_Upper:
+                    break;
+                case SpriteSheetTerrain.Missile_Silo_Lower:
+                    break;
+                default:
+                    break;
+            }
+
+
+        }
+
+        #region RotateThroughTerrain
         private void RotateThroughTerrain()
         {
             //rotate through terrain sprite
             if (HelperFunction.IsKeyPress(Keys.E))
             {
-                if ((int)currentlySelectedTerrain < ((int)SpriteSheetTerrain.Max - 1))
-                {
-                    currentlySelectedTerrain = (SpriteSheetTerrain)((int)currentlySelectedTerrain + 1);
-                }
-                else
-                {
-                    currentlySelectedTerrain = (SpriteSheetTerrain)((int)SpriteSheetTerrain.Min + 1);
-                }
+                currentlySelectedTerrain = GetNextTerrain(currentlySelectedTerrain);
             }
             if (HelperFunction.IsKeyPress(Keys.Q))
             {
-                if ((int)currentlySelectedTerrain > ((int)SpriteSheetTerrain.Min + 1))
-                {
-                    currentlySelectedTerrain = (SpriteSheetTerrain)((int)currentlySelectedTerrain - 1);
-                }
-                else
-                {
-                    currentlySelectedTerrain = (SpriteSheetTerrain)((int)SpriteSheetTerrain.Max - 1);
-                }
+                currentlySelectedTerrain = GetPreviousTerrain(currentlySelectedTerrain);
             }
         }
+
+        private SpriteSheetTerrain GetNextTerrain(SpriteSheetTerrain t)
+        {
+            if (t.CompareWith(SpriteSheetTerrain.Max - 1) < 0)
+            {
+                t = t.Next();
+            }
+            else
+            {
+                t = SpriteSheetTerrain.Min.Next();
+            }
+            return t;
+        }
+
+        private SpriteSheetTerrain GetPreviousTerrain(SpriteSheetTerrain t)
+        {
+            if (t.CompareWith(SpriteSheetTerrain.Min + 1) > 0)
+            {
+                t = t.Previous();
+            }
+            else
+            {
+                t = SpriteSheetTerrain.Max.Previous();
+            }
+            return t;
+        }
+        #endregion
 
         private void MoveCamera(KeyboardState keyboardInputState, MouseState mouseInputState)
         {

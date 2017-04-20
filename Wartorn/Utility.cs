@@ -48,6 +48,21 @@ namespace Wartorn
             {
                 return value <= max && value >= min;
             }
+
+            public static int CompareWith(this SpriteSheetTerrain t,SpriteSheetTerrain other)
+            {
+                return ((int)t).CompareTo((int)other);
+            }
+
+            public static SpriteSheetTerrain Next(this SpriteSheetTerrain t)
+            {
+                return (SpriteSheetTerrain)((int)t + 1);
+            }
+
+            public static SpriteSheetTerrain Previous(this SpriteSheetTerrain t)
+            {
+                return (SpriteSheetTerrain)((int)t - 1);
+            }
         }
     }
 }
