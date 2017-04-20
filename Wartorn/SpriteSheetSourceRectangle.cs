@@ -11,7 +11,6 @@ using Wartorn.Utility;
 
 namespace Wartorn
 {
-    //only water
     public enum SpriteSheetTerrain
     {
         Min,
@@ -28,22 +27,22 @@ namespace Wartorn
         Desert_Reef, Desert_Sea, Desert_River_ver, Desert_River_hor, Desert_River_Inter3_right, Desert_River_Inter3_left, Desert_River_Inter3_up, Desert_River_Inter3_down, Desert_River_Cross, Desert_River_Turn_up_right, Desert_River_Turn_up_left, Desert_River_Turn_down_right, Desert_River_Turn_down_left, Desert_River_Flow_left, Desert_River_Flow_up, Desert_River_Flow_down, Desert_River_Flow_right, Desert_Coast_up_left, Desert_Coast_up, Desert_Coast_up_right, Desert_Coast_left, Desert_Coast_right, Desert_Coast_down_left, Desert_Coast_down, Desert_Coast_d_right, Desert_Cliff_up_left, Desert_Cliff_u, Desert_Cliff_up_right, Desert_Cliff_down_left, Desert_Cliff_down, Desert_Cliff_down_right, Desert_Isle_Coast_up_left, Desert_Isle_Coast_up_right, Desert_Isle_Coast_side_right_up, Desert_Isle_Coast_side_right_down, Desert_Isle_Coast_side_left_up, Desert_Isle_Coast_side_left_down, Desert_Isle_Coast_down_left, Desert_Isle_Coast_down_right, Desert_Isle_Cliff_down_left, Desert_Isle_Cliff_down_right, Desert_Isle_Cliff_up_left, Desert_Isle_Cliff_up_right, Desert_Cliff_left, Desert_Cliff_right, Desert_Lone_Coast_up_left, Desert_Lone_Coast_up_right, Desert_Lone_Coast_down_left, Desert_Lone_Coast_down_right, Desert_Lone_Coast_up, Desert_Lone_Coast_down, Desert_Lone_Coast_right, Desert_Lone_Coast_left, Desert_Invert_Coast_down_left, Desert_Invert_Coast_down_right, Desert_Invert_Coast_up_left, Desert_Invert_Coast_up_right, Desert_Invert_Coast_left_down, Desert_Invert_Coast_left_up, Desert_Invert_Coast_right_up, Desert_Invert_Coast_right_down,
 
         //Normal Road, Tree and Mountain
-        Road_turn_up_right, Road_Turn_up_left, Road_Inter3_right, Road_Inter3_down, Road_hor, Road_Cross, Bridge_hor, Road_Turn_down_right, Road_Turn_down_left, Road_Inter3_up, Road_Inter3_left, Road_ver, Plain, Bridge_ver, Tree, Tree_4_1, Tree_4_2, Tree_4_3, Tree_4_4, Tree_9_1, Tree_9_2, Tree_9_3, Tree_9_4, Tree_9_5, Tree_9_6, Tree_9_7, Tree_9_8, Tree_9_9, Mountain_High_Upper, Mountain_High_Lower, Mountain_Low,
+        Road_turn_up_right, Road_Turn_up_left, Road_Inter3_right, Road_Inter3_down, Road_hor, Road_Cross, Bridge_hor, Road_Turn_down_right, Road_Turn_down_left, Road_Inter3_up, Road_Inter3_left, Road_ver, Plain, Bridge_ver, Tree, Tree_top_left, Tree_top_right, Tree_bottom_left, Tree__bottom_right, Tree_9_1, Tree_9_2, Tree_9_3, Tree_9_4, Tree_9_5, Tree_9_6, Tree_9_7, Tree_9_8, Tree_9_9, Mountain_High_Upper, Mountain_High_Lower, Mountain_Low,
 
         //Tropical Road, Tree and Mountain
-        Tropical_Road_turn_up_right, Tropical_Road_Turn_up_left, Tropical_Road_Inter3_right, Tropical_Road_Inter3_down, Tropical_Road_hor, Tropical_Road_Cross, Tropical_Bridge_hor, Tropical_Road_Turn_down_right, Tropical_Road_Turn_down_left, Tropical_Road_Inter3_up, Tropical_Road_Inter3_left, Tropical_Road_ver, Tropical_Plain, Tropical_Bridge_ver, Tropical_Tree, Tropical_Tree_4_1, Tropical_Tree_4_2, Tropical_Tree_4_3, Tropical_Tree_4_4, Tropical_Tree_9_1, Tropical_Tree_9_2, Tropical_Tree_9_3, Tropical_Tree_9_4, Tropical_Tree_9_5, Tropical_Tree_9_6, Tropical_Tree_9_7, Tropical_Tree_9_8, Tropical_Tree_9_9, Tropical_Mountain_High_Upper, Tropical_Mountain_High_Lower, Tropical_Mountain_Low,
+        Tropical_Road_turn_up_right, Tropical_Road_Turn_up_left, Tropical_Road_Inter3_right, Tropical_Road_Inter3_down, Tropical_Road_hor, Tropical_Road_Cross, Tropical_Bridge_hor, Tropical_Road_Turn_down_right, Tropical_Road_Turn_down_left, Tropical_Road_Inter3_up, Tropical_Road_Inter3_left, Tropical_Road_ver, Tropical_Plain, Tropical_Bridge_ver, Tropical_Tree, Tropical_Tree_top_left, Tropical_Tree_top_right, Tropical_Tree_bottom_left, Tropical_Tree__bottom_right, Tropical_Tree_9_1, Tropical_Tree_9_2, Tropical_Tree_9_3, Tropical_Tree_9_4, Tropical_Tree_9_5, Tropical_Tree_9_6, Tropical_Tree_9_7, Tropical_Tree_9_8, Tropical_Tree_9_9, Tropical_Mountain_High_Upper, Tropical_Mountain_High_Lower, Tropical_Mountain_Low,
 
         //Rain Road, Tree and Mountain
-        Rain_Road_turn_up_right, Rain_Road_Turn_up_left, Rain_Road_Inter3_right, Rain_Road_Inter3_down, Rain_Road_hor, Rain_Road_Cross, Rain_Bridge_hor, Rain_Road_Turn_down_right, Rain_Road_Turn_down_left, Rain_Road_Inter3_up, Rain_Road_Inter3_left, Rain_Road_ver, Rain_Plain, Rain_Bridge_ver, Rain_Tree, Rain_Tree_4_1, Rain_Tree_4_2, Rain_Tree_4_3, Rain_Tree_4_4, Rain_Tree_9_1, Rain_Tree_9_2, Rain_Tree_9_3, Rain_Tree_9_4, Rain_Tree_9_5, Rain_Tree_9_6, Rain_Tree_9_7, Rain_Tree_9_8, Rain_Tree_9_9, Rain_Mountain_High_Upper, Rain_Mountain_High_Lower, Rain_Mountain_Low,
+        Rain_Road_turn_up_right, Rain_Road_Turn_up_left, Rain_Road_Inter3_right, Rain_Road_Inter3_down, Rain_Road_hor, Rain_Road_Cross, Rain_Bridge_hor, Rain_Road_Turn_down_right, Rain_Road_Turn_down_left, Rain_Road_Inter3_up, Rain_Road_Inter3_left, Rain_Road_ver, Rain_Plain, Rain_Bridge_ver, Rain_Tree, Rain_Tree_top_left, Rain_Tree_top_right, Rain_Tree_bottom_left, Rain_Tree__bottom_right, Rain_Tree_9_1, Rain_Tree_9_2, Rain_Tree_9_3, Rain_Tree_9_4, Rain_Tree_9_5, Rain_Tree_9_6, Rain_Tree_9_7, Rain_Tree_9_8, Rain_Tree_9_9, Rain_Mountain_High_Upper, Rain_Mountain_High_Lower, Rain_Mountain_Low,
 
         //Snow Road, Tree and Mountain
-        Snow_Road_turn_up_right, Snow_Road_Turn_up_left, Snow_Road_Inter3_right, Snow_Road_Inter3_down, Snow_Road_hor, Snow_Road_Cross, Snow_Bridge_hor, Snow_Road_Turn_down_right, Snow_Road_Turn_down_left, Snow_Road_Inter3_up, Snow_Road_Inter3_left, Snow_Road_ver, Snow_Plain, Snow_Bridge_ver, Snow_Tree, Snow_Tree_4_1, Snow_Tree_4_2, Snow_Tree_4_3, Snow_Tree_4_4, Snow_Tree_9_1, Snow_Tree_9_2, Snow_Tree_9_3, Snow_Tree_9_4, Snow_Tree_9_5, Snow_Tree_9_6, Snow_Tree_9_7, Snow_Tree_9_8, Snow_Tree_9_9, Snow_Mountain_High_Upper, Snow_Mountain_High_Lower, Snow_Mountain_Low,
+        Snow_Road_turn_up_right, Snow_Road_Turn_up_left, Snow_Road_Inter3_right, Snow_Road_Inter3_down, Snow_Road_hor, Snow_Road_Cross, Snow_Bridge_hor, Snow_Road_Turn_down_right, Snow_Road_Turn_down_left, Snow_Road_Inter3_up, Snow_Road_Inter3_left, Snow_Road_ver, Snow_Plain, Snow_Bridge_ver, Snow_Tree, Snow_Tree_top_left, Snow_Tree_top_right, Snow_Tree_bottom_left, Snow_Tree__bottom_right, Snow_Tree_9_1, Snow_Tree_9_2, Snow_Tree_9_3, Snow_Tree_9_4, Snow_Tree_9_5, Snow_Tree_9_6, Snow_Tree_9_7, Snow_Tree_9_8, Snow_Tree_9_9, Snow_Mountain_High_Upper, Snow_Mountain_High_Lower, Snow_Mountain_Low,
 
         //Desert Road, Tree and Mountain
         Desert_Road_turn_up_right, Desert_Road_Turn_up_left, Desert_Road_Inter3_right, Desert_Road_Inter3_down, Desert_Road_hor, Desert_Road_Cross, Desert_Bridge_hor, Desert_Road_Turn_down_right, Desert_Road_Turn_down_left, Desert_Road_Inter3_up, Desert_Road_Inter3_left, Desert_Road_ver, Desert_Plain, Desert_Bridge_ver, Desert_Tree, Desert_Mountain_High_Upper, Desert_Mountain_High_Lower,
 
         //Neutral Building
-        City_Upper, City_Lower, Factory, AirPort_Upper, AirPort_Lower, Harbor_Upper, Harbor_Lower, Radar_Upper, Radar_Lower, SupplyBase_Upper, SupplyBase_Lower,
+        City_Upper, City_Lower, Factory, AirPort_Upper, AirPort_Lower, Harbor_Upper, Harbor_Lower, Radar_Upper, Radar_Lower, SupplyBase_Upper, SupplyBase_Lower, Missile_Silo_Upper, Missile_Silo_Lower, Missile_Silo_Launched,
 
         //Red Building
         Red_City_Upper, Red_City_Lower, Red_Factory, Red_AirPort_Upper, Red_AirPort_Lower, Red_Harbor_Upper, Red_Harbor_Lower, Red_Radar_Upper, Red_Radar_Lower, Red_SupplyBase_Upper, Red_SupplyBase_Lower, Red_Headquarter_Upper, Red_Headquarter_Lower,
@@ -57,8 +56,6 @@ namespace Wartorn
         //Yellow Building
         Yellow_City_Upper, Yellow_City_Lower, Yellow_Factory, Yellow_AirPort_Upper, Yellow_AirPort_Lower, Yellow_Harbor_Upper, Yellow_Harbor_Lower, Yellow_Radar_Upper, Yellow_Radar_Lower, Yellow_SupplyBase_Upper, Yellow_SupplyBase_Lower, Yellow_Headquarter_Upper, Yellow_Headquarter_Lower,
 
-        //Missile Silo
-        Missile_Silo_Upper, Missile_Silo_Lower, Missile_Silo_Launched,
         Max,
         None
     }
@@ -70,21 +67,57 @@ namespace Wartorn
         public static void LoadSprite()
         {
             TerrainSprite = new Dictionary<SpriteSheetTerrain, Rectangle>();
-            //for (int i = 0; i < ((int)SpriteSheetTerrain.Max - 1); i++)
-            //{
-            //    TerrainSprite.Add((SpriteSheetTerrain)(i + 1), new Rectangle(i * 48, 0, 48, 48));
-            //}
-            int c = 1;
-            for (int i = 0; i < 13; i++)
+            int row = 0;
+            int count = 1;
+
+            //normal water
+            for (int i = 0; i < 4; i++)
             {
-                for (int j = 0; j < 35; j++)
+                for (int j = 0; j < 61; j++)
                 {
-                    TerrainSprite.Add((SpriteSheetTerrain)(c), new Rectangle(j * 48, i * 48, 48, 48));
-                    c++;
+                    TerrainSprite.Add((SpriteSheetTerrain)count, new Rectangle(j * 48, row * 48, 48, 48));
+                    count++;
                 }
+                row++;
             }
 
-            endloop:
+            //road,tree,mountain
+            for (int i = 0; i < 4; i++)
+            {
+                for (int j = 0; j < 31; j++)
+                {
+                    TerrainSprite.Add((SpriteSheetTerrain)count, new Rectangle(j * 48, row * 48, 48, 48));
+                    count++;
+                }
+                row++;
+            }
+
+            //desert road,tree,mountain
+            for (int i = 0; i < 17; i++)
+            {
+                TerrainSprite.Add((SpriteSheetTerrain)count, new Rectangle(i * 48, row * 48, 48, 48));
+                count++;
+            }
+            row++;
+
+            //neutral building
+            for (int j = 0; j < 14; j++)
+            {
+                TerrainSprite.Add((SpriteSheetTerrain)count, new Rectangle(j * 48, row * 48, 48, 48));
+                count++;
+            }
+            row++;
+
+            //owned building
+            for (int i = 0; i < 4; i++)
+            {
+                for (int j = 0; j < 13; j++)
+                {
+                    TerrainSprite.Add((SpriteSheetTerrain)count, new Rectangle(j * 48, row * 48, 48, 48));
+                    count++;
+                }
+                row++;
+            }
 
             string log = JsonConvert.SerializeObject(TerrainSprite, Formatting.Indented);
             File.WriteAllText("RectangleLog.txt", log);

@@ -212,18 +212,6 @@
 /processorParam:TextureFormat=Color
 /build:sprite\GUI\Main_Font.png
 
-#begin sprite\terrainspritesheet.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:sprite\terrainspritesheet.png
-
 #begin sprite/showtile.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -236,7 +224,7 @@
 /processorParam:TextureFormat=Color
 /build:sprite/showtile.png
 
-#begin sprite/terrainspritesheet13x35.png
+#begin sprite/terrain.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -246,17 +234,5 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:sprite/terrainspritesheet13x35.png
-
-#begin sprite/terrainspritesheet1line.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:sprite/terrainspritesheet1line.png
+/build:sprite/terrain.png
 

@@ -40,6 +40,7 @@ namespace Wartorn.Screens
 
         private Side GuiSide = Side.Left;
         private bool isMenuOpen = true;
+        private bool isQuickRotate = true;
 
         //represent a changing map cell action
         struct Action
@@ -172,7 +173,8 @@ namespace Wartorn.Screens
             {
                 for (int j = 0; j < map.Height; j++)
                 {
-                    map[i, j] = new MapCell((SpriteSheetTerrain)count);
+                    map[i, j] = new MapCell(SpriteSheetTerrain.Sea);
+                    continue;
                     count += 1;
                     if (count == (int)(SpriteSheetTerrain.Max))
                     {
@@ -201,7 +203,7 @@ namespace Wartorn.Screens
             if (!isMenuOpen)
             {
                 PlaceTile(mouseInputState);
-                RotateThroughTerrain();
+                RotateThroughTerrain(keyboardInputState);
             }
             MoveCamera(keyboardInputState, mouseInputState);
             //ZoomCamera();
@@ -283,13 +285,13 @@ namespace Wartorn.Screens
 
             switch (t)
             {
-                case SpriteSheetTerrain.Tree_4_1:
+                case SpriteSheetTerrain.Tree_top_left:
                     break;
-                case SpriteSheetTerrain.Tree_4_2:
+                case SpriteSheetTerrain.Tree_top_right:
                     break;
-                case SpriteSheetTerrain.Tree_4_3:
+                case SpriteSheetTerrain.Tree_bottom_left:
                     break;
-                case SpriteSheetTerrain.Tree_4_4:
+                case SpriteSheetTerrain.Tree_bottom_right:
                     break;
 
                 case SpriteSheetTerrain.Tree_9_1:
@@ -316,13 +318,13 @@ namespace Wartorn.Screens
                 case SpriteSheetTerrain.Mountain_High_Lower:
                     break;
                     
-                case SpriteSheetTerrain.Tropical_Tree_4_1:
+                case SpriteSheetTerrain.Tropical_Tree_top_left:
                     break;
-                case SpriteSheetTerrain.Tropical_Tree_4_2:
+                case SpriteSheetTerrain.Tropical_Tree_top_right:
                     break;
-                case SpriteSheetTerrain.Tropical_Tree_4_3:
+                case SpriteSheetTerrain.Tropical_Tree_bottom_left:
                     break;
-                case SpriteSheetTerrain.Tropical_Tree_4_4:
+                case SpriteSheetTerrain.Tropical_Tree_bottom_right:
                     break;
 
                 case SpriteSheetTerrain.Tropical_Tree_9_1:
@@ -349,13 +351,13 @@ namespace Wartorn.Screens
                 case SpriteSheetTerrain.Tropical_Mountain_High_Lower:
                     break;
 
-                case SpriteSheetTerrain.Rain_Tree_4_1:
+                case SpriteSheetTerrain.Rain_Tree_top_left:
                     break;
-                case SpriteSheetTerrain.Rain_Tree_4_2:
+                case SpriteSheetTerrain.Rain_Tree_top_right:
                     break;
-                case SpriteSheetTerrain.Rain_Tree_4_3:
+                case SpriteSheetTerrain.Rain_Tree_bottom_left:
                     break;
-                case SpriteSheetTerrain.Rain_Tree_4_4:
+                case SpriteSheetTerrain.Rain_Tree_bottom_right:
                     break;
 
                 case SpriteSheetTerrain.Rain_Tree_9_1:
@@ -382,13 +384,13 @@ namespace Wartorn.Screens
                 case SpriteSheetTerrain.Rain_Mountain_High_Lower:
                     break;
 
-                case SpriteSheetTerrain.Snow_Tree_4_1:
+                case SpriteSheetTerrain.Snow_Tree_top_left:
                     break;
-                case SpriteSheetTerrain.Snow_Tree_4_2:
+                case SpriteSheetTerrain.Snow_Tree_top_right:
                     break;
-                case SpriteSheetTerrain.Snow_Tree_4_3:
+                case SpriteSheetTerrain.Snow_Tree_bottom_left:
                     break;
-                case SpriteSheetTerrain.Snow_Tree_4_4:
+                case SpriteSheetTerrain.Snow_Tree_bottom_right:
                     break;
 
                 case SpriteSheetTerrain.Snow_Tree_9_1:
@@ -553,14 +555,20 @@ namespace Wartorn.Screens
         }
 
         #region RotateThroughTerrain
-        private void RotateThroughTerrain()
+        private void RotateThroughTerrain(KeyboardState keyboardInputState)
         {
+            if (HelperFunction.IsKeyPress(Keys.P))
+            {
+                isQuickRotate = !isQuickRotate;
+            }
             //rotate through terrain sprite
-            if (HelperFunction.IsKeyPress(Keys.E))
+            if ((HelperFunction.IsKeyPress(Keys.E) && !isQuickRotate)
+              ||(keyboardInputState.IsKeyDown(Keys.E) && isQuickRotate))
             {
                 currentlySelectedTerrain = GetNextTerrain(currentlySelectedTerrain);
             }
-            if (HelperFunction.IsKeyPress(Keys.Q))
+            if ((HelperFunction.IsKeyPress(Keys.Q) && !isQuickRotate)
+              || (keyboardInputState.IsKeyDown(Keys.Q) && isQuickRotate))
             {
                 currentlySelectedTerrain = GetPreviousTerrain(currentlySelectedTerrain);
             }
