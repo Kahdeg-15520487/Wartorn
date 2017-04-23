@@ -125,12 +125,36 @@ namespace Wartorn
 
         public static Rectangle GetSpriteRectangle(string str)
         {
-            return TerrainSprite[str.ToEnum<SpriteSheetTerrain>()];
+            var temp = str.ToEnum<SpriteSheetTerrain>();
+            if (temp == SpriteSheetTerrain.None)
+            {
+                return Rectangle.Empty;
+            }
+            return TerrainSprite[temp];
         }
 
         public static Rectangle GetSpriteRectangle(SpriteSheetTerrain t)
         {
+            if (t == SpriteSheetTerrain.None)
+            {
+                return Rectangle.Empty;
+            }
             return TerrainSprite[t];
+        }
+
+        public static SpriteSheetTerrain GetTerrain(Rectangle r)
+        {
+            if (TerrainSprite.ContainsValue(r))
+            {
+                foreach (var pair in TerrainSprite)
+                {
+                    if (pair.Value == r)
+                    {
+                        return pair.Key;
+                    }
+                }
+            }
+            return SpriteSheetTerrain.None;
         }
     }
 }

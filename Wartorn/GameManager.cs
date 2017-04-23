@@ -2,10 +2,14 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Wartorn.Utility.Drawing;
+using Wartorn.Utility;
 using Wartorn.UIClass;
 using Wartorn.ScreenManager;
 using Wartorn.Screens;
 using System;
+
+using GeonBit.UI;
+using GeonBitUI = GeonBit.UI.Entities;
 
 namespace Wartorn
 {
@@ -23,7 +27,7 @@ namespace Wartorn
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             CONTENT_MANAGER.Content = Content;
-            IsMouseVisible = true;
+            //IsMouseVisible = true;
             lastInputState = new InputState();
 
             graphics.PreferMultiSampling = true;
@@ -49,10 +53,43 @@ namespace Wartorn
             SCREEN_MANAGER.add_screen(new MainMenuScreen(GraphicsDevice));
             
 
-            SCREEN_MANAGER.goto_screen("MainMenuScreen");
+            //SCREEN_MANAGER.goto_screen("MainMenuScreen");
             //SCREEN_MANAGER.goto_screen("EditorScreen");
 
             DrawingHelper.Initialize(GraphicsDevice);
+
+            UserInterface.Initialize(Content, BuiltinThemes.hd);
+
+            GeonBitUI.Panel panel = new GeonBitUI.Panel(new Vector2(200, 200), anchor: GeonBitUI.Anchor.TopCenter);
+            GeonBitUI.Button subject = new GeonBitUI.Button("lala", size: new Vector2(150, 40), anchor: GeonBitUI.Anchor.Center);
+            GeonBitUI.Button hider = new GeonBitUI.Button("hide",size: new Vector2(150,40),anchor: GeonBitUI.Anchor.TopCenter);
+            GeonBitUI.Label info = new GeonBitUI.Label("not hidden", anchor: GeonBitUI.Anchor.BottomCenter);
+            panel.AddChild(subject);
+            panel.AddChild(hider);
+            panel.AddChild(info);
+
+            GeonBitUI.Panel hidepanel = new GeonBitUI.Panel(new Vector2(200, 100), anchor: GeonBitUI.Anchor.BottomCenter);
+            GeonBitUI.Label hideinfo = new GeonBitUI.Label("not hidden", anchor: GeonBitUI.Anchor.Center);
+            hidepanel.AddChild(hideinfo);
+
+            hider.OnClick = (sender) =>
+            {
+                subject.Visible = !subject.Visible;
+                info.Text = subject.Visible ? "not hidden" : "hidden";
+
+                hidepanel.Visible = !hidepanel.Visible;
+                hideinfo.Text = hidepanel.Visible ? "not hidden" : "hidden";
+            };
+
+            subject.OnClick = (sender) =>
+            {
+                info.Text = "lala";
+                hideinfo.Text = "lala";
+            };
+
+            UserInterface.AddEntity(panel);
+            UserInterface.AddEntity(hidepanel);
+
 
             base.Initialize();
         }
@@ -73,7 +110,41 @@ namespace Wartorn
 
             CONTENT_MANAGER.UIspriteSheet = CONTENT_MANAGER.Content.Load<Texture2D>(@"sprite\ui_sprite_sheet");
 
-            SCREEN_MANAGER.Init();
+            //expriment
+
+            GeonBitUI.Panel imagepanel = new GeonBitUI.Panel(new Vector2(716, 200),skin: GeonBitUI.PanelSkin.Simple, anchor: GeonBitUI.Anchor.Center);
+
+            GeonBitUI.Label currentlySelectedTerrain = new GeonBitUI.Label("",anchor: GeonBitUI.Anchor.TopLeft,offset: new Vector2(-20,-20));
+            imagepanel.AddChild(currentlySelectedTerrain);
+            //water selection
+            int col = 0;
+            int row = 0;
+            Vector2 offset = new Vector2(-20, 5);
+            for (SpriteSheetTerrain i = SpriteSheetTerrain.Reef; i.CompareWith(SpriteSheetTerrain.Invert_Coast_right_down) <= 0; i = i.Next())
+            {
+                //Button temp = new Button(SpriteSheetSourceRectangle.GetSpriteRectangle(i), new Point(col * 26 + 10, row * 26 + 80), 0.5f, false);
+                GeonBitUI.Image temp = new GeonBitUI.Image(CONTENT_MANAGER.spriteSheet, new Vector2(24, 24), anchor: GeonBitUI.Anchor.TopLeft, offset: offset + new Vector2(26 * col, 26 * row));
+                temp.SourceRectangle = SpriteSheetSourceRectangle.GetSpriteRectangle(i);
+                Rectangle temprectangle = temp.SourceRectangle ?? default(Rectangle);
+                temp.OnClick += (sender) =>
+                {
+                    currentlySelectedTerrain.Text = SpriteSheetSourceRectangle.GetTerrain(temprectangle).ToString();
+                };
+
+                imagepanel.AddChild(temp);
+                col++;
+                if (col == 27)
+                {
+                    col = 0;
+                    row++;
+                }
+            }
+
+            UserInterface.AddEntity(imagepanel);
+
+            //end experiment
+
+            //SCREEN_MANAGER.Init();
             //InitializeUI();
         }
         #region Init UI example
@@ -189,6 +260,8 @@ namespace Wartorn
             // TODO: Add your update logic here
             CONTENT_MANAGER.inputState = new InputState(Mouse.GetState(), Keyboard.GetState());
 
+            UserInterface.Update(gameTime);
+
             SCREEN_MANAGER.Update(gameTime);
 
             lastInputState = inputState;
@@ -203,6 +276,8 @@ namespace Wartorn
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
+
+            UserInterface.Draw(CONTENT_MANAGER.spriteBatch);
 
             // TODO: Add your drawing code here
             CONTENT_MANAGER.spriteBatch.Begin(SpriteSortMode.FrontToBack);

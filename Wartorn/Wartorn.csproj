@@ -53,6 +53,33 @@
     <Compile Include="GameData\StructData.cs" />
     <Compile Include="GameManager.cs" />
     <Compile Include="Drawing\PrimitiveBatch.cs" />
+    <Compile Include="GeonBit.UI\DrawUtils.cs" />
+    <Compile Include="GeonBit.UI\Entities\Button.cs" />
+    <Compile Include="GeonBit.UI\Entities\CheckBox.cs" />
+    <Compile Include="GeonBit.UI\Entities\ColoredRectangle.cs" />
+    <Compile Include="GeonBit.UI\Entities\Dropdown.cs" />
+    <Compile Include="GeonBit.UI\Entities\Entity.cs" />
+    <Compile Include="GeonBit.UI\Entities\Header.cs" />
+    <Compile Include="GeonBit.UI\Entities\HorizontalLine.cs" />
+    <Compile Include="GeonBit.UI\Entities\Icon.cs" />
+    <Compile Include="GeonBit.UI\Entities\Image.cs" />
+    <Compile Include="GeonBit.UI\Entities\Label.cs" />
+    <Compile Include="GeonBit.UI\Entities\LineSpace.cs" />
+    <Compile Include="GeonBit.UI\Entities\Panel.cs" />
+    <Compile Include="GeonBit.UI\Entities\PanelTabs.cs" />
+    <Compile Include="GeonBit.UI\Entities\Paragraph.cs" />
+    <Compile Include="GeonBit.UI\Entities\ProgressBar.cs" />
+    <Compile Include="GeonBit.UI\Entities\RadioButton.cs" />
+    <Compile Include="GeonBit.UI\Entities\RootPanel.cs" />
+    <Compile Include="GeonBit.UI\Entities\SelectList.cs" />
+    <Compile Include="GeonBit.UI\Entities\Slider.cs" />
+    <Compile Include="GeonBit.UI\Entities\StyleSheet.cs" />
+    <Compile Include="GeonBit.UI\Entities\TextInput.cs" />
+    <Compile Include="GeonBit.UI\Entities\TextInputValidators.cs" />
+    <Compile Include="GeonBit.UI\Entities\VerticalScrollbar.cs" />
+    <Compile Include="GeonBit.UI\InputHelper.cs" />
+    <Compile Include="GeonBit.UI\Resources.cs" />
+    <Compile Include="GeonBit.UI\UserInterface.cs" />
     <Compile Include="Handler.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -82,6 +109,9 @@
     <Compile Include="Utility.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="DataTypes">
+      <HintPath>..\..\GeonBit.UI-master\GeonBit.UI\Libs\DataTypes\DataTypes\bin\Debug\DataTypes.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\DLL refrence\Newtonsoft.Json.dll</HintPath>
@@ -113,7 +143,10 @@
   <ItemGroup>
     <MonoGameContentReference Include="Content\Content.mgcb" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="GeonBit.UI\Entities\README.md" />
+    <None Include="GeonBit.UI\README.md" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
