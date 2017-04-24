@@ -19,8 +19,9 @@ namespace Wartorn
             bool isPressed = false;
             Rectangle internalRect;
             ButtonContentType contentType;
-            Rectangle spriteSourceRectangle = Rectangle.Empty;
+            public Rectangle spriteSourceRectangle = Rectangle.Empty;
             Texture2D sprite;
+            bool isFromUISpriteSheet;
             public Texture2D Sprite { set { sprite = value; contentType = ButtonContentType.Sprite; } }
 
             public override Point Position
@@ -101,13 +102,14 @@ namespace Wartorn
             /// <param name="sprite">The source rectangle of the sprite in UISpriteSheet</param>
             /// <param name="position">Position of the top left corner</param>
             /// <param name="scale">Scale of the button</param>
-            public Button(Rectangle sprite, Point position, float scale = 1)
+            public Button(Rectangle sprite, Point position, float scale = 1, bool isFromUISpriteSheet = true)
             {
                 contentType = ButtonContentType.SpriteFromSheet;
                 spriteSourceRectangle = sprite;
                 Position = position;
                 Size = spriteSourceRectangle.Size.ToVector2();
                 Scale = scale;
+                this.isFromUISpriteSheet = isFromUISpriteSheet;
                 Init();
             }
 
@@ -172,7 +174,7 @@ namespace Wartorn
                         DrawingHelper.DrawRectangle(rect, borderColor, false);
                         break;
                     case ButtonContentType.SpriteFromSheet:
-                        spriteBatch.Draw(CONTENT_MANAGER.UIspriteSheet, Position.ToVector2(), spriteSourceRectangle, isPressed ? buttonColorPressed : buttonColorReleased, Rotation, Vector2.Zero, Scale, SpriteEffects.None, LayerDepth.GuiUpper);
+                        spriteBatch.Draw(isFromUISpriteSheet ? CONTENT_MANAGER.UIspriteSheet : CONTENT_MANAGER.spriteSheet, Position.ToVector2(), spriteSourceRectangle, isPressed ? buttonColorPressed : buttonColorReleased, Rotation, Vector2.Zero, Scale, SpriteEffects.None, LayerDepth.GuiUpper);
                         break;
                     case ButtonContentType.Sprite:
                         spriteBatch.Draw(sprite, Position.ToVector2(), null, isPressed ? buttonColorPressed : buttonColorReleased, Rotation, Vector2.Zero, Scale, SpriteEffects.None, LayerDepth.GuiUpper);

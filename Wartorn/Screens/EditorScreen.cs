@@ -99,6 +99,84 @@ namespace Wartorn.Screens
             //terrain selection menu
             Canvas canvas_terrain_selection = new Canvas();
 
+            Dictionary<SpriteSheetTerrain, Button> terrainSelectionButton = new Dictionary<SpriteSheetTerrain, Button>();
+
+            Button button_changeWaterTheme = new Button("Normal", new Point(10, 50), new Vector2(80, 20), CONTENT_MANAGER.defaultfont);
+            button_changeWaterTheme.backgroundColor = Color.White;
+            button_changeWaterTheme.foregroundColor = Color.Black;
+            Button button_changeWaterWeather = new Button("Sunny", new Point(100, 50), new Vector2(80, 20), CONTENT_MANAGER.defaultfont);
+            button_changeWaterWeather.backgroundColor = Color.White;
+            button_changeWaterWeather.foregroundColor = Color.Black;
+
+            Button button_changeRoadTreeMountainTheme = new Button("Normal", new Point(10, 160), new Vector2(80, 20), CONTENT_MANAGER.defaultfont);
+            button_changeRoadTreeMountainTheme.backgroundColor = Color.White;
+            button_changeRoadTreeMountainTheme.foregroundColor = Color.Black;
+
+            int col = 0;
+            int row = 0;
+
+            //water selection
+            for (SpriteSheetTerrain i = SpriteSheetTerrain.Reef; i.CompareWith(SpriteSheetTerrain.Invert_Coast_right_down) <= 0; i = i.Next())
+            {
+                Button temp = new Button(SpriteSheetSourceRectangle.GetSpriteRectangle(i), new Point(col * 26 + 10, row * 26 + 80), 0.5f, false);
+                temp.Text = i.ToString();
+                temp.MouseClick += (sender, e) =>
+                {
+                    currentlySelectedTerrain = temp.Text.ToEnum<SpriteSheetTerrain>();
+                };
+                terrainSelectionButton.Add(i, temp);
+                col++;
+                if (col == 27)
+                {
+                    col = 0;
+                    row++;
+                }
+            }
+            button_changeWaterTheme.MouseClick += (sender, e) =>
+            {
+                //current terrain is reef then next = 61 -> next terrain is rain_reef
+                //current terrain is desert_reef then next = 0 -> next terrain is reef
+                int next = 0;
+                switch (terrainSelectionButton[SpriteSheetTerrain.Reef].Text.ToEnum<SpriteSheetTerrain>())
+                {
+                    case SpriteSheetTerrain.Reef:
+                        next = 61;
+                        button_changeWaterTheme.Text = "Rain";
+                        break;
+                    case SpriteSheetTerrain.Rain_Reef:
+                        button_changeWaterTheme.Text = "Snow";
+                        next = 122;
+                        break;
+                    case SpriteSheetTerrain.Snow_Reef:
+                        button_changeWaterTheme.Text = "Desert";
+                        next = 183;
+                        break;
+                    case SpriteSheetTerrain.Desert_Reef:
+                        button_changeWaterTheme.Text = "Normal";
+                        next = 0;
+                        break;
+                    default:
+                        break;
+                }
+                for (SpriteSheetTerrain i = SpriteSheetTerrain.Reef; i.CompareWith(SpriteSheetTerrain.Invert_Coast_right_down) <= 0; i = i.Next())
+                {
+                    terrainSelectionButton[i].spriteSourceRectangle = SpriteSheetSourceRectangle.GetSpriteRectangle(i.Next(next));
+                    terrainSelectionButton[i].Text = i.Next(next).ToString();
+                }
+            };
+
+            //road,tree,mountain selection
+
+
+
+            canvas_terrain_selection.AddElement("button_changeWaterTheme", button_changeWaterTheme);
+            canvas_terrain_selection.AddElement("button_changeWaterWeather", button_changeWaterWeather);
+            canvas_terrain_selection.AddElement("button_changeRoadTreeMountainTheme", button_changeRoadTreeMountainTheme);
+            foreach (var item in terrainSelectionButton)
+            {
+                canvas_terrain_selection.AddElement(item.Key.ToString(), item.Value);
+            }
+
 
             Label label1 = new Label("Hor" + Environment.NewLine + "Ver", new Point(0, 0), new Vector2(30, 20), CONTENT_MANAGER.defaultfont);
             label1.Scale = 1.2f;
@@ -148,7 +226,7 @@ namespace Wartorn.Screens
                 if (!string.IsNullOrEmpty(content))
                 {
                     var temp = Storage.MapData.LoadMap(content);
-                    if (temp!=null)
+                    if (temp != null)
                     {
                         map.Clone(temp);
                     }
@@ -162,6 +240,7 @@ namespace Wartorn.Screens
 
             //add ui element to canvas
             canvas.AddElement("canvas_Menu", canvas_Menu);
+            canvas.AddElement("canvas_terrain_selection", canvas_terrain_selection);
 
             canvas.AddElement("label1", label1);
             canvas.AddElement("label_Horizontal", label_Horizontal);
@@ -219,6 +298,7 @@ namespace Wartorn.Screens
             {
                 isMenuOpen = !isMenuOpen;
                 ((Canvas)canvas.GetElement("canvas_Menu")).IsVisible = isMenuOpen;
+                ((Canvas)canvas.GetElement("canvas_terrain_selection")).IsVisible = isMenuOpen;
             }
         }
 
@@ -338,7 +418,7 @@ namespace Wartorn.Screens
                 case SpriteSheetTerrain.Tropical_Tree_top_right:
                 case SpriteSheetTerrain.Rain_Tree_top_right:
                 case SpriteSheetTerrain.Snow_Tree_top_right:
-                    if (p.X.Between(map.Width , 1) && p.Y.Between(map.Height - 1, 0))
+                    if (p.X.Between(map.Width, 1) && p.Y.Between(map.Height - 1, 0))
                     {
                         map[p.GetNearbyPoint(Direction.West)].terrainbase = t.Previous();
                         map[p.GetNearbyPoint(Direction.South)].terrainbase = t.Next().Next();
@@ -352,7 +432,7 @@ namespace Wartorn.Screens
                 case SpriteSheetTerrain.Tropical_Tree_bottom_left:
                 case SpriteSheetTerrain.Rain_Tree_bottom_left:
                 case SpriteSheetTerrain.Snow_Tree_bottom_left:
-                    if (p.X.Between(map.Width - 1, 0) && p.Y.Between(map.Height , 1))
+                    if (p.X.Between(map.Width - 1, 0) && p.Y.Between(map.Height, 1))
                     {
                         map[p.GetNearbyPoint(Direction.East)].terrainbase = t.Next();
                         map[p.GetNearbyPoint(Direction.North)].terrainbase = t.Previous().Previous();
@@ -366,7 +446,7 @@ namespace Wartorn.Screens
                 case SpriteSheetTerrain.Tropical_Tree_bottom_right:
                 case SpriteSheetTerrain.Rain_Tree_bottom_right:
                 case SpriteSheetTerrain.Snow_Tree_bottom_right:
-                    if (p.X.Between(map.Width , 1) && p.Y.Between(map.Height , 1))
+                    if (p.X.Between(map.Width, 1) && p.Y.Between(map.Height, 1))
                     {
                         map[p.GetNearbyPoint(Direction.West)].terrainbase = t.Previous();
                         map[p.GetNearbyPoint(Direction.North)].terrainbase = t.Previous().Previous();
@@ -388,7 +468,7 @@ namespace Wartorn.Screens
                 case SpriteSheetTerrain.Tropical_Tree_up_left:
                 case SpriteSheetTerrain.Rain_Tree_up_left:
                 case SpriteSheetTerrain.Snow_Tree_up_left:
-                    if (p.X.Between(map.Width-2,0) && p.Y.Between(map.Height-2,0))
+                    if (p.X.Between(map.Width - 2, 0) && p.Y.Between(map.Height - 2, 0))
                     {
                         center = p.GetNearbyPoint(Direction.SouthEast);
 
@@ -458,7 +538,7 @@ namespace Wartorn.Screens
                 case SpriteSheetTerrain.Tropical_Tree_middle_left:
                 case SpriteSheetTerrain.Rain_Tree_middle_left:
                 case SpriteSheetTerrain.Snow_Tree_middle_left:
-                    if (p.X.Between(map.Width-2, 0) && p.Y.Between(map.Height - 1, 1))
+                    if (p.X.Between(map.Width - 2, 0) && p.Y.Between(map.Height - 1, 1))
                     {
                         center = p.GetNearbyPoint(Direction.East);
 
@@ -530,7 +610,7 @@ namespace Wartorn.Screens
                 case SpriteSheetTerrain.Tropical_Tree_down_left:
                 case SpriteSheetTerrain.Rain_Tree_down_left:
                 case SpriteSheetTerrain.Snow_Tree_down_left:
-                    if (p.X.Between(map.Width-2, 0) && p.Y.Between(map.Height , 2))
+                    if (p.X.Between(map.Width - 2, 0) && p.Y.Between(map.Height, 2))
                     {
                         center = p.GetNearbyPoint(Direction.NorthEast);
 
@@ -578,7 +658,7 @@ namespace Wartorn.Screens
                 case SpriteSheetTerrain.Tropical_Tree_down_right:
                 case SpriteSheetTerrain.Rain_Tree_down_right:
                 case SpriteSheetTerrain.Snow_Tree_down_right:
-                    if (p.X.Between(map.Width , 2) && p.Y.Between(map.Height, 2))
+                    if (p.X.Between(map.Width, 2) && p.Y.Between(map.Height, 2))
                     {
                         center = p.GetNearbyPoint(Direction.NorthWest);
 
@@ -641,7 +721,7 @@ namespace Wartorn.Screens
                 case SpriteSheetTerrain.Yellow_Headquarter_Upper:
 
                 case SpriteSheetTerrain.Missile_Silo_Upper:
-                    if (p.Y.Between(map.Height-1,0))
+                    if (p.Y.Between(map.Height - 1, 0))
                     {
                         map[p.GetNearbyPoint(Direction.South)].terrainLower = t.Next();
                     }
@@ -716,7 +796,7 @@ namespace Wartorn.Screens
             }
             //rotate through terrain sprite
             if ((HelperFunction.IsKeyPress(Keys.E) && !isQuickRotate)
-              ||(keyboardInputState.IsKeyDown(Keys.E) && isQuickRotate))
+              || (keyboardInputState.IsKeyDown(Keys.E) && isQuickRotate))
             {
                 currentlySelectedTerrain = GetNextTerrain(currentlySelectedTerrain);
             }
