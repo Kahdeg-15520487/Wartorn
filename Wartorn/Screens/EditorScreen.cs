@@ -15,6 +15,9 @@ using Wartorn.Drawing;
 using Newtonsoft.Json;
 using System.IO;
 
+using GeonBit.UI;
+using GeonBitUI = GeonBit.UI.Entities;
+
 
 namespace Wartorn.Screens
 {
@@ -28,6 +31,7 @@ namespace Wartorn.Screens
         private Map map;
         private Canvas canvas;
         private Camera camera;
+        private GeonBitUI.Panel mainPanel;
 
         private Texture2D showtile;
 
@@ -74,6 +78,18 @@ namespace Wartorn.Screens
             InitMap();
         }
 
+        public override bool Init()
+        {
+            mainPanel.Visible = true;
+            return base.Init();
+        }
+
+        public override void Shutdown()
+        {
+            mainPanel.Visible = false;
+            base.Shutdown();
+        }
+
         private void LoadContent()
         {
             showtile = CONTENT_MANAGER.Content.Load<Texture2D>(@"sprite\showtile");
@@ -82,7 +98,30 @@ namespace Wartorn.Screens
         #region InitUI
         private void InitUI()
         {
+            //Migrate to GeonBit UI
+
+            //initialize the main panel of this screen
+            mainPanel = new GeonBitUI.Panel(new Vector2(720, 480), skin: GeonBitUI.PanelSkin.None);
+
+            //declare ui entities
+
+            //escape menu
+            GeonBitUI.Panel escapeMenu = new GeonBitUI.Panel(new Vector2(200, 200), skin: GeonBitUI.PanelSkin.Simple, anchor: GeonBitUI.Anchor.TopRight);
+
+            GeonBitUI.Image gbutton_Undo = new GeonBitUI.Image(CONTENT_MANAGER.UIspriteSheet, new Vector2(24, 24), anchor: GeonBitUI.Anchor.CenterLeft);
+            gbutton_Undo.SourceRectangle = UISpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetUI.Undo);
+
+            //bind event
+
+            //add to panel
+            escapeMenu.AddChild(gbutton_Undo);
+            mainPanel.AddChild(escapeMenu);
+            UserInterface.AddEntity(mainPanel);
+
+            //end
+
             //declare ui element
+
 
             //escape menu
             Canvas canvas_Menu = new Canvas();

@@ -27,7 +27,7 @@ namespace Wartorn
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             CONTENT_MANAGER.Content = Content;
-            //IsMouseVisible = true;
+            IsMouseVisible = true;
             lastInputState = new InputState();
 
             graphics.PreferMultiSampling = true;
@@ -49,48 +49,8 @@ namespace Wartorn
             graphics.PreferredBackBufferHeight = Constants.Height;  // set this value to the desired height of your window
             graphics.ApplyChanges();
 
-            SCREEN_MANAGER.add_screen(new EditorScreen(GraphicsDevice));
-            SCREEN_MANAGER.add_screen(new MainMenuScreen(GraphicsDevice));
-            
-
-            //SCREEN_MANAGER.goto_screen("MainMenuScreen");
-            //SCREEN_MANAGER.goto_screen("EditorScreen");
-
             DrawingHelper.Initialize(GraphicsDevice);
-
-            UserInterface.Initialize(Content, BuiltinThemes.hd);
-
-            GeonBitUI.Panel panel = new GeonBitUI.Panel(new Vector2(200, 200), anchor: GeonBitUI.Anchor.TopCenter);
-            GeonBitUI.Button subject = new GeonBitUI.Button("lala", size: new Vector2(150, 40), anchor: GeonBitUI.Anchor.Center);
-            GeonBitUI.Button hider = new GeonBitUI.Button("hide",size: new Vector2(150,40),anchor: GeonBitUI.Anchor.TopCenter);
-            GeonBitUI.Label info = new GeonBitUI.Label("not hidden", anchor: GeonBitUI.Anchor.BottomCenter);
-            panel.AddChild(subject);
-            panel.AddChild(hider);
-            panel.AddChild(info);
-
-            GeonBitUI.Panel hidepanel = new GeonBitUI.Panel(new Vector2(200, 100), anchor: GeonBitUI.Anchor.BottomCenter);
-            GeonBitUI.Label hideinfo = new GeonBitUI.Label("not hidden", anchor: GeonBitUI.Anchor.Center);
-            hidepanel.AddChild(hideinfo);
-
-            hider.OnClick = (sender) =>
-            {
-                subject.Visible = !subject.Visible;
-                info.Text = subject.Visible ? "not hidden" : "hidden";
-
-                hidepanel.Visible = !hidepanel.Visible;
-                hideinfo.Text = hidepanel.Visible ? "not hidden" : "hidden";
-            };
-
-            subject.OnClick = (sender) =>
-            {
-                info.Text = "lala";
-                hideinfo.Text = "lala";
-            };
-
-            UserInterface.AddEntity(panel);
-            UserInterface.AddEntity(hidepanel);
-
-
+            
             base.Initialize();
         }
 
@@ -110,11 +70,18 @@ namespace Wartorn
 
             CONTENT_MANAGER.UIspriteSheet = CONTENT_MANAGER.Content.Load<Texture2D>(@"sprite\ui_sprite_sheet");
 
-            //expriment
+            InitUI();
+            InitScreens();
+        }
 
-            GeonBitUI.Panel imagepanel = new GeonBitUI.Panel(new Vector2(716, 200),skin: GeonBitUI.PanelSkin.Simple, anchor: GeonBitUI.Anchor.Center);
+        private void InitUI()
+        {
+            UserInterface.Initialize(Content, BuiltinThemes.hd);
+            UserInterface.ShowCursor = false;
 
-            GeonBitUI.Label currentlySelectedTerrain = new GeonBitUI.Label("",anchor: GeonBitUI.Anchor.TopLeft,offset: new Vector2(-20,-20));
+            GeonBitUI.Panel imagepanel = new GeonBitUI.Panel(new Vector2(716, 200), skin: GeonBitUI.PanelSkin.Simple, anchor: GeonBitUI.Anchor.Center);
+
+            GeonBitUI.Label currentlySelectedTerrain = new GeonBitUI.Label("", anchor: GeonBitUI.Anchor.TopLeft, offset: new Vector2(-20, -20));
             imagepanel.AddChild(currentlySelectedTerrain);
             //water selection
             int col = 0;
@@ -140,103 +107,20 @@ namespace Wartorn
                 }
             }
 
-            UserInterface.AddEntity(imagepanel);
-
-            //end experiment
-
-            //SCREEN_MANAGER.Init();
-            //InitializeUI();
+            //UserInterface.AddEntity(imagepanel);
         }
-        #region Init UI example
-        /*
-        void InitializeUI()
+
+        private void InitScreens()
         {
-            Label label1 = new Label()
-            {
-                Text = "1",
-                Position = new Point(50,50),
-                Size = new Vector2(100,50),
-                font = defaultFont,
-                foregroundColor = Color.Black,
-                Scale = 2
-            };
+            SCREEN_MANAGER.add_screen(new EditorScreen(GraphicsDevice));
+            SCREEN_MANAGER.add_screen(new MainMenuScreen(GraphicsDevice));
 
-            Label label2 = new Label()
-            {
-                Text = "",
-                Position = new Point(10, 400),
-                Size = new Vector2(100, 30),
-                font = defaultFont,
-                foregroundColor = Color.White
-            };
+            //SCREEN_MANAGER.goto_screen("MainMenuScreen");
+            SCREEN_MANAGER.goto_screen("EditorScreen");
 
-            Label label3 = new Label()
-            {
-                Text = string.Empty,
-                Position = new Point(10, 440),
-                Size = new Vector2(100, 30),
-                font = defaultFont,
-                foregroundColor = Color.White
-            };
-
-            Label labelTime = new Label()
-            {
-                Text = string.Empty,
-                Position = new Point(5,5),
-                Size = new Vector2(100, 30),
-                font = defaultFont,
-                foregroundColor = Color.White
-            };
-
-            label1.MouseEnter += delegate (object sender, UIEventArgs e)
-            {
-                label3.Text = "enter";
-            };
-            label1.MouseLeave += delegate (object sender, UIEventArgs e)
-            {
-                label3.Text = "leave";
-            };
-
-            Button button1 = new Button()
-            {
-                Text = "test",
-                Position = new Point(200, 200),
-                Size = new Vector2(50, 50),
-                font = defaultFont,
-                backgroundColor = Color.White,
-                foregroundColor = Color.Black,
-                ButtonColorPressed = Color.LightSlateGray,
-                ButtonColorReleased = Color.LightGray
-            };
-
-            button1.MouseUp += delegate (object sender, UIEventArgs e)
-            {
-                int temp;
-                if (int.TryParse(label1.Text,out temp))
-                {
-                    label1.Text = (temp + 1).ToString();
-                }
-            };
-
-            InputBox inputbox1 = new InputBox()
-            {
-                Text = "test",
-                Position = new Point(300, 200),
-                Size = new Vector2(50, 50),
-                font = defaultFont,
-                backgroundColor = Color.White,
-                foregroundColor = Color.White
-            };
-
-            canvas.AddElement("label1", label1);
-            canvas.AddElement("label2", label2);
-            canvas.AddElement("label3", label3);
-            canvas.AddElement("button1", button1);
-            canvas.AddElement("labelTime", labelTime);
-            canvas.AddElement("inputbox1", inputbox1);
+            SCREEN_MANAGER.Init();
         }
-        */
-        #endregion
+
         /// <summary>
         /// UnloadContent will be called once per game and is the place to unload
         /// game-specific content.

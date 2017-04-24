@@ -4,25 +4,50 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
 using Wartorn.ScreenManager;
-using Microsoft.Xna.Framework.Input;
+
+using GeonBit.UI;
+using GeonBitUI = GeonBit.UI.Entities;
 
 namespace Wartorn.Screens
 {
     class BlueScreen : Screen
     {
+        private GeonBitUI.Panel mainpanel;
+
         public BlueScreen(GraphicsDevice device) : base(device, "BlueScreen")
         {
+            mainpanel = new GeonBitUI.Panel(new Vector2(720, 480), skin: GeonBitUI.PanelSkin.None);
+            mainpanel.Visible = false;
+
+            GeonBitUI.Panel bluepanel = new GeonBitUI.Panel(new Vector2(200, 200));
+
+            GeonBitUI.Label bluelabel = new GeonBitUI.Label("blue");
+            GeonBitUI.Button bluebutton = new GeonBitUI.Button("go to red");
+
+            bluebutton.OnClick += (sender) =>
+            {
+                SCREEN_MANAGER.goto_screen("RedScreen");
+            };
+
+            bluepanel.AddChild(bluelabel);
+            bluepanel.AddChild(bluebutton);
+
+            mainpanel.AddChild(bluepanel);
+            UserInterface.AddEntity(mainpanel);
         }
 
         public override bool Init()
         {
+            mainpanel.Visible = true;
             return base.Init();
         }
 
         public override void Shutdown()
         {
+            mainpanel.Visible = false;
             base.Shutdown();
         }
 
@@ -39,7 +64,7 @@ namespace Wartorn.Screens
 
         public override void Draw(GameTime gameTime)
         {
-            _device.Clear(Color.Blue);
+            //_device.Clear(Color.Blue);
         }
     }
 }

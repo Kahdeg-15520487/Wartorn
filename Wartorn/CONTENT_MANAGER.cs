@@ -15,6 +15,8 @@ namespace Wartorn
     //singleton to store common data
     public static class CONTENT_MANAGER
     {
+        public static GeonBit.UI.Entities.Panel temppanel;
+
         public static ContentManager Content;
         public static SpriteBatch spriteBatch;
         public static SpriteFont defaultfont;
