@@ -140,12 +140,12 @@ namespace Wartorn.Screens
                 switch (terrainSelectionButton[SpriteSheetTerrain.Reef].Text.ToEnum<SpriteSheetTerrain>())
                 {
                     case SpriteSheetTerrain.Reef:
-                        next = 61;
-                        button_changeWaterTheme.Text = "Rain";
+                        //next = 61;
+                        //button_changeWaterTheme.Text = "Rain";
                         break;
                     case SpriteSheetTerrain.Rain_Reef:
-                        button_changeWaterTheme.Text = "Snow";
-                        next = 122;
+                        //button_changeWaterTheme.Text = "Snow";
+                        //next = 122;
                         break;
                     case SpriteSheetTerrain.Snow_Reef:
                         button_changeWaterTheme.Text = "Desert";
