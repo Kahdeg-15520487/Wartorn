@@ -235,7 +235,7 @@ namespace Wartorn.Screens
 
             button_Exit.MouseClick += (sender, e) =>
             {
-                Environment.Exit(0);
+                SCREEN_MANAGER.go_back();
             };
 
             //add ui element to canvas
