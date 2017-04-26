@@ -4,30 +4,30 @@
   <Platform>DesktopGL</Platform>
   <Config />
   <SourceFiles>
-    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/defaultfont.spritefont</File>
-    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/ui_sprite_sheet.png</File>
-    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/GUI/intro.mp4</File>
-    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/GUI/Startscreen.png</File>
-    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/GUI/Title.png</File>
-    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/GUI/menufont.spritefont</File>
-    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/GUI/Select_screen.png</File>
-    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/GUI/Startscreen_Airstrike.png</File>
-    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/GUI/Startscreen_Battleship.png</File>
-    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/GUI/Startscreen_Wartorn.png</File>
-    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/GUI/Mode_select_light.png</File>
-    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/GUI/Mode_select_dark.png</File>
-    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/GUI/Main_Font.png</File>
-    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/showtile.png</File>
-    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/terrain.png</File>
-    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/Alliance_RED/Anti_Air.png</File>
-    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/Alliance_RED/APC.png</File>
-    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/Alliance_RED/Artillery.png</File>
-    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/Alliance_RED/H_Tank.png</File>
-    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/Alliance_RED/Missile.png</File>
-    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/Alliance_RED/Soldier.png</File>
-    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/Alliance_RED/Tank.png</File>
-    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/Alliance_RED/Rocket.png</File>
-    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/Alliance_RED/Recon.png</File>
-    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/Alliance_RED/Mech.png</File>
+    <File>D:/Wartorn/Wartorn/Content/defaultfont.spritefont</File>
+    <File>D:/Wartorn/Wartorn/Content/sprite/ui_sprite_sheet.png</File>
+    <File>D:/Wartorn/Wartorn/Content/sprite/GUI/intro.mp4</File>
+    <File>D:/Wartorn/Wartorn/Content/sprite/GUI/Startscreen.png</File>
+    <File>D:/Wartorn/Wartorn/Content/sprite/GUI/Title.png</File>
+    <File>D:/Wartorn/Wartorn/Content/sprite/GUI/menufont.spritefont</File>
+    <File>D:/Wartorn/Wartorn/Content/sprite/GUI/Select_screen.png</File>
+    <File>D:/Wartorn/Wartorn/Content/sprite/GUI/Startscreen_Airstrike.png</File>
+    <File>D:/Wartorn/Wartorn/Content/sprite/GUI/Startscreen_Battleship.png</File>
+    <File>D:/Wartorn/Wartorn/Content/sprite/GUI/Startscreen_Wartorn.png</File>
+    <File>D:/Wartorn/Wartorn/Content/sprite/GUI/Mode_select_light.png</File>
+    <File>D:/Wartorn/Wartorn/Content/sprite/GUI/Mode_select_dark.png</File>
+    <File>D:/Wartorn/Wartorn/Content/sprite/GUI/Main_Font.png</File>
+    <File>D:/Wartorn/Wartorn/Content/sprite/showtile.png</File>
+    <File>D:/Wartorn/Wartorn/Content/sprite/terrain.png</File>
+    <File>D:/Wartorn/Wartorn/Content/sprite/Alliance_RED/Anti_Air.png</File>
+    <File>D:/Wartorn/Wartorn/Content/sprite/Alliance_RED/APC.png</File>
+    <File>D:/Wartorn/Wartorn/Content/sprite/Alliance_RED/Artillery.png</File>
+    <File>D:/Wartorn/Wartorn/Content/sprite/Alliance_RED/H_Tank.png</File>
+    <File>D:/Wartorn/Wartorn/Content/sprite/Alliance_RED/Missile.png</File>
+    <File>D:/Wartorn/Wartorn/Content/sprite/Alliance_RED/Soldier.png</File>
+    <File>D:/Wartorn/Wartorn/Content/sprite/Alliance_RED/Tank.png</File>
+    <File>D:/Wartorn/Wartorn/Content/sprite/Alliance_RED/Rocket.png</File>
+    <File>D:/Wartorn/Wartorn/Content/sprite/Alliance_RED/Recon.png</File>
+    <File>D:/Wartorn/Wartorn/Content/sprite/Alliance_RED/Mech.png</File>
   </SourceFiles>
 </SourceFileCollection>
