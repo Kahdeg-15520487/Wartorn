@@ -16,10 +16,9 @@ namespace Wartorn.Screens
 {
     class TestAnimationScreen : Screen
     {
-        Dictionary<Unit,AnimatedEntity> entityList;
-        Dictionary<Unit,Texture2D> animationSpriteSheet;
+        Dictionary<UnitType,AnimatedEntity> entityList;
 
-        Unit currentUnit = Unit.Soldier;
+        UnitType currentUnit = UnitType.Soldier;
 
         public TestAnimationScreen(GraphicsDevice device) : base(device, "TestAnimationScreen")
         {
@@ -28,60 +27,23 @@ namespace Wartorn.Screens
 
         private void LoadContent()
         {
-            animationSpriteSheet = new Dictionary<Unit, Texture2D>();
-            var UnitTypes = new List<Unit>((IEnumerable<Unit>)Enum.GetValues(typeof(Unit)));
-            UnitTypes.Remove(Unit.None);
 
-            foreach (Unit unittype in UnitTypes)
-            {
-                animationSpriteSheet.Add(unittype, CONTENT_MANAGER.Content.Load<Texture2D>("sprite//Alliance_RED//" + unittype.ToString()));
-            }
-
-            entityList = new Dictionary<Unit, AnimatedEntity>();
+            entityList = new Dictionary<UnitType, AnimatedEntity>();
         }
 
         public override bool Init()
         {
-            var UnitTypes = new List<Unit>((IEnumerable<Unit>)Enum.GetValues(typeof(Unit)));
-            UnitTypes.Remove(Unit.None);
+            var UnitTypes = new List<UnitType>((IEnumerable<UnitType>)Enum.GetValues(typeof(UnitType)));
+            UnitTypes.Remove(UnitType.None);
 
-            foreach (Unit unittype in UnitTypes)
+            foreach (UnitType unittype in UnitTypes)
             {
-                AnimatedEntity temp = new AnimatedEntity(new Vector2(24, 24), null);
-                temp.LoadContent(animationSpriteSheet[unittype]);
+                AnimatedEntity temp = new AnimatedEntity(new Vector2(24, 24), null, LayerDepth.Unit);
+                temp.LoadContent(CONTENT_MANAGER.animationSheets[unittype]);
 
-                Animation idle = new Animation("idle", true, 4, "right");
-                for (int i = 0; i < 4; i++)
-                {
-                    idle.AddKeyFrame(i * 48, 0, 48, 48);
-                }
+                temp.AddAnimation(CONTENT_MANAGER.animationTypes);
 
-                Animation right = new Animation("right", true, 4, "up");
-                for (int i = 0; i < 4; i++)
-                {
-                    right.AddKeyFrame(i * 48, 48, 48, 48);
-                }
 
-                Animation up = new Animation("up", true, 4, "down");
-                for (int i = 0; i < 4; i++)
-                {
-                    up.AddKeyFrame(i * 48, 96, 48, 48);
-                }
-
-                Animation down = new Animation("down", true, 4, "done");
-                for (int i = 0; i < 4; i++)
-                {
-                    down.AddKeyFrame(i * 48, 144, 48, 48);
-                }
-
-                Animation done = new Animation("done", true, 1, "idle");
-                done.AddKeyFrame(0, 192, 48, 48);
-
-                temp.AddAnimation(idle);
-                temp.AddAnimation(right);
-                temp.AddAnimation(up);
-                temp.AddAnimation(down);
-                temp.AddAnimation(done);
                 temp.PlayAnimation("idle");
 
                 entityList.Add(unittype, temp);
@@ -94,14 +56,18 @@ namespace Wartorn.Screens
         {
             if (HelperFunction.IsKeyPress(Keys.Up))
             {
-                if (currentUnit == Unit.Missile)
+                if (currentUnit == UnitType.Missile)
                 {
-                    currentUnit = Unit.Soldier;
+                    currentUnit = UnitType.Soldier;
                 }
                 else
                 {
                     currentUnit = currentUnit.Next();
                 }
+            }
+            if (currentUnit == UnitType.None)
+            {
+                currentUnit = UnitType.Soldier;
             }
 
             entityList[currentUnit].Update(gameTime);

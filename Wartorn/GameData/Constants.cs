@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Wartorn.GameData
 {
-    enum Terrain
+    public enum TerrainType
     {
         //terrain
         Reef,
@@ -32,7 +32,7 @@ namespace Wartorn.GameData
     }
 
 
-    enum Unit
+    public enum UnitType
     {
         None,
         Soldier,
@@ -47,7 +47,7 @@ namespace Wartorn.GameData
         Missile
     }
 
-    enum Weather
+    public enum Weather
     {
         normal,
         rain,
@@ -55,8 +55,8 @@ namespace Wartorn.GameData
         sandstorm
     }
 
-    enum GameMode
+    public enum GameMode
     {
         campaign
-    }
+    }    
 }

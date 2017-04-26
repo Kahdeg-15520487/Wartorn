@@ -1,11 +1,26 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using System;
+using System.IO;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
-using Wartorn.Utility.Drawing;
-using Wartorn.UIClass;
+using Microsoft.Xna.Framework.Graphics;
+
 using Wartorn.ScreenManager;
+using Wartorn.Storage;
+using Wartorn.GameData;
+using Wartorn.UIClass;
+using Wartorn.Utility;
+using Wartorn.Utility.Drawing;
 using Wartorn.Screens;
-using System;
+using Wartorn.Drawing;
+using Wartorn.Drawing.Animation;
+
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Wartorn
 {
@@ -27,6 +42,13 @@ namespace Wartorn
             lastInputState = new InputState();
 
             graphics.PreferMultiSampling = true;
+
+            JsonConvert.DefaultSettings  = () =>
+            {
+                var settings = new JsonSerializerSettings();
+                settings.Converters.Add(new UnitPairJsonConverter());
+                return settings;
+            };            
         }
 
         /// <summary>
@@ -46,6 +68,7 @@ namespace Wartorn
             graphics.ApplyChanges();
 
             DrawingHelper.Initialize(GraphicsDevice);
+            //Unit.Load();
 
             base.Initialize();
         }
@@ -66,7 +89,58 @@ namespace Wartorn
 
             CONTENT_MANAGER.UIspriteSheet = CONTENT_MANAGER.Content.Load<Texture2D>(@"sprite\ui_sprite_sheet");
 
+            LoadAnimationContent();
             InitScreen();
+        }
+
+        private void LoadAnimationContent()
+        {
+            CONTENT_MANAGER.animationSheets = new Dictionary<UnitType, Texture2D>();
+            CONTENT_MANAGER.animationTypes = new List<Animation>();
+
+            //list of unit type
+            var UnitTypes = new List<UnitType>((IEnumerable<UnitType>)Enum.GetValues(typeof(UnitType)));
+            UnitTypes.Remove(UnitType.None);
+            
+            //load animation sprite sheet for each unit type
+            foreach (UnitType unittype in UnitTypes)
+            {
+                CONTENT_MANAGER.animationSheets.Add(unittype, CONTENT_MANAGER.Content.Load<Texture2D>("sprite//Alliance_RED//" + unittype.ToString()));
+            }
+
+            //declare animation type
+            Animation idle = new Animation("idle", true, 4, string.Empty);
+            for (int i = 0; i < 4; i++)
+            {
+                idle.AddKeyFrame(i * 48, 0, 48, 48);
+            }
+
+            Animation right = new Animation("right", true, 4, string.Empty);
+            for (int i = 0; i < 4; i++)
+            {
+                right.AddKeyFrame(i * 48, 48, 48, 48);
+            }
+
+            Animation up = new Animation("up", true, 4, string.Empty);
+            for (int i = 0; i < 4; i++)
+            {
+                up.AddKeyFrame(i * 48, 96, 48, 48);
+            }
+
+            Animation down = new Animation("down", true, 4, string.Empty);
+            for (int i = 0; i < 4; i++)
+            {
+                down.AddKeyFrame(i * 48, 144, 48, 48);
+            }
+
+            Animation done = new Animation("done", true, 1, string.Empty);
+            done.AddKeyFrame(0, 192, 48, 48);
+
+            CONTENT_MANAGER.animationTypes.Add(idle);
+            CONTENT_MANAGER.animationTypes.Add(right);
+            CONTENT_MANAGER.animationTypes.Add(up);
+            CONTENT_MANAGER.animationTypes.Add(down);
+            CONTENT_MANAGER.animationTypes.Add(done);
         }
 
         private void InitScreen()
@@ -76,8 +150,8 @@ namespace Wartorn
             SCREEN_MANAGER.add_screen(new TestAnimationScreen(GraphicsDevice));
 
 
-            SCREEN_MANAGER.goto_screen("TestAnimationScreen");
-            //SCREEN_MANAGER.goto_screen("MainMenuScreen");
+            //SCREEN_MANAGER.goto_screen("TestAnimationScreen");
+            SCREEN_MANAGER.goto_screen("MainMenuScreen");
             //SCREEN_MANAGER.goto_screen("EditorScreen");
 
             SCREEN_MANAGER.Init();

@@ -52,6 +52,7 @@
     <Compile Include="GameData\MapCell.cs" />
     <Compile Include="GameData\Session.cs" />
     <Compile Include="GameData\StructData.cs" />
+    <Compile Include="GameData\Unit.cs" />
     <Compile Include="GameManager.cs" />
     <Compile Include="Drawing\PrimitiveBatch.cs" />
     <Compile Include="Handler.cs">

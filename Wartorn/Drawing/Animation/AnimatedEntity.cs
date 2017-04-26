@@ -32,6 +32,8 @@ namespace Wartorn.Drawing.Animation
         // The scale of our sprite
         private float scale;
 
+        private float depth;
+
         // Tells SpriteBatch how to flip our texture
         private SpriteEffects flipEffect;
 
@@ -66,6 +68,11 @@ namespace Wartorn.Drawing.Animation
         {
             get { return currentAnimation.Name; }
         }
+        public float Depth
+        {
+            get { return depth; }
+            set { depth = value; }
+        }
 
         #endregion
 
@@ -79,16 +86,18 @@ namespace Wartorn.Drawing.Animation
             origin = Vector2.Zero;
             rotation = 0;
             scale = 1;
+            depth = LayerDepth.BackGround;
             flipEffect = SpriteEffects.None;
             tintColor = Color.White;
         }
-        public AnimatedEntity(Vector2 position, Color? tintColor, float scale = 1)
+        public AnimatedEntity(Vector2 position, Color? tintColor, float depth, float scale = 1)
         {
             //Initialize the Dictionary
             animations = new Dictionary<string, Animation>(24);
             spriteSheet = null;
             origin = Vector2.Zero;
             rotation = 0;
+            this.depth = depth;
             flipEffect = SpriteEffects.None;
 
             this.position = position;
@@ -142,6 +151,23 @@ namespace Wartorn.Drawing.Animation
                 Utility.HelperFunction.Log(new ApplicationException("Animation Key is already contained in the Dictionary"));
             }
         }
+        public void AddAnimation(List<Animation> anims)
+        {
+            foreach (Animation animation in anims)
+            {
+                // Is this Animation already in the Dictionary?
+                if (!animations.ContainsKey(animation.Name))
+                {
+                    // If not we can safely add it
+                    animations.Add(animation.Name, animation);
+                }
+                else
+                {
+                    // Otherwise we tell are computer to yell at us
+                    Utility.HelperFunction.Log(new ApplicationException("Animation Key is already contained in the Dictionary"));
+                }
+            }
+        }
 
         /// <summary>
         /// Tells this entity to play an specific animation
@@ -176,8 +202,10 @@ namespace Wartorn.Drawing.Animation
         {
             if (currentAnimation != null)
             {
-                origin.X = currentAnimation.CurntKeyFrame.Width / 2;
-                origin.Y = currentAnimation.CurntKeyFrame.Height / 2;
+                //2 câu lệnh sau sẽ làm cho origin của animation ở chính giữa khung hình.
+                //vì nguyên cái game chạy theo origin là vector2.zero nên bỏ
+                //origin.X = currentAnimation.CurntKeyFrame.Width / 2;
+                //origin.Y = currentAnimation.CurntKeyFrame.Height / 2;
 
                 currentAnimation.Update(gameTime);
 
@@ -205,7 +233,7 @@ namespace Wartorn.Drawing.Animation
             if (currentAnimation != null)
             {
                 spriteBatch.Draw(spriteSheet, position, currentAnimation.CurntKeyFrame.Source, tintColor,
-                    rotation, origin, scale, flipEffect, 0);
+                    rotation, origin, scale, flipEffect, depth);
             }
         }
 

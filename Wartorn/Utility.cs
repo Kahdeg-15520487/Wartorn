@@ -79,7 +79,7 @@ namespace Wartorn
                 var type = typeof(T);
                 int result;
                 T box = default(T);
-                count.Clamp(int.MaxValue, 0);
+                //count.Clamp(int.MaxValue, 0);
                 switch (type.Name)
                 {
                     case "SpriteSheetTerrain":
@@ -87,13 +87,13 @@ namespace Wartorn
                         result = (int)unboxSpriteSheetTerrain + count;
                         box = (T)((object)result);
                         return box;
-                    case "Unit":
-                        Unit unboxUnit = (Unit)((object)t);
+                    case "UnitType":
+                        UnitType unboxUnit = (UnitType)((object)t);
                         result = (int)unboxUnit + count;
                         box = (T)((object)result);
                         break;
                     case "Terrain":
-                        Terrain unboxTerrain = (Terrain)((object)t);
+                        TerrainType unboxTerrain = (TerrainType)((object)t);
                         result = (int)unboxTerrain + count;
                         box = (T)((object)result);
                         break;

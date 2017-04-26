@@ -142,57 +142,57 @@ namespace Wartorn
             return TerrainSprite[t];
         }
 
-        public static Rectangle GetSpriteRectangle(Terrain t)
+        public static Rectangle GetSpriteRectangle(TerrainType t)
         {
             Rectangle temp = Rectangle.Empty;
             switch (t)
             {
-                case Terrain.Reef:
+                case TerrainType.Reef:
                     temp = TerrainSprite[SpriteSheetTerrain.Reef];
                     break;
-                case Terrain.Sea:
+                case TerrainType.Sea:
                     temp = TerrainSprite[SpriteSheetTerrain.Sea];
                     break;
-                case Terrain.River:
+                case TerrainType.River:
                     temp = TerrainSprite[SpriteSheetTerrain.River_hor];
                     break;
-                case Terrain.Coast:
+                case TerrainType.Coast:
                     temp = TerrainSprite[SpriteSheetTerrain.Coast_up];
                     break;
-                case Terrain.Cliff:
+                case TerrainType.Cliff:
                     temp = TerrainSprite[SpriteSheetTerrain.Cliff_up];
                     break;
-                case Terrain.Road:
+                case TerrainType.Road:
                     temp = TerrainSprite[SpriteSheetTerrain.Road_hor];
                     break;
-                case Terrain.Tree:
+                case TerrainType.Tree:
                     temp = TerrainSprite[SpriteSheetTerrain.Tree];
                     break;
-                case Terrain.Mountain:
+                case TerrainType.Mountain:
                     temp = TerrainSprite[SpriteSheetTerrain.Mountain_High_Lower];
                     break;
-                case Terrain.MissileSilo:
+                case TerrainType.MissileSilo:
                     temp = TerrainSprite[SpriteSheetTerrain.Missile_Silo_Lower];
                     break;
-                case Terrain.City:
+                case TerrainType.City:
                     temp = TerrainSprite[SpriteSheetTerrain.City_Lower];
                     break;
-                case Terrain.Factory:
+                case TerrainType.Factory:
                     temp = TerrainSprite[SpriteSheetTerrain.Factory];
                     break;
-                case Terrain.AirPort:
+                case TerrainType.AirPort:
                     temp = TerrainSprite[SpriteSheetTerrain.AirPort_Lower];
                     break;
-                case Terrain.Harbor:
+                case TerrainType.Harbor:
                     temp = TerrainSprite[SpriteSheetTerrain.Harbor_Lower];
                     break;
-                case Terrain.Radar:
+                case TerrainType.Radar:
                     temp = TerrainSprite[SpriteSheetTerrain.Radar_Lower];
                     break;
-                case Terrain.SupplyBase:
+                case TerrainType.SupplyBase:
                     temp = TerrainSprite[SpriteSheetTerrain.SupplyBase_Lower];
                     break;
-                case Terrain.Headquarter:
+                case TerrainType.Headquarter:
                     temp = TerrainSprite[SpriteSheetTerrain.Blue_Headquarter_Lower];
                     break;
                 default:

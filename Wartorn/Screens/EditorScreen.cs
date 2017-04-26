@@ -1,11 +1,14 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
+
 using Wartorn.ScreenManager;
 using Wartorn.Storage;
 using Wartorn.GameData;
@@ -13,8 +16,7 @@ using Wartorn.UIClass;
 using Wartorn.Utility;
 using Wartorn.Drawing;
 using Newtonsoft.Json;
-using System.IO;
-
+using Wartorn.Drawing.Animation;
 
 namespace Wartorn.Screens
 {
@@ -33,7 +35,6 @@ namespace Wartorn.Screens
 
         private Point selectedMapCell = new Point(0, 0);
         private Vector2 offset = new Vector2(70, 70);
-        private Vector2 mapcellsize = new Vector2(48, 48);
         private Rectangle mapArea;
 
         private SpriteSheetTerrain currentlySelectedTerrain = SpriteSheetTerrain.Tree_up_left;
@@ -71,7 +72,7 @@ namespace Wartorn.Screens
         public override bool Init()
         {
             map = new Map(50, 30);
-            mapArea = new Rectangle(0, 0, (int)(map.Width * mapcellsize.X), (int)(map.Height * mapcellsize.Y));
+            mapArea = new Rectangle(0, 0, (int)(map.Width * Constants.MapCellWidth), (int)(map.Height * Constants.MapCellHeight));
             canvas = new Canvas();
             camera = new Camera(_device.Viewport);
 
@@ -264,14 +265,16 @@ namespace Wartorn.Screens
                 for (int j = 0; j < map.Height; j++)
                 {
                     map[i, j] = new MapCell(SpriteSheetTerrain.Sea);
-                    continue;
-                    count += 1;
-                    if (count == (int)(SpriteSheetTerrain.Max))
-                    {
-                        count = 1;
-                    }
                 }
             }
+
+            Unit soldier1 = new Unit(UnitType.Soldier, new AnimatedEntity ());
+            soldier1.Animation.Depth = LayerDepth.Unit;
+            soldier1.Animation.LoadContent(CONTENT_MANAGER.animationSheets[UnitType.Soldier]);
+            soldier1.Animation.AddAnimation(CONTENT_MANAGER.animationTypes);
+            soldier1.Animation.PlayAnimation("idle");
+
+            map[5, 5].unit = soldier1;
         }
 
         public override void Update(GameTime gameTime)
@@ -296,7 +299,20 @@ namespace Wartorn.Screens
                 RotateThroughTerrain(keyboardInputState);
             }
             MoveCamera(keyboardInputState, mouseInputState);
+
+            UpdateMap(gameTime);
             //ZoomCamera();
+        }
+
+        private void UpdateMap(GameTime gameTime)
+        {
+            foreach (MapCell mapcell in map)
+            {
+                if (mapcell.unit!=null)
+                {
+                    mapcell.unit.Animation.Update(gameTime);
+                }
+            }
         }
 
         #region Update's sub method
@@ -391,6 +407,7 @@ namespace Wartorn.Screens
         }
 
         //xử lí việc 1 tile lớn gồm nhiều tile nhỏ được vẽ
+        #region ve nhieu tile
         private void HandleMultiTileSprite(Point p, SpriteSheetTerrain t)
         {
             var mapcell = map[p];
@@ -1310,6 +1327,7 @@ namespace Wartorn.Screens
                     break;
             }
         }
+        #endregion
 
         #region RotateThroughTerrain
         private void RotateThroughTerrain(KeyboardState keyboardInputState)
@@ -1399,8 +1417,8 @@ namespace Wartorn.Screens
         {
             //calculate currently selected mapcell
             Vector2 temp = camera.TranslateFromScreenToWorld(mousepos.ToVector2());
-            temp.X = (int)(temp.X / mapcellsize.X);       //mapcell size
-            temp.Y = (int)(temp.Y / mapcellsize.Y);
+            temp.X = (int)(temp.X / Constants.MapCellWidth);       //mapcell size
+            temp.Y = (int)(temp.Y / Constants.MapCellHeight);
 
             if (temp.X >= 0 && temp.X < map.Width && temp.Y >= 0 && temp.Y < map.Height)
                 return temp.ToPoint();
@@ -1414,7 +1432,7 @@ namespace Wartorn.Screens
 
         public override void Draw(GameTime gameTime)
         {
-            DrawMap(CONTENT_MANAGER.spriteBatch);
+            DrawMap(CONTENT_MANAGER.spriteBatch,gameTime);
             canvas.Draw(CONTENT_MANAGER.spriteBatch);
             CONTENT_MANAGER.spriteBatch.Draw(showtile, GuiSide == Side.Left ? new Vector2(0, 350) : new Vector2(630, 350), null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.GuiLower);
             CONTENT_MANAGER.spriteBatch.DrawString(CONTENT_MANAGER.defaultfont, map[selectedMapCell].terrainbase.ToString(), GuiSide == Side.Left ? new Vector2(0, 360) : new Vector2(650, 360), Color.Black, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.GuiUpper);
@@ -1422,37 +1440,22 @@ namespace Wartorn.Screens
             CONTENT_MANAGER.spriteBatch.Draw(CONTENT_MANAGER.spriteSheet, GuiSide == Side.Left ? new Vector2(10, 380) : new Vector2(660, 380), SpriteSheetSourceRectangle.GetSpriteRectangle(map[selectedMapCell].terrainbase), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.GuiUpper);
         }
 
-        private void DrawMap(SpriteBatch spriteBatch)
+        private void DrawMap(SpriteBatch spriteBatch,GameTime gameTime)
         {
             //end that batch since the map will be render diffrently
             spriteBatch.End();
+
             //begin a new batch with translated matrix to simulate scrolling
             spriteBatch.Begin(SpriteSortMode.FrontToBack, transformMatrix: camera.TransformMatrix);
-            MapCell tempmapcell;
-            for (int i = 0; i < map.Width; i++)
-            {
-                for (int j = 0; j < map.Height; j++)
-                {
-                    tempmapcell = map[i, j];
-                    if (tempmapcell.terrainbase != SpriteSheetTerrain.None)
-                    {
-                        spriteBatch.Draw(CONTENT_MANAGER.spriteSheet, new Vector2(i * mapcellsize.X, j * mapcellsize.Y), SpriteSheetSourceRectangle.GetSpriteRectangle(tempmapcell.terrainbase), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.TerrainBase);
-                    }
-                    if (tempmapcell.terrainLower != SpriteSheetTerrain.None)
-                    {
-                        spriteBatch.Draw(CONTENT_MANAGER.spriteSheet, new Vector2(i * mapcellsize.X, j * mapcellsize.Y), SpriteSheetSourceRectangle.GetSpriteRectangle(tempmapcell.terrainLower), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.TerrainLower);
-                    }
-                    if (tempmapcell.terrainUpper != SpriteSheetTerrain.None)
-                    {
-                        spriteBatch.Draw(CONTENT_MANAGER.spriteSheet, new Vector2(i * mapcellsize.X, j * mapcellsize.Y), SpriteSheetSourceRectangle.GetSpriteRectangle(tempmapcell.terrainUpper), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.TerrainUpper);
-                    }
-                }
-            }
+            
+            MapRenderer.Render(map, spriteBatch, gameTime);
 
-            spriteBatch.Draw(CONTENT_MANAGER.spriteSheet, new Vector2(selectedMapCell.X * mapcellsize.X, selectedMapCell.Y * mapcellsize.Y), SpriteSheetSourceRectangle.GetSpriteRectangle(currentlySelectedTerrain), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.GuiLower);
-            spriteBatch.Draw(CONTENT_MANAGER.UIspriteSheet, new Vector2(selectedMapCell.X * mapcellsize.X, selectedMapCell.Y * mapcellsize.Y), new Rectangle(0, 0, 48, 48), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.GuiUpper);
+            spriteBatch.Draw(CONTENT_MANAGER.spriteSheet, new Vector2(selectedMapCell.X * Constants.MapCellWidth, selectedMapCell.Y * Constants.MapCellHeight), SpriteSheetSourceRectangle.GetSpriteRectangle(currentlySelectedTerrain), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.GuiLower);
+            spriteBatch.Draw(CONTENT_MANAGER.UIspriteSheet, new Vector2(selectedMapCell.X * Constants.MapCellWidth, selectedMapCell.Y * Constants.MapCellHeight), new Rectangle(0, 0, 48, 48), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.GuiUpper);
+
             //end this batch
             spriteBatch.End();
+
             //start a new batch for whatever come after
             spriteBatch.Begin(SpriteSortMode.FrontToBack);
         }

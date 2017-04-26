@@ -9,6 +9,8 @@ using System.IO;
 using System.Reflection;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
+using Wartorn.GameData;
+using Wartorn.Drawing.Animation;
 
 namespace Wartorn
 {
@@ -20,6 +22,11 @@ namespace Wartorn
         public static SpriteFont defaultfont;
         public static Texture2D spriteSheet;
         public static Texture2D UIspriteSheet;
+
+        #region animation sprite sheet
+        public static Dictionary<UnitType, Texture2D> animationSheets;
+        public static List<Animation> animationTypes;
+        #endregion
 
         public static string LocalRootPath = Path.GetDirectoryName(Assembly.GetAssembly(typeof(Program)).Location);
 
