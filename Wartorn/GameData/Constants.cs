@@ -9,43 +9,42 @@ namespace Wartorn.GameData
     enum Terrain
     {
         //terrain
-        Plain,
-        Dessert,
-        Forest,
-        Mountain,
+        Reef,
+        Sea,
         River,
         Coast,
-        Road,
-        Ocean,
-        Reef,
-        Waterfall,
         Cliff,
-        Tropical_Plain,
+        Road,
+        Tree,
+        Mountain,
 
         //neutral
-        Bridge,
-        Ruin,
-        Barricade,
-        Bunker,
-        Turret,
+        MissileSilo,
 
-        //capturable building
+        //building
         City,
         Factory,
         AirPort,
-        Supply_Base,
-        Town,
-        Missle_Silo,
-        Navy_Fort,
-        Control_Point,
-        Radar_Station
+        Harbor,
+        Radar,
+        SupplyBase,
+        Headquarter
     }
 
 
     enum Unit
     {
-        soldier,
-        tank
+        None,
+        Soldier,
+        Mech,
+        Recon,
+        APC,
+        Tank,
+        H_Tank,
+        Artillery,
+        Rocket,
+        Anti_Air,
+        Missile
     }
 
     enum Weather

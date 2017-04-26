@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
+using System.Text;
 
 namespace Wartorn.Drawing.Animation
 {
-    public class AnimatedEntity
+    public class AnimatedEntity : ICloneable
     {
         #region Fields
 
@@ -81,7 +82,7 @@ namespace Wartorn.Drawing.Animation
             flipEffect = SpriteEffects.None;
             tintColor = Color.White;
         }
-        public AnimatedEntity(Vector2 position, float scale, Color tintColor)
+        public AnimatedEntity(Vector2 position, Color? tintColor, float scale = 1)
         {
             //Initialize the Dictionary
             animations = new Dictionary<string, Animation>(24);
@@ -92,12 +93,7 @@ namespace Wartorn.Drawing.Animation
 
             this.position = position;
             this.scale = scale;
-            this.tintColor = tintColor;
-
-            //Make sure the color is set to something otherwise we wont see
-            //the texture drawn
-            if (tintColor == null)
-                tintColor = Color.White;
+            this.tintColor = tintColor ?? Color.White;
 
             //If the scale is less than 0 we wont see the texture drawn
             if (scale <= 0)
@@ -143,7 +139,7 @@ namespace Wartorn.Drawing.Animation
             else
             {
                 // Otherwise we tell are computer to yell at us
-                throw new ApplicationException("Animation Key is already contained in the Dictionary");
+                Utility.HelperFunction.Log(new ApplicationException("Animation Key is already contained in the Dictionary"));
             }
         }
 
@@ -213,7 +209,23 @@ namespace Wartorn.Drawing.Animation
             }
         }
 
+        public object Clone()
+        {
+            return this.MemberwiseClone();
+        }
+
         #endregion
+
+        public override string ToString()
+        {
+            StringBuilder result = new StringBuilder();
+            foreach (string key in animations.Keys)
+            {
+                result.Append(key);
+                result.Append(Environment.NewLine);
+            }
+            return result.ToString();
+        }
     }
 
 

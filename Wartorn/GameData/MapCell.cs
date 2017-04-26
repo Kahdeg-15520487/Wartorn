@@ -16,6 +16,7 @@ namespace Wartorn.GameData
         public SpriteSheetTerrain terrainLower = SpriteSheetTerrain.None;
         public SpriteSheetTerrain terrainUpper = SpriteSheetTerrain.None;
         public SpriteSheetTerrain terrainbase;
+        public Terrain terrain;
         public bool isFog;
         public Unit unit;
         public int unitId;
@@ -32,15 +33,6 @@ namespace Wartorn.GameData
             this.unitId = unitId;
         }
 
-        public MapCell(SpriteSheetTerrain t, Unit u, int unitId, bool isfog)
-        {
-            terrainbase = t;
-            unit = u;
-            this.unitId = unitId;
-            isFog = isfog;
-        }
-
-        [JsonConstructor]
         public MapCell(SpriteSheetTerrain t,SpriteSheetTerrain ot,SpriteSheetTerrain oot, Unit u, int unitId,bool isfog)
         {
             terrainbase = t;
@@ -48,6 +40,15 @@ namespace Wartorn.GameData
             terrainUpper = oot;
             unit = u;
             this.unitId = unitId;
+            isFog = isfog;
+        }
+
+        [JsonConstructor]
+        public MapCell(Terrain t,Unit? u,int? unitid,bool isfog = false)
+        {
+            terrain = t;
+            unit = u ?? Unit.None;
+            unitId = unitid.GetValueOrDefault();
             isFog = isfog;
         }
     }

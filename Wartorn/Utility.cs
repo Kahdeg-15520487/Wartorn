@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.IO;
+using Wartorn.GameData;
 
 namespace Wartorn
 {
@@ -71,6 +72,35 @@ namespace Wartorn
             public static SpriteSheetTerrain Previous(this SpriteSheetTerrain t,int count = 1)
             {
                 return (SpriteSheetTerrain)((int)t - count);
+            }
+
+            public static T Next<T>(this T t, int count = 1)
+            {
+                var type = typeof(T);
+                int result;
+                T box = default(T);
+                count.Clamp(int.MaxValue, 0);
+                switch (type.Name)
+                {
+                    case "SpriteSheetTerrain":
+                        SpriteSheetTerrain unboxSpriteSheetTerrain = (SpriteSheetTerrain)((object)t);
+                        result = (int)unboxSpriteSheetTerrain + count;
+                        box = (T)((object)result);
+                        return box;
+                    case "Unit":
+                        Unit unboxUnit = (Unit)((object)t);
+                        result = (int)unboxUnit + count;
+                        box = (T)((object)result);
+                        break;
+                    case "Terrain":
+                        Terrain unboxTerrain = (Terrain)((object)t);
+                        result = (int)unboxTerrain + count;
+                        box = (T)((object)result);
+                        break;
+                    default:
+                        break;
+                }
+                return box;
             }
 
             public static Point GetNearbyPoint(this Point p, Direction d)

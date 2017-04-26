@@ -38,6 +38,7 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AnimationFrame.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="CONTENT_MANAGER.cs" />
     <Compile Include="Drawing\Animation\AnimatedEntity.cs" />
@@ -66,6 +67,7 @@
     <Compile Include="Screens\EditorScreen.cs" />
     <Compile Include="Screens\MainMenuScreen.cs" />
     <Compile Include="Screens\RedScreen.cs" />
+    <Compile Include="Screens\TestAnimationScreen.cs" />
     <Compile Include="UISpriteSheetSourceRectangle.cs" />
     <Compile Include="SpriteSheetSourceRectangle.cs" />
     <Compile Include="Storage\MapData.cs" />

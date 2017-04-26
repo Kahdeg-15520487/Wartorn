@@ -45,13 +45,6 @@ namespace Wartorn
             graphics.PreferredBackBufferHeight = Constants.Height;  // set this value to the desired height of your window
             graphics.ApplyChanges();
 
-            SCREEN_MANAGER.add_screen(new EditorScreen(GraphicsDevice));
-            SCREEN_MANAGER.add_screen(new MainMenuScreen(GraphicsDevice));
-            
-
-            SCREEN_MANAGER.goto_screen("MainMenuScreen");
-            //SCREEN_MANAGER.goto_screen("EditorScreen");
-
             DrawingHelper.Initialize(GraphicsDevice);
 
             base.Initialize();
@@ -73,99 +66,23 @@ namespace Wartorn
 
             CONTENT_MANAGER.UIspriteSheet = CONTENT_MANAGER.Content.Load<Texture2D>(@"sprite\ui_sprite_sheet");
 
-            SCREEN_MANAGER.Init();
-            //InitializeUI();
+            InitScreen();
         }
-        #region Init UI example
-        /*
-        void InitializeUI()
+
+        private void InitScreen()
         {
-            Label label1 = new Label()
-            {
-                Text = "1",
-                Position = new Point(50,50),
-                Size = new Vector2(100,50),
-                font = defaultFont,
-                foregroundColor = Color.Black,
-                Scale = 2
-            };
+            SCREEN_MANAGER.add_screen(new EditorScreen(GraphicsDevice));
+            SCREEN_MANAGER.add_screen(new MainMenuScreen(GraphicsDevice));
+            SCREEN_MANAGER.add_screen(new TestAnimationScreen(GraphicsDevice));
 
-            Label label2 = new Label()
-            {
-                Text = "",
-                Position = new Point(10, 400),
-                Size = new Vector2(100, 30),
-                font = defaultFont,
-                foregroundColor = Color.White
-            };
 
-            Label label3 = new Label()
-            {
-                Text = string.Empty,
-                Position = new Point(10, 440),
-                Size = new Vector2(100, 30),
-                font = defaultFont,
-                foregroundColor = Color.White
-            };
+            SCREEN_MANAGER.goto_screen("TestAnimationScreen");
+            //SCREEN_MANAGER.goto_screen("MainMenuScreen");
+            //SCREEN_MANAGER.goto_screen("EditorScreen");
 
-            Label labelTime = new Label()
-            {
-                Text = string.Empty,
-                Position = new Point(5,5),
-                Size = new Vector2(100, 30),
-                font = defaultFont,
-                foregroundColor = Color.White
-            };
-
-            label1.MouseEnter += delegate (object sender, UIEventArgs e)
-            {
-                label3.Text = "enter";
-            };
-            label1.MouseLeave += delegate (object sender, UIEventArgs e)
-            {
-                label3.Text = "leave";
-            };
-
-            Button button1 = new Button()
-            {
-                Text = "test",
-                Position = new Point(200, 200),
-                Size = new Vector2(50, 50),
-                font = defaultFont,
-                backgroundColor = Color.White,
-                foregroundColor = Color.Black,
-                ButtonColorPressed = Color.LightSlateGray,
-                ButtonColorReleased = Color.LightGray
-            };
-
-            button1.MouseUp += delegate (object sender, UIEventArgs e)
-            {
-                int temp;
-                if (int.TryParse(label1.Text,out temp))
-                {
-                    label1.Text = (temp + 1).ToString();
-                }
-            };
-
-            InputBox inputbox1 = new InputBox()
-            {
-                Text = "test",
-                Position = new Point(300, 200),
-                Size = new Vector2(50, 50),
-                font = defaultFont,
-                backgroundColor = Color.White,
-                foregroundColor = Color.White
-            };
-
-            canvas.AddElement("label1", label1);
-            canvas.AddElement("label2", label2);
-            canvas.AddElement("label3", label3);
-            canvas.AddElement("button1", button1);
-            canvas.AddElement("labelTime", labelTime);
-            canvas.AddElement("inputbox1", inputbox1);
+            SCREEN_MANAGER.Init();
         }
-        */
-        #endregion
+
         /// <summary>
         /// UnloadContent will be called once per game and is the place to unload
         /// game-specific content.
