@@ -20,6 +20,7 @@ namespace Wartorn
         public static ContentManager Content;
         public static SpriteBatch spriteBatch;
         public static SpriteFont defaultfont;
+        public static SpriteFont arcadefont;
         public static Texture2D spriteSheet;
         public static Texture2D UIspriteSheet;
 

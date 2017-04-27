@@ -108,85 +108,50 @@ namespace Wartorn.Screens
             //terrain selection menu
             Canvas canvas_terrain_selection = new Canvas();
 
-            Dictionary<SpriteSheetTerrain, Button> terrainSelectionButton = new Dictionary<SpriteSheetTerrain, Button>();
+            Button button_changeTerrainTheme = new Button("Normal", new Point(10, 50), new Vector2(80, 20), CONTENT_MANAGER.arcadefont);
+            button_changeTerrainTheme.backgroundColor = Color.White;
+            button_changeTerrainTheme.foregroundColor = Color.Black;
+            Button button_changeWeather = new Button("Sunny", new Point(100, 50), new Vector2(80, 20), CONTENT_MANAGER.arcadefont);
+            button_changeWeather.backgroundColor = Color.White;
+            button_changeWeather.foregroundColor = Color.Black;
 
-            Button button_changeWaterTheme = new Button("Normal", new Point(10, 50), new Vector2(80, 20), CONTENT_MANAGER.defaultfont);
-            button_changeWaterTheme.backgroundColor = Color.White;
-            button_changeWaterTheme.foregroundColor = Color.Black;
-            Button button_changeWaterWeather = new Button("Sunny", new Point(100, 50), new Vector2(80, 20), CONTENT_MANAGER.defaultfont);
-            button_changeWaterWeather.backgroundColor = Color.White;
-            button_changeWaterWeather.foregroundColor = Color.Black;
+            Button button_bridge = new Button(SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Bridge_hor), new Point(10, 80), 0.75f, false);
+            Button button_road = new Button(SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Road_hor), new Point(50, 80), 0.75f, false);
+            Button button_reef = new Button(SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Reef), new Point(90, 80), 0.75f, false);
+            Button button_shoal = new Button(SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Coast_up), new Point(130, 80), 0.75f, false);
+            Button button_river = new Button(SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.River_hor), new Point(170, 80), 0.75f, false);
+            Button button_wood = new Button(SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Tree), new Point(210, 80), 0.75f, false);
+            Button button_mountain = new Button(SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Mountain_Low), new Point(250, 80), 0.75f, false);
+            Button button_sea = new Button(SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Sea), new Point(290, 80), 0.75f, false);
 
-            Button button_changeRoadTreeMountainTheme = new Button("Normal", new Point(10, 160), new Vector2(80, 20), CONTENT_MANAGER.defaultfont);
-            button_changeRoadTreeMountainTheme.backgroundColor = Color.White;
-            button_changeRoadTreeMountainTheme.foregroundColor = Color.Black;
-
-            int col = 0;
-            int row = 0;
-
-            //water selection
-            for (SpriteSheetTerrain i = SpriteSheetTerrain.Reef; i.CompareWith(SpriteSheetTerrain.Invert_Coast_right_down) <= 0; i = i.Next())
+            //bind event
+            button_changeTerrainTheme.MouseClick += (sender, e) =>
             {
-                Button temp = new Button(SpriteSheetSourceRectangle.GetSpriteRectangle(i), new Point(col * 26 + 10, row * 26 + 80), 0.5f, false);
-                temp.Text = i.ToString();
-                temp.MouseClick += (sender, e) =>
+                switch (button_changeTerrainTheme.Text)
                 {
-                    currentlySelectedTerrain = temp.Text.ToEnum<SpriteSheetTerrain>();
-                };
-                terrainSelectionButton.Add(i, temp);
-                col++;
-                if (col == 27)
-                {
-                    col = 0;
-                    row++;
-                }
-            }
-            button_changeWaterTheme.MouseClick += (sender, e) =>
-            {
-                //current terrain is reef then next = 61 -> next terrain is rain_reef
-                //current terrain is desert_reef then next = 0 -> next terrain is reef
-                int next = 0;
-                switch (terrainSelectionButton[SpriteSheetTerrain.Reef].Text.ToEnum<SpriteSheetTerrain>())
-                {
-                    case SpriteSheetTerrain.Reef:
-                        //next = 61;
-                        //button_changeWaterTheme.Text = "Rain";
+                    case "Normal":
                         break;
-                    case SpriteSheetTerrain.Rain_Reef:
-                        //button_changeWaterTheme.Text = "Snow";
-                        //next = 122;
+                    case "Tropical":
                         break;
-                    case SpriteSheetTerrain.Snow_Reef:
-                        button_changeWaterTheme.Text = "Desert";
-                        next = 183;
-                        break;
-                    case SpriteSheetTerrain.Desert_Reef:
-                        button_changeWaterTheme.Text = "Normal";
-                        next = 0;
+                    case "Desert":
                         break;
                     default:
                         break;
                 }
-                for (SpriteSheetTerrain i = SpriteSheetTerrain.Reef; i.CompareWith(SpriteSheetTerrain.Invert_Coast_right_down) <= 0; i = i.Next())
-                {
-                    terrainSelectionButton[i].spriteSourceRectangle = SpriteSheetSourceRectangle.GetSpriteRectangle(i.Next(next));
-                    terrainSelectionButton[i].Text = i.Next(next).ToString();
-                }
             };
 
-            //road,tree,mountain selection
+            canvas_terrain_selection.AddElement("button_changeTerrainTheme", button_changeTerrainTheme);
+            canvas_terrain_selection.AddElement("button_changeWeather", button_changeWeather);
+            canvas_terrain_selection.AddElement("button_bridge", button_bridge);
+            canvas_terrain_selection.AddElement("button_road", button_road);
+            canvas_terrain_selection.AddElement("button_reef", button_reef);
+            canvas_terrain_selection.AddElement("button_shoal", button_shoal);
+            canvas_terrain_selection.AddElement("button_river", button_river);
+            canvas_terrain_selection.AddElement("button_wood", button_wood);
+            canvas_terrain_selection.AddElement("button_mountain", button_mountain);
+            canvas_terrain_selection.AddElement("button_sea", button_sea);
 
-
-
-            canvas_terrain_selection.AddElement("button_changeWaterTheme", button_changeWaterTheme);
-            canvas_terrain_selection.AddElement("button_changeWaterWeather", button_changeWaterWeather);
-            canvas_terrain_selection.AddElement("button_changeRoadTreeMountainTheme", button_changeRoadTreeMountainTheme);
-            foreach (var item in terrainSelectionButton)
-            {
-                canvas_terrain_selection.AddElement(item.Key.ToString(), item.Value);
-            }
-
-
+            //side menu
             Label label1 = new Label("Hor" + Environment.NewLine + "Ver", new Point(0, 0), new Vector2(30, 20), CONTENT_MANAGER.defaultfont);
             label1.Scale = 1.2f;
             Label label_Horizontal = new Label("1", new Point(40, 0), new Vector2(20, 20), CONTENT_MANAGER.defaultfont);

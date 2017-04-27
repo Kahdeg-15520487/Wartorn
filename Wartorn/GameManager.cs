@@ -85,6 +85,7 @@ namespace Wartorn
 
             // TODO: use this.Content to load your game content here
             CONTENT_MANAGER.defaultfont = CONTENT_MANAGER.Content.Load<SpriteFont>("defaultfont");
+            CONTENT_MANAGER.arcadefont = CONTENT_MANAGER.Content.Load<SpriteFont>(@"sprite\GUI\menufont");
             CONTENT_MANAGER.spriteSheet = CONTENT_MANAGER.Content.Load<Texture2D>(@"sprite\terrain");
 
             CONTENT_MANAGER.UIspriteSheet = CONTENT_MANAGER.Content.Load<Texture2D>(@"sprite\ui_sprite_sheet");
