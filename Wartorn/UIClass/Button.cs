@@ -49,6 +49,21 @@ namespace Wartorn
                 }
             }
 
+            /// <summary>
+            /// Offset of the text inside the button
+            /// </summary>
+            public Vector2 Origin
+            {
+                get
+                {
+                    return origin;
+                }
+                set
+                {
+                    origin = value;
+                }
+            }
+
             Color buttonColorPressed = Color.LightSlateGray;
             Color buttonColorReleased = Color.LightGray;
             public Color ButtonColorPressed
@@ -169,7 +184,7 @@ namespace Wartorn
                 switch (contentType)
                 {
                     case ButtonContentType.Text:
-                        spriteBatch.DrawString(font != null ? font : CONTENT_MANAGER.defaultfont, (string.IsNullOrEmpty(text)) ? "" : text, new Vector2(rect.X, rect.Y) + Size / 4, foregroundColor, Rotation, Vector2.Zero, scale, SpriteEffects.None, LayerDepth.GuiUpper);
+                        spriteBatch.DrawString(font != null ? font : CONTENT_MANAGER.defaultfont, (string.IsNullOrEmpty(text)) ? "" : text, new Vector2(rect.X, rect.Y) + Size / 4, foregroundColor, Rotation, origin, scale, SpriteEffects.None, LayerDepth.GuiUpper);
                         DrawingHelper.DrawRectangle(internalRect, isPressed ? buttonColorPressed : buttonColorReleased, true);
                         DrawingHelper.DrawRectangle(rect, borderColor, false);
                         break;

@@ -109,36 +109,88 @@ namespace Wartorn.Screens
             Canvas canvas_terrain_selection = new Canvas();
 
             Button button_changeTerrainTheme = new Button("Normal", new Point(10, 50), new Vector2(80, 20), CONTENT_MANAGER.arcadefont);
+            button_changeTerrainTheme.Origin = new Vector2(10,0);
             button_changeTerrainTheme.backgroundColor = Color.White;
             button_changeTerrainTheme.foregroundColor = Color.Black;
             Button button_changeWeather = new Button("Sunny", new Point(100, 50), new Vector2(80, 20), CONTENT_MANAGER.arcadefont);
             button_changeWeather.backgroundColor = Color.White;
             button_changeWeather.foregroundColor = Color.Black;
 
+            List<Button> tempbuttonlist = new List<Button>();
+
             Button button_bridge = new Button(SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Bridge_hor), new Point(10, 80), 0.75f, false);
             Button button_road = new Button(SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Road_hor), new Point(50, 80), 0.75f, false);
-            Button button_reef = new Button(SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Reef), new Point(90, 80), 0.75f, false);
-            Button button_shoal = new Button(SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Coast_up), new Point(130, 80), 0.75f, false);
-            Button button_river = new Button(SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.River_hor), new Point(170, 80), 0.75f, false);
-            Button button_wood = new Button(SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Tree), new Point(210, 80), 0.75f, false);
-            Button button_mountain = new Button(SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Mountain_Low), new Point(250, 80), 0.75f, false);
-            Button button_sea = new Button(SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Sea), new Point(290, 80), 0.75f, false);
+            Button button_wood = new Button(SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Tree), new Point(90, 80), 0.75f, false);
+            Button button_mountain = new Button(SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Mountain_Low), new Point(130, 80), 0.75f, false);
+            Button button_plain = new Button(SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Plain), new Point(170, 80), 0.75f, false);
+
+            Button button_reef = new Button(SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Reef), new Point(210, 80), 0.75f, false);
+            Button button_shoal = new Button(SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Coast_up), new Point(250, 80), 0.75f, false);
+            Button button_river = new Button(SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.River_hor), new Point(290, 80), 0.75f, false);            
+            Button button_sea = new Button(SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Sea), new Point(330, 80), 0.75f, false);
+
+            tempbuttonlist.Add(button_bridge);
+            tempbuttonlist.Add(button_road);
+            tempbuttonlist.Add(button_wood);
+            tempbuttonlist.Add(button_mountain);
+            tempbuttonlist.Add(button_plain);
+            tempbuttonlist.Add(button_reef);
+            tempbuttonlist.Add(button_shoal);
+            tempbuttonlist.Add(button_river);
+            tempbuttonlist.Add(button_sea);
 
             //bind event
             button_changeTerrainTheme.MouseClick += (sender, e) =>
             {
+                //normal -> tropical -> desert -> normal ...
                 switch (button_changeTerrainTheme.Text)
                 {
                     case "Normal":
+                        button_changeTerrainTheme.Text = "Tropical";
+                        button_bridge.spriteSourceRectangle = SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Tropical_Bridge_hor);
+                        button_road.spriteSourceRectangle = SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Tropical_Road_hor);
+                        button_wood.spriteSourceRectangle = SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Tropical_Tree);
+                        button_mountain.spriteSourceRectangle = SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Tropical_Mountain_Low);
+                        button_plain.spriteSourceRectangle = SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Tropical_Plain);
                         break;
                     case "Tropical":
+                        button_changeTerrainTheme.Text = "Desert";
+                        button_bridge.spriteSourceRectangle = SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Desert_Bridge_hor);
+                        button_road.spriteSourceRectangle = SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Desert_Road_hor);
+                        button_wood.spriteSourceRectangle = SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Desert_Tree);
+                        button_mountain.spriteSourceRectangle = SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Desert_Mountain_High_Lower);
+                        button_plain.spriteSourceRectangle = SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Desert_Plain);
+
+                        button_reef.spriteSourceRectangle = SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Desert_Reef);
+                        button_shoal.spriteSourceRectangle = SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Desert_Coast_up);
+                        button_river.spriteSourceRectangle = SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Desert_River_hor);
+                        button_sea.spriteSourceRectangle = SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Desert_Sea);
                         break;
                     case "Desert":
+                        button_changeTerrainTheme.Text = "Normal";
+                        button_bridge.spriteSourceRectangle = SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Bridge_hor);
+                        button_road.spriteSourceRectangle = SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Road_hor);
+                        button_wood.spriteSourceRectangle = SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Tree);
+                        button_mountain.spriteSourceRectangle = SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Mountain_Low);
+                        button_plain.spriteSourceRectangle = SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Plain);
+
+                        button_reef.spriteSourceRectangle = SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Reef);
+                        button_shoal.spriteSourceRectangle = SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Coast_up);
+                        button_river.spriteSourceRectangle = SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.River_hor);
+                        button_sea.spriteSourceRectangle = SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Sea);
                         break;
                     default:
                         break;
                 }
             };
+
+            for (int i = 0; i < tempbuttonlist.Count-1; i++)
+            {
+                tempbuttonlist[i].MouseClick += (sender, e) =>
+                {
+                    currentlySelectedTerrain = SpriteSheetSourceRectangle.GetTerrain(tempbuttonlist[i].spriteSourceRectangle);
+                };
+            }
 
             canvas_terrain_selection.AddElement("button_changeTerrainTheme", button_changeTerrainTheme);
             canvas_terrain_selection.AddElement("button_changeWeather", button_changeWeather);
@@ -150,6 +202,7 @@ namespace Wartorn.Screens
             canvas_terrain_selection.AddElement("button_wood", button_wood);
             canvas_terrain_selection.AddElement("button_mountain", button_mountain);
             canvas_terrain_selection.AddElement("button_sea", button_sea);
+            canvas_terrain_selection.AddElement("button_plain", button_plain);
 
             //side menu
             Label label1 = new Label("Hor" + Environment.NewLine + "Ver", new Point(0, 0), new Vector2(30, 20), CONTENT_MANAGER.defaultfont);
