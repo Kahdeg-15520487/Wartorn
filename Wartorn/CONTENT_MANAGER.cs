@@ -25,6 +25,7 @@ namespace Wartorn
         public static Texture2D UIspriteSheet;
 
         #region animation sprite sheet
+        public static Dictionary<UnitType, AnimatedEntity> animationEntities;
         public static Dictionary<UnitType, Texture2D> animationSheets;
         public static List<Animation> animationTypes;
         #endregion

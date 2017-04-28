@@ -22,7 +22,7 @@ using Newtonsoft.Json.Linq;
 
 namespace Wartorn.GameData
 {
-    class Unit
+    public class Unit
     {
         #region static stuff
         static Dictionary<UnitPair, int> _DammageTable;
@@ -76,6 +76,7 @@ namespace Wartorn.GameData
         #endregion
     }
 
+    
     public class UnitPair
     {
         public UnitType Attacker { get; set; }
@@ -87,6 +88,15 @@ namespace Wartorn.GameData
         }
     }
 
+    public static class UnitCreationHelper
+    {
+        public static Unit Create(UnitType unittype)
+        {
+            return new Unit(unittype, (AnimatedEntity)CONTENT_MANAGER.animationEntities[unittype].Clone());
+        }
+    }
+
+    #region JsonConverter class
     public class UnitPairJsonConverter : JsonConverter
     {
         public override bool CanConvert(Type objectType)
@@ -148,4 +158,5 @@ namespace Wartorn.GameData
             writer.WriteEndObject();
         }
     }
+    #endregion
 }

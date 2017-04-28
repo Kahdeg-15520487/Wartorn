@@ -69,6 +69,7 @@
     <Compile Include="Screens\MainMenuScreen.cs" />
     <Compile Include="Screens\RedScreen.cs" />
     <Compile Include="Screens\TestAnimationScreen.cs" />
+    <Compile Include="Screens\UnitMoveProtypeScreen.cs" />
     <Compile Include="UISpriteSheetSourceRectangle.cs" />
     <Compile Include="SpriteSheetSourceRectangle.cs" />
     <Compile Include="Storage\MapData.cs" />

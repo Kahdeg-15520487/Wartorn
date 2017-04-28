@@ -15,6 +15,7 @@ namespace Wartorn.GameData
         Coast,
         Cliff,
         Road,
+        Plain,
         Tree,
         Mountain,
 
@@ -30,6 +31,7 @@ namespace Wartorn.GameData
         SupplyBase,
         Headquarter
     }
+
 
 
     public enum UnitType

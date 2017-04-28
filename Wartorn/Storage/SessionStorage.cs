@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Wartorn.Storage
 {
-    class SessionData
+    class SessionStorage
     {
     }
 }

@@ -11,6 +11,7 @@ using Wartorn.ScreenManager;
 using Wartorn.Drawing.Animation;
 using Wartorn.Utility;
 using Wartorn.GameData;
+using Wartorn;
 
 namespace Wartorn.Screens
 {

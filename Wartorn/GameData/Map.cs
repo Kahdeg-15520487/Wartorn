@@ -18,6 +18,9 @@ namespace Wartorn.GameData
         [JsonProperty]
         MapCell[,] map;
 
+        private bool isProcessed = false;
+        public bool IsProcessed { get { return isProcessed; } }
+
         public int Width { get { return map.GetLength(0); } }
         public int Height { get { return map.GetLength(1); } }
 
@@ -47,6 +50,14 @@ namespace Wartorn.GameData
         public IEnumerator GetEnumerator()
         {
             return map.GetEnumerator();
+        }
+
+        public void Fill(TerrainType terrain)
+        {
+            foreach (var mapcell in map)
+            {
+                mapcell.terrain = terrain;
+            }
         }
     }
 }

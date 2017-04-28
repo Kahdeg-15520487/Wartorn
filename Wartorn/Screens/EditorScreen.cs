@@ -147,6 +147,7 @@ namespace Wartorn.Screens
                 {
                     case "Normal":
                         button_changeTerrainTheme.Text = "Tropical";
+                        button_changeWeather.Text = "Sunny";
                         button_bridge.spriteSourceRectangle = SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Tropical_Bridge_hor);
                         button_road.spriteSourceRectangle = SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Tropical_Road_hor);
                         button_wood.spriteSourceRectangle = SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Tropical_Tree);
@@ -155,6 +156,7 @@ namespace Wartorn.Screens
                         break;
                     case "Tropical":
                         button_changeTerrainTheme.Text = "Desert";
+                        button_changeWeather.Text = "Sunny";
                         button_bridge.spriteSourceRectangle = SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Desert_Bridge_hor);
                         button_road.spriteSourceRectangle = SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Desert_Road_hor);
                         button_wood.spriteSourceRectangle = SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Desert_Tree);
@@ -167,6 +169,59 @@ namespace Wartorn.Screens
                         button_sea.spriteSourceRectangle = SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Desert_Sea);
                         break;
                     case "Desert":
+                        button_changeTerrainTheme.Text = "Normal";
+                        button_changeWeather.Text = "Sunny";
+                        button_bridge.spriteSourceRectangle = SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Bridge_hor);
+                        button_road.spriteSourceRectangle = SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Road_hor);
+                        button_wood.spriteSourceRectangle = SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Tree);
+                        button_mountain.spriteSourceRectangle = SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Mountain_Low);
+                        button_plain.spriteSourceRectangle = SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Plain);
+
+                        button_reef.spriteSourceRectangle = SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Reef);
+                        button_shoal.spriteSourceRectangle = SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Coast_up);
+                        button_river.spriteSourceRectangle = SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.River_hor);
+                        button_sea.spriteSourceRectangle = SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Sea);
+                        break;
+                    default:
+                        break;
+                }
+            };
+
+            button_changeWeather.MouseClick += (sender, e) =>
+            {
+                //Sunny -> rain -> snow
+                switch (button_changeWeather.Text)
+                {
+                    case "Sunny":
+                        button_changeWeather.Text = "Rain";
+                        button_changeTerrainTheme.Text = "Normal";
+                        button_bridge.spriteSourceRectangle = SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Rain_Bridge_hor);
+                        button_road.spriteSourceRectangle = SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Rain_Road_hor);
+                        button_wood.spriteSourceRectangle = SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Rain_Tree);
+                        button_mountain.spriteSourceRectangle = SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Rain_Mountain_Low);
+                        button_plain.spriteSourceRectangle = SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Rain_Plain);
+
+                        button_reef.spriteSourceRectangle = SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Rain_Reef);
+                        button_shoal.spriteSourceRectangle = SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Rain_Coast_up);
+                        button_river.spriteSourceRectangle = SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Rain_River_hor);
+                        button_sea.spriteSourceRectangle = SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Rain_Sea);
+                        break;
+                    case "Rain":
+                        button_changeWeather.Text = "Snow";
+                        button_changeTerrainTheme.Text = "Normal";
+                        button_bridge.spriteSourceRectangle = SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Snow_Bridge_hor);
+                        button_road.spriteSourceRectangle = SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Snow_Road_hor);
+                        button_wood.spriteSourceRectangle = SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Snow_Tree);
+                        button_mountain.spriteSourceRectangle = SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Snow_Mountain_Low);
+                        button_plain.spriteSourceRectangle = SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Snow_Plain);
+
+                        button_reef.spriteSourceRectangle = SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Snow_Reef);
+                        button_shoal.spriteSourceRectangle = SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Snow_Coast_up);
+                        button_river.spriteSourceRectangle = SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Snow_River_hor);
+                        button_sea.spriteSourceRectangle = SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Snow_Sea);
+                        break;
+                    case "Snow":
+                        button_changeWeather.Text = "Sunny";
                         button_changeTerrainTheme.Text = "Normal";
                         button_bridge.spriteSourceRectangle = SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Bridge_hor);
                         button_road.spriteSourceRectangle = SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Road_hor);
@@ -184,11 +239,11 @@ namespace Wartorn.Screens
                 }
             };
 
-            for (int i = 0; i < tempbuttonlist.Count-1; i++)
+            foreach (var button in tempbuttonlist)
             {
-                tempbuttonlist[i].MouseClick += (sender, e) =>
+                button.MouseClick += (sender, e) =>
                 {
-                    currentlySelectedTerrain = SpriteSheetSourceRectangle.GetTerrain(tempbuttonlist[i].spriteSourceRectangle);
+                    currentlySelectedTerrain = SpriteSheetSourceRectangle.GetTerrain(button.spriteSourceRectangle);
                 };
             }
 
@@ -483,7 +538,7 @@ namespace Wartorn.Screens
                     break;
                 case SpriteSheetTerrain.Coast_down:
                     break;
-                case SpriteSheetTerrain.Coast_d_right:
+                case SpriteSheetTerrain.Coast_down_right:
                     break;
                 case SpriteSheetTerrain.Cliff_up_left:
                     break;
@@ -605,7 +660,7 @@ namespace Wartorn.Screens
                     break;
                 case SpriteSheetTerrain.Rain_Coast_down:
                     break;
-                case SpriteSheetTerrain.Rain_Coast_d_right:
+                case SpriteSheetTerrain.Rain_Coast_down_right:
                     break;
                 case SpriteSheetTerrain.Rain_Cliff_up_left:
                     break;
@@ -727,7 +782,7 @@ namespace Wartorn.Screens
                     break;
                 case SpriteSheetTerrain.Snow_Coast_down:
                     break;
-                case SpriteSheetTerrain.Snow_Coast_d_right:
+                case SpriteSheetTerrain.Snow_Coast_down_right:
                     break;
                 case SpriteSheetTerrain.Snow_Cliff_up_left:
                     break;
@@ -849,7 +904,7 @@ namespace Wartorn.Screens
                     break;
                 case SpriteSheetTerrain.Desert_Coast_down:
                     break;
-                case SpriteSheetTerrain.Desert_Coast_d_right:
+                case SpriteSheetTerrain.Desert_Coast_down_right:
                     break;
                 case SpriteSheetTerrain.Desert_Cliff_up_left:
                     break;
@@ -1453,8 +1508,8 @@ namespace Wartorn.Screens
             DrawMap(CONTENT_MANAGER.spriteBatch,gameTime);
             canvas.Draw(CONTENT_MANAGER.spriteBatch);
             CONTENT_MANAGER.spriteBatch.Draw(showtile, GuiSide == Side.Left ? new Vector2(0, 350) : new Vector2(630, 350), null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.GuiLower);
-            CONTENT_MANAGER.spriteBatch.DrawString(CONTENT_MANAGER.defaultfont, map[selectedMapCell].terrainbase.ToString(), GuiSide == Side.Left ? new Vector2(0, 360) : new Vector2(650, 360), Color.Black, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.GuiUpper);
-            CONTENT_MANAGER.spriteBatch.DrawString(CONTENT_MANAGER.defaultfont, currentlySelectedTerrain.ToString(), GuiSide == Side.Left ? new Vector2(0, 430) : new Vector2(650, 430), Color.Black, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.GuiUpper);
+            CONTENT_MANAGER.spriteBatch.DrawString(CONTENT_MANAGER.defaultfont, map[selectedMapCell].terrainbase.ToTerrainType().ToString(), GuiSide == Side.Left ? new Vector2(0, 360) : new Vector2(650, 360), Color.Black, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.GuiUpper);
+            CONTENT_MANAGER.spriteBatch.DrawString(CONTENT_MANAGER.defaultfont, currentlySelectedTerrain.ToTerrainType().ToString(), GuiSide == Side.Left ? new Vector2(0, 430) : new Vector2(650, 430), Color.Black, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.GuiUpper);
             CONTENT_MANAGER.spriteBatch.Draw(CONTENT_MANAGER.spriteSheet, GuiSide == Side.Left ? new Vector2(10, 380) : new Vector2(660, 380), SpriteSheetSourceRectangle.GetSpriteRectangle(map[selectedMapCell].terrainbase), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.GuiUpper);
         }
 

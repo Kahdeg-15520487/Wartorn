@@ -46,5 +46,10 @@ namespace Wartorn.Drawing
                 }
             }
         }
+
+        public static void Process(Map map)
+        {
+
+        }
     }
 }

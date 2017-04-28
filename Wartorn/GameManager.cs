@@ -96,6 +96,7 @@ namespace Wartorn
 
         private void LoadAnimationContent()
         {
+            CONTENT_MANAGER.animationEntities = new Dictionary<UnitType, AnimatedEntity>();
             CONTENT_MANAGER.animationSheets = new Dictionary<UnitType, Texture2D>();
             CONTENT_MANAGER.animationTypes = new List<Animation>();
 
@@ -142,6 +143,15 @@ namespace Wartorn
             CONTENT_MANAGER.animationTypes.Add(up);
             CONTENT_MANAGER.animationTypes.Add(down);
             CONTENT_MANAGER.animationTypes.Add(done);
+
+            foreach (var unittype in UnitTypes)
+            {
+                AnimatedEntity temp = new AnimatedEntity(Vector2.Zero, Color.White, LayerDepth.Unit);
+                temp.LoadContent(CONTENT_MANAGER.animationSheets[unittype]);
+                temp.AddAnimation(CONTENT_MANAGER.animationTypes);
+                temp.PlayAnimation("idle");
+                CONTENT_MANAGER.animationEntities.Add(unittype, temp);
+            }
         }
 
         private void InitScreen()
