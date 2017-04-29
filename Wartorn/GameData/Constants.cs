@@ -21,6 +21,7 @@ namespace Wartorn.GameData
 
         //neutral
         MissileSilo,
+        MissileSiloLaunched,
 
         //building
         City,
@@ -51,10 +52,25 @@ namespace Wartorn.GameData
 
     public enum Weather
     {
-        normal,
-        rain,
-        snow,
-        sandstorm
+        Sunny,
+        Rain,
+        Snow
+    }
+
+    public enum Theme
+    {
+        Normal,
+        Tropical,
+        Desert
+    }
+
+    public enum Owner
+    {
+        None,
+        Red,
+        Blue,
+        Green,
+        Yellow
     }
 
     public enum GameMode

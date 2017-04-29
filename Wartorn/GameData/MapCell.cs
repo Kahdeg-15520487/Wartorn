@@ -20,6 +20,7 @@ namespace Wartorn.GameData
         public bool isFog;
         public Unit unit;
         public int unitId;
+        public Owner owner = Owner.None;
 
         public MapCell(SpriteSheetTerrain t)
         {

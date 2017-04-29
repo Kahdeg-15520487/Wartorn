@@ -69,13 +69,31 @@ namespace Wartorn.Storage
         {
             StringBuilder output = new StringBuilder();
 
-            output.Append(JsonConvert.SerializeObject(VersionNumber.MajorVersion));
+            output.Append(JsonConvert.SerializeObject(VersionNumber.MajorVersion, Formatting.Indented));
             output.Append('|');
-            output.Append(JsonConvert.SerializeObject(VersionNumber.MinorVersion));
+            output.Append(JsonConvert.SerializeObject(VersionNumber.MinorVersion, Formatting.Indented));
             output.Append('|');
-            output.Append(JsonConvert.SerializeObject(map));
+            output.Append(JsonConvert.SerializeObject(map,Formatting.Indented));
 
             return output.ToString();
+        }
+    }
+
+    public class MapJsonConverter : JsonConverter
+    {
+        public override bool CanConvert(Type objectType)
+        {
+            return objectType == typeof(Map);
+        }
+
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        {
+            throw new NotImplementedException();
         }
     }
 }

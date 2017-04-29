@@ -74,7 +74,7 @@
     <Compile Include="SpriteSheetSourceRectangle.cs" />
     <Compile Include="Storage\MapData.cs" />
     <Compile Include="Storage\NoiseGenerator.cs" />
-    <Compile Include="Storage\SessionData.cs" />
+    <Compile Include="Storage\SessionStorage.cs" />
     <Compile Include="UIClass\Button.cs" />
     <Compile Include="UIClass\Console.cs" />
     <Compile Include="UIClass\InputBox.cs" />

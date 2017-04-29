@@ -98,10 +98,10 @@ namespace Wartorn
                     case SpriteSheetTerrain.River_Inter3_up:
                     case SpriteSheetTerrain.River_Inter3_down:
                     case SpriteSheetTerrain.River_Cross:
-                    case SpriteSheetTerrain.River_Turn_up_right:
-                    case SpriteSheetTerrain.River_Turn_up_left:
-                    case SpriteSheetTerrain.River_Turn_down_right:
-                    case SpriteSheetTerrain.River_Turn_down_left:
+                    case SpriteSheetTerrain.River_turn_up_right:
+                    case SpriteSheetTerrain.River_turn_up_left:
+                    case SpriteSheetTerrain.River_turn_down_right:
+                    case SpriteSheetTerrain.River_turn_down_left:
                     case SpriteSheetTerrain.River_Flow_left:
                     case SpriteSheetTerrain.River_Flow_up:
                     case SpriteSheetTerrain.River_Flow_down:
@@ -114,10 +114,10 @@ namespace Wartorn
                     case SpriteSheetTerrain.Rain_River_Inter3_up:
                     case SpriteSheetTerrain.Rain_River_Inter3_down:
                     case SpriteSheetTerrain.Rain_River_Cross:
-                    case SpriteSheetTerrain.Rain_River_Turn_up_right:
-                    case SpriteSheetTerrain.Rain_River_Turn_up_left:
-                    case SpriteSheetTerrain.Rain_River_Turn_down_right:
-                    case SpriteSheetTerrain.Rain_River_Turn_down_left:
+                    case SpriteSheetTerrain.Rain_River_turn_up_right:
+                    case SpriteSheetTerrain.Rain_River_turn_up_left:
+                    case SpriteSheetTerrain.Rain_River_turn_down_right:
+                    case SpriteSheetTerrain.Rain_River_turn_down_left:
                     case SpriteSheetTerrain.Rain_River_Flow_left:
                     case SpriteSheetTerrain.Rain_River_Flow_up:
                     case SpriteSheetTerrain.Rain_River_Flow_down:
@@ -130,10 +130,10 @@ namespace Wartorn
                     case SpriteSheetTerrain.Snow_River_Inter3_up:
                     case SpriteSheetTerrain.Snow_River_Inter3_down:
                     case SpriteSheetTerrain.Snow_River_Cross:
-                    case SpriteSheetTerrain.Snow_River_Turn_up_right:
-                    case SpriteSheetTerrain.Snow_River_Turn_up_left:
-                    case SpriteSheetTerrain.Snow_River_Turn_down_right:
-                    case SpriteSheetTerrain.Snow_River_Turn_down_left:
+                    case SpriteSheetTerrain.Snow_River_turn_up_right:
+                    case SpriteSheetTerrain.Snow_River_turn_up_left:
+                    case SpriteSheetTerrain.Snow_River_turn_down_right:
+                    case SpriteSheetTerrain.Snow_River_turn_down_left:
                     case SpriteSheetTerrain.Snow_River_Flow_left:
                     case SpriteSheetTerrain.Snow_River_Flow_up:
                     case SpriteSheetTerrain.Snow_River_Flow_down:
@@ -146,10 +146,10 @@ namespace Wartorn
                     case SpriteSheetTerrain.Desert_River_Inter3_up:
                     case SpriteSheetTerrain.Desert_River_Inter3_down:
                     case SpriteSheetTerrain.Desert_River_Cross:
-                    case SpriteSheetTerrain.Desert_River_Turn_up_right:
-                    case SpriteSheetTerrain.Desert_River_Turn_up_left:
-                    case SpriteSheetTerrain.Desert_River_Turn_down_right:
-                    case SpriteSheetTerrain.Desert_River_Turn_down_left:
+                    case SpriteSheetTerrain.Desert_River_turn_up_right:
+                    case SpriteSheetTerrain.Desert_River_turn_up_left:
+                    case SpriteSheetTerrain.Desert_River_turn_down_right:
+                    case SpriteSheetTerrain.Desert_River_turn_down_left:
                     case SpriteSheetTerrain.Desert_River_Flow_left:
                     case SpriteSheetTerrain.Desert_River_Flow_up:
                     case SpriteSheetTerrain.Desert_River_Flow_down:
@@ -354,71 +354,71 @@ namespace Wartorn
 
 
                     case SpriteSheetTerrain.Road_turn_up_right:
-                    case SpriteSheetTerrain.Road_Turn_up_left:
+                    case SpriteSheetTerrain.Road_turn_up_left:
                     case SpriteSheetTerrain.Road_Inter3_right:
                     case SpriteSheetTerrain.Road_Inter3_down:
                     case SpriteSheetTerrain.Road_hor:
                     case SpriteSheetTerrain.Road_Cross:
                     case SpriteSheetTerrain.Bridge_hor:
                     case SpriteSheetTerrain.Bridge_ver:
-                    case SpriteSheetTerrain.Road_Turn_down_right:
-                    case SpriteSheetTerrain.Road_Turn_down_left:
+                    case SpriteSheetTerrain.Road_turn_down_right:
+                    case SpriteSheetTerrain.Road_turn_down_left:
                     case SpriteSheetTerrain.Road_Inter3_up:
                     case SpriteSheetTerrain.Road_Inter3_left:
                     case SpriteSheetTerrain.Road_ver:
 
                     case SpriteSheetTerrain.Tropical_Road_turn_up_right:
-                    case SpriteSheetTerrain.Tropical_Road_Turn_up_left:
+                    case SpriteSheetTerrain.Tropical_Road_turn_up_left:
                     case SpriteSheetTerrain.Tropical_Road_Inter3_right:
                     case SpriteSheetTerrain.Tropical_Road_Inter3_down:
                     case SpriteSheetTerrain.Tropical_Road_hor:
                     case SpriteSheetTerrain.Tropical_Road_Cross:
                     case SpriteSheetTerrain.Tropical_Bridge_hor:
                     case SpriteSheetTerrain.Tropical_Bridge_ver:
-                    case SpriteSheetTerrain.Tropical_Road_Turn_down_right:
-                    case SpriteSheetTerrain.Tropical_Road_Turn_down_left:
+                    case SpriteSheetTerrain.Tropical_Road_turn_down_right:
+                    case SpriteSheetTerrain.Tropical_Road_turn_down_left:
                     case SpriteSheetTerrain.Tropical_Road_Inter3_up:
                     case SpriteSheetTerrain.Tropical_Road_Inter3_left:
                     case SpriteSheetTerrain.Tropical_Road_ver:
 
                     case SpriteSheetTerrain.Rain_Road_turn_up_right:
-                    case SpriteSheetTerrain.Rain_Road_Turn_up_left:
+                    case SpriteSheetTerrain.Rain_Road_turn_up_left:
                     case SpriteSheetTerrain.Rain_Road_Inter3_right:
                     case SpriteSheetTerrain.Rain_Road_Inter3_down:
                     case SpriteSheetTerrain.Rain_Road_hor:
                     case SpriteSheetTerrain.Rain_Road_Cross:
                     case SpriteSheetTerrain.Rain_Bridge_hor:
                     case SpriteSheetTerrain.Rain_Bridge_ver:
-                    case SpriteSheetTerrain.Rain_Road_Turn_down_right:
-                    case SpriteSheetTerrain.Rain_Road_Turn_down_left:
+                    case SpriteSheetTerrain.Rain_Road_turn_down_right:
+                    case SpriteSheetTerrain.Rain_Road_turn_down_left:
                     case SpriteSheetTerrain.Rain_Road_Inter3_up:
                     case SpriteSheetTerrain.Rain_Road_Inter3_left:
                     case SpriteSheetTerrain.Rain_Road_ver:
 
                     case SpriteSheetTerrain.Snow_Road_turn_up_right:
-                    case SpriteSheetTerrain.Snow_Road_Turn_up_left:
+                    case SpriteSheetTerrain.Snow_Road_turn_up_left:
                     case SpriteSheetTerrain.Snow_Road_Inter3_right:
                     case SpriteSheetTerrain.Snow_Road_Inter3_down:
                     case SpriteSheetTerrain.Snow_Road_hor:
                     case SpriteSheetTerrain.Snow_Road_Cross:
                     case SpriteSheetTerrain.Snow_Bridge_hor:
                     case SpriteSheetTerrain.Snow_Bridge_ver:
-                    case SpriteSheetTerrain.Snow_Road_Turn_down_right:
-                    case SpriteSheetTerrain.Snow_Road_Turn_down_left:
+                    case SpriteSheetTerrain.Snow_Road_turn_down_right:
+                    case SpriteSheetTerrain.Snow_Road_turn_down_left:
                     case SpriteSheetTerrain.Snow_Road_Inter3_up:
                     case SpriteSheetTerrain.Snow_Road_Inter3_left:
                     case SpriteSheetTerrain.Snow_Road_ver:
 
                     case SpriteSheetTerrain.Desert_Road_turn_up_right:
-                    case SpriteSheetTerrain.Desert_Road_Turn_up_left:
+                    case SpriteSheetTerrain.Desert_Road_turn_up_left:
                     case SpriteSheetTerrain.Desert_Road_Inter3_right:
                     case SpriteSheetTerrain.Desert_Road_Inter3_down:
                     case SpriteSheetTerrain.Desert_Road_hor:
                     case SpriteSheetTerrain.Desert_Road_Cross:
                     case SpriteSheetTerrain.Desert_Bridge_hor:
                     case SpriteSheetTerrain.Desert_Bridge_ver:
-                    case SpriteSheetTerrain.Desert_Road_Turn_down_right:
-                    case SpriteSheetTerrain.Desert_Road_Turn_down_left:
+                    case SpriteSheetTerrain.Desert_Road_turn_down_right:
+                    case SpriteSheetTerrain.Desert_Road_turn_down_left:
                     case SpriteSheetTerrain.Desert_Road_Inter3_up:
                     case SpriteSheetTerrain.Desert_Road_Inter3_left:
                     case SpriteSheetTerrain.Desert_Road_ver:
@@ -571,8 +571,10 @@ namespace Wartorn
                         break;
 
                     case SpriteSheetTerrain.Missile_Silo_Lower:
-                    case SpriteSheetTerrain.Missile_Silo_Launched:
                         result = TerrainType.MissileSilo;
+                        break;
+                    case SpriteSheetTerrain.Missile_Silo_Launched:
+                        result = TerrainType.MissileSiloLaunched;
                         break;
 
                     case SpriteSheetTerrain.Red_Headquarter_Lower:
@@ -604,7 +606,7 @@ namespace Wartorn
                         result = (int)unboxUnit + count;
                         box = (T)((object)result);
                         break;
-                    case "Terrain":
+                    case "TerrainType":
                         TerrainType unboxTerrain = (TerrainType)((object)t);
                         result = (int)unboxTerrain + count;
                         box = (T)((object)result);
@@ -625,22 +627,21 @@ namespace Wartorn
                 {
                     case "SpriteSheetTerrain":
                         SpriteSheetTerrain unboxSpriteSheetTerrain = (SpriteSheetTerrain)((object)t);
-                        result = (int)unboxSpriteSheetTerrain + count;
+                        result = (int)unboxSpriteSheetTerrain - count;
                         box = (T)((object)result);
                         return box;
                     case "UnitType":
                         UnitType unboxUnit = (UnitType)((object)t);
-                        result = (int)unboxUnit + count;
+                        result = (int)unboxUnit - count;
                         box = (T)((object)result);
                         break;
-                    case "Terrain":
+                    case "TerrainType":
                         TerrainType unboxTerrain = (TerrainType)((object)t);
-                        result = (int)unboxTerrain + count;
+                        result = (int)unboxTerrain - count;
                         box = (T)((object)result);
                         break;
                     default:
                         return t;
-                        break;
                 }
                 return box;
             }

@@ -12,20 +12,65 @@ using Wartorn.Utility.Drawing;
 
 namespace Wartorn.GameData
 {
-    [JsonObject(MemberSerialization.OptIn)]
     class Map : IEnumerable
     {
-        [JsonProperty]
         MapCell[,] map;
 
         private bool isProcessed = false;
-        public bool IsProcessed { get { return isProcessed; } }
+        public bool IsProcessed
+        {
+            get
+            {
+                return isProcessed;
+            }
+            set
+            {
+                isProcessed = value;
+            }
+        }
 
         public int Width { get { return map.GetLength(0); } }
         public int Height { get { return map.GetLength(1); } }
 
-        public MapCell this[int x, int y] { get { return map[x, y]; } set { map[x, y] = value; } }
-        public MapCell this[Point p] { get { return map[p.X, p.Y]; } set { map[p.X, p.Y] = value; } }
+        public Weather weather = Weather.Sunny;
+        public Theme theme = Theme.Normal;
+
+        public MapCell this[int x, int y]
+        {
+            get
+            {
+                try
+                {
+                    return map[x, y];
+                }
+                catch (Exception e)
+                {
+                    return null;
+                }
+            }
+            set
+            {
+                map[x, y] = value;
+            }
+        }
+        public MapCell this[Point p]
+        {
+            get
+            {
+                try
+                {
+                    return map[p.X, p.Y];
+                }
+                catch (Exception e)
+                {
+                    return null;
+                }
+            }
+            set
+            {
+                map[p.X, p.Y] = value;
+            }
+        }
 
         //constructor
         public Map()
