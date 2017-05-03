@@ -45,8 +45,6 @@ namespace Wartorn.Storage
             try
             {
                 output = JsonConvert.DeserializeObject<Map>(mapdata[2]);
-
-                Utility.HelperFunction.Log(new Exception(JsonConvert.SerializeObject(output, Formatting.Indented)));
             }
             catch (Exception er)
             {

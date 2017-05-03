@@ -39,6 +39,7 @@ namespace Wartorn.Screens
 
         //private SpriteSheetTerrain currentlySelectedTerrain = SpriteSheetTerrain.Tree_up_left;
         private TerrainType currentlySelectedTerrain = TerrainType.Plain;
+        private Owner currentlySelectedOwner = Owner.None;
 
         private Side GuiSide = Side.Left;
         private bool isMenuOpen = true;
@@ -138,15 +139,6 @@ namespace Wartorn.Screens
             tempbuttonlist.Add(button_shoal);
             tempbuttonlist.Add(button_river);
             tempbuttonlist.Add(button_sea);
-
-            //building button
-            Rectangle a = SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.City_Lower);
-            a.Location = new Point(a.Location.X, a.Location.Y - 48);
-            a.Size = new Point(a.Size.X, a.Size.Y + 48);
-            CONTENT_MANAGER.ShowMessageBox(a.ToString());
-            Button button_city = new Button(a, new Point(10, 140), 1, false);
-
-            tempbuttonlist.Add(button_city);
 
             //bind event
             button_changeTerrainTheme.MouseClick += (sender, e) =>
@@ -278,7 +270,89 @@ namespace Wartorn.Screens
             canvas_terrain_selection.AddElement("button_mountain", button_mountain);
             canvas_terrain_selection.AddElement("button_sea", button_sea);
             canvas_terrain_selection.AddElement("button_plain", button_plain);
+
+            //building button
+            Button button_changeOwner = new Button("None", new Point(10, 120), new Vector2(80, 20), CONTENT_MANAGER.arcadefont);
+            button_changeOwner.Origin = new Vector2(10, 0);
+            button_changeOwner.backgroundColor = Color.White;
+            button_changeOwner.foregroundColor = Color.Black;
+
+            tempbuttonlist = new List<Button>();
+
+            Button button_city = new Button(CONTENT_MANAGER.buildingSpriteSheet,new Rectangle(0, 0, 48, 96), new Point(10, 140), 0.75f);
+            Button button_factory = new Button(CONTENT_MANAGER.buildingSpriteSheet, new Rectangle(48, 0, 48, 96), new Point(50, 140), 0.75f);
+            Button button_airport = new Button(CONTENT_MANAGER.buildingSpriteSheet, new Rectangle(96, 0, 48, 96), new Point(90, 140), 0.75f);
+            Button button_harbor = new Button(CONTENT_MANAGER.buildingSpriteSheet, new Rectangle(144, 0, 48, 96), new Point(130, 140), 0.75f);
+            Button button_radar = new Button(CONTENT_MANAGER.buildingSpriteSheet, new Rectangle(192, 0, 48, 96), new Point(170, 140), 0.75f);
+            Button button_supplybase = new Button(CONTENT_MANAGER.buildingSpriteSheet, new Rectangle(240, 0, 48, 96), new Point(210, 140), 0.75f);
+            Button button_headquarter = new Button(CONTENT_MANAGER.buildingSpriteSheet, new Rectangle(288, 0, 48, 96), new Point(250, 140), 0.75f);
+            Button button_missilesilo = new Button(CONTENT_MANAGER.buildingSpriteSheet, new Rectangle(336, 0, 48, 96), new Point(290, 140), 0.75f);
+
+            tempbuttonlist.Add(button_city);
+            tempbuttonlist.Add(button_factory);
+            tempbuttonlist.Add(button_airport);
+            tempbuttonlist.Add(button_harbor);
+            tempbuttonlist.Add(button_radar);
+            tempbuttonlist.Add(button_supplybase);
+            tempbuttonlist.Add(button_headquarter);
+            tempbuttonlist.Add(button_missilesilo);
+
+            //bind event
+            button_changeOwner.MouseClick += (sender, e) =>
+            {
+                int nextowner = 0;
+                switch (button_changeOwner.Text)
+                {
+                    case "None":
+                        button_changeOwner.Text = "Red";
+                        currentlySelectedOwner = Owner.Red;
+                        nextowner = 96;
+                        break;
+                    case "Red":
+                        button_changeOwner.Text = "Blue";
+                        currentlySelectedOwner = Owner.Blue;
+                        nextowner = 192;
+                        break;
+                    case "Blue":
+                        button_changeOwner.Text = "Green";
+                        currentlySelectedOwner = Owner.Green;
+                        nextowner = 288;
+                        break;
+                    case "Green":
+                        button_changeOwner.Text = "Yellow";
+                        currentlySelectedOwner = Owner.Yellow;
+                        nextowner = 384;
+                        break;
+                    case "Yellow":
+                        button_changeOwner.Text = "None";
+                        currentlySelectedOwner = Owner.None;
+                        nextowner = 0;
+                        break;
+                    default:
+                        break;
+                }
+                Rectangle temp;
+                for (int i = 0; i < tempbuttonlist.Count; i++)
+                {
+                    temp = tempbuttonlist[i].spriteSourceRectangle;
+                    tempbuttonlist[i].spriteSourceRectangle = new Rectangle(temp.X, nextowner, temp.Width, temp.Height);
+                }
+            };
+
+            //button_city.MouseClick += (sender, e) =>
+            //{
+            //    currentlySelectedTerrain = TerrainType.City;
+            //};
+
+            canvas_terrain_selection.AddElement("button_changeOwner", button_changeOwner);
             canvas_terrain_selection.AddElement("button_city", button_city);
+            canvas_terrain_selection.AddElement("button_factory", button_factory);
+            canvas_terrain_selection.AddElement("button_airport", button_airport);
+            canvas_terrain_selection.AddElement("button_harbor", button_harbor);
+            canvas_terrain_selection.AddElement("button_radar", button_radar);
+            canvas_terrain_selection.AddElement("button_supplybase", button_supplybase);
+            canvas_terrain_selection.AddElement("button_headquarter", button_headquarter);
+            canvas_terrain_selection.AddElement("button_missilesilo", button_missilesilo);
 
             //side menu
             Label label1 = new Label("Hor" + Environment.NewLine + "Ver", new Point(0, 0), new Vector2(30, 20), CONTENT_MANAGER.defaultfont);
@@ -366,9 +440,10 @@ namespace Wartorn.Screens
             map[10, 10] = new MapCell(TerrainType.City);
             map[10, 10].owner = Owner.Red;
 
-            Unit soldier1 = UnitCreationHelper.Create(UnitType.Soldier, Owner.Red);
+            Unit soldier1 = UnitCreationHelper.Create(UnitType.Artillery, Owner.Red);
             soldier1.Animation.Depth = LayerDepth.Unit;
-            soldier1.Animation.PlayAnimation("idle");
+            soldier1.Animation.PlayAnimation(AnimationName.right.ToString());
+            soldier1.Animation.FlipEffect = SpriteEffects.FlipHorizontally;
 
             map[5, 5].unit = soldier1;
         }
@@ -457,6 +532,7 @@ namespace Wartorn.Screens
                         {
                             undostack.Push(new Action(selectedMapCell, map[selectedMapCell].terrain));
                             map[selectedMapCell].terrain = currentlySelectedTerrain;
+                            map[selectedMapCell].owner = currentlySelectedOwner;
                             map.IsProcessed = false;
                         }
                     }

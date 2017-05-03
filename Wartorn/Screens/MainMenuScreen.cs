@@ -58,7 +58,7 @@ namespace Wartorn.Screens
             //cái này là cái tựa đề tên game, để vẽ đè lên cái background ở trên
             TitleBackground = CONTENT_MANAGER.Content.Load<Texture2D>(@"sprite\GUI\Title");
 
-            //cái này là cái 
+            //cái này là cái hinh dung cho button
             ModeSelectDark = CONTENT_MANAGER.Content.Load<Texture2D>(@"sprite\GUI\Mode_select_dark");
             ModeSelectLight = CONTENT_MANAGER.Content.Load<Texture2D>(@"sprite\GUI\Mode_select_light");
 
@@ -76,9 +76,9 @@ namespace Wartorn.Screens
             label_fps.IsVisible = false;
 
             //TODO make button for main menu
-            Button button_Campaign = new Button(ModeSelectDark, new Point(100, 275), 2);
-            Button button_MapEditor = new Button(ModeSelectDark, new Point(300, 275), 2);
-            Button button_OtherGamemode = new Button(ModeSelectDark, new Point(500, 275), 2);
+            Button button_Campaign = new Button(ModeSelectDark, null, new Point(100, 275), 2);
+            Button button_MapEditor = new Button(ModeSelectDark, null, new Point(300, 275), 2);
+            Button button_OtherGamemode = new Button(ModeSelectDark, null, new Point(500, 275), 2);
 
             //bind action to ui event
             button_Campaign.MouseClick += (sender, e) =>

@@ -23,6 +23,7 @@ namespace Wartorn
         public static SpriteFont arcadefont;
         public static Texture2D spriteSheet;
         public static Texture2D UIspriteSheet;
+        public static Texture2D buildingSpriteSheet;
 
         #region animation sprite sheet
         public static Dictionary<UnitType, AnimatedEntity> animationEntities;

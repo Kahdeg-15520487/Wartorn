@@ -19,7 +19,20 @@ namespace Wartorn
             bool isPressed = false;
             Rectangle internalRect;
             ButtonContentType contentType;
-            public Rectangle spriteSourceRectangle = Rectangle.Empty;
+            private Rectangle? _spriteSourceRectangle = null;
+            public Rectangle spriteSourceRectangle
+            {
+                get
+                {
+                    return _spriteSourceRectangle.GetValueOrDefault();
+                }
+                set
+                {
+                    _spriteSourceRectangle = value;
+                    rect.Size = (value.X > 0 && value.Y > 0) ? value.Size : rect.Size;
+                }
+            }
+
             Texture2D sprite;
             bool isFromUISpriteSheet;
             public Texture2D Sprite { set { sprite = value; contentType = ButtonContentType.Sprite; } }
@@ -44,7 +57,7 @@ namespace Wartorn
                 }
                 set
                 {
-                    rect.Size = (value.X > 0 && value.Y > 0) ? value.ToPoint() : rect.Size;
+                    rect.Size = (value.X > 0 && value.Y > 0) ? value.ToPoint() : sprite.Bounds.Size;
                     internalRect.Size = new Point(rect.Size.X - 1, rect.Size.Y - 1);
                 }
             }
@@ -144,12 +157,13 @@ namespace Wartorn
                 Init();
             }
 
-            public Button(Texture2D sprite, Point position, float scale = 1)
+            public Button(Texture2D sprite,Rectangle? spriterect, Point position, float scale = 1)
             {
                 contentType = ButtonContentType.Sprite;
+                _spriteSourceRectangle = spriterect;
                 this.sprite = sprite;
                 Position = position;
-                Size = sprite.Bounds.Size.ToVector2();
+                Size = _spriteSourceRectangle.GetValueOrDefault().Size.ToVector2();
                 Scale = scale;
                 Init();
             }
@@ -192,7 +206,7 @@ namespace Wartorn
                         spriteBatch.Draw(isFromUISpriteSheet ? CONTENT_MANAGER.UIspriteSheet : CONTENT_MANAGER.spriteSheet, Position.ToVector2(), spriteSourceRectangle, isPressed ? buttonColorPressed : buttonColorReleased, Rotation, Vector2.Zero, Scale, SpriteEffects.None, LayerDepth.GuiUpper);
                         break;
                     case ButtonContentType.Sprite:
-                        spriteBatch.Draw(sprite, Position.ToVector2(), null, isPressed ? buttonColorPressed : buttonColorReleased, Rotation, Vector2.Zero, Scale, SpriteEffects.None, LayerDepth.GuiUpper);
+                        spriteBatch.Draw(sprite, Position.ToVector2(), _spriteSourceRectangle, isPressed ? buttonColorPressed : buttonColorReleased, Rotation, Vector2.Zero, Scale, SpriteEffects.None, LayerDepth.GuiUpper);
                         break;
                     default:
                         break;
