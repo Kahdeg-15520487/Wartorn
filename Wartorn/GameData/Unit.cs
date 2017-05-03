@@ -61,12 +61,14 @@ namespace Wartorn.GameData
         public AnimatedEntity Animation { get { return animation; } }
         public UnitType UnitType { get { return unitType; } }
         public int HitPoint { get { return hitPoint; } }
+        public Owner Owner { get; set; }
         
-        public Unit(UnitType unittype, AnimatedEntity anim)
+        public Unit(UnitType unittype, AnimatedEntity anim,Owner owner,int hp = 100)
         {
             unitType = unittype;
             animation = anim;
-            hitPoint = 20;
+            Owner = owner;
+            hitPoint = hp;
         }
 
         public int ReceiveDammage(UnitType other)
@@ -90,18 +92,103 @@ namespace Wartorn.GameData
 
     public static class UnitCreationHelper
     {
-        public static Unit Create(UnitType unittype)
+        public static Unit Create(UnitType unittype,Owner owner,int hp = 100)
         {
-            return new Unit(unittype, (AnimatedEntity)CONTENT_MANAGER.animationEntities[unittype].Clone());
+            //todo load the sprite based on the owner of this unit
+            return new Unit(unittype, (AnimatedEntity)CONTENT_MANAGER.animationEntities[unittype].Clone(), owner, hp);
         }
     }
 
     #region JsonConverter class
+
+    public class UnitJsonConverter : JsonConverter
+    {
+        public override bool CanConvert(Type objectType)
+        {
+            return objectType == typeof(Unit);
+        }
+
+        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        {
+            Unit temp = (Unit)value;
+            writer.WriteStartObject();
+            writer.WritePropertyName("UnitType");
+            serializer.Serialize(writer, temp.UnitType.ToString());
+            writer.WritePropertyName("Owner");
+            serializer.Serialize(writer, temp.Owner.ToString());
+            writer.WritePropertyName("HP");
+            serializer.Serialize(writer, temp.HitPoint);
+            writer.WriteEndObject();
+        }
+
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        {
+            UnitType unittype = UnitType.None;
+            Owner owner = Owner.None;
+            int hp = 0;
+
+            bool gotUnittype = false;
+            bool gotOwner = false;
+            bool gotHp = false;
+
+            while (reader.Read())
+            {
+                if (reader.TokenType != JsonToken.PropertyName)
+                {
+                    break;
+                }
+
+                string propertyName = (string)reader.Value;
+                if (!reader.Read())
+                {
+                    continue;
+                }
+                switch (propertyName)
+                {
+                    case "UnitType":
+                        unittype = (serializer.Deserialize<string>(reader)).ToEnum<UnitType>();
+                        gotUnittype = true;
+                        break;
+                    case "Owner":
+                        owner = (serializer.Deserialize<string>(reader)).ToEnum<Owner>();
+                        gotOwner = true;
+                        break;
+                    case "HP":
+                        hp = serializer.Deserialize<int>(reader);
+                        gotHp = true;
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            if (!(gotUnittype && gotHp && gotOwner))
+            {
+                //throw new InvalidDataException("Not enought data");
+                return null;
+            }
+
+            return UnitCreationHelper.Create(unittype, owner, hp);
+        }
+    }
+
     public class UnitPairJsonConverter : JsonConverter
     {
         public override bool CanConvert(Type objectType)
         {
             return objectType == typeof(UnitPair);
+        }
+
+        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        {
+            UnitPair temp = (UnitPair)value;
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("Attacker");
+            serializer.Serialize(writer, temp.Attacker.ToString());
+            writer.WritePropertyName("Defender");
+            serializer.Serialize(writer, temp.Defender.ToString());
+            writer.WriteEndObject();
         }
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
@@ -144,18 +231,6 @@ namespace Wartorn.GameData
             }
 
             return new UnitPair(attacker, defender);
-        }
-
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
-        {
-            UnitPair temp = (UnitPair)value;
-
-            writer.WriteStartObject();
-            writer.WritePropertyName("Attacker");
-            serializer.Serialize(writer, temp.Attacker.ToString());
-            writer.WritePropertyName("Defender");
-            serializer.Serialize(writer, temp.Defender.ToString());
-            writer.WriteEndObject();
         }
     }
     #endregion

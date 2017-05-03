@@ -14,7 +14,7 @@ namespace Wartorn.GameData
 {
     class Map : IEnumerable
     {
-        MapCell[,] map;
+        public MapCell[,] map { get; private set; }
 
         private bool isProcessed = false;
         public bool IsProcessed

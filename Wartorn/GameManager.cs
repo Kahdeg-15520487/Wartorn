@@ -47,6 +47,8 @@ namespace Wartorn
             {
                 var settings = new JsonSerializerSettings();
                 settings.Converters.Add(new UnitPairJsonConverter());
+                settings.Converters.Add(new UnitJsonConverter());
+                settings.Converters.Add(new MapJsonConverter());
                 return settings;
             };            
         }

@@ -22,6 +22,7 @@ namespace Wartorn.GameData
         public int unitId;
         public Owner owner = Owner.None;
 
+        /*
         public MapCell(SpriteSheetTerrain t)
         {
             terrainbase = t;
@@ -42,6 +43,15 @@ namespace Wartorn.GameData
             unit = u;
             this.unitId = unitId;
             isFog = isfog;
+        }
+        */
+
+        public MapCell(TerrainType t)
+        {
+            terrain = t;
+            unit = null;
+            unitId = default(int);
+            isFog = false;
         }
 
         [JsonConstructor]
