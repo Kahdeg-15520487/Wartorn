@@ -78,7 +78,7 @@ namespace Wartorn.Screens
             undostack = new Stack<Action>();
 
             InitUI();
-            InitMap();
+            InitMap(TerrainType.Plain);
             return base.Init();
         }
 
@@ -117,6 +117,7 @@ namespace Wartorn.Screens
 
             List<Button> tempbuttonlist = new List<Button>();
 
+            //terrain button
             Button button_bridge = new Button(SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Bridge_hor), new Point(10, 80), 0.75f, false);
             Button button_road = new Button(SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Road_hor), new Point(50, 80), 0.75f, false);
             Button button_wood = new Button(SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Tree), new Point(90, 80), 0.75f, false);
@@ -137,6 +138,15 @@ namespace Wartorn.Screens
             tempbuttonlist.Add(button_shoal);
             tempbuttonlist.Add(button_river);
             tempbuttonlist.Add(button_sea);
+
+            //building button
+            Rectangle a = SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.City_Lower);
+            a.Location = new Point(a.Location.X, a.Location.Y - 48);
+            a.Size = new Point(a.Size.X, a.Size.Y + 48);
+            CONTENT_MANAGER.ShowMessageBox(a.ToString());
+            Button button_city = new Button(a, new Point(10, 140), 1, false);
+
+            tempbuttonlist.Add(button_city);
 
             //bind event
             button_changeTerrainTheme.MouseClick += (sender, e) =>
@@ -268,6 +278,7 @@ namespace Wartorn.Screens
             canvas_terrain_selection.AddElement("button_mountain", button_mountain);
             canvas_terrain_selection.AddElement("button_sea", button_sea);
             canvas_terrain_selection.AddElement("button_plain", button_plain);
+            canvas_terrain_selection.AddElement("button_city", button_city);
 
             //side menu
             Label label1 = new Label("Hor" + Environment.NewLine + "Ver", new Point(0, 0), new Vector2(30, 20), CONTENT_MANAGER.defaultfont);
@@ -341,21 +352,22 @@ namespace Wartorn.Screens
         }
         #endregion
 
-        private void InitMap()
+        private void InitMap(TerrainType terraintype)
         {
             int count = 1;
             for (int i = 0; i < map.Width; i++)
             {
                 for (int j = 0; j < map.Height; j++)
                 {
-                    map[i, j] = new MapCell(TerrainType.Sea, null, null);
+                    map[i, j] = new MapCell(terraintype, null, null);
                 }
             }
 
-            Unit soldier1 = new Unit(UnitType.Soldier, new AnimatedEntity ());
+            map[10, 10] = new MapCell(TerrainType.City);
+            map[10, 10].owner = Owner.Red;
+
+            Unit soldier1 = UnitCreationHelper.Create(UnitType.Soldier, Owner.Red);
             soldier1.Animation.Depth = LayerDepth.Unit;
-            soldier1.Animation.LoadContent(CONTENT_MANAGER.animationSheets[UnitType.Soldier]);
-            soldier1.Animation.AddAnimation(CONTENT_MANAGER.animationTypes);
             soldier1.Animation.PlayAnimation("idle");
 
             map[5, 5].unit = soldier1;
