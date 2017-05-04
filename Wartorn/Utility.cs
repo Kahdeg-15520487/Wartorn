@@ -383,6 +383,18 @@ namespace Wartorn
                         break;
 
 
+                    case SpriteSheetTerrain.Bridge_hor:
+                    case SpriteSheetTerrain.Bridge_ver:
+                    case SpriteSheetTerrain.Tropical_Bridge_hor:
+                    case SpriteSheetTerrain.Tropical_Bridge_ver:
+                    case SpriteSheetTerrain.Rain_Bridge_hor:
+                    case SpriteSheetTerrain.Rain_Bridge_ver:
+                    case SpriteSheetTerrain.Snow_Bridge_hor:
+                    case SpriteSheetTerrain.Snow_Bridge_ver:
+                    case SpriteSheetTerrain.Desert_Bridge_hor:
+                    case SpriteSheetTerrain.Desert_Bridge_ver:
+                        result =  TerrainType.Bridge;
+                        break;
 
                     case SpriteSheetTerrain.Road_turn_up_right:
                     case SpriteSheetTerrain.Road_turn_up_left:
@@ -390,8 +402,6 @@ namespace Wartorn
                     case SpriteSheetTerrain.Road_Inter3_down:
                     case SpriteSheetTerrain.Road_hor:
                     case SpriteSheetTerrain.Road_Cross:
-                    case SpriteSheetTerrain.Bridge_hor:
-                    case SpriteSheetTerrain.Bridge_ver:
                     case SpriteSheetTerrain.Road_turn_down_right:
                     case SpriteSheetTerrain.Road_turn_down_left:
                     case SpriteSheetTerrain.Road_Inter3_up:
@@ -404,8 +414,6 @@ namespace Wartorn
                     case SpriteSheetTerrain.Tropical_Road_Inter3_down:
                     case SpriteSheetTerrain.Tropical_Road_hor:
                     case SpriteSheetTerrain.Tropical_Road_Cross:
-                    case SpriteSheetTerrain.Tropical_Bridge_hor:
-                    case SpriteSheetTerrain.Tropical_Bridge_ver:
                     case SpriteSheetTerrain.Tropical_Road_turn_down_right:
                     case SpriteSheetTerrain.Tropical_Road_turn_down_left:
                     case SpriteSheetTerrain.Tropical_Road_Inter3_up:
@@ -418,8 +426,6 @@ namespace Wartorn
                     case SpriteSheetTerrain.Rain_Road_Inter3_down:
                     case SpriteSheetTerrain.Rain_Road_hor:
                     case SpriteSheetTerrain.Rain_Road_Cross:
-                    case SpriteSheetTerrain.Rain_Bridge_hor:
-                    case SpriteSheetTerrain.Rain_Bridge_ver:
                     case SpriteSheetTerrain.Rain_Road_turn_down_right:
                     case SpriteSheetTerrain.Rain_Road_turn_down_left:
                     case SpriteSheetTerrain.Rain_Road_Inter3_up:
@@ -432,8 +438,6 @@ namespace Wartorn
                     case SpriteSheetTerrain.Snow_Road_Inter3_down:
                     case SpriteSheetTerrain.Snow_Road_hor:
                     case SpriteSheetTerrain.Snow_Road_Cross:
-                    case SpriteSheetTerrain.Snow_Bridge_hor:
-                    case SpriteSheetTerrain.Snow_Bridge_ver:
                     case SpriteSheetTerrain.Snow_Road_turn_down_right:
                     case SpriteSheetTerrain.Snow_Road_turn_down_left:
                     case SpriteSheetTerrain.Snow_Road_Inter3_up:
@@ -446,8 +450,6 @@ namespace Wartorn
                     case SpriteSheetTerrain.Desert_Road_Inter3_down:
                     case SpriteSheetTerrain.Desert_Road_hor:
                     case SpriteSheetTerrain.Desert_Road_Cross:
-                    case SpriteSheetTerrain.Desert_Bridge_hor:
-                    case SpriteSheetTerrain.Desert_Bridge_ver:
                     case SpriteSheetTerrain.Desert_Road_turn_down_right:
                     case SpriteSheetTerrain.Desert_Road_turn_down_left:
                     case SpriteSheetTerrain.Desert_Road_Inter3_up:

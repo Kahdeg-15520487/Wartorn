@@ -142,7 +142,7 @@ namespace Wartorn
 
         public static Rectangle GetSpriteRectangle(SpriteSheetTerrain t)
         {
-            if (t == SpriteSheetTerrain.None)
+            if (t == SpriteSheetTerrain.None || t== SpriteSheetTerrain.Min || t== SpriteSheetTerrain.Max)
             {
                 return Rectangle.Empty;
             }
@@ -168,6 +168,9 @@ namespace Wartorn
                     break;
                 case TerrainType.Cliff:
                     temp = TerrainSprite[SpriteSheetTerrain.Cliff_up];
+                    break;
+                case TerrainType.Bridge:
+                    temp = TerrainSprite[SpriteSheetTerrain.Bridge_hor];
                     break;
                 case TerrainType.Road:
                     temp = TerrainSprite[SpriteSheetTerrain.Road_hor];

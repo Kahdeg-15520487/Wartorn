@@ -62,5 +62,12 @@ namespace Wartorn.GameData
             unitId = unitid.GetValueOrDefault();
             isFog = isfog;
         }
+
+        public void ClearRenderData()
+        {
+            terrainbase = SpriteSheetTerrain.None;
+            terrainLower = SpriteSheetTerrain.None;
+            terrainUpper = SpriteSheetTerrain.None;
+        }
     }
 }

@@ -15,6 +15,7 @@ namespace Wartorn.GameData
         Coast,
         Cliff,
         Road,
+        Bridge,
         Plain,
         Tree,
         Mountain,

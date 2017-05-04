@@ -50,11 +50,13 @@ namespace Wartorn.Screens
         {
             public Point selectedMapCell;
             public TerrainType selectedMapCellTerrain;
+            public Owner selectedMapCellOwner;
 
-            public Action(Point p, TerrainType t)
+            public Action(Point p, MapCell mc)
             {
                 selectedMapCell = p;
-                selectedMapCellTerrain = t;
+                selectedMapCellTerrain = mc.terrain;
+                selectedMapCellOwner = mc.owner;
             }
         }
         Stack<Action> undostack;
@@ -111,6 +113,7 @@ namespace Wartorn.Screens
                 {
                     var lastaction = undostack.Pop();
                     map[lastaction.selectedMapCell].terrain = lastaction.selectedMapCellTerrain;
+                    map[lastaction.selectedMapCell].owner = lastaction.selectedMapCellOwner;
                     map.IsProcessed = false;
                 }
             };
@@ -514,7 +517,7 @@ namespace Wartorn.Screens
             ((Label)canvas.GetElement("label_Vertical")).Text = (selectedMapCell.Y + 1).ToString();
 
             OpenHideMenu();
-            MoveGuiToAvoidMouse(mouseInputState);
+            //MoveGuiToAvoidMouse(mouseInputState);
 
             if (!isMenuOpen)
             {
@@ -580,9 +583,9 @@ namespace Wartorn.Screens
                     //check if not any cell is selected
                     if (selectedMapCell != null)
                     {
-                        if (map[selectedMapCell].terrain != currentlySelectedTerrain)
+                        if (map[selectedMapCell].terrain != currentlySelectedTerrain || map[selectedMapCell].owner != currentlySelectedOwner)
                         {
-                            undostack.Push(new Action(selectedMapCell, map[selectedMapCell].terrain));
+                            undostack.Push(new Action(selectedMapCell, map[selectedMapCell]));
                             map[selectedMapCell].terrain = currentlySelectedTerrain;
                             map[selectedMapCell].owner = currentlySelectedOwner;
                             map.IsProcessed = false;

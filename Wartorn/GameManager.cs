@@ -49,6 +49,7 @@ namespace Wartorn
                 settings.Converters.Add(new UnitPairJsonConverter());
                 settings.Converters.Add(new UnitJsonConverter());
                 settings.Converters.Add(new MapJsonConverter());
+                settings.Converters.Add(new MapCellJsonConverter());
                 return settings;
             };            
         }

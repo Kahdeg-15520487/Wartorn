@@ -99,19 +99,16 @@ namespace Wartorn.Storage
             writer.WritePropertyName("Weather");
             serializer.Serialize(writer, temp.weather.ToString());
             writer.WritePropertyName("Data");
-            serializer.Serialize(writer, temp.map);
-            writer.WriteEndObject();
-
-            //writer.WriteStartArray();
-            //for (int x = 0; x < temp.Width; x++)
-            //{
-            //    for (int y = 0; y < temp.Height; y++)
-            //    {
-            //        serializer.Serialize(writer, temp[x, y]);
-            //    }
-            //}
-            //writer.WriteEndArray();
-            
+            writer.WriteStartArray();
+            for (int x = 0; x < temp.Width; x++)
+            {
+                for (int y = 0; y < temp.Height; y++)
+                {
+                    serializer.Serialize(writer, temp[x, y]);
+                }
+            }
+            writer.WriteEndArray();
+            writer.WriteEndObject();            
         }
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
@@ -120,7 +117,7 @@ namespace Wartorn.Storage
             int width=0, height=0;
             Theme theme = Theme.Normal;
             Weather weather = Weather.Sunny;
-            MapCell[,] map = new MapCell[0, 0];
+            List<MapCell> map = new List<MapCell>();
 
             while (reader.Read())
             {
@@ -150,7 +147,16 @@ namespace Wartorn.Storage
                         weather = (serializer.Deserialize<string>(reader)).ToEnum<Weather>();
                         break;
                     case "Data":
-                        map = serializer.Deserialize<MapCell[,]>(reader);
+                        //map = serializer.Deserialize<MapCell[,]>(reader);
+                        var temp = serializer.Deserialize(reader);
+                        List<object> mapdata = JsonConvert.DeserializeObject<List<object>>(temp.ToString());
+                        MapCell mctemp;
+                        foreach (var obj in mapdata)
+                        {
+                            mctemp = JsonConvert.DeserializeObject<MapCell>(obj.ToString());
+                            map.Add(mctemp);
+                        }
+                        File.WriteAllText("mapdata.txt", JsonConvert.SerializeObject(map, Formatting.Indented));
                         break;
                     default:
                         break;
@@ -160,13 +166,85 @@ namespace Wartorn.Storage
             result = new Map(width, height);
             result.theme = theme;
             result.weather = weather;
+            int c = 0;
             for (int x = 0; x < result.Width; x++)
             {
                 for (int y = 0; y < result.Height; y++)
                 {
-                    result[x, y] = map[x, y];
+                    result[x, y] = map[c];
+                    c++;
                 }
             }
+
+            return result;
+        }
+    }
+
+    public class MapCellJsonConverter : JsonConverter
+    {
+        public override bool CanConvert(Type objectType)
+        {
+            return objectType == typeof(MapCell);
+        }
+
+        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        {
+            MapCell temp = (MapCell)value;
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("terrain");
+            serializer.Serialize(writer, temp.terrain.ToString());
+            writer.WritePropertyName("owner");
+            serializer.Serialize(writer, temp.owner.ToString());
+            writer.WritePropertyName("unit");
+            serializer.Serialize(writer, temp.unit);
+            writer.WritePropertyName("unitid");
+            serializer.Serialize(writer, temp.unitId);
+            writer.WriteEndObject();
+        }
+
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        {
+            TerrainType terrain = TerrainType.Plain;
+            Owner owner = Owner.None;
+            Unit unit = null;
+            int unitid = 0;
+
+            while (reader.Read())
+            {
+                if (reader.TokenType != JsonToken.PropertyName)
+                {
+                    break;
+                }
+
+                string propertyName = (string)reader.Value;
+                if (!reader.Read())
+                {
+                    continue;
+                }
+
+                switch (propertyName)
+                {
+                    case "terrain":
+                        terrain = (serializer.Deserialize<string>(reader)).ToEnum<TerrainType>();
+                        break;
+                    case "owner":
+                        owner = (serializer.Deserialize<string>(reader)).ToEnum<Owner>();
+                        break;
+                    case "unit":
+                        unit = serializer.Deserialize<Unit>(reader);
+                        break;
+                    case "unitid":
+                        unitid = serializer.Deserialize<int>(reader);
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+
+            MapCell result = new MapCell(terrain, unit, unitid);
+            result.owner = owner;
 
             return result;
         }
