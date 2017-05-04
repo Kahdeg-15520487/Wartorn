@@ -89,10 +89,9 @@ namespace Wartorn.Screens
         }
 
         #region InitUI
-        private void InitUI()
-        {
-            //declare ui element
 
+        private void InitEscapeMenu()
+        {
             //escape menu
             Canvas canvas_Menu = new Canvas();
             Button button_Undo = new Button(UISpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetUI.Undo), new Point(20, 20), 0.5f);
@@ -105,11 +104,69 @@ namespace Wartorn.Screens
             canvas_Menu.AddElement("button_Exit", button_Exit);
             canvas_Menu.IsVisible = isMenuOpen;
 
+            //bind action to ui event
+            button_Undo.MouseClick += (sender, e) =>
+            {
+                if (undostack.Count > 0)
+                {
+                    var lastaction = undostack.Pop();
+                    map[lastaction.selectedMapCell].terrain = lastaction.selectedMapCellTerrain;
+                    map.IsProcessed = false;
+                }
+            };
+
+            button_Save.MouseClick += (sender, e) =>
+            {
+                var savedata = MapData.SaveMap(map);
+                try
+                {
+                    Directory.CreateDirectory(@"map/");
+                    File.WriteAllText(@"map/" + DateTime.Now.ToString("dd-MM-yyyy_HH-mm") + ".map", savedata);
+                }
+                catch (Exception er)
+                {
+                    HelperFunction.Log(er);
+                }
+            };
+
+            button_Open.MouseClick += (sender, e) =>
+            {
+                string path = CONTENT_MANAGER.ShowFileOpenDialog(CONTENT_MANAGER.LocalRootPath);
+                string content = string.Empty;
+                try
+                {
+                    content = File.ReadAllText(path);
+                }
+                catch (Exception er)
+                {
+                    Utility.HelperFunction.Log(er);
+                }
+
+                if (!string.IsNullOrEmpty(content))
+                {
+                    var temp = Storage.MapData.LoadMap(content);
+                    if (temp != null)
+                    {
+                        map.Clone(temp);
+                    }
+                }
+            };
+
+            button_Exit.MouseClick += (sender, e) =>
+            {
+                SCREEN_MANAGER.go_back();
+            };
+
+            canvas.AddElement("canvas_Menu", canvas_Menu);
+        }
+
+        private void InitTileSelectMenu()
+        {
             //terrain selection menu
             Canvas canvas_terrain_selection = new Canvas();
 
             Button button_changeTerrainTheme = new Button("Normal", new Point(10, 50), new Vector2(80, 20), CONTENT_MANAGER.arcadefont);
-            button_changeTerrainTheme.Origin = new Vector2(10,0);
+            button_changeTerrainTheme.Origin = new Vector2(10, 0);
             button_changeTerrainTheme.backgroundColor = Color.White;
             button_changeTerrainTheme.foregroundColor = Color.Black;
             Button button_changeWeather = new Button("Sunny", new Point(100, 50), new Vector2(80, 20), CONTENT_MANAGER.arcadefont);
@@ -127,7 +184,7 @@ namespace Wartorn.Screens
 
             Button button_reef = new Button(SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Reef), new Point(210, 80), 0.75f, false);
             Button button_shoal = new Button(SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Coast_up), new Point(250, 80), 0.75f, false);
-            Button button_river = new Button(SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.River_hor), new Point(290, 80), 0.75f, false);            
+            Button button_river = new Button(SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.River_hor), new Point(290, 80), 0.75f, false);
             Button button_sea = new Button(SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Sea), new Point(330, 80), 0.75f, false);
 
             tempbuttonlist.Add(button_bridge);
@@ -279,7 +336,7 @@ namespace Wartorn.Screens
 
             tempbuttonlist = new List<Button>();
 
-            Button button_city = new Button(CONTENT_MANAGER.buildingSpriteSheet,new Rectangle(0, 0, 48, 96), new Point(10, 140), 0.75f);
+            Button button_city = new Button(CONTENT_MANAGER.buildingSpriteSheet, new Rectangle(0, 0, 48, 96), new Point(10, 140), 0.75f);
             Button button_factory = new Button(CONTENT_MANAGER.buildingSpriteSheet, new Rectangle(48, 0, 48, 96), new Point(50, 140), 0.75f);
             Button button_airport = new Button(CONTENT_MANAGER.buildingSpriteSheet, new Rectangle(96, 0, 48, 96), new Point(90, 140), 0.75f);
             Button button_harbor = new Button(CONTENT_MANAGER.buildingSpriteSheet, new Rectangle(144, 0, 48, 96), new Point(130, 140), 0.75f);
@@ -339,10 +396,51 @@ namespace Wartorn.Screens
                 }
             };
 
-            //button_city.MouseClick += (sender, e) =>
-            //{
-            //    currentlySelectedTerrain = TerrainType.City;
-            //};
+            button_city.MouseClick += (sender, e) =>
+            {
+                currentlySelectedTerrain = TerrainType.City;
+            };
+
+            button_factory.MouseClick += (sender, e) =>
+            {
+                currentlySelectedTerrain = TerrainType.Factory;
+            };
+
+            button_airport.MouseClick += (sender, e) =>
+            {
+                currentlySelectedTerrain = TerrainType.AirPort;
+            };
+
+            button_harbor.MouseClick += (sender, e) =>
+            {
+                currentlySelectedTerrain = TerrainType.Harbor;
+            };
+
+            button_radar.MouseClick += (sender, e) =>
+            {
+                currentlySelectedTerrain = TerrainType.Radar;
+            };
+
+            button_supplybase.MouseClick += (sender, e) =>
+            {
+                currentlySelectedTerrain = TerrainType.SupplyBase;
+            };
+
+            button_headquarter.MouseClick += (sender, e) =>
+            {
+                if (button_headquarter.spriteSourceRectangle.Y != 0)
+                {
+                    currentlySelectedTerrain = TerrainType.Headquarter;
+                }
+            };
+
+            button_missilesilo.MouseClick += (sender, e) =>
+            {
+                if (button_missilesilo.spriteSourceRectangle.Y == 0)
+                {
+                    currentlySelectedTerrain = TerrainType.MissileSilo;
+                }
+            };
 
             canvas_terrain_selection.AddElement("button_changeOwner", button_changeOwner);
             canvas_terrain_selection.AddElement("button_city", button_city);
@@ -354,6 +452,15 @@ namespace Wartorn.Screens
             canvas_terrain_selection.AddElement("button_headquarter", button_headquarter);
             canvas_terrain_selection.AddElement("button_missilesilo", button_missilesilo);
 
+            canvas.AddElement("canvas_terrain_selection", canvas_terrain_selection);
+        }
+
+        private void InitUI()
+        {
+            //declare ui element
+            InitEscapeMenu();
+            InitTileSelectMenu();            
+
             //side menu
             Label label1 = new Label("Hor" + Environment.NewLine + "Ver", new Point(0, 0), new Vector2(30, 20), CONTENT_MANAGER.defaultfont);
             label1.Scale = 1.2f;
@@ -361,65 +468,10 @@ namespace Wartorn.Screens
             label_Horizontal.Scale = 1.2f;
             Label label_Vertical = new Label("1", new Point(40, 20), new Vector2(20, 20), CONTENT_MANAGER.defaultfont);
             label_Vertical.Scale = 1.2f;
-            //label1.foregroundColor = Color.White;
 
-            //bind action to ui event
-            button_Undo.MouseClick += (sender, e) =>
-            {
-                if (undostack.Count > 0)
-                {
-                    var lastaction = undostack.Pop();
-                    map[lastaction.selectedMapCell].terrain = lastaction.selectedMapCellTerrain;
-                    map.IsProcessed = false;
-                }
-            };
-
-            button_Save.MouseClick += (sender, e) =>
-            {
-                var savedata = MapData.SaveMap(map);
-                try
-                {
-                    Directory.CreateDirectory(@"map/");
-                    File.WriteAllText(@"map/" + DateTime.Now.ToString("dd-MM-yyyy_HH-mm") + ".map", savedata);
-                }
-                catch (Exception er)
-                {
-                    HelperFunction.Log(er);
-                }
-            };
-
-            button_Open.MouseClick += (sender, e) =>
-            {
-                string path = CONTENT_MANAGER.ShowFileOpenDialog(CONTENT_MANAGER.LocalRootPath);
-                string content = string.Empty;
-                try
-                {
-                    content = File.ReadAllText(path);
-                }
-                catch (Exception er)
-                {
-                    Utility.HelperFunction.Log(er);
-                }
-
-                if (!string.IsNullOrEmpty(content))
-                {
-                    var temp = Storage.MapData.LoadMap(content);
-                    if (temp != null)
-                    {
-                        map.Clone(temp);
-                    }
-                }
-            };
-
-            button_Exit.MouseClick += (sender, e) =>
-            {
-                SCREEN_MANAGER.go_back();
-            };
+            
 
             //add ui element to canvas
-            canvas.AddElement("canvas_Menu", canvas_Menu);
-            canvas.AddElement("canvas_terrain_selection", canvas_terrain_selection);
-
             canvas.AddElement("label1", label1);
             canvas.AddElement("label_Horizontal", label_Horizontal);
             canvas.AddElement("label_Vertical", label_Vertical);
@@ -653,11 +705,138 @@ namespace Wartorn.Screens
             spriteBatch.End();
 
             //begin a new batch with translated matrix to simulate scrolling
+            //aka make a camera
             spriteBatch.Begin(SpriteSortMode.FrontToBack, transformMatrix: camera.TransformMatrix);
             
+            //render the map
             MapRenderer.Render(map, spriteBatch, gameTime);
 
-            spriteBatch.Draw(CONTENT_MANAGER.spriteSheet, new Vector2(selectedMapCell.X * Constants.MapCellWidth, selectedMapCell.Y * Constants.MapCellHeight), SpriteSheetSourceRectangle.GetSpriteRectangle(currentlySelectedTerrain), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.GuiLower);
+            //spriteBatch.Draw(CONTENT_MANAGER.spriteSheet, new Vector2(selectedMapCell.X * Constants.MapCellWidth, selectedMapCell.Y * Constants.MapCellHeight), SpriteSheetSourceRectangle.GetSpriteRectangle(currentlySelectedTerrain), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.GuiLower);
+            //draw the tile that is about to be placed
+            if (currentlySelectedTerrain.Is2Tile())
+            {
+                //ve 2 tile tren duoi
+                Rectangle uppertile = Rectangle.Empty;
+                Rectangle lowertile = Rectangle.Empty;
+                int nextowner = 0;
+                switch (currentlySelectedOwner)
+                {
+                    case Owner.None:
+                        nextowner = 0;
+                        break;
+                    case Owner.Red:
+                        nextowner = SpriteSheetTerrain.Red_City_Lower - SpriteSheetTerrain.City_Lower;
+                        break;
+                    case Owner.Blue:
+                        nextowner = SpriteSheetTerrain.Blue_City_Lower - SpriteSheetTerrain.City_Lower;
+                        break;
+                    case Owner.Green:
+                        nextowner = SpriteSheetTerrain.Green_City_Lower - SpriteSheetTerrain.City_Lower;
+                        break;
+                    case Owner.Yellow:
+                        nextowner = SpriteSheetTerrain.Yellow_City_Lower - SpriteSheetTerrain.City_Lower;
+                        break;
+                    default:
+                        break;
+                }
+
+                switch (currentlySelectedTerrain)
+                {
+                    case TerrainType.Mountain:
+                        switch (map.weather)
+                        {
+                            case Weather.Sunny:
+                                switch (map.theme)
+                                {
+                                    case Theme.Normal:
+                                        lowertile = SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Mountain_High_Lower);
+                                        uppertile = SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Mountain_High_Upper);
+                                        break;
+                                    case Theme.Tropical:
+                                        lowertile = SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Tropical_Mountain_High_Lower);
+                                        uppertile = SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Tropical_Mountain_High_Upper);
+                                        break;
+                                    case Theme.Desert:
+                                        lowertile = SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Desert_Mountain_High_Lower);
+                                        uppertile = SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Desert_Mountain_High_Upper);
+                                        break;
+                                    default:
+                                        break;
+                                }
+                                break;
+                            case Weather.Rain:
+                                lowertile = SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Rain_Mountain_High_Lower);
+                                uppertile = SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Rain_Mountain_High_Upper);
+                                break;
+                            case Weather.Snow:
+                                lowertile = SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Snow_Mountain_High_Lower);
+                                uppertile = SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Snow_Mountain_High_Upper);
+                                break;
+                            default:
+                                break;
+                        }
+                        break;
+
+
+                    case TerrainType.MissileSilo:
+                        lowertile = SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Missile_Silo_Lower);
+                        uppertile = SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Missile_Silo_Upper);
+                        break;
+                    case TerrainType.City:
+                        lowertile = SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.City_Lower.Next(nextowner));
+                        uppertile = SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.City_Upper.Next(nextowner));
+                        break;
+                    case TerrainType.AirPort:
+                        lowertile = SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.AirPort_Lower.Next(nextowner));
+                        uppertile = SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.AirPort_Upper.Next(nextowner));
+                        break;
+                    case TerrainType.Harbor:
+                        lowertile = SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Harbor_Lower.Next(nextowner));
+                        uppertile = SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Harbor_Upper.Next(nextowner));
+                        break;
+                    case TerrainType.Radar:
+                        lowertile = SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Radar_Lower.Next(nextowner));
+                        uppertile = SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Radar_Upper.Next(nextowner));
+                        break;
+                    case TerrainType.SupplyBase:
+                        lowertile = SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.SupplyBase_Lower.Next(nextowner));
+                        uppertile = SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.SupplyBase_Upper.Next(nextowner));
+                        break;
+                    case TerrainType.Headquarter:
+                        switch (currentlySelectedOwner)
+                        {
+                            case Owner.Red:
+                                nextowner = 0;
+                                break;
+                            case Owner.Blue:
+                                nextowner = SpriteSheetTerrain.Blue_Headquarter_Lower - SpriteSheetTerrain.Red_Headquarter_Lower;
+                                break;
+                            case Owner.Green:
+                                nextowner = SpriteSheetTerrain.Green_Headquarter_Lower - SpriteSheetTerrain.Red_Headquarter_Lower;
+                                break;
+                            case Owner.Yellow:
+                                nextowner = SpriteSheetTerrain.Yellow_Headquarter_Lower - SpriteSheetTerrain.Red_Headquarter_Lower;
+                                break;
+                            default:
+                                break;
+                        }
+                        lowertile = SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Red_Headquarter_Lower.Next(nextowner));
+                        uppertile = SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Red_Headquarter_Upper.Next(nextowner));
+                        break;
+                    default:
+                        break;
+                }
+                spriteBatch.Draw(CONTENT_MANAGER.spriteSheet, new Vector2(selectedMapCell.X * Constants.MapCellWidth, selectedMapCell.Y * Constants.MapCellHeight), lowertile, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.GuiBackground);
+                spriteBatch.Draw(CONTENT_MANAGER.spriteSheet, new Vector2(selectedMapCell.X * Constants.MapCellWidth, (selectedMapCell.Y-1) * Constants.MapCellHeight), uppertile, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.GuiBackground);
+            }
+            else
+            {
+                //ve 1 tile
+                spriteBatch.Draw(CONTENT_MANAGER.spriteSheet, new Vector2(selectedMapCell.X * Constants.MapCellWidth, selectedMapCell.Y * Constants.MapCellHeight), SpriteSheetSourceRectangle.GetSpriteRectangle(currentlySelectedTerrain), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.GuiBackground);
+            }
+
+            //draw the cursor
+            //todo change cursor
             spriteBatch.Draw(CONTENT_MANAGER.UIspriteSheet, new Vector2(selectedMapCell.X * Constants.MapCellWidth, selectedMapCell.Y * Constants.MapCellHeight), new Rectangle(0, 0, 48, 48), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.GuiUpper);
 
             //end this batch

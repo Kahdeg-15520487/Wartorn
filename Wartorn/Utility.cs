@@ -64,6 +64,37 @@ namespace Wartorn
                 return ((int)t).CompareTo((int)other);
             }
 
+            public static bool Is2Tile(this TerrainType t)
+            {
+                switch (t)
+                {
+                    case TerrainType.Reef:
+                    case TerrainType.Sea:
+                    case TerrainType.River:
+                    case TerrainType.Coast:
+                    case TerrainType.Cliff:
+                    case TerrainType.Road:
+                    case TerrainType.Plain:
+                    case TerrainType.Tree:
+                    case TerrainType.MissileSiloLaunched:
+                    case TerrainType.Factory:
+                        return false;
+
+                    case TerrainType.Mountain:
+                    case TerrainType.MissileSilo:
+                    case TerrainType.City:
+                    case TerrainType.AirPort:
+                    case TerrainType.Harbor:
+                    case TerrainType.Radar:
+                    case TerrainType.SupplyBase:
+                    case TerrainType.Headquarter:
+                        return true;
+                    default:
+                        break;
+                }
+                return false;
+            }
+
             public static TerrainType ToTerrainType(this SpriteSheetTerrain t)
             {
                 TerrainType result = TerrainType.Plain;

@@ -386,9 +386,26 @@ namespace Wartorn.Drawing
                             map[pos.GetNearbyPoint(Direction.North)].terrainUpper = SpriteSheetTerrain.SupplyBase_Upper.Next(nextowner);
                             break;
                         case TerrainType.Headquarter:
+                            switch (map[pos].owner)
+                            {
+                                case Owner.Red:
+                                    nextowner = 0;
+                                    break;
+                                case Owner.Blue:
+                                    nextowner = SpriteSheetTerrain.Blue_Headquarter_Lower - SpriteSheetTerrain.Red_Headquarter_Lower;
+                                    break;
+                                case Owner.Green:
+                                    nextowner = SpriteSheetTerrain.Green_Headquarter_Lower - SpriteSheetTerrain.Red_Headquarter_Lower;
+                                    break;
+                                case Owner.Yellow:
+                                    nextowner = SpriteSheetTerrain.Yellow_Headquarter_Lower - SpriteSheetTerrain.Red_Headquarter_Lower;
+                                    break;
+                                default:
+                                    break;
+                            }
                             map[pos].terrainbase = SpriteSheetTerrain.Plain.Next(nextroadtreemnt);
-                            map[pos].terrainLower = SpriteSheetTerrain.Red_Headquarter_Lower.Next(nextowner - (int)SpriteSheetTerrain.Red_Headquarter_Lower);
-                            map[pos.GetNearbyPoint(Direction.North)].terrainUpper = SpriteSheetTerrain.Red_Headquarter_Upper.Next(nextowner - (int)SpriteSheetTerrain.Red_Headquarter_Lower);
+                            map[pos].terrainLower = SpriteSheetTerrain.Red_Headquarter_Lower.Next(nextowner);
+                            map[pos.GetNearbyPoint(Direction.North)].terrainUpper = SpriteSheetTerrain.Red_Headquarter_Upper.Next(nextowner);
                             break;
                         default:
                             break;
