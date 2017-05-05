@@ -32,7 +32,7 @@ namespace Wartorn
 
             public static void Log(Exception e)
             {
-                File.WriteAllText("crashlog.txt",e.Message+Environment.NewLine+e.StackTrace+Environment.NewLine+e.TargetSite);
+                File.WriteAllText("crashlog.txt", DateTime.Now.ToString(@"dd\/MM\/yyyy HH:mm") + Environment.NewLine + e.Message + Environment.NewLine + e.StackTrace + Environment.NewLine + e.TargetSite);
             }
         }
 
