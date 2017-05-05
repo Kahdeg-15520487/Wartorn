@@ -4,7 +4,6 @@
   <Platform>DesktopGL</Platform>
   <Config />
   <SourceFiles>
-    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/defaultfont.spritefont</File>
     <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/ui_sprite_sheet.png</File>
     <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/GUI/intro.mp4</File>
     <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/GUI/Startscreen.png</File>
@@ -30,5 +29,6 @@
     <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/Alliance_RED/Recon.png</File>
     <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/Alliance_RED/Mech.png</File>
     <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/building.png</File>
+    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/defaultfont.spritefont</File>
   </SourceFiles>
 </SourceFileCollection>

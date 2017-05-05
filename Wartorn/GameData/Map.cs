@@ -90,6 +90,9 @@ namespace Wartorn.GameData
         public void Clone(Map m)
         {
             map = m.map;
+            weather = m.weather;
+            theme = m.theme;
+            isProcessed = false;
         }
 
         public IEnumerator GetEnumerator()

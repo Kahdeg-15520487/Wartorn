@@ -172,9 +172,11 @@ namespace Wartorn.Storage
                 for (int y = 0; y < result.Height; y++)
                 {
                     result[x, y] = map[c];
+                    //CONTENT_MANAGER.ShowMessageBox(result[x, y].terrain.ToString());
                     c++;
                 }
             }
+            result.IsProcessed = false;
 
             return result;
         }

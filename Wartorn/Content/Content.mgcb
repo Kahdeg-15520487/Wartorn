@@ -13,13 +13,6 @@
 
 #---------------------------------- Content ---------------------------------#
 
-#begin defaultfont.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
-/processorParam:PremultiplyAlpha=True
-/processorParam:TextureFormat=Compressed
-/build:defaultfont.spritefont
-
 #begin sprite/ui_sprite_sheet.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -307,4 +300,11 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:sprite/building.png
+
+#begin defaultfont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:defaultfont.spritefont
 

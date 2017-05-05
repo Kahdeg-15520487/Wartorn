@@ -714,6 +714,7 @@ namespace Wartorn.Screens
             //render the map
             MapRenderer.Render(map, spriteBatch, gameTime);
 
+            #region draw cursor
             //spriteBatch.Draw(CONTENT_MANAGER.spriteSheet, new Vector2(selectedMapCell.X * Constants.MapCellWidth, selectedMapCell.Y * Constants.MapCellHeight), SpriteSheetSourceRectangle.GetSpriteRectangle(currentlySelectedTerrain), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.GuiLower);
             //draw the tile that is about to be placed
             if (currentlySelectedTerrain.Is2Tile())
@@ -841,6 +842,7 @@ namespace Wartorn.Screens
             //draw the cursor
             //todo change cursor
             spriteBatch.Draw(CONTENT_MANAGER.UIspriteSheet, new Vector2(selectedMapCell.X * Constants.MapCellWidth, selectedMapCell.Y * Constants.MapCellHeight), new Rectangle(0, 0, 48, 48), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.GuiUpper);
+            #endregion
 
             //end this batch
             spriteBatch.End();
