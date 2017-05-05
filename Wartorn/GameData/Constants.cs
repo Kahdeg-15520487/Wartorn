@@ -6,58 +6,76 @@ using System.Threading.Tasks;
 
 namespace Wartorn.GameData
 {
-    enum Terrain
+    public enum TerrainType
     {
         //terrain
-        Plain,
-        Dessert,
-        Forest,
-        Mountain,
+        Reef,
+        Sea,
         River,
         Coast,
-        Road,
-        Ocean,
-        Reef,
-        Waterfall,
         Cliff,
-        Tropical_Plain,
+        Road,
+        Bridge,
+        Plain,
+        Tree,
+        Mountain,
 
         //neutral
-        Bridge,
-        Ruin,
-        Barricade,
-        Bunker,
-        Turret,
+        MissileSilo,
+        MissileSiloLaunched,
 
-        //capturable building
+        //building
         City,
         Factory,
         AirPort,
-        Supply_Base,
-        Town,
-        Missle_Silo,
-        Navy_Fort,
-        Control_Point,
-        Radar_Station
+        Harbor,
+        Radar,
+        SupplyBase,
+        Headquarter
     }
 
 
-    enum Unit
+
+    public enum UnitType
     {
-        soldier,
-        tank
+        None,
+        Soldier,
+        Mech,
+        Recon,
+        APC,
+        Tank,
+        H_Tank,
+        Artillery,
+        Rocket,
+        Anti_Air,
+        Missile
     }
 
-    enum Weather
+    public enum Weather
     {
-        normal,
-        rain,
-        snow,
-        sandstorm
+        Sunny,
+        Rain,
+        Snow
     }
 
-    enum GameMode
+    public enum Theme
+    {
+        Normal,
+        Tropical,
+        Desert
+    }
+
+    public enum Owner
+    {
+        None,
+        Red,
+        Blue,
+        Green,
+        Yellow
+    }
+
+    public enum GameMode
     {
         campaign
-    }
+    }    
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 
 namespace Wartorn.Drawing.Animation
@@ -6,7 +7,7 @@ namespace Wartorn.Drawing.Animation
     /// <summary>
     /// Contains the data needed to animate a series of frames defined in a texture
     /// </summary>
-    public sealed class Animation
+    public sealed class Animation : ICloneable
     {
         #region Fields
 
@@ -131,6 +132,11 @@ namespace Wartorn.Drawing.Animation
             Frame keyFrame = new Frame(x, y, width, height);
             keyFrames.Add(keyFrame);
         }
+        public void AddKeyFrame(Rectangle source)
+        {
+            Frame keyFrame = new Frame(source.X, source.Y, source.Width, source.Height);
+            keyFrames.Add(keyFrame);
+        }
 
         #endregion
 
@@ -166,6 +172,11 @@ namespace Wartorn.Drawing.Animation
 
                 totalElapsedTime -= totalElapsedTime;
             }
+        }
+
+        public object Clone()
+        {
+            return this.MemberwiseClone();
         }
 
         #endregion

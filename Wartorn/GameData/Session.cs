@@ -19,7 +19,7 @@ namespace Wartorn.GameData
 
         public Session(SessionData sessiondata)
         {
-            map = Storage.MapData.LoadMap(sessiondata.mapName);
+            map = sessiondata.map;
             gameMode = sessiondata.gameMode;
         }
     }

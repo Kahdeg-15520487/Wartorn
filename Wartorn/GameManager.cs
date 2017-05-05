@@ -1,11 +1,26 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using System;
+using System.IO;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
-using Wartorn.Utility.Drawing;
-using Wartorn.UIClass;
+using Microsoft.Xna.Framework.Graphics;
+
 using Wartorn.ScreenManager;
+using Wartorn.Storage;
+using Wartorn.GameData;
+using Wartorn.UIClass;
+using Wartorn.Utility;
+using Wartorn.Utility.Drawing;
 using Wartorn.Screens;
-using System;
+using Wartorn.Drawing;
+using Wartorn.Drawing.Animation;
+
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Wartorn
 {
@@ -27,6 +42,16 @@ namespace Wartorn
             lastInputState = new InputState();
 
             graphics.PreferMultiSampling = true;
+
+            JsonConvert.DefaultSettings  = () =>
+            {
+                var settings = new JsonSerializerSettings();
+                settings.Converters.Add(new UnitPairJsonConverter());
+                settings.Converters.Add(new UnitJsonConverter());
+                settings.Converters.Add(new MapJsonConverter());
+                settings.Converters.Add(new MapCellJsonConverter());
+                return settings;
+            };            
         }
 
         /// <summary>
@@ -45,14 +70,8 @@ namespace Wartorn
             graphics.PreferredBackBufferHeight = Constants.Height;  // set this value to the desired height of your window
             graphics.ApplyChanges();
 
-            SCREEN_MANAGER.add_screen(new EditorScreen(GraphicsDevice));
-            SCREEN_MANAGER.add_screen(new MainMenuScreen(GraphicsDevice));
-            
-
-            SCREEN_MANAGER.goto_screen("MainMenuScreen");
-            //SCREEN_MANAGER.goto_screen("EditorScreen");
-
             DrawingHelper.Initialize(GraphicsDevice);
+            //Unit.Load();
 
             base.Initialize();
         }
@@ -69,103 +88,89 @@ namespace Wartorn
 
             // TODO: use this.Content to load your game content here
             CONTENT_MANAGER.defaultfont = CONTENT_MANAGER.Content.Load<SpriteFont>("defaultfont");
+            CONTENT_MANAGER.arcadefont = CONTENT_MANAGER.Content.Load<SpriteFont>(@"sprite\GUI\menufont");
             CONTENT_MANAGER.spriteSheet = CONTENT_MANAGER.Content.Load<Texture2D>(@"sprite\terrain");
-
+            CONTENT_MANAGER.buildingSpriteSheet = CONTENT_MANAGER.Content.Load<Texture2D>(@"sprite\building");
             CONTENT_MANAGER.UIspriteSheet = CONTENT_MANAGER.Content.Load<Texture2D>(@"sprite\ui_sprite_sheet");
 
-            SCREEN_MANAGER.Init();
-            //InitializeUI();
+            LoadAnimationContent();
+            InitScreen();
         }
-        #region Init UI example
-        /*
-        void InitializeUI()
+
+        private void LoadAnimationContent()
         {
-            Label label1 = new Label()
-            {
-                Text = "1",
-                Position = new Point(50,50),
-                Size = new Vector2(100,50),
-                font = defaultFont,
-                foregroundColor = Color.Black,
-                Scale = 2
-            };
+            CONTENT_MANAGER.animationEntities = new Dictionary<UnitType, AnimatedEntity>();
+            CONTENT_MANAGER.animationSheets = new Dictionary<UnitType, Texture2D>();
+            CONTENT_MANAGER.animationTypes = new List<Animation>();
 
-            Label label2 = new Label()
+            //list of unit type
+            var UnitTypes = new List<UnitType>((IEnumerable<UnitType>)Enum.GetValues(typeof(UnitType)));
+            UnitTypes.Remove(UnitType.None);
+            
+            //load animation sprite sheet for each unit type
+            foreach (UnitType unittype in UnitTypes)
             {
-                Text = "",
-                Position = new Point(10, 400),
-                Size = new Vector2(100, 30),
-                font = defaultFont,
-                foregroundColor = Color.White
-            };
+                CONTENT_MANAGER.animationSheets.Add(unittype, CONTENT_MANAGER.Content.Load<Texture2D>("sprite//Alliance_RED//" + unittype.ToString()));
+            }
 
-            Label label3 = new Label()
+            //declare animation type
+            Animation idle = new Animation("idle", true, 4, string.Empty);
+            for (int i = 0; i < 4; i++)
             {
-                Text = string.Empty,
-                Position = new Point(10, 440),
-                Size = new Vector2(100, 30),
-                font = defaultFont,
-                foregroundColor = Color.White
-            };
+                idle.AddKeyFrame(i * 48, 0, 48, 48);
+            }
 
-            Label labelTime = new Label()
+            Animation right = new Animation("right", true, 4, string.Empty);
+            for (int i = 0; i < 4; i++)
             {
-                Text = string.Empty,
-                Position = new Point(5,5),
-                Size = new Vector2(100, 30),
-                font = defaultFont,
-                foregroundColor = Color.White
-            };
+                right.AddKeyFrame(i * 48, 48, 48, 48);
+            }
 
-            label1.MouseEnter += delegate (object sender, UIEventArgs e)
+            Animation up = new Animation("up", true, 4, string.Empty);
+            for (int i = 0; i < 4; i++)
             {
-                label3.Text = "enter";
-            };
-            label1.MouseLeave += delegate (object sender, UIEventArgs e)
-            {
-                label3.Text = "leave";
-            };
+                up.AddKeyFrame(i * 48, 96, 48, 48);
+            }
 
-            Button button1 = new Button()
+            Animation down = new Animation("down", true, 4, string.Empty);
+            for (int i = 0; i < 4; i++)
             {
-                Text = "test",
-                Position = new Point(200, 200),
-                Size = new Vector2(50, 50),
-                font = defaultFont,
-                backgroundColor = Color.White,
-                foregroundColor = Color.Black,
-                ButtonColorPressed = Color.LightSlateGray,
-                ButtonColorReleased = Color.LightGray
-            };
+                down.AddKeyFrame(i * 48, 144, 48, 48);
+            }
 
-            button1.MouseUp += delegate (object sender, UIEventArgs e)
+            Animation done = new Animation("done", true, 1, string.Empty);
+            done.AddKeyFrame(0, 192, 48, 48);
+
+            CONTENT_MANAGER.animationTypes.Add(idle);
+            CONTENT_MANAGER.animationTypes.Add(right);
+            CONTENT_MANAGER.animationTypes.Add(up);
+            CONTENT_MANAGER.animationTypes.Add(down);
+            CONTENT_MANAGER.animationTypes.Add(done);
+
+            foreach (var unittype in UnitTypes)
             {
-                int temp;
-                if (int.TryParse(label1.Text,out temp))
-                {
-                    label1.Text = (temp + 1).ToString();
-                }
-            };
-
-            InputBox inputbox1 = new InputBox()
-            {
-                Text = "test",
-                Position = new Point(300, 200),
-                Size = new Vector2(50, 50),
-                font = defaultFont,
-                backgroundColor = Color.White,
-                foregroundColor = Color.White
-            };
-
-            canvas.AddElement("label1", label1);
-            canvas.AddElement("label2", label2);
-            canvas.AddElement("label3", label3);
-            canvas.AddElement("button1", button1);
-            canvas.AddElement("labelTime", labelTime);
-            canvas.AddElement("inputbox1", inputbox1);
+                AnimatedEntity temp = new AnimatedEntity(Vector2.Zero, Color.White, LayerDepth.Unit);
+                temp.LoadContent(CONTENT_MANAGER.animationSheets[unittype]);
+                temp.AddAnimation(CONTENT_MANAGER.animationTypes);
+                temp.PlayAnimation("idle");
+                CONTENT_MANAGER.animationEntities.Add(unittype, temp);
+            }
         }
-        */
-        #endregion
+
+        private void InitScreen()
+        {
+            SCREEN_MANAGER.add_screen(new EditorScreen(GraphicsDevice));
+            SCREEN_MANAGER.add_screen(new MainMenuScreen(GraphicsDevice));
+            SCREEN_MANAGER.add_screen(new TestAnimationScreen(GraphicsDevice));
+
+
+            //SCREEN_MANAGER.goto_screen("TestAnimationScreen");
+            SCREEN_MANAGER.goto_screen("MainMenuScreen");
+            //SCREEN_MANAGER.goto_screen("EditorScreen");
+
+            SCREEN_MANAGER.Init();
+        }
+
         /// <summary>
         /// UnloadContent will be called once per game and is the place to unload
         /// game-specific content.

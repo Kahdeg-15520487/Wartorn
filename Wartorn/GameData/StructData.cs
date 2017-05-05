@@ -8,8 +8,8 @@ namespace Wartorn.GameData
 {
     struct SessionData
     {
-        public string mapName;
         public GameMode gameMode;
         public int[] playerId;
+        public Map map;
     }
 }

@@ -13,7 +13,7 @@ namespace Wartorn.UIClass
     {
         protected Rectangle rect = new Rectangle();
         
-        protected Vector2 origin;
+        protected Vector2 origin = Vector2.Zero;
         /// <summary>
         /// The position of the UI element a.k.a where the top left corner of this element should be
         /// </summary>
