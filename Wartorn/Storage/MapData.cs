@@ -167,16 +167,20 @@ namespace Wartorn.Storage
             result.theme = theme;
             result.weather = weather;
             int c = 0;
+            bool isProcessed = false;
             for (int x = 0; x < result.Width; x++)
             {
                 for (int y = 0; y < result.Height; y++)
                 {
                     result[x, y] = map[c];
-                    //CONTENT_MANAGER.ShowMessageBox(result[x, y].terrain.ToString());
+                    if (result[x,y].terrainbase != SpriteSheetTerrain.None)
+                    {
+                        isProcessed = true;
+                    }
                     c++;
                 }
             }
-            result.IsProcessed = false;
+            result.IsProcessed = isProcessed;
 
             return result;
         }
@@ -202,12 +206,21 @@ namespace Wartorn.Storage
             serializer.Serialize(writer, temp.unit);
             writer.WritePropertyName("unitid");
             serializer.Serialize(writer, temp.unitId);
+            writer.WritePropertyName("base");
+            serializer.Serialize(writer, temp.terrainbase.ToString());
+            writer.WritePropertyName("lower");
+            serializer.Serialize(writer, temp.terrainLower.ToString());
+            writer.WritePropertyName("upper");
+            serializer.Serialize(writer, temp.terrainUpper.ToString());
             writer.WriteEndObject();
         }
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
             TerrainType terrain = TerrainType.Plain;
+            SpriteSheetTerrain terrainbase = SpriteSheetTerrain.None;
+            SpriteSheetTerrain terrainLower = SpriteSheetTerrain.None;
+            SpriteSheetTerrain terrainUpper = SpriteSheetTerrain.None;
             Owner owner = Owner.None;
             Unit unit = null;
             int unitid = 0;
@@ -239,6 +252,15 @@ namespace Wartorn.Storage
                     case "unitid":
                         unitid = serializer.Deserialize<int>(reader);
                         break;
+                    case "base":
+                        terrainbase = (serializer.Deserialize<string>(reader)).ToEnum<SpriteSheetTerrain>();
+                        break;
+                    case "lower":
+                        terrainUpper = (serializer.Deserialize<string>(reader)).ToEnum<SpriteSheetTerrain>();
+                        break;
+                    case "upper":
+                        terrainLower = (serializer.Deserialize<string>(reader)).ToEnum<SpriteSheetTerrain>();
+                        break;
                     default:
                         break;
                 }
@@ -247,6 +269,9 @@ namespace Wartorn.Storage
 
             MapCell result = new MapCell(terrain, unit, unitid);
             result.owner = owner;
+            result.terrainbase = terrainbase;
+            result.terrainLower = terrainLower;
+            result.terrainUpper = terrainUpper;
 
             return result;
         }

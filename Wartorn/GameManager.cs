@@ -162,7 +162,8 @@ namespace Wartorn
             SCREEN_MANAGER.add_screen(new EditorScreen(GraphicsDevice));
             SCREEN_MANAGER.add_screen(new MainMenuScreen(GraphicsDevice));
             SCREEN_MANAGER.add_screen(new TestAnimationScreen(GraphicsDevice));
-
+            SCREEN_MANAGER.add_screen(new Screens.MainGameScreen.SetupScreen(GraphicsDevice));
+            SCREEN_MANAGER.add_screen(new Screens.MainGameScreen.GameScreen(GraphicsDevice));
 
             //SCREEN_MANAGER.goto_screen("TestAnimationScreen");
             SCREEN_MANAGER.goto_screen("MainMenuScreen");

@@ -92,7 +92,7 @@ namespace Wartorn.Screens
                 }
                 else
                 {
-                    //SCREEN_MANAGER.goto_screen("Campaign");
+                    SCREEN_MANAGER.goto_screen("SetupScreen");
                 }
             };
 

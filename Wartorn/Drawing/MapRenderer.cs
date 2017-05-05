@@ -16,7 +16,7 @@ namespace Wartorn.Drawing
 {
     static class MapRenderer
     {
-        //TODO do the maprenderer class
+        //TODO: make a minimap renderer
         public static void Render(Map map, SpriteBatch spriteBatch, GameTime gameTime)
         {
             if (!map.IsProcessed)
@@ -537,7 +537,7 @@ namespace Wartorn.Drawing
                                 map[pos].terrainLower = SpriteSheetTerrain.SupplyBase_Lower.Next(nextowner);
                                 map[pos.GetNearbyPoint(Direction.North)].terrainUpper = SpriteSheetTerrain.SupplyBase_Upper.Next(nextowner);
                                 break;
-                            case TerrainType.Headquarter:
+                            case TerrainType.HQ:
                                 switch (map[pos].owner)
                                 {
                                     case Owner.Red:

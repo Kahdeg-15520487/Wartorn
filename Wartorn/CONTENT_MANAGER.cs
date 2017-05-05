@@ -24,6 +24,7 @@ namespace Wartorn
         public static Texture2D spriteSheet;
         public static Texture2D UIspriteSheet;
         public static Texture2D buildingSpriteSheet;
+        public static Texture2D blank8x8;
 
         #region animation sprite sheet
         public static Dictionary<UnitType, AnimatedEntity> animationEntities;

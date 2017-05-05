@@ -202,7 +202,7 @@ namespace Wartorn
                 case TerrainType.SupplyBase:
                     temp = TerrainSprite[SpriteSheetTerrain.SupplyBase_Lower];
                     break;
-                case TerrainType.Headquarter:
+                case TerrainType.HQ:
                     temp = TerrainSprite[SpriteSheetTerrain.Blue_Headquarter_Lower];
                     break;
                 default:

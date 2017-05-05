@@ -30,5 +30,7 @@
     <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/Alliance_RED/Mech.png</File>
     <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/building.png</File>
     <File>G:/Workspace/c#/Wartorn/Wartorn/Content/defaultfont.spritefont</File>
+    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/blank8x8.png</File>
+    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/GUI/placeholdergui.png</File>
   </SourceFiles>
 </SourceFileCollection>

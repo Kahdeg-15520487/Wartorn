@@ -47,11 +47,11 @@
     <Compile Include="Drawing\Camera.cs" />
     <Compile Include="Drawing\DrawingHelper.cs" />
     <Compile Include="Drawing\MapRenderer.cs" />
+    <Compile Include="Drawing\MiniMapGenerator.cs" />
     <Compile Include="GameData\Constants.cs" />
     <Compile Include="GameData\Map.cs" />
     <Compile Include="GameData\MapCell.cs" />
     <Compile Include="GameData\Session.cs" />
-    <Compile Include="GameData\StructData.cs" />
     <Compile Include="GameData\Unit.cs" />
     <Compile Include="GameManager.cs" />
     <Compile Include="Drawing\PrimitiveBatch.cs" />
@@ -66,6 +66,8 @@
     <Compile Include="Screens\BlueScreen.cs" />
     <Compile Include="Screens\Campaign.cs" />
     <Compile Include="Screens\EditorScreen.cs" />
+    <Compile Include="Screens\MainGameScreen\GameScreen.cs" />
+    <Compile Include="Screens\MainGameScreen\SetupScreen.cs" />
     <Compile Include="Screens\MainMenuScreen.cs" />
     <Compile Include="Screens\RedScreen.cs" />
     <Compile Include="Screens\TestAnimationScreen.cs" />

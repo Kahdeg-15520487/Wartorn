@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.IO;
 using Wartorn.GameData;
+using Wartorn.Drawing;
 
 namespace Wartorn
 {
@@ -33,6 +34,19 @@ namespace Wartorn
             public static void Log(Exception e)
             {
                 File.WriteAllText("crashlog.txt", DateTime.Now.ToString(@"dd\/MM\/yyyy HH:mm") + Environment.NewLine + e.Message + Environment.NewLine + e.StackTrace + Environment.NewLine + e.TargetSite);
+            }
+
+
+            public static Point TranslateMousePosToMapCellPos(Point mousepos, Camera camera, int width, int height)
+            {
+                //calculate currently selected mapcell
+                Vector2 temp = camera.TranslateFromScreenToWorld(mousepos.ToVector2());
+                temp.X = (int)(temp.X / Constants.MapCellWidth);       //mapcell size
+                temp.Y = (int)(temp.Y / Constants.MapCellHeight);
+
+                if (temp.X >= 0 && temp.X < width && temp.Y >= 0 && temp.Y < height)
+                    return temp.ToPoint();
+                return Point.Zero;
             }
         }
 
@@ -87,7 +101,7 @@ namespace Wartorn
                     case TerrainType.Harbor:
                     case TerrainType.Radar:
                     case TerrainType.SupplyBase:
-                    case TerrainType.Headquarter:
+                    case TerrainType.HQ:
                         return true;
                     default:
                         break;
@@ -614,7 +628,7 @@ namespace Wartorn
                     case SpriteSheetTerrain.Blue_Headquarter_Lower:
                     case SpriteSheetTerrain.Green_Headquarter_Lower:
                     case SpriteSheetTerrain.Yellow_Headquarter_Lower:
-                        result = TerrainType.Headquarter;
+                        result = TerrainType.HQ;
                         break;
                 }
 

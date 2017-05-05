@@ -10,17 +10,37 @@ using Wartorn.Utility.Drawing;
 
 namespace Wartorn.GameData
 {
-    class Session
+    struct PlayerInfo
     {
-        int turn;
-        Weather weather;
-        Map map;
-        GameMode gameMode;
+        public int playerId;
+        public Owner owner;
+        public PlayerInfo(int playerid,Owner owner)
+        {
+            playerId = playerid;
+            this.owner = owner;
+        }
+    }
+
+    struct SessionData
+    {
+        public GameMode gameMode;
+        public PlayerInfo[] playerId;
+        public Map map;
+    }
+
+    struct Session
+    {
+        public int turn;
+        public Weather weather;
+        public Map map;
+        public GameMode gameMode;
 
         public Session(SessionData sessiondata)
         {
             map = sessiondata.map;
             gameMode = sessiondata.gameMode;
+            turn = 0;
+            weather = Weather.Sunny;
         }
     }
 }

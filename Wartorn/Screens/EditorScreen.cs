@@ -30,8 +30,10 @@ namespace Wartorn.Screens
         private Map map;
         private Canvas canvas;
         private Camera camera;
+        private MiniMapGenerator minimapgen;
 
         private Texture2D showtile;
+        private Texture2D minimap;
 
         private Point selectedMapCell = new Point(0, 0);
         private Vector2 offset = new Vector2(70, 70);
@@ -74,14 +76,17 @@ namespace Wartorn.Screens
         public override bool Init()
         {
             map = new Map(50, 30);
-            mapArea = new Rectangle(0, 0, (int)(map.Width * Constants.MapCellWidth), (int)(map.Height * Constants.MapCellHeight));
+            mapArea = new Rectangle(0, 0, map.Width * Constants.MapCellWidth, map.Height * Constants.MapCellHeight);
             canvas = new Canvas();
             camera = new Camera(_device.Viewport);
+            minimapgen = new MiniMapGenerator(_device, CONTENT_MANAGER.Content, CONTENT_MANAGER.spriteBatch);
 
             undostack = new Stack<Action>();
 
             InitUI();
             InitMap(TerrainType.Plain);
+
+            minimap = minimapgen.GenerateMapTexture(map);
             return base.Init();
         }
 
@@ -433,7 +438,7 @@ namespace Wartorn.Screens
             {
                 if (button_headquarter.spriteSourceRectangle.Y != 0)
                 {
-                    currentlySelectedTerrain = TerrainType.Headquarter;
+                    currentlySelectedTerrain = TerrainType.HQ;
                 }
             };
 
@@ -526,11 +531,16 @@ namespace Wartorn.Screens
             }
             MoveCamera(keyboardInputState, mouseInputState);
 
-            UpdateMap(gameTime);
+            UpdateAnimation(gameTime);
             //ZoomCamera();
+
+            if (!map.IsProcessed)
+            {
+                minimap = minimapgen.GenerateMapTexture(map);
+            }
         }
 
-        private void UpdateMap(GameTime gameTime)
+        private void UpdateAnimation(GameTime gameTime)
         {
             foreach (MapCell mapcell in map)
             {
@@ -696,10 +706,18 @@ namespace Wartorn.Screens
         {
             DrawMap(CONTENT_MANAGER.spriteBatch,gameTime);
             canvas.Draw(CONTENT_MANAGER.spriteBatch);
+
+            //draw side menu
             CONTENT_MANAGER.spriteBatch.Draw(showtile, GuiSide == Side.Left ? new Vector2(0, 350) : new Vector2(630, 350), null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.GuiLower);
             CONTENT_MANAGER.spriteBatch.DrawString(CONTENT_MANAGER.defaultfont, map[selectedMapCell].terrainbase.ToTerrainType().ToString(), GuiSide == Side.Left ? new Vector2(0, 360) : new Vector2(650, 360), Color.Black, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.GuiUpper);
             CONTENT_MANAGER.spriteBatch.DrawString(CONTENT_MANAGER.defaultfont, currentlySelectedTerrain.ToString(), GuiSide == Side.Left ? new Vector2(0, 430) : new Vector2(650, 430), Color.Black, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.GuiUpper);
             CONTENT_MANAGER.spriteBatch.Draw(CONTENT_MANAGER.spriteSheet, GuiSide == Side.Left ? new Vector2(10, 380) : new Vector2(660, 380), SpriteSheetSourceRectangle.GetSpriteRectangle(map[selectedMapCell].terrainbase), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.GuiUpper);
+
+            //draw minimap
+            if (isMenuOpen)
+            {
+                CONTENT_MANAGER.spriteBatch.Draw(minimap, new Vector2(400, 10), null, Color.White, 0f, Vector2.Zero, 0.75f, SpriteEffects.None, LayerDepth.GuiLower);
+            }
         }
 
         private void DrawMap(SpriteBatch spriteBatch,GameTime gameTime)
@@ -806,7 +824,7 @@ namespace Wartorn.Screens
                         lowertile = SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.SupplyBase_Lower.Next(nextowner));
                         uppertile = SpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.SupplyBase_Upper.Next(nextowner));
                         break;
-                    case TerrainType.Headquarter:
+                    case TerrainType.HQ:
                         switch (currentlySelectedOwner)
                         {
                             case Owner.Red:

@@ -15,7 +15,7 @@ using Wartorn.Utility;
 
 namespace Wartorn.Drawing
 {
-    class Camera
+    public class Camera
     {
         private float _zoom = 1f;
         private Vector2 _location = Vector2.Zero;

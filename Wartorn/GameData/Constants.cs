@@ -31,7 +31,7 @@ namespace Wartorn.GameData
         Harbor,
         Radar,
         SupplyBase,
-        Headquarter
+        HQ
     }
 
 

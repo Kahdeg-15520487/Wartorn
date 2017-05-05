@@ -51,6 +51,18 @@ namespace Wartorn
                 return _screens[index];
             }
 
+            static public Screen get_screen(string screenname)
+            {
+                for (int i = 0; i < _screens.Count; i++)
+                {
+                    if (string.Compare(_screens[i].Name,screenname) == 0)
+                    {
+                        return _screens[i];
+                    }
+                }
+                return null;
+            }
+
             /// <summary>
             /// Go to screen
             /// </summary>
