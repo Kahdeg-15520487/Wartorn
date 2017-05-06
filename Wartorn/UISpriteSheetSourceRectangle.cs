@@ -33,8 +33,6 @@ namespace Wartorn
             {
                 UISprite.Add(((SpriteSheetUI)i).ToString(), new Rectangle(i * 48, 0, 48, 48));
             }
-            //string log = JsonConvert.SerializeObject(UISprite, Formatting.Indented);
-            //File.WriteAllText("log.txt", log);
         }
 
         public static Rectangle GetSpriteRectangle(string str)

@@ -53,6 +53,19 @@ namespace Wartorn
                 }
             }
 
+            public T GetElementAs<T>(string uiName)
+            {
+                if (UIelements.ContainsKey(uiName))
+                {
+                    return (T)(object)UIelements[uiName];
+                }
+                else
+                {
+                    Utility.HelperFunction.Log(new Exception(uiName + " not found"));
+                    return default(T);
+                }
+            }
+
             public void LoadContent()
             {
                 //UIspritesheet = content.Load<Texture2D>("sprite\\UIspritesheet");

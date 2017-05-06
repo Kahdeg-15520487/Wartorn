@@ -92,6 +92,8 @@ namespace Wartorn
             CONTENT_MANAGER.spriteSheet = CONTENT_MANAGER.Content.Load<Texture2D>(@"sprite\terrain");
             CONTENT_MANAGER.buildingSpriteSheet = CONTENT_MANAGER.Content.Load<Texture2D>(@"sprite\building");
             CONTENT_MANAGER.UIspriteSheet = CONTENT_MANAGER.Content.Load<Texture2D>(@"sprite\ui_sprite_sheet");
+            CONTENT_MANAGER.unitSpriteSheet = CONTENT_MANAGER.Content.Load<Texture2D>(@"sprite\unit");
+            CONTENT_MANAGER.blank8x8 = CONTENT_MANAGER.Content.Load<Texture2D>(@"sprite\blank8x8");
 
             LoadAnimationContent();
             InitScreen();

@@ -26,33 +26,62 @@ namespace Wartorn.Screens.MainGameScreen
 {
     class GameScreen : Screen
     {
+        //information of this game session
         Session session;
 
+        //ui canvas
         Canvas canvas;
         Canvas canvas_generalInfo;
         Canvas canvas_action;
+        Canvas canvas_action_Factory;
+        Canvas canvas_action_Airport;
+        Canvas canvas_action_Harbor;
+        Canvas canvas_action_Unit;
+        Canvas canvas_action_Building;
+
+        //resources
         Texture2D guibackground;
         Texture2D minimap;
         MiniMapGenerator minimapgen;
 
+        //
         Camera camera;
 
+        //input information
+        MouseState mouseInputState;
+        MouseState lastMouseInputState;
+        KeyboardState keyboardInputState;
+        KeyboardState lastKeyboardInputState;
         Point selectedMapCell;
 
-        readonly Rectangle minimapbound = new Rectangle(2, 312, 234, 166);
 
+        //constants
+        readonly Rectangle minimapbound = new Rectangle(2, 312, 234, 166);
+        readonly Rectangle actionbound = new Rectangle(536, 340, 182, 138);
+
+        //gui variable
         bool isHideGUI = false;
+
+        //player information
+        PlayerInfo[] playerInfos;
+        int currentPlayer = 0;
+        int localPlayer = 0;
+
+        //build unit information
+        UnitType selectedUnitToBuild = UnitType.None;
+        Point selectedFactoryToBuild = new Point(0, 0);
 
         public GameScreen(GraphicsDevice device) : base(device, "GameScreen")
         {
             LoadContent();
-            minimapgen = new MiniMapGenerator(device, CONTENT_MANAGER.Content, CONTENT_MANAGER.spriteBatch);
+            minimapgen = new MiniMapGenerator(device, CONTENT_MANAGER.spriteBatch);
         }
 
         public void InitSession(SessionData sessiondata)
         {
             session = new Session(sessiondata);
             minimap = minimapgen.GenerateMapTexture(session.map);
+            playerInfos = sessiondata.playerInfos;
         }
 
         private void LoadContent()
@@ -62,6 +91,9 @@ namespace Wartorn.Screens.MainGameScreen
 
         public override bool Init()
         {
+            //TODO
+            //do something to handshake player
+
             camera = new Camera(_device.Viewport);
             canvas = new Canvas();
 
@@ -93,50 +125,214 @@ namespace Wartorn.Screens.MainGameScreen
         {
             //declare ui elements
             Label label_terraintype = new Label(" ", new Point(465, 365), new Vector2(50, 20), CONTENT_MANAGER.arcadefont);
+            label_terraintype.Scale = 0.75f;
+            Label label_unittype = new Label(" ", new Point(300, 365), new Vector2(80, 20), CONTENT_MANAGER.arcadefont);
 
             //bind event
 
             //add to canvas
             canvas_generalInfo.AddElement("label_terraintype", label_terraintype);
+            canvas_generalInfo.AddElement("label_unittype", label_unittype);
         }
 
+        /* action button layout
+         * 
+         *      540  570  600  630  660  690
+         * 346
+         * 380
+         * 414
+         * 448
+         */
         private void InitCanvas_action()
         {
             //declare ui elements
+            InitCanvas_Factory();
+
             //bind event
+
             //add to canvas
+            canvas_action.AddElement("canvas_Factory", canvas_action_Factory);
         }
+
+        private void InitCanvas_Factory()
+        {
+            canvas_action_Factory = new Canvas();
+            canvas_action_Factory.IsVisible = false;
+
+            //hàng 1
+            Button button_Soldier = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSprite(UnitType.Soldier,playerInfos[localPlayer].owner), new Point(540, 346), 0.5f);
+            Button button_Mech = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSprite(UnitType.Mech, playerInfos[localPlayer].owner), new Point(570, 346), 0.5f);
+            Button button_Recon = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSprite(UnitType.Recon, playerInfos[localPlayer].owner), new Point(600, 346), 0.5f);
+            Button button_APC = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSprite(UnitType.APC, playerInfos[localPlayer].owner), new Point(630, 346), 0.5f);
+            Button button_Tank = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSprite(UnitType.Tank, playerInfos[localPlayer].owner), new Point(660, 346), 0.5f);
+            Button button_H_Tank = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSprite(UnitType.H_Tank, playerInfos[localPlayer].owner), new Point(690, 346), 0.5f);
+
+            //hàng 2
+            Button button_Artilerry = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSprite(UnitType.Artillery, playerInfos[localPlayer].owner), new Point(540, 380), 0.5f);
+            Button button_Rocket = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSprite(UnitType.Rocket, playerInfos[localPlayer].owner), new Point(570, 380), 0.5f);
+            Button button_AntiAir = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSprite(UnitType.Anti_Air, playerInfos[localPlayer].owner), new Point(600, 380), 0.5f);
+            Button button_Missile = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSprite(UnitType.Missile, playerInfos[localPlayer].owner), new Point(630, 380), 0.5f);
+
+            List<Button> tempbuttonlist = new List<Button>();
+            tempbuttonlist.Add(button_Soldier);
+            tempbuttonlist.Add(button_Mech);
+            tempbuttonlist.Add(button_Recon);
+            tempbuttonlist.Add(button_APC);
+            tempbuttonlist.Add(button_Tank);
+            tempbuttonlist.Add(button_H_Tank);
+            tempbuttonlist.Add(button_Artilerry);
+            tempbuttonlist.Add(button_Rocket);
+            tempbuttonlist.Add(button_AntiAir);
+            tempbuttonlist.Add(button_Missile);
+
+            #region bind event
+            foreach (Button button in tempbuttonlist)
+            {
+                button.MouseClick += (sender, e) =>
+                {
+                    selectedUnitToBuild = UnitSpriteSheetRectangle.GetUnitType(button.spriteSourceRectangle);
+                };
+            }
+            #endregion
+
+            canvas_action_Factory.AddElement("button_Soldier", button_Soldier);
+            canvas_action_Factory.AddElement("button_Mech", button_Mech);
+            canvas_action_Factory.AddElement("button_Recon", button_Recon);
+            canvas_action_Factory.AddElement("button_APC", button_APC);
+            canvas_action_Factory.AddElement("button_Tank", button_Tank);
+            canvas_action_Factory.AddElement("button_H_Tank", button_H_Tank);
+            canvas_action_Factory.AddElement("button_Artilerry", button_Artilerry);
+            canvas_action_Factory.AddElement("button_Rocket", button_Rocket);
+            canvas_action_Factory.AddElement("button_AntiAir", button_AntiAir);
+            canvas_action_Factory.AddElement("button_Missile", button_Missile);
+        }
+
 
         public override void Shutdown()
         {
-            base.Shutdown();
+            session.map = null;
         }
 
         public override void Update(GameTime gameTime)
         {
-            var mouseInputState = CONTENT_MANAGER.inputState.mouseState;
-            var lastMouseInputState = CONTENT_MANAGER.lastInputState.mouseState;
-            var keyboardInputState = CONTENT_MANAGER.inputState.keyboardState;
-            var lastKeyboardInputState = CONTENT_MANAGER.lastInputState.keyboardState;
+            mouseInputState = CONTENT_MANAGER.inputState.mouseState;
+            lastMouseInputState = CONTENT_MANAGER.lastInputState.mouseState;
+            keyboardInputState = CONTENT_MANAGER.inputState.keyboardState;
+            lastKeyboardInputState = CONTENT_MANAGER.lastInputState.keyboardState;
+
+            if (Utility.HelperFunction.IsKeyPress(Keys.Escape))
+            {
+                SCREEN_MANAGER.goto_screen("SetupScreen");
+                return;
+            }
 
             UpdateAnimation(gameTime);
 
             //update canvas
+            canvas.Update(CONTENT_MANAGER.inputState, CONTENT_MANAGER.lastInputState);
             ((Label)canvas["label_mousepos"]).Text = mouseInputState.Position.ToString();
             UpdateCanvas_generalInfo();
 
             //camera control
             MoveCamera(keyboardInputState, mouseInputState);
-
             selectedMapCell = Utility.HelperFunction.TranslateMousePosToMapCellPos(mouseInputState.Position, camera, session.map.Width, session.map.Height);
-            minimap = minimapgen.GenerateMapTexture(session.map);
+
+            //update minimap
+            if (!session.map.IsProcessed)
+            {
+                minimap = minimapgen.GenerateMapTexture(session.map);
+            }
+
+            UpdateTurn();
+            if (mouseInputState.LeftButton == ButtonState.Released
+             && lastMouseInputState.LeftButton == ButtonState.Pressed)
+                UpdateBuilding();
+            UpdateUnit();
         }
+
+        #region Update game logic
+        private void UpdateTurn()
+        {
+            //throw new NotImplementedException();
+        }
+
+        private void UpdateUnit()
+        {
+            
+        }
+
+        private void UpdateBuilding()
+        {
+            MapCell temp = session.map[selectedMapCell];
+            if (isBuildingThatProduceUnit(temp.terrain)
+             && currentPlayer == localPlayer
+             && temp.owner == playerInfos[localPlayer].owner)
+            {
+                switch (temp.terrain)
+                {
+                    case TerrainType.Factory:
+                        canvas_action_Factory.IsVisible = true;
+                        selectedFactoryToBuild = selectedMapCell;
+                        break;
+                    case TerrainType.AirPort:
+                        break;
+                    case TerrainType.Harbor:
+                        break;
+                    default:
+                        break;
+                }
+            }
+            else
+            {
+                if (!actionbound.Contains(mouseInputState.Position))
+                {
+                    canvas_action_Factory.IsVisible = false;
+                }
+            }
+
+            if (selectedUnitToBuild != UnitType.None)
+            {
+                SpawnUnit(selectedUnitToBuild, playerInfos[localPlayer], selectedFactoryToBuild);
+                selectedUnitToBuild = UnitType.None;
+            }
+        }
+
+        private bool SpawnUnit(UnitType unittype,PlayerInfo owner,Point location)
+        {
+            MapCell spawnlocation = session.map[location];
+            if (spawnlocation != null
+              &&spawnlocation.unit == null)
+            {
+                Unit temp = UnitCreationHelper.Create(unittype, owner.owner);
+                temp.UnitID = 0;
+                session.map[location].unit = temp;
+                return true;
+            }
+
+            return false;
+        }
+
+        private bool isBuildingThatProduceUnit(TerrainType t)
+        {
+            switch (t)
+            {
+                case TerrainType.Factory:
+                case TerrainType.AirPort:
+                case TerrainType.Harbor:
+                    return true;
+                default:
+                    break;
+            }
+            return false;
+        }
+        #endregion
 
         #region Update function helper
 
         private void UpdateCanvas_generalInfo()
         {
             ((Label)canvas_generalInfo["label_terraintype"]).Text = session.map[selectedMapCell].terrain.ToString();
+            ((Label)canvas_generalInfo["label_unittype"]).Text = session.map[selectedMapCell].unit != null ? session.map[selectedMapCell].unit.UnitType.ToString() : " ";
         }
 
         private void UpdateAnimation(GameTime gameTime)
@@ -173,6 +369,7 @@ namespace Wartorn.Screens.MainGameScreen
         }
 
         #endregion
+
         public override void Draw(GameTime gameTime)
         {
             DrawMap(CONTENT_MANAGER.spriteBatch, gameTime);
@@ -182,11 +379,16 @@ namespace Wartorn.Screens.MainGameScreen
             canvas.Draw(CONTENT_MANAGER.spriteBatch);
 
             //draw canvas_generalInfo
-            //MapCell temp = session.map[selectedMapCell];
-            
+            DrawCanvas_generalInfo();
+
 
             //draw the minimap
             CONTENT_MANAGER.spriteBatch.Draw(minimap, minimapbound, null, Color.White, 0f, Vector2.Zero, SpriteEffects.None, LayerDepth.GuiBackground);
+        }
+
+        private void DrawCanvas_generalInfo()
+        {
+            
         }
 
         private void DrawMap(SpriteBatch spriteBatch,GameTime gameTime)

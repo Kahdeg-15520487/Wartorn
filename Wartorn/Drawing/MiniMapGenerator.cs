@@ -7,17 +7,13 @@ namespace Wartorn.Drawing
 {
     class MiniMapGenerator
     {
-        ContentManager content;
         GraphicsDevice graphics;
         SpriteBatch spriteBatch;
-        Texture2D tile;
 
-        public MiniMapGenerator(GraphicsDevice gd, ContentManager cm, SpriteBatch sb)
+        public MiniMapGenerator(GraphicsDevice gd, SpriteBatch sb)
         {
             spriteBatch = sb;
             graphics = gd;
-            content = new ContentManager(cm.ServiceProvider, cm.RootDirectory);
-            tile = content.Load<Texture2D>(@"sprite\blank8x8");
         }
 
 
@@ -134,7 +130,7 @@ namespace Wartorn.Drawing
                     }
 
                     draw:
-                    spriteBatch.Draw(tile, new Vector2(x * 8, y * 8), color);
+                    spriteBatch.Draw(CONTENT_MANAGER.blank8x8, new Vector2(x * 8, y * 8), color);
                 }
 
             spriteBatch.End();

@@ -62,6 +62,7 @@ namespace Wartorn.GameData
         public UnitType UnitType { get { return unitType; } }
         public int HitPoint { get { return hitPoint; } }
         public Owner Owner { get; set; }
+        public int UnitID { get; set; }
         
         public Unit(UnitType unittype, AnimatedEntity anim,Owner owner,int hp = 100)
         {

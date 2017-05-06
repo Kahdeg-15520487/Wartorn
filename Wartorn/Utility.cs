@@ -658,6 +658,11 @@ namespace Wartorn
                         result = (int)unboxTerrain + count;
                         box = (T)((object)result);
                         break;
+                    case "SpriteSheetUnit":
+                        SpriteSheetUnit unboxSpriteSheetUnit = (SpriteSheetUnit)((object)t);
+                        result = (int)unboxSpriteSheetUnit + count;
+                        box = (T)((object)result);
+                        break;
                     default:
                         break;
                 }
@@ -685,6 +690,11 @@ namespace Wartorn
                     case "TerrainType":
                         TerrainType unboxTerrain = (TerrainType)((object)t);
                         result = (int)unboxTerrain - count;
+                        box = (T)((object)result);
+                        break;
+                    case "SpriteSheetUnit":
+                        SpriteSheetUnit unboxSpriteSheetUnit = (SpriteSheetUnit)((object)t);
+                        result = (int)unboxSpriteSheetUnit - count;
                         box = (T)((object)result);
                         break;
                     default:

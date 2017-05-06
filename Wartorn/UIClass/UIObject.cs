@@ -11,7 +11,7 @@ namespace Wartorn.UIClass
 {
     abstract class UIObject:IUIEvent
     {
-        protected Rectangle rect = new Rectangle();
+        public Rectangle rect = new Rectangle();
         
         protected Vector2 origin = Vector2.Zero;
         /// <summary>

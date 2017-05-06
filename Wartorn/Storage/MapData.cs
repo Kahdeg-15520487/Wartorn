@@ -156,7 +156,7 @@ namespace Wartorn.Storage
                             mctemp = JsonConvert.DeserializeObject<MapCell>(obj.ToString());
                             map.Add(mctemp);
                         }
-                        File.WriteAllText("mapdata.txt", JsonConvert.SerializeObject(map, Formatting.Indented));
+                        //File.WriteAllText("mapdata.txt", JsonConvert.SerializeObject(map, Formatting.Indented));
                         break;
                     default:
                         break;
@@ -204,8 +204,6 @@ namespace Wartorn.Storage
             serializer.Serialize(writer, temp.owner.ToString());
             writer.WritePropertyName("unit");
             serializer.Serialize(writer, temp.unit);
-            writer.WritePropertyName("unitid");
-            serializer.Serialize(writer, temp.unitId);
             writer.WritePropertyName("base");
             serializer.Serialize(writer, temp.terrainbase.ToString());
             writer.WritePropertyName("lower");
@@ -249,8 +247,6 @@ namespace Wartorn.Storage
                     case "unit":
                         unit = serializer.Deserialize<Unit>(reader);
                         break;
-                    case "unitid":
-                        unitid = serializer.Deserialize<int>(reader);
                         break;
                     case "base":
                         terrainbase = (serializer.Deserialize<string>(reader)).ToEnum<SpriteSheetTerrain>();
@@ -267,7 +263,7 @@ namespace Wartorn.Storage
             }
 
 
-            MapCell result = new MapCell(terrain, unit, unitid);
+            MapCell result = new MapCell(terrain, unit);
             result.owner = owner;
             result.terrainbase = terrainbase;
             result.terrainLower = terrainLower;

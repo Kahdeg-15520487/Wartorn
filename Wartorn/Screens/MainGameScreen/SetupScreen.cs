@@ -35,6 +35,8 @@ namespace Wartorn.Screens.MainGameScreen
         MiniMapGenerator minimapgen;
         Texture2D minimap;
 
+        string mapdata;
+
         public SetupScreen(GraphicsDevice device) : base(device, "SetupScreen")
         {
 
@@ -47,7 +49,7 @@ namespace Wartorn.Screens.MainGameScreen
 
             InitUI();
 
-            minimapgen = new MiniMapGenerator(_device, CONTENT_MANAGER.Content, CONTENT_MANAGER.spriteBatch);
+            minimapgen = new MiniMapGenerator(_device, CONTENT_MANAGER.spriteBatch);
 
             return base.Init();
         }
@@ -77,6 +79,7 @@ namespace Wartorn.Screens.MainGameScreen
 
                 if (!string.IsNullOrEmpty(content))
                 {
+                    mapdata = content;
                     var temp = Storage.MapData.LoadMap(content);
                     if (temp != null)
                     {
@@ -97,9 +100,12 @@ namespace Wartorn.Screens.MainGameScreen
                     return;
                 }
                 sessiondata = new SessionData();
-                sessiondata.map = map;
+                sessiondata.map = new Map();
+                sessiondata.map.Clone(Storage.MapData.LoadMap(mapdata));
                 sessiondata.gameMode = GameMode.campaign;
-                sessiondata.playerId = new PlayerInfo[2];
+                sessiondata.playerInfos = new PlayerInfo[2];
+                sessiondata.playerInfos[0] = new PlayerInfo(0, Owner.Red);
+                sessiondata.playerInfos[1] = new PlayerInfo(1, Owner.Blue);
                 ((GameScreen)SCREEN_MANAGER.get_screen("GameScreen")).InitSession(sessiondata);
                 SCREEN_MANAGER.goto_screen("GameScreen");
             };

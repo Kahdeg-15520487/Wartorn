@@ -79,7 +79,7 @@ namespace Wartorn.Screens
             mapArea = new Rectangle(0, 0, map.Width * Constants.MapCellWidth, map.Height * Constants.MapCellHeight);
             canvas = new Canvas();
             camera = new Camera(_device.Viewport);
-            minimapgen = new MiniMapGenerator(_device, CONTENT_MANAGER.Content, CONTENT_MANAGER.spriteBatch);
+            minimapgen = new MiniMapGenerator(_device, CONTENT_MANAGER.spriteBatch);
 
             undostack = new Stack<Action>();
 
@@ -493,7 +493,7 @@ namespace Wartorn.Screens
             {
                 for (int j = 0; j < map.Height; j++)
                 {
-                    map[i, j] = new MapCell(terraintype, null, null);
+                    map[i, j] = new MapCell(terraintype, null);
                 }
             }
 

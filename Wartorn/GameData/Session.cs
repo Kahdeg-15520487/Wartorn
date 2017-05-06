@@ -14,17 +14,19 @@ namespace Wartorn.GameData
     {
         public int playerId;
         public Owner owner;
-        public PlayerInfo(int playerid,Owner owner)
+        public int money;
+        public PlayerInfo(int playerid,Owner owner,int startingmoney = 0)
         {
             playerId = playerid;
             this.owner = owner;
+            money = startingmoney;
         }
     }
 
     struct SessionData
     {
         public GameMode gameMode;
-        public PlayerInfo[] playerId;
+        public PlayerInfo[] playerInfos;
         public Map map;
     }
 
