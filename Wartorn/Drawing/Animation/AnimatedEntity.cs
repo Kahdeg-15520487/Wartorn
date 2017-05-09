@@ -49,6 +49,11 @@ namespace Wartorn.Drawing.Animation
             get { return position; }
             set { position = value; }
         }
+        public Vector2 Origin
+        {
+            get { return origin; }
+            set { origin = value; }
+        }
         public float Scale
         {
             get { return scale; }
@@ -90,12 +95,12 @@ namespace Wartorn.Drawing.Animation
             flipEffect = SpriteEffects.None;
             tintColor = Color.White;
         }
-        public AnimatedEntity(Vector2 position, Color? tintColor, float depth, float scale = 1)
+        public AnimatedEntity(Vector2 position,Vector2 origin, Color? tintColor, float depth, float scale = 1)
         {
             //Initialize the Dictionary
             animations = new Dictionary<string, Animation>(24);
             spriteSheet = null;
-            origin = Vector2.Zero;
+            this.origin = origin;
             rotation = 0;
             this.depth = depth;
             flipEffect = SpriteEffects.None;
@@ -149,6 +154,23 @@ namespace Wartorn.Drawing.Animation
             {
                 // Otherwise we tell are computer to yell at us
                 Utility.HelperFunction.Log(new ApplicationException("Animation Key is already contained in the Dictionary"));
+            }
+        }
+        public void AddAnimation(params Animation[] anims)
+        {
+            foreach (Animation animation in anims)
+            {
+                // Is this Animation already in the Dictionary?
+                if (!animations.ContainsKey(animation.Name))
+                {
+                    // If not we can safely add it
+                    animations.Add(animation.Name, animation);
+                }
+                else
+                {
+                    // Otherwise we tell are computer to yell at us
+                    Utility.HelperFunction.Log(new ApplicationException("Animation Key is already contained in the Dictionary"));
+                }
             }
         }
         public void AddAnimation(List<Animation> anims)

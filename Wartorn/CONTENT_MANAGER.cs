@@ -28,8 +28,8 @@ namespace Wartorn
         public static Texture2D unitSpriteSheet;
 
         #region animation sprite sheet
-        public static Dictionary<UnitType, AnimatedEntity> animationEntities;
-        public static Dictionary<UnitType, Texture2D> animationSheets;
+        public static Dictionary<SpriteSheetUnit, AnimatedEntity> animationEntities;
+        public static Dictionary<SpriteSheetUnit, Texture2D> animationSheets;
         public static List<Animation> animationTypes;
         #endregion
 

@@ -124,14 +124,23 @@ namespace Wartorn
 
                     case UnitType.APC:
                     case UnitType.Tank:
-                    case UnitType.H_Tank:
+                    case UnitType.HeavyTank:
                     case UnitType.Artillery:
-                    case UnitType.Anti_Air:
+                    case UnitType.AntiAir:
                         return MovementType.Treads;
                     default:
                         break;
                 }
-                return MovementType.None
+                return MovementType.None;
+            }
+
+            public static SpriteSheetUnit GetSpriteSheetUnit(this UnitType ut,Owner owner)
+            {
+                StringBuilder result = new StringBuilder();
+                result.Append(owner.ToString());
+                result.Append("_");
+                result.Append(ut.ToString());
+                return result.ToString().ToEnum<SpriteSheetUnit>();
             }
 
             public static TerrainType ToTerrainType(this SpriteSheetTerrain t)
@@ -688,6 +697,16 @@ namespace Wartorn
                         result = (int)unboxSpriteSheetUnit + count;
                         box = (T)((object)result);
                         break;
+                    case "AnimationName":
+                        AnimationName unboxAnimationName = (AnimationName)((object)t);
+                        result = (int)unboxAnimationName + count;
+                        box = (T)((object)result);
+                        break;
+                    case "Owner":
+                        Owner unboxOwner = (Owner)((object)t);
+                        result = (int)unboxOwner + count;
+                        box = (T)((object)result);
+                        break;
                     default:
                         break;
                 }
@@ -720,6 +739,16 @@ namespace Wartorn
                     case "SpriteSheetUnit":
                         SpriteSheetUnit unboxSpriteSheetUnit = (SpriteSheetUnit)((object)t);
                         result = (int)unboxSpriteSheetUnit - count;
+                        box = (T)((object)result);
+                        break;
+                    case "AnimationName":
+                        AnimationName unboxAnimationName = (AnimationName)((object)t);
+                        result = (int)unboxAnimationName - count;
+                        box = (T)((object)result);
+                        break;
+                    case "Owner":
+                        Owner unboxOwner = (Owner)((object)t);
+                        result = (int)unboxOwner - count;
                         box = (T)((object)result);
                         break;
                     default:

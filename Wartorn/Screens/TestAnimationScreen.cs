@@ -17,9 +17,12 @@ namespace Wartorn.Screens
 {
     class TestAnimationScreen : Screen
     {
-        Dictionary<UnitType,AnimatedEntity> entityList;
+        Dictionary<UnitType, Unit> RedUnitList;
+        Dictionary<UnitType, Unit> BlueUnitList;
 
         UnitType currentUnit = UnitType.Soldier;
+        AnimationName currentAnimation = AnimationName.idle;
+        Owner currentColor = Owner.Red;
 
         public TestAnimationScreen(GraphicsDevice device) : base(device, "TestAnimationScreen")
         {
@@ -28,8 +31,8 @@ namespace Wartorn.Screens
 
         private void LoadContent()
         {
-
-            entityList = new Dictionary<UnitType, AnimatedEntity>();
+            RedUnitList = new Dictionary<UnitType, Unit>();
+            BlueUnitList = new Dictionary<UnitType, Unit>();
         }
 
         public override bool Init()
@@ -39,15 +42,10 @@ namespace Wartorn.Screens
 
             foreach (UnitType unittype in UnitTypes)
             {
-                AnimatedEntity temp = new AnimatedEntity(new Vector2(24, 24), null, LayerDepth.Unit);
-                temp.LoadContent(CONTENT_MANAGER.animationSheets[unittype]);
-
-                temp.AddAnimation(CONTENT_MANAGER.animationTypes);
-
-
-                temp.PlayAnimation("idle");
-
-                entityList.Add(unittype, temp);
+                Unit temp = UnitCreationHelper.Create(unittype, Owner.Red);
+                RedUnitList.Add(unittype, temp);
+                temp = UnitCreationHelper.Create(unittype, Owner.Blue);
+                BlueUnitList.Add(unittype, temp);
             }
 
             return base.Init();
@@ -55,9 +53,22 @@ namespace Wartorn.Screens
 
         public override void Update(GameTime gameTime)
         {
-            if (HelperFunction.IsKeyPress(Keys.Up))
+            //cylce through unit
+            if (HelperFunction.IsKeyPress(Keys.Left))
             {
-                if (currentUnit == UnitType.Missile)
+                if (currentUnit == UnitType.Soldier)
+                {
+                    currentUnit = UnitType.Battleship;
+                }
+                else
+                {
+                    currentUnit = currentUnit.Previous();
+                }
+            }
+
+            if (HelperFunction.IsKeyPress(Keys.Right))
+            {
+                if (currentUnit == UnitType.Battleship)
                 {
                     currentUnit = UnitType.Soldier;
                 }
@@ -66,19 +77,103 @@ namespace Wartorn.Screens
                     currentUnit = currentUnit.Next();
                 }
             }
-            if (currentUnit == UnitType.None)
+
+            //cycle through animation
+            if (HelperFunction.IsKeyPress(Keys.Up))
             {
-                currentUnit = UnitType.Soldier;
+                if (currentAnimation == AnimationName.idle)
+                {
+                    currentAnimation = AnimationName.done;
+                }
+                else
+                {
+                    currentAnimation = currentAnimation.Previous();
+                }
+            }
+            if (HelperFunction.IsKeyPress(Keys.Down))
+            {
+                if (currentAnimation == AnimationName.done)
+                {
+                    currentAnimation = AnimationName.idle;
+                }
+                else
+                {
+                    currentAnimation = currentAnimation.Next();
+                }
             }
 
-            entityList[currentUnit].Update(gameTime);
+            //cycle through color
+            if (HelperFunction.IsKeyPress(Keys.E))
+            {
+                if (currentColor == Owner.Blue)
+                {
+                    currentColor = Owner.Red;
+                }
+                else
+                {
+                    currentColor = currentColor.Next();
+                }
+            }
+            if (HelperFunction.IsKeyPress(Keys.Q))
+            {
+                if (currentColor == Owner.Red)
+                {
+                    currentColor = Owner.Blue;
+                }
+                else
+                {
+                    currentColor = currentColor.Previous();
+                }
+            }
+
+            switch (currentColor)
+            {
+                case Owner.Red:
+
+                    if (RedUnitList[currentUnit].Animation.CurntAnimationName.CompareTo(currentAnimation.ToString()) != 0)
+                    {
+                        RedUnitList[currentUnit].Animation.PlayAnimation(currentAnimation.ToString());
+                    }
+                    RedUnitList[currentUnit].Animation.Update(gameTime);
+                    break;
+                case Owner.Blue:
+
+                    if (BlueUnitList[currentUnit].Animation.CurntAnimationName.CompareTo(currentAnimation.ToString()) != 0)
+                    {
+                        BlueUnitList[currentUnit].Animation.PlayAnimation(currentAnimation.ToString());
+                    }
+                    BlueUnitList[currentUnit].Animation.Update(gameTime);
+                    break;
+                case Owner.Green:
+                    break;
+                case Owner.Yellow:
+                    break;
+                default:
+                    break;
+            }
 
             base.Update(gameTime);
         }
 
         public override void Draw(GameTime gameTime)
         {
-            entityList[currentUnit].Draw(gameTime, CONTENT_MANAGER.spriteBatch);
+            switch (currentColor)
+            {
+                case Owner.Red:
+                    RedUnitList[currentUnit].Animation.Draw(gameTime, CONTENT_MANAGER.spriteBatch);
+                    break;
+                case Owner.Blue:
+                    BlueUnitList[currentUnit].Animation.Draw(gameTime, CONTENT_MANAGER.spriteBatch);
+                    break;
+                case Owner.Green:
+                    break;
+                case Owner.Yellow:
+                    break;
+                default:
+                    break;
+            }
+
+            CONTENT_MANAGER.spriteBatch.DrawString(CONTENT_MANAGER.arcadefont, currentColor.ToString() + Environment.NewLine + currentUnit.ToString() + Environment.NewLine + currentAnimation.ToString(), new Vector2(100, 0), Color.White);
             base.Draw(gameTime);
         }
     }

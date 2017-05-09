@@ -42,4 +42,13 @@ namespace Wartorn
         West     ,  Center  ,   East,
         SouthWest,  South   ,   SouthEast
     }
+
+    public enum AnimationName
+    {
+        idle,
+        right,
+        up,
+        down,
+        done
+    }
 }

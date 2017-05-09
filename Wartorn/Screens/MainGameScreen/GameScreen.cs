@@ -189,12 +189,12 @@ namespace Wartorn.Screens.MainGameScreen
             Button button_Recon = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSprite(UnitType.Recon, playerInfos[localPlayer].owner), new Point(600, 346), 0.5f);
             Button button_APC = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSprite(UnitType.APC, playerInfos[localPlayer].owner), new Point(630, 346), 0.5f);
             Button button_Tank = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSprite(UnitType.Tank, playerInfos[localPlayer].owner), new Point(660, 346), 0.5f);
-            Button button_H_Tank = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSprite(UnitType.H_Tank, playerInfos[localPlayer].owner), new Point(690, 346), 0.5f);
+            Button button_H_Tank = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSprite(UnitType.HeavyTank, playerInfos[localPlayer].owner), new Point(690, 346), 0.5f);
 
             //hàng 2
-            Button button_Artilerry = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSprite(UnitType.Artillery, playerInfos[localPlayer].owner), new Point(540, 380), 0.5f);
+            Button button_Artillery = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSprite(UnitType.Artillery, playerInfos[localPlayer].owner), new Point(540, 380), 0.5f);
             Button button_Rocket = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSprite(UnitType.Rocket, playerInfos[localPlayer].owner), new Point(570, 380), 0.5f);
-            Button button_AntiAir = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSprite(UnitType.Anti_Air, playerInfos[localPlayer].owner), new Point(600, 380), 0.5f);
+            Button button_AntiAir = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSprite(UnitType.AntiAir, playerInfos[localPlayer].owner), new Point(600, 380), 0.5f);
             Button button_Missile = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSprite(UnitType.Missile, playerInfos[localPlayer].owner), new Point(630, 380), 0.5f);
 
             List<Button> tempbuttonlist = new List<Button>();
@@ -204,7 +204,7 @@ namespace Wartorn.Screens.MainGameScreen
             tempbuttonlist.Add(button_APC);
             tempbuttonlist.Add(button_Tank);
             tempbuttonlist.Add(button_H_Tank);
-            tempbuttonlist.Add(button_Artilerry);
+            tempbuttonlist.Add(button_Artillery);
             tempbuttonlist.Add(button_Rocket);
             tempbuttonlist.Add(button_AntiAir);
             tempbuttonlist.Add(button_Missile);
@@ -225,7 +225,7 @@ namespace Wartorn.Screens.MainGameScreen
             canvas_action_Factory.AddElement("button_APC", button_APC);
             canvas_action_Factory.AddElement("button_Tank", button_Tank);
             canvas_action_Factory.AddElement("button_H_Tank", button_H_Tank);
-            canvas_action_Factory.AddElement("button_Artilerry", button_Artilerry);
+            canvas_action_Factory.AddElement("button_Artillery", button_Artillery);
             canvas_action_Factory.AddElement("button_Rocket", button_Rocket);
             canvas_action_Factory.AddElement("button_AntiAir", button_AntiAir);
             canvas_action_Factory.AddElement("button_Missile", button_Missile);

@@ -189,11 +189,11 @@ namespace Wartorn.GameData
                     break;
                 case UnitType.Tank:
                     break;
-                case UnitType.H_Tank:
+                case UnitType.HeavyTank:
                     break;
                 case UnitType.Artillery:
                     break;
-                case UnitType.Anti_Air:
+                case UnitType.AntiAir:
                     break;
                 default:
                     break;
@@ -251,7 +251,7 @@ namespace Wartorn.GameData
         public static Unit Create(UnitType unittype,Owner owner,int hp = 100)
         {
             //todo load the sprite based on the owner of this unit
-            return new Unit(unittype, (AnimatedEntity)CONTENT_MANAGER.animationEntities[unittype].Clone(), owner, hp);
+            return new Unit(unittype, (AnimatedEntity)CONTENT_MANAGER.animationEntities[unittype.GetSpriteSheetUnit(owner)].Clone(), owner, hp);
         }
     }
 

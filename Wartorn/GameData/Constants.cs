@@ -39,16 +39,30 @@ namespace Wartorn.GameData
     public enum UnitType
     {
         None,
+
+        //land
         Soldier,
         Mech,
         Recon,
         APC,
         Tank,
-        H_Tank,
+        HeavyTank,
         Artillery,
         Rocket,
-        Anti_Air,
-        Missile
+        AntiAir,
+        Missile,
+
+        //air
+        TransportCopter,
+        BattleCopter,
+        Fighter,
+        Bomber,
+
+        //sea
+        Lander,
+        Cruise,
+        Submarine,
+        Battleship
     }
 
     public enum MovementType

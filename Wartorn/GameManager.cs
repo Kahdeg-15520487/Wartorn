@@ -104,21 +104,28 @@ namespace Wartorn
 
         private void LoadAnimationContent()
         {
-            CONTENT_MANAGER.animationEntities = new Dictionary<UnitType, AnimatedEntity>();
-            CONTENT_MANAGER.animationSheets = new Dictionary<UnitType, Texture2D>();
+            string delimit = "Green";
+            CONTENT_MANAGER.animationEntities = new Dictionary<SpriteSheetUnit, AnimatedEntity>();
+            CONTENT_MANAGER.animationSheets = new Dictionary<SpriteSheetUnit, Texture2D>();
             CONTENT_MANAGER.animationTypes = new List<Animation>();
 
             //list of unit type
-            var UnitTypes = new List<UnitType>((IEnumerable<UnitType>)Enum.GetValues(typeof(UnitType)));
-            UnitTypes.Remove(UnitType.None);
-            
+            var UnitTypes = new List<SpriteSheetUnit>((IEnumerable<SpriteSheetUnit>)Enum.GetValues(typeof(SpriteSheetUnit)));
+            //Artillery
             //load animation sprite sheet for each unit type
-            foreach (UnitType unittype in UnitTypes)
+            foreach (SpriteSheetUnit unittype in UnitTypes)
             {
-                CONTENT_MANAGER.animationSheets.Add(unittype, CONTENT_MANAGER.Content.Load<Texture2D>("sprite//Alliance_RED//" + unittype.ToString()));
+                var paths = unittype.ToString().Split('_');
+                if (paths[0].CompareTo(delimit) == 0)
+                {
+                    break;
+                }
+                CONTENT_MANAGER.animationSheets.Add(unittype, CONTENT_MANAGER.Content.Load<Texture2D>("sprite//Animation//" + paths[0] + "//" + paths[1]));
             }
 
-            //declare animation type
+            //declare animation frame
+
+            //animation frame for "normal" unit
             Animation idle = new Animation("idle", true, 4, string.Empty);
             for (int i = 0; i < 4; i++)
             {
@@ -146,17 +153,69 @@ namespace Wartorn
             Animation done = new Animation("done", true, 1, string.Empty);
             done.AddKeyFrame(0, 192, 48, 48);
 
+            //animation frame for "HIGH" unit
+            Animation idleAir = new Animation("idle", true, 4, string.Empty);
+            for (int i = 0; i < 4; i++)
+            {
+                idleAir.AddKeyFrame(i * 64, 0, 64, 64);
+            }
+
+            Animation rightAir = new Animation("right", true, 4, string.Empty);
+            for (int i = 0; i < 4; i++)
+            {
+                rightAir.AddKeyFrame(i * 64, 64, 64, 64);
+            }
+
+            Animation upAir = new Animation("up", true, 4, string.Empty);
+            for (int i = 0; i < 4; i++)
+            {
+                upAir.AddKeyFrame(i * 64, 128, 64, 64);
+            }
+
+            Animation downAir = new Animation("down", true, 4, string.Empty);
+            for (int i = 0; i < 4; i++)
+            {
+                downAir.AddKeyFrame(i * 64, 192, 64, 64);
+            }
+
+            Animation doneAir = new Animation("done", true, 1, string.Empty);
+            doneAir.AddKeyFrame(0, 256, 64, 64);
+
             CONTENT_MANAGER.animationTypes.Add(idle);
             CONTENT_MANAGER.animationTypes.Add(right);
             CONTENT_MANAGER.animationTypes.Add(up);
             CONTENT_MANAGER.animationTypes.Add(down);
             CONTENT_MANAGER.animationTypes.Add(done);
 
-            foreach (var unittype in UnitTypes)
+            foreach (SpriteSheetUnit unittype in UnitTypes)
             {
-                AnimatedEntity temp = new AnimatedEntity(Vector2.Zero, Color.White, LayerDepth.Unit);
+                string unittypestring = unittype.ToString();
+                AnimatedEntity temp = new AnimatedEntity(Vector2.Zero, Vector2.Zero, Color.White, LayerDepth.Unit);
+                if (unittypestring.Contains(delimit))
+                {
+                    break;
+                }
+
                 temp.LoadContent(CONTENT_MANAGER.animationSheets[unittype]);
-                temp.AddAnimation(CONTENT_MANAGER.animationTypes);
+
+                if (unittypestring.Contains("TransportCopter")
+                  || unittypestring.Contains("BattleCopter")
+                  || unittypestring.Contains("Fighter")
+                  || unittypestring.Contains("Bomber"))
+                {
+                    //we enter "HIGH" mode
+                    //first we set the origin to "HIGH"
+
+
+                    //then we load the "HIGH" animation in
+                    temp.AddAnimation(idleAir, rightAir, upAir, downAir, doneAir);
+                }
+                else
+                {
+                    //we enter "normal" mode
+                    temp.AddAnimation(idle, right, up, down, done);
+                }
+
                 temp.PlayAnimation("idle");
                 CONTENT_MANAGER.animationEntities.Add(unittype, temp);
             }
@@ -171,6 +230,7 @@ namespace Wartorn
             SCREEN_MANAGER.add_screen(new Screens.MainGameScreen.GameScreen(GraphicsDevice));
 
             //SCREEN_MANAGER.goto_screen("TestAnimationScreen");
+            //SCREEN_MANAGER.goto_screen("SetupScreen");
             SCREEN_MANAGER.goto_screen("MainMenuScreen");
             //SCREEN_MANAGER.goto_screen("EditorScreen");
 
@@ -199,6 +259,11 @@ namespace Wartorn
 
             // TODO: Add your update logic here
             CONTENT_MANAGER.inputState = new InputState(Mouse.GetState(), Keyboard.GetState());
+
+            if (HelperFunction.IsKeyPress(Keys.F1))
+            {
+                SCREEN_MANAGER.goto_screen("TestAnimationScreen");
+            }
 
             SCREEN_MANAGER.Update(gameTime);
 
