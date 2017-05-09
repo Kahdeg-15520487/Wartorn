@@ -51,6 +51,14 @@ namespace Wartorn.GameData
         Missile
     }
 
+    public enum MovementType
+    {
+        None,
+        Foot,
+        Tires,
+        Treads
+    }
+
     public enum Weather
     {
         Sunny,

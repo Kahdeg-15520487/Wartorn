@@ -91,7 +91,7 @@ namespace Wartorn.Screens.MainGameScreen
             };
             button_exit.MouseClick += (sender, e) =>
             {
-                SCREEN_MANAGER.go_back();
+                SCREEN_MANAGER.goto_screen("MainMenuScreen");
             };
             button_start.MouseClick += (sender, e) =>
             {
@@ -119,7 +119,11 @@ namespace Wartorn.Screens.MainGameScreen
 
         public override void Shutdown()
         {
-            base.Shutdown();
+            sessiondata.playerInfos = null;
+            sessiondata.map = null;
+            map = null;
+            minimap?.Dispose();
+            minimap = null;
         }
 
         public override void Update(GameTime gameTime)

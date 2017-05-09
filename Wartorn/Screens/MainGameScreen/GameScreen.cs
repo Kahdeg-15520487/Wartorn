@@ -44,7 +44,7 @@ namespace Wartorn.Screens.MainGameScreen
         Texture2D minimap;
         MiniMapGenerator minimapgen;
 
-        //
+        //camera ?
         Camera camera;
 
         //input information
@@ -66,10 +66,17 @@ namespace Wartorn.Screens.MainGameScreen
         PlayerInfo[] playerInfos;
         int currentPlayer = 0;
         int localPlayer = 0;
+        List<Unit> ownedUnit;
 
         //build unit information
         UnitType selectedUnitToBuild = UnitType.None;
         Point selectedFactoryToBuild = new Point(0, 0);
+
+        //current unit selection
+        Point selectedUnit = new Point(0, 0);
+
+        //fog of war
+        bool[,] mapcellVisibility;
 
         public GameScreen(GraphicsDevice device) : base(device, "GameScreen")
         {
@@ -77,11 +84,21 @@ namespace Wartorn.Screens.MainGameScreen
             minimapgen = new MiniMapGenerator(device, CONTENT_MANAGER.spriteBatch);
         }
 
+        #region Innit
         public void InitSession(SessionData sessiondata)
         {
             session = new Session(sessiondata);
             minimap = minimapgen.GenerateMapTexture(session.map);
             playerInfos = sessiondata.playerInfos;
+            ownedUnit = new List<Unit>();
+            mapcellVisibility = new bool[session.map.Width, session.map.Height];
+            for (int x = 0; x < session.map.Width; x++)
+            {
+                for (int y = 0; y < session.map.Height; y++)
+                {
+                    mapcellVisibility[x, y] = false;
+                }
+            }
         }
 
         private void LoadContent()
@@ -99,6 +116,13 @@ namespace Wartorn.Screens.MainGameScreen
 
             InitUI();
 
+            foreach (MapCell mapcell in session.map)
+            {
+                if (mapcell.unit!=null && mapcell.unit.Owner == playerInfos[localPlayer].owner)
+                {
+                    ownedUnit.Add(mapcell.unit);
+                }
+            }
             return base.Init();
         }
 
@@ -206,11 +230,13 @@ namespace Wartorn.Screens.MainGameScreen
             canvas_action_Factory.AddElement("button_AntiAir", button_AntiAir);
             canvas_action_Factory.AddElement("button_Missile", button_Missile);
         }
-
+        #endregion
 
         public override void Shutdown()
         {
             session.map = null;
+            minimap?.Dispose();
+            minimap = null;
         }
 
         public override void Update(GameTime gameTime)
@@ -243,28 +269,39 @@ namespace Wartorn.Screens.MainGameScreen
                 minimap = minimapgen.GenerateMapTexture(session.map);
             }
 
-            UpdateTurn();
+            //update game logic
             if (mouseInputState.LeftButton == ButtonState.Released
              && lastMouseInputState.LeftButton == ButtonState.Pressed)
+            {
                 UpdateBuilding();
-            UpdateUnit();
+                UpdateUnit();
+            }
         }
 
         #region Update game logic
-        private void UpdateTurn()
+
+        private void CalculateVision()
         {
-            //throw new NotImplementedException();
+            foreach (Unit unit in ownedUnit)
+            {
+
+            }
         }
 
         private void UpdateUnit()
         {
-            
+            MapCell temp = session.map[selectedMapCell];
+            if (temp.unit != null)
+            {
+                selectedUnit = selectedMapCell;
+            }
         }
 
         private void UpdateBuilding()
         {
             MapCell temp = session.map[selectedMapCell];
-            if (isBuildingThatProduceUnit(temp.terrain)
+            if (temp.unit == null
+             && isBuildingThatProduceUnit(temp.terrain)
              && currentPlayer == localPlayer
              && temp.owner == playerInfos[localPlayer].owner)
             {
@@ -325,14 +362,16 @@ namespace Wartorn.Screens.MainGameScreen
             }
             return false;
         }
+
+
         #endregion
 
         #region Update function helper
 
         private void UpdateCanvas_generalInfo()
         {
-            ((Label)canvas_generalInfo["label_terraintype"]).Text = session.map[selectedMapCell].terrain.ToString();
-            ((Label)canvas_generalInfo["label_unittype"]).Text = session.map[selectedMapCell].unit != null ? session.map[selectedMapCell].unit.UnitType.ToString() : " ";
+            ((Label)canvas_generalInfo["label_terraintype"]).Text = session.map[selectedMapCell].terrain.ToString() + Environment.NewLine + session.map[selectedMapCell].owner.ToString();
+            ((Label)canvas_generalInfo["label_unittype"]).Text = session.map[selectedMapCell].unit != null ? session.map[selectedMapCell].unit.UnitType.ToString() + Environment.NewLine + session.map[selectedMapCell].unit.Owner.ToString() : " ";
         }
 
         private void UpdateAnimation(GameTime gameTime)
@@ -370,6 +409,7 @@ namespace Wartorn.Screens.MainGameScreen
 
         #endregion
 
+        #region Draw
         public override void Draw(GameTime gameTime)
         {
             DrawMap(CONTENT_MANAGER.spriteBatch, gameTime);
@@ -400,6 +440,9 @@ namespace Wartorn.Screens.MainGameScreen
             //render the map
             MapRenderer.Render(session.map, spriteBatch, gameTime);
 
+            //draw selected unit's movement range
+            DrawSelectedUnit(spriteBatch);
+
             //draw the cursor
             spriteBatch.Draw(CONTENT_MANAGER.UIspriteSheet, new Vector2(selectedMapCell.X * Constants.MapCellWidth, selectedMapCell.Y * Constants.MapCellHeight), new Rectangle(0, 0, 48, 48), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.GuiUpper);
 
@@ -407,5 +450,11 @@ namespace Wartorn.Screens.MainGameScreen
 
             spriteBatch.Begin(SpriteSortMode.FrontToBack);
         }
+
+        private void DrawSelectedUnit(SpriteBatch spriteBatch)
+        {
+
+        }
+        #endregion
     }
 }

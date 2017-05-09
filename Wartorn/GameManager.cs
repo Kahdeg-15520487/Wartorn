@@ -48,6 +48,7 @@ namespace Wartorn
                 var settings = new JsonSerializerSettings();
                 settings.Converters.Add(new UnitPairJsonConverter());
                 settings.Converters.Add(new UnitJsonConverter());
+                settings.Converters.Add(new UnitTypeJsonConverter());
                 settings.Converters.Add(new MapJsonConverter());
                 settings.Converters.Add(new MapCellJsonConverter());
                 return settings;
@@ -71,6 +72,8 @@ namespace Wartorn
             graphics.ApplyChanges();
 
             DrawingHelper.Initialize(GraphicsDevice);
+
+            Unit.Init();
             //Unit.Load();
 
             base.Initialize();

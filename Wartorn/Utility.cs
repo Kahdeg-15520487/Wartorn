@@ -109,6 +109,31 @@ namespace Wartorn
                 return false;
             }
 
+            public static MovementType GetMovementType(this UnitType ut)
+            {
+                switch (ut)
+                {
+                    case UnitType.Soldier:
+                    case UnitType.Mech:
+                        return MovementType.Foot;
+
+                    case UnitType.Recon:
+                    case UnitType.Rocket:
+                    case UnitType.Missile:
+                        return MovementType.Tires;
+
+                    case UnitType.APC:
+                    case UnitType.Tank:
+                    case UnitType.H_Tank:
+                    case UnitType.Artillery:
+                    case UnitType.Anti_Air:
+                        return MovementType.Treads;
+                    default:
+                        break;
+                }
+                return MovementType.None
+            }
+
             public static TerrainType ToTerrainType(this SpriteSheetTerrain t)
             {
                 TerrainType result = TerrainType.Plain;
