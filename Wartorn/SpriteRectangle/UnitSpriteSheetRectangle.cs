@@ -37,12 +37,12 @@ namespace Wartorn
             }
         }
 
-        public static Rectangle GetSprite(SpriteSheetUnit t)
+        public static Rectangle GetSpriteRectangle(SpriteSheetUnit t)
         {
             return UnitSprite[t];
         }
 
-        public static Rectangle GetSprite(UnitType unittype, Owner owner)
+        public static Rectangle GetSpriteRectangle(UnitType unittype, Owner owner = Owner.Red)
         {
             int x = ((int)unittype - 1) * 48;
             int y = ((int)owner - 1) * 48;

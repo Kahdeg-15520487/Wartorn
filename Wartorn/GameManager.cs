@@ -64,8 +64,10 @@ namespace Wartorn
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            SpriteSheetSourceRectangle.LoadSprite();
+            TerrainSpriteSheetSourceRectangle.LoadSprite();
             UISpriteSheetSourceRectangle.LoadSprite();
+            UnitSpriteSheetRectangle.LoadSprite();
+            BuildingSpriteSourceRectangle.LoadSprite();
 
             graphics.PreferredBackBufferWidth = Constants.Width;    // set this value to the desired width of your window
             graphics.PreferredBackBufferHeight = Constants.Height;  // set this value to the desired height of your window
@@ -104,7 +106,7 @@ namespace Wartorn
 
         private void LoadAnimationContent()
         {
-            string delimit = "Green";
+            string delimit = "Yellow";
             CONTENT_MANAGER.animationEntities = new Dictionary<SpriteSheetUnit, AnimatedEntity>();
             CONTENT_MANAGER.animationSheets = new Dictionary<SpriteSheetUnit, Texture2D>();
             CONTENT_MANAGER.animationTypes = new List<Animation>();
@@ -181,6 +183,13 @@ namespace Wartorn
             Animation doneAir = new Animation("done", true, 1, string.Empty);
             doneAir.AddKeyFrame(0, 256, 64, 64);
 
+            //animation frame for copter unit
+            Animation idleCopter = new Animation("idle", true, 3, string.Empty);
+            for (int i = 0; i < 3; i++)
+            {
+                idleCopter.AddKeyFrame(i * 64, 0, 64, 64);
+            }
+
             CONTENT_MANAGER.animationTypes.Add(idle);
             CONTENT_MANAGER.animationTypes.Add(right);
             CONTENT_MANAGER.animationTypes.Add(up);
@@ -208,7 +217,14 @@ namespace Wartorn
 
 
                     //then we load the "HIGH" animation in
-                    temp.AddAnimation(idleAir, rightAir, upAir, downAir, doneAir);
+                    if (unittypestring.Contains("Copter"))
+                    {
+                        temp.AddAnimation(idleCopter, rightAir, upAir, downAir, doneAir);
+                    }
+                    else
+                    {
+                        temp.AddAnimation(idleAir, rightAir, upAir, downAir, doneAir);
+                    }
                 }
                 else
                 {

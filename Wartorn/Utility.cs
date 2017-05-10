@@ -707,6 +707,11 @@ namespace Wartorn
                         result = (int)unboxOwner + count;
                         box = (T)((object)result);
                         break;
+                    case "SpriteSheetBuilding":
+                        SpriteSheetBuilding unboxSpriteSheetBuilding = (SpriteSheetBuilding)((object)t);
+                        result = (int)unboxSpriteSheetBuilding + count;
+                        box = (T)((object)result);
+                        break;
                     default:
                         break;
                 }
@@ -749,6 +754,11 @@ namespace Wartorn
                     case "Owner":
                         Owner unboxOwner = (Owner)((object)t);
                         result = (int)unboxOwner - count;
+                        box = (T)((object)result);
+                        break;
+                    case "SpriteSheetBuilding":
+                        SpriteSheetBuilding unboxSpriteSheetBuilding = (SpriteSheetBuilding)((object)t);
+                        result = (int)unboxSpriteSheetBuilding - count;
                         box = (T)((object)result);
                         break;
                     default:

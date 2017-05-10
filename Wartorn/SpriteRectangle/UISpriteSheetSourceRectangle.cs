@@ -10,7 +10,6 @@ using Wartorn.GameData;
 
 namespace Wartorn
 {
-    //only water
     enum SpriteSheetUI
     {
         Select,

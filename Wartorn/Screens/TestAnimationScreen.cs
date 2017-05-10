@@ -19,6 +19,7 @@ namespace Wartorn.Screens
     {
         Dictionary<UnitType, Unit> RedUnitList;
         Dictionary<UnitType, Unit> BlueUnitList;
+        Dictionary<UnitType, Unit> GreenUnitList;
 
         UnitType currentUnit = UnitType.Soldier;
         AnimationName currentAnimation = AnimationName.idle;
@@ -33,6 +34,7 @@ namespace Wartorn.Screens
         {
             RedUnitList = new Dictionary<UnitType, Unit>();
             BlueUnitList = new Dictionary<UnitType, Unit>();
+            GreenUnitList = new Dictionary<UnitType, Unit>();
         }
 
         public override bool Init()
@@ -46,6 +48,8 @@ namespace Wartorn.Screens
                 RedUnitList.Add(unittype, temp);
                 temp = UnitCreationHelper.Create(unittype, Owner.Blue);
                 BlueUnitList.Add(unittype, temp);
+                temp = UnitCreationHelper.Create(unittype, Owner.Green);
+                GreenUnitList.Add(unittype, temp);
             }
 
             return base.Init();
@@ -105,7 +109,7 @@ namespace Wartorn.Screens
             //cycle through color
             if (HelperFunction.IsKeyPress(Keys.E))
             {
-                if (currentColor == Owner.Blue)
+                if (currentColor == Owner.Green)
                 {
                     currentColor = Owner.Red;
                 }
@@ -118,7 +122,7 @@ namespace Wartorn.Screens
             {
                 if (currentColor == Owner.Red)
                 {
-                    currentColor = Owner.Blue;
+                    currentColor = Owner.Green;
                 }
                 else
                 {
@@ -129,7 +133,6 @@ namespace Wartorn.Screens
             switch (currentColor)
             {
                 case Owner.Red:
-
                     if (RedUnitList[currentUnit].Animation.CurntAnimationName.CompareTo(currentAnimation.ToString()) != 0)
                     {
                         RedUnitList[currentUnit].Animation.PlayAnimation(currentAnimation.ToString());
@@ -137,7 +140,6 @@ namespace Wartorn.Screens
                     RedUnitList[currentUnit].Animation.Update(gameTime);
                     break;
                 case Owner.Blue:
-
                     if (BlueUnitList[currentUnit].Animation.CurntAnimationName.CompareTo(currentAnimation.ToString()) != 0)
                     {
                         BlueUnitList[currentUnit].Animation.PlayAnimation(currentAnimation.ToString());
@@ -145,6 +147,11 @@ namespace Wartorn.Screens
                     BlueUnitList[currentUnit].Animation.Update(gameTime);
                     break;
                 case Owner.Green:
+                    if (GreenUnitList[currentUnit].Animation.CurntAnimationName.CompareTo(currentAnimation.ToString()) != 0)
+                    {
+                        GreenUnitList[currentUnit].Animation.PlayAnimation(currentAnimation.ToString());
+                    }
+                    GreenUnitList[currentUnit].Animation.Update(gameTime);
                     break;
                 case Owner.Yellow:
                     break;
@@ -166,6 +173,7 @@ namespace Wartorn.Screens
                     BlueUnitList[currentUnit].Animation.Draw(gameTime, CONTENT_MANAGER.spriteBatch);
                     break;
                 case Owner.Green:
+                    GreenUnitList[currentUnit].Animation.Draw(gameTime, CONTENT_MANAGER.spriteBatch);
                     break;
                 case Owner.Yellow:
                     break;

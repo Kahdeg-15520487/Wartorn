@@ -32,15 +32,15 @@ namespace Wartorn.Drawing
                     tempmapcell = map[i, j];
                     if (tempmapcell.terrainbase != SpriteSheetTerrain.None)
                     {
-                        spriteBatch.Draw(CONTENT_MANAGER.spriteSheet, curpos, SpriteSheetSourceRectangle.GetSpriteRectangle(tempmapcell.terrainbase), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.TerrainBase);
+                        spriteBatch.Draw(CONTENT_MANAGER.spriteSheet, curpos, TerrainSpriteSheetSourceRectangle.GetSpriteRectangle(tempmapcell.terrainbase), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.TerrainBase);
                     }
                     if (tempmapcell.terrainLower != SpriteSheetTerrain.None)
                     {
-                        spriteBatch.Draw(CONTENT_MANAGER.spriteSheet, curpos, SpriteSheetSourceRectangle.GetSpriteRectangle(tempmapcell.terrainLower), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.TerrainLower);
+                        spriteBatch.Draw(CONTENT_MANAGER.spriteSheet, curpos, TerrainSpriteSheetSourceRectangle.GetSpriteRectangle(tempmapcell.terrainLower), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.TerrainLower);
                     }
                     if (tempmapcell.terrainUpper != SpriteSheetTerrain.None)
                     {
-                        spriteBatch.Draw(CONTENT_MANAGER.spriteSheet, curpos, SpriteSheetSourceRectangle.GetSpriteRectangle(tempmapcell.terrainUpper), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.TerrainUpper);
+                        spriteBatch.Draw(CONTENT_MANAGER.spriteSheet, curpos, TerrainSpriteSheetSourceRectangle.GetSpriteRectangle(tempmapcell.terrainUpper), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.TerrainUpper);
                     }
 
                     if (tempmapcell.unit != null)
@@ -71,15 +71,15 @@ namespace Wartorn.Drawing
                     {
                         if (tempmapcell.terrainbase != SpriteSheetTerrain.None)
                         {
-                            spriteBatch.Draw(CONTENT_MANAGER.spriteSheet, curpos, SpriteSheetSourceRectangle.GetSpriteRectangle(tempmapcell.terrainbase), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.TerrainBase);
+                            spriteBatch.Draw(CONTENT_MANAGER.spriteSheet, curpos, TerrainSpriteSheetSourceRectangle.GetSpriteRectangle(tempmapcell.terrainbase), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.TerrainBase);
                         }
                         if (tempmapcell.terrainLower != SpriteSheetTerrain.None)
                         {
-                            spriteBatch.Draw(CONTENT_MANAGER.spriteSheet, curpos, SpriteSheetSourceRectangle.GetSpriteRectangle(tempmapcell.terrainLower), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.TerrainLower);
+                            spriteBatch.Draw(CONTENT_MANAGER.spriteSheet, curpos, TerrainSpriteSheetSourceRectangle.GetSpriteRectangle(tempmapcell.terrainLower), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.TerrainLower);
                         }
                         if (tempmapcell.terrainUpper != SpriteSheetTerrain.None)
                         {
-                            spriteBatch.Draw(CONTENT_MANAGER.spriteSheet, curpos, SpriteSheetSourceRectangle.GetSpriteRectangle(tempmapcell.terrainUpper), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.TerrainUpper);
+                            spriteBatch.Draw(CONTENT_MANAGER.spriteSheet, curpos, TerrainSpriteSheetSourceRectangle.GetSpriteRectangle(tempmapcell.terrainUpper), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.TerrainUpper);
                         }
 
                         if (tempmapcell.unit != null)
@@ -386,6 +386,15 @@ namespace Wartorn.Drawing
 
                             //todo: fix this shit
                             case TerrainType.Tree:
+                                //desert ko co forest
+                                if (map.theme == Theme.Desert)
+                                {
+                                    map[pos].ClearRenderData();
+                                    map[pos].terrainbase = SpriteSheetTerrain.Desert_Plain;
+                                    map[pos].terrainLower = SpriteSheetTerrain.Desert_Tree;
+                                    break;
+                                }
+
                                 /*
                                  * T1 T2 T3
                                  * T4 T5 T6

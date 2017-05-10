@@ -57,8 +57,8 @@ namespace Wartorn.GameData
                 _VisionRange.Add(unittype, 0);
             }
 
-            //File.WriteAllText("dmgtable.txt", JsonConvert.SerializeObject(_DammageTable.ToArray(), Formatting.Indented));
-            //File.WriteAllText("movementrangetable.txt", JsonConvert.SerializeObject(_MovementRange.ToArray(), Formatting.Indented));
+            File.WriteAllText("dmgtable.txt", JsonConvert.SerializeObject(_DammageTable.ToArray(), Formatting.Indented));
+            File.WriteAllText("movementrangetable.txt", JsonConvert.SerializeObject(_MovementRange.ToArray(), Formatting.Indented));
             File.WriteAllText("visionrangetable.txt", JsonConvert.SerializeObject(_VisionRange.ToArray(), Formatting.Indented));
         }
 

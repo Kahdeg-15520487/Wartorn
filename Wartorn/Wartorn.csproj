@@ -38,6 +38,7 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="SpriteRectangle\BuildingSpriteSourceRectangle.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="CONTENT_MANAGER.cs" />
     <Compile Include="Drawing\Animation\AnimatedEntity.cs" />
@@ -71,8 +72,8 @@
     <Compile Include="Screens\RedScreen.cs" />
     <Compile Include="Screens\TestAnimationScreen.cs" />
     <Compile Include="Screens\UnitMoveProtypeScreen.cs" />
-    <Compile Include="UISpriteSheetSourceRectangle.cs" />
-    <Compile Include="SpriteSheetSourceRectangle.cs" />
+    <Compile Include="SpriteRectangle\UISpriteSheetSourceRectangle.cs" />
+    <Compile Include="SpriteRectangle\SpriteSheetSourceRectangle.cs" />
     <Compile Include="Storage\MapData.cs" />
     <Compile Include="Storage\NoiseGenerator.cs" />
     <Compile Include="Storage\SessionStorage.cs" />
@@ -84,7 +85,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UIClass\Canvas.cs" />
     <Compile Include="UIClass\UIObject.cs" />
-    <Compile Include="UnitSpriteSheetRectangle.cs" />
+    <Compile Include="SpriteRectangle\UnitSpriteSheetRectangle.cs" />
     <Compile Include="Utility.cs" />
   </ItemGroup>
   <ItemGroup>
