@@ -453,7 +453,7 @@ namespace Wartorn.Screens.MainGameScreen
 
         private void DrawSelectedUnit(SpriteBatch spriteBatch)
         {
-
+			
         }
         #endregion
     }
