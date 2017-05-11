@@ -801,6 +801,29 @@ namespace Wartorn
                 }
                 return output;
             }
+
+            public static string toString(this Point p)
+            {
+                return string.Format("{0}:{1}", p.X, p.Y);
+            }
+
+            public static bool TryParse(this string str,out Point p)
+            {
+                var data = str.Split(':');
+                int x, y;
+                bool result = false;
+
+                if (int.TryParse(data[0], out x) && int.TryParse(data[1], out y))
+                {
+                    p = new Point(x, y);
+                    return true;
+                }
+                else
+                {
+                    p = Point.Zero;
+                    return result;
+                }
+            }
         }
     }
 }

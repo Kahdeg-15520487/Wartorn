@@ -38,6 +38,8 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="PathFinding\dijkstra.cs" />
+    <Compile Include="PathFinding\FloodRange.cs" />
     <Compile Include="SpriteRectangle\BuildingSpriteSourceRectangle.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="CONTENT_MANAGER.cs" />

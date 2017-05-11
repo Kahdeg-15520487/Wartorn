@@ -43,7 +43,7 @@ namespace Wartorn
 
             graphics.PreferMultiSampling = true;
 
-            JsonConvert.DefaultSettings  = () =>
+            JsonConvert.DefaultSettings = () =>
             {
                 var settings = new JsonSerializerSettings();
                 settings.Converters.Add(new UnitPairJsonConverter());
@@ -51,8 +51,9 @@ namespace Wartorn
                 settings.Converters.Add(new UnitTypeJsonConverter());
                 settings.Converters.Add(new MapJsonConverter());
                 settings.Converters.Add(new MapCellJsonConverter());
+                //settings.Converters.Add(new Wartorn.PathFinding.PointJsonConverter());
                 return settings;
-            };            
+            };
         }
 
         /// <summary>

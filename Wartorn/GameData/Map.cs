@@ -102,9 +102,19 @@ namespace Wartorn.GameData
 
         public void Fill(TerrainType terrain)
         {
-            foreach (var mapcell in map)
+            for (int y = 0; y < Height; y++)
             {
-                mapcell.terrain = terrain;
+                for (int x = 0; x < Width; x++)
+                {
+                    if (map[x,y] == null)
+                    {
+                        map[x, y] = new MapCell(terrain);
+                    }
+                    else
+                    {
+                        map[x, y].terrain = terrain;
+                    }
+                }
             }
         }
     }

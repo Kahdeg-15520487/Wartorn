@@ -92,6 +92,8 @@ namespace Wartorn.Screens.MainGameScreen
             playerInfos = sessiondata.playerInfos;
             ownedUnit = new List<Unit>();
             mapcellVisibility = new bool[session.map.Width, session.map.Height];
+
+            //init visibility table
             for (int x = 0; x < session.map.Width; x++)
             {
                 for (int y = 0; y < session.map.Height; y++)
@@ -99,6 +101,9 @@ namespace Wartorn.Screens.MainGameScreen
                     mapcellVisibility[x, y] = false;
                 }
             }
+
+            //init movementgridcost
+            Wartorn.PathFinding.FloodRange range = new PathFinding.FloodRange(session.map);
         }
 
         private void LoadContent()

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -7,7 +8,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using Wartorn.GameData;
+using Wartorn.Storage;
 
 namespace Wartorn
 {
@@ -22,6 +24,7 @@ namespace Wartorn
         [STAThread]
         static void Main()
         {
+            Wartorn.PathFinding.Dijkstras.DijkstraTest.test();
             Application.Run(new Handler());
         }
     }
