@@ -9,12 +9,16 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Wartorn.Utility.Drawing;
+using Wartorn.PathFinding.Dijkstras;
+using Wartorn.Utility;
 
 namespace Wartorn.GameData
 {
     class Map : IEnumerable
     {
         public MapCell[,] map { get; private set; }
+
+        public Graph navgivationGraph;
 
         private bool isProcessed = false;
         public bool IsProcessed
@@ -114,6 +118,44 @@ namespace Wartorn.GameData
                     {
                         map[x, y].terrain = terrain;
                     }
+                }
+            }
+            isProcessed = false;
+        }
+
+        public void GenerateNavigationMap()
+        {
+            navgivationGraph = new Graph();
+
+            for (int y = 0; y < Height; y++)
+            {
+                for (int x = 0; x < Width; x++)
+                {
+                    Point currentPoint = new Point(x, y);
+                    Point east = currentPoint.GetNearbyPoint(Direction.East)
+                        , west = currentPoint.GetNearbyPoint(Direction.West)
+                        , south = currentPoint.GetNearbyPoint(Direction.South)
+                        , north = currentPoint.GetNearbyPoint(Direction.North);
+
+                    Dictionary<string, int> temp = new Dictionary<string, int>();
+                    if (this[east] != null)
+                    {
+                        temp.Add(east.toString(), 0);
+                    }
+                    if (this[west] != null)
+                    {
+                        temp.Add(west.toString(), 0);
+                    }
+                    if (this[north] != null)
+                    {
+                        temp.Add(north.toString(), 0);
+                    }
+                    if (this[south] != null)
+                    {
+                        temp.Add(south.toString(), 0);
+                    }
+                    var t = currentPoint.toString();//, converter);
+                    navgivationGraph.add_vertex(t, temp);
                 }
             }
         }

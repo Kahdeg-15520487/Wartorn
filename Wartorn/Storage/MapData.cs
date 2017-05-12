@@ -72,6 +72,7 @@ namespace Wartorn.Storage
             output.Append('|');
             output.Append(JsonConvert.SerializeObject(VersionNumber.MinorVersion, Formatting.Indented));
             output.Append('|');
+            map.GenerateNavigationMap();
             output.Append(JsonConvert.SerializeObject(map,Formatting.Indented));
 
             return output.ToString();
@@ -108,6 +109,8 @@ namespace Wartorn.Storage
                 }
             }
             writer.WriteEndArray();
+            writer.WritePropertyName("NavGraph");
+            serializer.Serialize(writer, temp.navgivationGraph.Vertices.ToArray());
             writer.WriteEndObject();            
         }
 
@@ -157,6 +160,11 @@ namespace Wartorn.Storage
                             map.Add(mctemp);
                         }
                         //File.WriteAllText("mapdata.txt", JsonConvert.SerializeObject(map, Formatting.Indented));
+                        break;
+                    case "NavGraph":
+                        Dictionary<string, Dictionary<string, int>> navgg = new Dictionary<string, Dictionary<string, int>>();
+                        JsonConvert.DeserializeObject<KeyValuePair<string, Dictionary<string, int>>[]>(serializer.Deserialize<string>(reader)).ToList().ForEach(kvp => { navgg.Add(kvp.Key, kvp.Value); });
+                        File.WriteAllText("mapnavigationdata.txt", JsonConvert.SerializeObject(navgg, Formatting.Indented));
                         break;
                     default:
                         break;

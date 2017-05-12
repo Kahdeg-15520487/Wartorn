@@ -24,7 +24,6 @@ namespace Wartorn
         [STAThread]
         static void Main()
         {
-            Wartorn.PathFinding.Dijkstras.DijkstraTest.test();
             Application.Run(new Handler());
         }
     }

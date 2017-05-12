@@ -115,7 +115,7 @@ namespace Wartorn.GameData
                     break;
 
                 case TerrainType.Plain:
-                    if (movementType == MovementType.Foot || movementType == MovementType.Treads)
+                    if (movementType == MovementType.Foot || movementType == MovementType.Track)
                     {
                         result = 0;
                     }

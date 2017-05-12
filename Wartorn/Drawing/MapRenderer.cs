@@ -513,6 +513,7 @@ namespace Wartorn.Drawing
                                 break;
 
                             case TerrainType.Mountain:
+                                SpriteSheetTerrain north = SpriteSheetTerrain.None;
                                 switch (map.weather)
                                 {
                                     case Weather.Sunny:
@@ -520,15 +521,15 @@ namespace Wartorn.Drawing
                                         {
                                             case Theme.Normal:
                                                 map[pos].terrainbase = SpriteSheetTerrain.Mountain_High_Lower;
-                                                map[pos.GetNearbyPoint(Direction.North)].terrainUpper = SpriteSheetTerrain.Mountain_High_Upper;
+                                                north = SpriteSheetTerrain.Mountain_High_Upper;
                                                 break;
                                             case Theme.Tropical:
                                                 map[pos].terrainbase = SpriteSheetTerrain.Tropical_Mountain_High_Lower;
-                                                map[pos.GetNearbyPoint(Direction.North)].terrainUpper = SpriteSheetTerrain.Tropical_Mountain_High_Upper;
+                                                north = SpriteSheetTerrain.Tropical_Mountain_High_Upper;
                                                 break;
                                             case Theme.Desert:
                                                 map[pos].terrainbase = SpriteSheetTerrain.Desert_Mountain_High_Lower;
-                                                map[pos.GetNearbyPoint(Direction.North)].terrainUpper = SpriteSheetTerrain.Desert_Mountain_High_Upper;
+                                                north = SpriteSheetTerrain.Desert_Mountain_High_Upper;
                                                 break;
                                             default:
                                                 break;
@@ -536,58 +537,94 @@ namespace Wartorn.Drawing
                                         break;
                                     case Weather.Rain:
                                         map[pos].terrainbase = SpriteSheetTerrain.Rain_Mountain_High_Lower;
-                                        map[pos.GetNearbyPoint(Direction.North)].terrainUpper = SpriteSheetTerrain.Rain_Mountain_High_Upper;
+                                        north = SpriteSheetTerrain.Rain_Mountain_High_Upper;
                                         break;
                                     case Weather.Snow:
                                         map[pos].terrainbase = SpriteSheetTerrain.Snow_Mountain_High_Lower;
-                                        map[pos.GetNearbyPoint(Direction.North)].terrainUpper = SpriteSheetTerrain.Snow_Mountain_High_Upper;
+                                        north = SpriteSheetTerrain.Snow_Mountain_High_Upper;
                                         break;
                                     default:
                                         break;
                                 }
+                                try
+                                {
+                                    map[pos.GetNearbyPoint(Direction.North)].terrainUpper = north;
+                                }
+                                catch { }
                                 break;
 
                             case TerrainType.MissileSilo:
                                 map[pos].terrainbase = SpriteSheetTerrain.Plain.Next(nextroadtreemnt);
                                 map[pos].terrainLower = SpriteSheetTerrain.Missile_Silo_Lower;
-                                map[pos.GetNearbyPoint(Direction.North)].terrainUpper = SpriteSheetTerrain.Missile_Silo_Upper;
+                                try
+                                {
+                                    map[pos.GetNearbyPoint(Direction.North)].terrainUpper = SpriteSheetTerrain.Missile_Silo_Upper;
+                                }
+                                catch { }
                                 break;
 
                             case TerrainType.MissileSiloLaunched:
                                 map[pos].terrainbase = SpriteSheetTerrain.Plain.Next(nextroadtreemnt);
                                 map[pos].terrainLower = SpriteSheetTerrain.Missile_Silo_Launched;
-                                map[pos.GetNearbyPoint(Direction.North)].terrainUpper = SpriteSheetTerrain.None;
+                                try {
+                                    map[pos.GetNearbyPoint(Direction.North)].terrainUpper = SpriteSheetTerrain.None;
+                                }
+                                catch { }
                                 break;
 
                             case TerrainType.City:
                                 map[pos].terrainbase = SpriteSheetTerrain.Plain.Next(nextroadtreemnt);
                                 map[pos].terrainLower = SpriteSheetTerrain.City_Lower.Next(nextowner);
-                                map[pos.GetNearbyPoint(Direction.North)].terrainUpper = SpriteSheetTerrain.City_Upper.Next(nextowner);
+                                try
+                                {
+                                    map[pos.GetNearbyPoint(Direction.North)].terrainUpper = SpriteSheetTerrain.City_Upper.Next(nextowner);
+                                }
+                                catch { }
                                 break;
                             case TerrainType.Factory:
                                 map[pos].terrainbase = SpriteSheetTerrain.Plain.Next(nextroadtreemnt);
                                 map[pos].terrainLower = SpriteSheetTerrain.Factory.Next(nextowner);
-                                map[pos.GetNearbyPoint(Direction.North)].terrainUpper = SpriteSheetTerrain.None;
+                                try
+                                {
+                                    map[pos.GetNearbyPoint(Direction.North)].terrainUpper = SpriteSheetTerrain.None;
+                                }
+                                catch { }
                                 break;
                             case TerrainType.AirPort:
                                 map[pos].terrainbase = SpriteSheetTerrain.Plain.Next(nextroadtreemnt);
                                 map[pos].terrainLower = SpriteSheetTerrain.AirPort_Lower.Next(nextowner);
-                                map[pos.GetNearbyPoint(Direction.North)].terrainUpper = SpriteSheetTerrain.AirPort_Upper.Next(nextowner);
+                                try
+                                {
+                                    map[pos.GetNearbyPoint(Direction.North)].terrainUpper = SpriteSheetTerrain.AirPort_Upper.Next(nextowner);
+                                }
+                                catch { }
                                 break;
                             case TerrainType.Harbor:
                                 map[pos].terrainbase = SpriteSheetTerrain.Plain.Next(nextroadtreemnt);
                                 map[pos].terrainLower = SpriteSheetTerrain.Harbor_Lower.Next(nextowner);
-                                map[pos.GetNearbyPoint(Direction.North)].terrainUpper = SpriteSheetTerrain.Harbor_Upper.Next(nextowner);
+                                try
+                                {
+                                    map[pos.GetNearbyPoint(Direction.North)].terrainUpper = SpriteSheetTerrain.Harbor_Upper.Next(nextowner);
+                                }
+                                catch { }
                                 break;
                             case TerrainType.Radar:
                                 map[pos].terrainbase = SpriteSheetTerrain.Plain.Next(nextroadtreemnt);
                                 map[pos].terrainLower = SpriteSheetTerrain.Radar_Lower.Next(nextowner);
-                                map[pos.GetNearbyPoint(Direction.North)].terrainUpper = SpriteSheetTerrain.Radar_Upper.Next(nextowner);
+                                try
+                                {
+                                    map[pos.GetNearbyPoint(Direction.North)].terrainUpper = SpriteSheetTerrain.Radar_Upper.Next(nextowner);
+                                }
+                                catch { }
                                 break;
                             case TerrainType.SupplyBase:
                                 map[pos].terrainbase = SpriteSheetTerrain.Plain.Next(nextroadtreemnt);
                                 map[pos].terrainLower = SpriteSheetTerrain.SupplyBase_Lower.Next(nextowner);
-                                map[pos.GetNearbyPoint(Direction.North)].terrainUpper = SpriteSheetTerrain.SupplyBase_Upper.Next(nextowner);
+                                try
+                                {
+                                    map[pos.GetNearbyPoint(Direction.North)].terrainUpper = SpriteSheetTerrain.SupplyBase_Upper.Next(nextowner);
+                                }
+                                catch { }
                                 break;
                             case TerrainType.HQ:
                                 switch (map[pos].owner)
@@ -609,7 +646,11 @@ namespace Wartorn.Drawing
                                 }
                                 map[pos].terrainbase = SpriteSheetTerrain.Plain.Next(nextroadtreemnt);
                                 map[pos].terrainLower = SpriteSheetTerrain.Red_Headquarter_Lower.Next(nextowner);
-                                map[pos.GetNearbyPoint(Direction.North)].terrainUpper = SpriteSheetTerrain.Red_Headquarter_Upper.Next(nextowner);
+                                try
+                                {
+                                    map[pos.GetNearbyPoint(Direction.North)].terrainUpper = SpriteSheetTerrain.Red_Headquarter_Upper.Next(nextowner);
+                                }
+                                catch { }
                                 break;
                             default:
                                 break;

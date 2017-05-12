@@ -38,7 +38,19 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="PathFinding\dijkstra.cs" />
+    <Compile Include="DropdownDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DropdownDialog.Designer.cs">
+      <DependentUpon>DropdownDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="InputDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="InputDialog.Designer.cs">
+      <DependentUpon>InputDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PathFinding\Dijkstra.cs" />
     <Compile Include="PathFinding\FloodRange.cs" />
     <Compile Include="SpriteRectangle\BuildingSpriteSourceRectangle.cs" />
     <Compile Include="Constants.cs" />
@@ -111,6 +123,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="DropdownDialog.resx">
+      <DependentUpon>DropdownDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Handler.resx">
       <DependentUpon>Handler.cs</DependentUpon>
     </EmbeddedResource>
@@ -118,6 +133,9 @@
     <Content Include="OpenTK.dll.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <EmbeddedResource Include="InputDialog.resx">
+      <DependentUpon>InputDialog.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <MonoGameContentReference Include="Content\Content.mgcb" />

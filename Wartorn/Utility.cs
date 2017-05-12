@@ -127,7 +127,7 @@ namespace Wartorn
                     case UnitType.HeavyTank:
                     case UnitType.Artillery:
                     case UnitType.AntiAir:
-                        return MovementType.Treads;
+                        return MovementType.Track;
                     default:
                         break;
                 }
@@ -805,6 +805,21 @@ namespace Wartorn
             public static string toString(this Point p)
             {
                 return string.Format("{0}:{1}", p.X, p.Y);
+            }
+
+            public static Point Parse(this string str)
+            {
+                var data = str.Split(':');
+                int x, y;
+
+                if (int.TryParse(data[0], out x) && int.TryParse(data[1], out y))
+                {
+                    return new Point(x, y);
+                }
+                else
+                {
+                    return Point.Zero;
+                }
             }
 
             public static bool TryParse(this string str,out Point p)

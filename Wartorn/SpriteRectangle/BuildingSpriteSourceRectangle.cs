@@ -58,7 +58,7 @@ namespace Wartorn
                 }
             }
 
-            File.WriteAllText("buildingspriterectangle.txt", JsonConvert.SerializeObject(BuildingSprite.ToArray(), Formatting.Indented));
+            //File.WriteAllText("buildingspriterectangle.txt", JsonConvert.SerializeObject(BuildingSprite.ToArray(), Formatting.Indented));
         }
 
         public static Rectangle GetSpriteRectangle(SpriteSheetBuilding t)

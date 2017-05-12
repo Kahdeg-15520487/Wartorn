@@ -75,8 +75,7 @@ namespace Wartorn.Drawing
                 return
                     Matrix.CreateTranslation(new Vector3(-_location.X, -_location.Y, 0)) *
                     Matrix.CreateRotationZ(_rotation) *
-                    Matrix.CreateScale(_zoom);// *
-                    //Matrix.CreateTranslation(new Vector3(_bounds.Width * 0.5f, _bounds.Height * 0.5f, 0));
+                    Matrix.CreateScale(_zoom);
             }
         }
 
@@ -88,6 +87,11 @@ namespace Wartorn.Drawing
         public Vector2 TranslateFromScreenToWorld(Vector2 vt)
         {
             return Vector2.Transform(vt, Matrix.Invert(this.TransformMatrix));
+        }
+
+        public Vector2 TranslateFromWorldToScreen(Vector2 vt)
+        {
+            return Vector2.Transform(vt, this.TransformMatrix);
         }
     }
 }

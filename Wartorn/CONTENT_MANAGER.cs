@@ -54,11 +54,14 @@ namespace Wartorn
         
         public static event EventHandler<MessageEventArgs> messagebox;
         public static event EventHandler<MessageEventArgs> fileopendialog;
-        public static event EventHandler<MessageEventArgs> togglebackgroundform;
+        public static event EventHandler<MessageEventArgs> promptbox;
+        public static event EventHandler<MessageEventArgs> dropdownbox;
 
-        public static void ShowMessageBox(string e)
+        public static string ShowMessageBox(string message)
         {
-            messagebox?.Invoke(null, new MessageEventArgs(e));
+            MessageEventArgs e = new MessageEventArgs(message);
+            messagebox?.Invoke(null, e);
+            return e.message;
         }
 
         public static string ShowFileOpenDialog(string rootpath)
@@ -68,9 +71,18 @@ namespace Wartorn
             return e.message;
         }
 
-        public static void ToggleBackgroundForm(string e)
+        public static string ShowPromptBox(string prompt)
         {
-            togglebackgroundform?.Invoke(null, new MessageEventArgs(e));
+            MessageEventArgs e = new MessageEventArgs(prompt);
+            promptbox?.Invoke(null, e);
+            return e.message;
+        }
+
+        public static string ShowDropdownBox(string prompt)
+        {
+            MessageEventArgs e = new MessageEventArgs(prompt);
+            dropdownbox?.Invoke(null, e);
+            return e.message;
         }
 
         public static void ShowFPS(GameTime gameTime)

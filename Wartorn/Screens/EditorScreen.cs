@@ -106,10 +106,16 @@ namespace Wartorn.Screens
             Button button_Save = new Button(UISpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetUI.Save), new Point(50, 20), 0.5f);
             Button button_Open = new Button(UISpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetUI.Open), new Point(80, 20), 0.5f);
             Button button_Exit = new Button(UISpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetUI.Exit), new Point(110, 20), 0.5f);
+            Button button_ChangeMapSize = new Button("Change map size", new Point(140, 20), new Vector2(140, 20), CONTENT_MANAGER.arcadefont);
+            button_ChangeMapSize.Origin = new Vector2(25, 2);
+            Button button_FillMap = new Button("Fill map", new Point(290, 20), new Vector2(90, 20), CONTENT_MANAGER.arcadefont);
+            button_FillMap.Origin = new Vector2(15, 2);
             canvas_Menu.AddElement("button_Undo", button_Undo);
             canvas_Menu.AddElement("button_Save", button_Save);
             canvas_Menu.AddElement("button_Open", button_Open);
             canvas_Menu.AddElement("button_Exit", button_Exit);
+            canvas_Menu.AddElement("button_ChangeMapSize", button_ChangeMapSize);
+            canvas_Menu.AddElement("button_FillMap", button_FillMap);
             canvas_Menu.IsVisible = isMenuOpen;
 
             //bind action to ui event
@@ -164,6 +170,46 @@ namespace Wartorn.Screens
             button_Exit.MouseClick += (sender, e) =>
             {
                 SCREEN_MANAGER.go_back();
+            };
+
+            button_ChangeMapSize.MouseClick += (sender, e) =>
+            {
+                int x, y;
+                string input = CONTENT_MANAGER.ShowPromptBox("Nhap chieu rong cua map:");
+                if (!int.TryParse(input,out x))
+                {
+                    CONTENT_MANAGER.ShowMessageBox("Please input number");
+                    return;
+                }
+
+                input = CONTENT_MANAGER.ShowPromptBox("Nhap chieu cao cua map:");
+                if (!int.TryParse(input,out y))
+                {
+                    CONTENT_MANAGER.ShowMessageBox("Please input number");
+                    return;
+                }
+
+                Map temp = new Map(x, y);
+                temp.Fill(TerrainType.Plain);
+                map.Clone(temp);
+
+                camera.Location = Vector2.Zero;
+            };
+
+            button_FillMap.MouseClick += (sender, e) =>
+            {
+                var options = (Enum.GetNames(typeof(TerrainType))).Aggregate((current, next) => current + "|" + next);
+                var selected = CONTENT_MANAGER.ShowDropdownBox("select terrain:|" + options);
+
+                if (selected != "Cancel")
+                {
+
+                    TerrainType tempterrain = selected.ToEnum<TerrainType>();
+
+                    Map temp = new Map(map.Width, map.Height);
+                    temp.Fill(tempterrain);
+                    map.Clone(temp);
+                }
             };
 
             canvas.AddElement("canvas_Menu", canvas_Menu);
@@ -532,24 +578,17 @@ namespace Wartorn.Screens
 
         private void InitMap(TerrainType terraintype)
         {
-            int count = 1;
-            for (int i = 0; i < map.Width; i++)
-            {
-                for (int j = 0; j < map.Height; j++)
-                {
-                    map[i, j] = new MapCell(terraintype, null);
-                }
-            }
+            map.Fill(terraintype);
 
-            map[10, 10] = new MapCell(TerrainType.City);
-            map[10, 10].owner = Owner.Red;
+            //map[10, 10] = new MapCell(TerrainType.City);
+            //map[10, 10].owner = Owner.Red;
 
-            Unit soldier1 = UnitCreationHelper.Create(UnitType.Artillery, Owner.Red);
-            soldier1.Animation.Depth = LayerDepth.Unit;
-            soldier1.Animation.PlayAnimation(AnimationName.right.ToString());
-            soldier1.Animation.FlipEffect = SpriteEffects.FlipHorizontally;
+            //Unit soldier1 = UnitCreationHelper.Create(UnitType.Artillery, Owner.Red);
+            //soldier1.Animation.Depth = LayerDepth.Unit;
+            //soldier1.Animation.PlayAnimation(AnimationName.right.ToString());
+            //soldier1.Animation.FlipEffect = SpriteEffects.FlipHorizontally;
 
-            map[5, 5].unit = soldier1;
+            //map[5, 5].unit = soldier1;
         }
 
         public override void Update(GameTime gameTime)
@@ -765,7 +804,10 @@ namespace Wartorn.Screens
             {
                 camera.Location += new Vector2(0, 1) * speed;
             }
-            camera.Location = new Vector2(camera.Location.X.Clamp(1680, 0), camera.Location.Y.Clamp(960, 0));
+
+            Point clampMax = new Point(map.Width * Constants.MapCellWidth - 720, map.Height * Constants.MapCellHeight - 480);
+
+            camera.Location = new Vector2(camera.Location.X.Clamp(clampMax.X, 0), camera.Location.Y.Clamp(clampMax.Y, 0));
         }
 
         private void ZoomCamera()

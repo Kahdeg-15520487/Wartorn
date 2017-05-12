@@ -76,7 +76,7 @@ namespace Wartorn
 
             DrawingHelper.Initialize(GraphicsDevice);
 
-            Unit.Init();
+            //Unit.Init();
             //Unit.Load();
 
             base.Initialize();
@@ -280,6 +280,13 @@ namespace Wartorn
             if (HelperFunction.IsKeyPress(Keys.F1))
             {
                 SCREEN_MANAGER.goto_screen("TestAnimationScreen");
+            }
+
+            if (HelperFunction.IsKeyPress(Keys.F2))
+            {
+                var options = (Enum.GetNames(typeof(TerrainType))).Aggregate((current, next) => current + "|" + next);
+                var selected = CONTENT_MANAGER.ShowDropdownBox("select terrain:" + "|" + options);
+                CONTENT_MANAGER.ShowMessageBox(selected);
             }
 
             SCREEN_MANAGER.Update(gameTime);

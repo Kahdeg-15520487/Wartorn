@@ -94,5 +94,10 @@
     <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/Animation/Yellow/Submarine.png</File>
     <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/Animation/Yellow/Tank.png</File>
     <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/Animation/Yellow/TransportCopter.png</File>
+    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/Cursor/Attack_Bubble.png</File>
+    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/Cursor/Attack_Cursor.png</File>
+    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/Cursor/Damage_Number.png</File>
+    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/Cursor/Select_Cursor.png</File>
+    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/MapOverlay.png</File>
   </SourceFiles>
 </SourceFileCollection>

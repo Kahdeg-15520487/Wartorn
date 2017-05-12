@@ -18,10 +18,15 @@ namespace Wartorn.PathFinding
         class Graph
         {
             //vertex list aka 
-            //the dictionary of distance for a Point to another Point with the distance betwene those 2 Points
+            //the dictionary of distance from a Point to another Point
             //this thing use string to label the Points
             public Dictionary<string, Dictionary<string, int>> Vertices = new Dictionary<string, Dictionary<string, int>>();
+
+            //the shortest path from one point to another point.
             public Dictionary<string, string> Pathlist = new Dictionary<string, string>();
+
+            //the source, the starting point, the origin of the graph
+            //usually the location of a Unit
             public string Source;
 
             //add a Point with its associated distance to nearby Points
@@ -50,6 +55,41 @@ namespace Wartorn.PathFinding
                 }
 
                 return path;
+            }
+
+            public int CalculateShortestPathCost(string destination)
+            {
+                int cost = int.MaxValue;
+
+                if (Pathlist.ContainsKey(destination))
+                {
+                    cost = 0;
+                    string currentNode = destination;
+                    while (currentNode.CompareTo(Source) != 0)
+                    {
+                        cost += Vertices[currentNode][Pathlist[currentNode]];
+                        currentNode = Pathlist[currentNode];
+                    }
+                }
+
+                return cost;
+            }
+
+
+            public List<string> FindReachableVertex(int maxCost)
+            {
+                List<string> reachableVertex = new List<string>();
+
+                foreach (string dest in Pathlist.Keys)
+                {
+                    int cost = CalculateShortestPathCost(dest);
+                    if (cost<=maxCost)
+                    {
+                        reachableVertex.Add(dest);
+                    }
+                }
+
+                return reachableVertex;
             }
 
             /// <summary>
@@ -81,26 +121,9 @@ namespace Wartorn.PathFinding
 
                     nodes.Add(vertex.Key);
                 }
-
-                StringBuilder steplog = new StringBuilder();
+                
                 while (nodes.Count != 0)
                 {
-                    previous.ToList().ForEach(kvp =>
-                    {
-                       steplog.AppendFormat("{0} <- {1}|", kvp.Key, kvp.Value);
-                    });
-                    steplog.AppendLine();
-                    distances.ToList().ForEach(kvp =>
-                    {
-                        steplog.AppendFormat("{0} = {1}|", kvp.Key, kvp.Value);
-                    });
-                    steplog.AppendLine();
-                    nodes.ForEach(node =>
-                    {
-                        steplog.AppendLine(node);
-                    });
-                    steplog.AppendLine();
-
                     //sort the Point based on the distances of each Point to the previous Point
                     nodes.Sort((x, y) => distances[x] - distances[y]);
 
@@ -115,7 +138,7 @@ namespace Wartorn.PathFinding
                         break;
                     }
 
-                    //loop through the surronding Point of the smallest
+                    //loop through the surrounding Point of the smallest
                     //to see if there is a Potential Shortest distance
                     foreach (var neighbor in Vertices[smallest])
                     {
@@ -128,15 +151,10 @@ namespace Wartorn.PathFinding
                     }
                 }
 
-                //StringBuilder dijkstraGraphFromSource = new StringBuilder();
                 foreach (var kvp in previous)
                 {
-                    //dijkstraGraphFromSource.AppendFormat("{0} <- {1}", kvp.Key, kvp.Value);
-                    //dijkstraGraphFromSource.AppendLine();
                     Pathlist.Add(kvp.Key, kvp.Value);
                 }
-                //File.WriteAllText("dijktra.txt", dijkstraGraphFromSource.ToString());
-                //File.WriteAllText("dijktra.txt", steplog.ToString());
             }
         }
 
@@ -146,6 +164,8 @@ namespace Wartorn.PathFinding
             {
                 Graph g = new Graph();
 
+                //this is a constants lookup table
+                //to see how each movementtype move on each terrain
                 Dictionary<MovementType, Dictionary<TerrainType, int>> TravelCost = new Dictionary<MovementType, Dictionary<TerrainType, int>>();
                 TravelCost.Add(MovementType.Foot, new Dictionary<TerrainType, int>());
                 TravelCost[MovementType.Foot].Add(TerrainType.Plain, 1);
@@ -154,12 +174,22 @@ namespace Wartorn.PathFinding
                 TravelCost[MovementType.Foot].Add(TerrainType.Mountain, 2);
                 TravelCost[MovementType.Foot].Add(TerrainType.Sea, int.MaxValue);
 
+                TravelCost.Add(MovementType.Track, new Dictionary<TerrainType, int>());
+                TravelCost[MovementType.Track].Add(TerrainType.Plain, 1);
+                TravelCost[MovementType.Track].Add(TerrainType.Road, 1);
+                TravelCost[MovementType.Track].Add(TerrainType.Tree, 2);
+                TravelCost[MovementType.Track].Add(TerrainType.Mountain, int.MaxValue);
+                TravelCost[MovementType.Track].Add(TerrainType.Sea, int.MaxValue);
 
-                var map = new Map(5, 5);
+
+                //the demo map
+                var map = new Map(6, 6);
                 map.Fill(TerrainType.Plain);
 
+                //the demo unit
                 Point start = new Point(2, 2);
-                Unit unit = new Unit(UnitType.Soldier, null, Owner.Red);
+                //Unit unit = new Unit(UnitType.Soldier, null, Owner.Red);
+                Unit unit = new Unit(UnitType.Tank, null, Owner.Red);
                 MovementType movementtype = unit.UnitType.GetMovementType();
                 int maxcost = 0;
 
@@ -177,19 +207,24 @@ namespace Wartorn.PathFinding
                 map[1, 3].terrain = TerrainType.Sea;
                 map[2, 3].terrain = TerrainType.Sea;
 
-                //process this map to a Graph
-
+                
+                //max movement cost of the unit
                 switch (unit.UnitType)
                 {
                     case UnitType.Soldier:
                         maxcost = 3;
                         break;
+                    case UnitType.Tank:
+                        maxcost = 6;
+                        break;
                     default:
                         break;
                 }
 
-                //PointJsonConverter converter = new PointJsonConverter();
-
+                
+                //init graph
+                //just check if a point is connect to nearby point
+                //this will be calculated with the map
                 for (int y = 0; y < map.Height; y++)
                 {
                     for (int x = 0; x < map.Width; x++)
@@ -201,56 +236,62 @@ namespace Wartorn.PathFinding
                             , north = currentPoint.GetNearbyPoint(Direction.North);
 
                         Dictionary<string, int> temp = new Dictionary<string, int>();
-                        if (map[east] != null)
+                        if (map[east]!=null)
                         {
-                            temp.Add(east.toString(), TravelCost[movementtype][map[east].terrain]);
+                            temp.Add(east.toString(), 0);
                         }
-                        if (map[west] != null)
+                        if (map[west]!=null)
                         {
-                            temp.Add(west.toString(), TravelCost[movementtype][map[west].terrain]);
+                            temp.Add(west.toString(), 0);
                         }
-                        if (map[north] != null)
+                        if (map[north]!=null)
                         {
-                            temp.Add(north.toString(), TravelCost[movementtype][map[north].terrain]);
+                            temp.Add(north.toString(), 0);
                         }
-                        if (map[south] != null)
+                        if (map[south]!=null)
                         {
-                            temp.Add(south.toString(), TravelCost[movementtype][map[south].terrain]);
+                            temp.Add(south.toString(), 0);
                         }
                         var t = currentPoint.toString();//, converter);
                         g.add_vertex(t, temp);
                     }
                 }
 
+                //serialize navgraph
+                string navgraph = JsonConvert.SerializeObject(g.Vertices.ToArray(),Formatting.Indented);
+                File.WriteAllText("navgraph.txt", navgraph);
 
-                //g.add_vertex("A", new Dictionary<string, int>() { { "B", 7 }, { "C", 8 } });
-                //g.add_vertex("B", new Dictionary<string, int>() { { "A", 7 }, { "F", 2 } });
-                //g.add_vertex("C", new Dictionary<string, int>() { { "A", 8 }, { "F", 6 }, { "G", 4 } });
-                //g.add_vertex("D", new Dictionary<string, int>() { { "F", 8 } });
-                //g.add_vertex("E", new Dictionary<string, int>() { { "H", 1 } });
-                //g.add_vertex("F", new Dictionary<string, int>() { { "B", 2 }, { "C", 6 }, { "D", 8 }, { "G", 9 }, { "H", 3 } });
-                //g.add_vertex("G", new Dictionary<string, int>() { { "C", 4 }, { "F", 9 } });
-                //g.add_vertex("H", new Dictionary<string, int>() { { "E", 1 }, { "F", 3 } });
-                //g.add_vertex("I", new Dictionary<string, int>() { { "J", 2 } });
-                //g.add_vertex("J", new Dictionary<string, int>() { { "I", 2 } });
+                //deserialize navgraph
+                Dictionary<string, Dictionary<string, int>> navgg = new Dictionary<string, Dictionary<string, int>>();
+                JsonConvert.DeserializeObject<KeyValuePair<string, Dictionary<string, int>>[]>(navgraph).ToList().ForEach(kvp => { navgg.Add(kvp.Key, kvp.Value); });
 
-                StringBuilder result = new StringBuilder();
 
+                //now we assign aproriate travel cost
+                //based on terrain and movementtype
+                List<string> vertices = g.Vertices.Keys.ToList();
+                foreach (string vertex in vertices)
+                {
+                    List<string> neighbors = g.Vertices[vertex].Keys.ToList();
+                    foreach (string neighbor in neighbors)
+                    {
+                        Point point = neighbor.Parse();
+                        int cost = TravelCost[movementtype][map[point].terrain];
+                        if (cost<int.MaxValue)
+                        {
+                            g.Vertices[vertex][neighbor] = cost;
+                        }
+                        else
+                        {
+                            g.Vertices[vertex].Remove(neighbor);
+                        }
+                    }
+                }
+
+                //start the dijkstra algorithm
                 g.Dijkstra(start.toString());
 
-                g.Vertices.ToList().ForEach(kvp =>
-                {
-                    kvp.Value.ToList().ForEach(kvp2 =>
-                    {
-                        result.AppendFormat("{0} -> {1} : {2}", kvp.Key, kvp2.Key, kvp2.Value);
-                        result.AppendLine();
-                    });
-                    result.AppendLine();
-                });
-                File.WriteAllText("graph.txt", result.ToString());
-
-                var path = g.FindShortestPath((new Point(0, 0)).toString());
-                File.WriteAllLines("dijktra.txt", path);
+                //find reachable vertex with the unit's max movement cost
+                var range = g.FindReachableVertex(maxcost);
             }
         }
     }
