@@ -114,8 +114,9 @@ namespace Wartorn
                 switch (ut)
                 {
                     case UnitType.Soldier:
+                        return MovementType.Soldier;
                     case UnitType.Mech:
-                        return MovementType.Foot;
+                        return MovementType.Mech;
 
                     case UnitType.Recon:
                     case UnitType.Rocket:
@@ -128,6 +129,20 @@ namespace Wartorn
                     case UnitType.Artillery:
                     case UnitType.AntiAir:
                         return MovementType.Track;
+
+                    case UnitType.TransportCopter:
+                    case UnitType.BattleCopter:
+                    case UnitType.Fighter:
+                    case UnitType.Bomber:
+                        return MovementType.Air;
+
+                    case UnitType.Lander:
+                        return MovementType.Lander;
+
+                    case UnitType.Cruise:
+                    case UnitType.Submarine:
+                    case UnitType.Battleship:
+                        return MovementType.Ship;
                     default:
                         break;
                 }

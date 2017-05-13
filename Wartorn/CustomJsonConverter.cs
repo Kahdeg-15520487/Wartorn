@@ -599,5 +599,59 @@ namespace Wartorn
                 return new Dictionary<MovementType, Dictionary<TerrainType, int>>(result);
             }
         }
+
+        public class RangeJsonConverter : JsonConverter
+        {
+            public override bool CanConvert(Type objectType)
+            {
+                return objectType == typeof(Range);
+            }
+
+            public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+            {
+                Range temp = (Range)value;
+
+                writer.WriteStartObject();
+                writer.WritePropertyName("Max");
+                serializer.Serialize(writer, temp.Max);
+                writer.WritePropertyName("Min");
+                serializer.Serialize(writer, temp.Min);
+                writer.WriteEndObject();
+            }
+
+            public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+            {
+                int max = 0;
+                int min = 0;
+
+                while (reader.Read())
+                {
+                    if (reader.TokenType != JsonToken.PropertyName)
+                    {
+                        break;
+                    }
+
+                    string propertyName = (string)reader.Value;
+                    if (!reader.Read())
+                    {
+                        continue;
+                    }
+
+                    switch (propertyName)
+                    {
+                        case "Max":
+                            max = serializer.Deserialize<int>(reader);
+                            break;
+                        case "Min":
+                            min = serializer.Deserialize<int>(reader);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+
+                return new Range(max, min);
+            }
+        }
     }
 }

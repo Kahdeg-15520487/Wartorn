@@ -167,12 +167,12 @@ namespace Wartorn.PathFinding
                 //this is a constants lookup table
                 //to see how each movementtype move on each terrain
                 Dictionary<MovementType, Dictionary<TerrainType, int>> TravelCost = new Dictionary<MovementType, Dictionary<TerrainType, int>>();
-                TravelCost.Add(MovementType.Foot, new Dictionary<TerrainType, int>());
-                TravelCost[MovementType.Foot].Add(TerrainType.Plain, 1);
-                TravelCost[MovementType.Foot].Add(TerrainType.Road, 1);
-                TravelCost[MovementType.Foot].Add(TerrainType.Tree, 1);
-                TravelCost[MovementType.Foot].Add(TerrainType.Mountain, 2);
-                TravelCost[MovementType.Foot].Add(TerrainType.Sea, int.MaxValue);
+                TravelCost.Add(MovementType.Soldier, new Dictionary<TerrainType, int>());
+                TravelCost[MovementType.Soldier].Add(TerrainType.Plain, 1);
+                TravelCost[MovementType.Soldier].Add(TerrainType.Road, 1);
+                TravelCost[MovementType.Soldier].Add(TerrainType.Tree, 1);
+                TravelCost[MovementType.Soldier].Add(TerrainType.Mountain, 2);
+                TravelCost[MovementType.Soldier].Add(TerrainType.Sea, int.MaxValue);
 
                 TravelCost.Add(MovementType.Track, new Dictionary<TerrainType, int>());
                 TravelCost[MovementType.Track].Add(TerrainType.Plain, 1);

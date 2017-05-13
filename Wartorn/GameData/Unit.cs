@@ -26,8 +26,11 @@ namespace Wartorn.GameData
     {
         #region static stuff
         static Dictionary<UnitPair, int> _DammageTable;
+        static Dictionary<UnitType, int> _Cost;
+        static Dictionary<UnitType, int> _Gas;
         static Dictionary<UnitType, int> _MovementRange;
         static Dictionary<UnitType, int> _VisionRange;
+        static Dictionary<UnitType, Range> _AttackRange;
         static Dictionary<MovementType, Dictionary<TerrainType, int>> _TravelCost;
 
         public static void Init()
@@ -49,6 +52,18 @@ namespace Wartorn.GameData
                 }
             }
 
+            _Cost = new Dictionary<UnitType, int>();
+            foreach (UnitType unittype in unittypes)
+            {
+                _Cost.Add(unittype, 0);
+            }
+
+            _Gas = new Dictionary<UnitType, int>();
+            foreach (UnitType unittype in unittypes)
+            {
+                _Gas.Add(unittype, 99);
+            }
+
             _MovementRange = new Dictionary<UnitType, int>();
             foreach (UnitType unittype in unittypes)
             {
@@ -62,6 +77,12 @@ namespace Wartorn.GameData
                 _VisionRange.Add(unittype, 0);
             }
 
+            _AttackRange = new Dictionary<UnitType, Range>();
+            foreach (UnitType unittype in unittypes)
+            {
+                _AttackRange.Add(unittype, new Range(1));
+            }
+
             _TravelCost = new Dictionary<MovementType, Dictionary<TerrainType, int>>();
             foreach (MovementType movetype in movementtypes)
             {
@@ -72,40 +93,63 @@ namespace Wartorn.GameData
                 }
             }
 
-            Directory.CreateDirectory(@"data/");
-            File.WriteAllText(@"data/dmgtable.txt", JsonConvert.SerializeObject(_DammageTable.ToArray(), Formatting.Indented));
-            File.WriteAllText(@"data/movementrangetable.txt", JsonConvert.SerializeObject(_MovementRange.ToArray(), Formatting.Indented));
-            File.WriteAllText(@"data/visionrangetable.txt", JsonConvert.SerializeObject(_VisionRange.ToArray(), Formatting.Indented));
-
-            File.WriteAllText(@"data/traversecosttable.txt", JsonConvert.SerializeObject(_TravelCost, Formatting.Indented));
+            Directory.CreateDirectory(@"data\");
+            File.WriteAllText(@"data\dmgtable.txt", JsonConvert.SerializeObject(_DammageTable.ToArray(), Formatting.Indented));
+            File.WriteAllText(@"data\costtable.txt", JsonConvert.SerializeObject(_Cost.ToArray(), Formatting.Indented));
+            File.WriteAllText(@"data\gastable.txt", JsonConvert.SerializeObject(_Gas.ToArray(), Formatting.Indented));
+            File.WriteAllText(@"data\movementrangetable.txt", JsonConvert.SerializeObject(_MovementRange.ToArray(), Formatting.Indented));
+            File.WriteAllText(@"data\visionrangetable.txt", JsonConvert.SerializeObject(_VisionRange.ToArray(), Formatting.Indented));
+            File.WriteAllText(@"data\attackrangetable.txt", JsonConvert.SerializeObject(_AttackRange.ToArray(), Formatting.Indented));
+            File.WriteAllText(@"data\traversecosttable.txt", JsonConvert.SerializeObject(_TravelCost, Formatting.Indented));
         }
 
         public static void Load()
         {
             _DammageTable = new Dictionary<UnitPair, int>();
+            _Cost = new Dictionary<UnitType, int>();
+            _Gas = new Dictionary<UnitType, int>();
             _MovementRange = new Dictionary<UnitType, int>();
             _VisionRange = new Dictionary<UnitType, int>();
+            _AttackRange = new Dictionary<UnitType, Range>();
             _TravelCost = new Dictionary<MovementType, Dictionary<TerrainType, int>>();
             
-            string dmgtable = File.ReadAllText(@"data/dmgtable.txt");
+            string dmgtable = File.ReadAllText(@"data\dmgtable.txt");
             JsonConvert.DeserializeObject<KeyValuePair<UnitPair, int>[]>(dmgtable).ToList().ForEach(kvp =>
             {
                 _DammageTable.Add(kvp.Key, kvp.Value);
             });
 
-            string movrangetable = File.ReadAllText(@"data/movementrangetable.txt");
+            string costtable = File.ReadAllText(@"data\costtable.txt");
+            JsonConvert.DeserializeObject<KeyValuePair<UnitType, int>[]>(costtable).ToList().ForEach(kvp =>
+            {
+                _Cost.Add(kvp.Key, kvp.Value);
+            });
+
+            string gastable = File.ReadAllText(@"data\gastable.txt");
+            JsonConvert.DeserializeObject<KeyValuePair<UnitType, int>[]>(gastable).ToList().ForEach(kvp =>
+            {
+                _Gas.Add(kvp.Key, kvp.Value);
+            });
+
+            string movrangetable = File.ReadAllText(@"data\movementrangetable.txt");
             JsonConvert.DeserializeObject<KeyValuePair<UnitType, int>[]>(movrangetable).ToList().ForEach(kvp =>
             {
                 _MovementRange.Add(kvp.Key, kvp.Value);
             });
 
-            string visionrangetable = File.ReadAllText(@"data/visionrangetable.txt");
+            string visionrangetable = File.ReadAllText(@"data\visionrangetable.txt");
             JsonConvert.DeserializeObject<KeyValuePair<UnitType, int>[]>(visionrangetable).ToList().ForEach(kvp =>
             {
                 _VisionRange.Add(kvp.Key, kvp.Value);
             });
 
-            string traversecosttable = File.ReadAllText(@"data/traversecosttable.txt");
+            string attackrangetable = File.ReadAllText(@"data\attackrangetable.txt");
+            JsonConvert.DeserializeObject<KeyValuePair<UnitType, Range>[]>(attackrangetable).ToList().ForEach(kvp =>
+            {
+                _AttackRange.Add(kvp.Key, kvp.Value);
+            });
+
+            string traversecosttable = File.ReadAllText(@"data\traversecosttable.txt");
             _TravelCost = JsonConvert.DeserializeObject<Dictionary<MovementType, Dictionary<TerrainType, int>>>(traversecosttable);
         }
 
@@ -156,7 +200,7 @@ namespace Wartorn.GameData
     }
 
     
-    public class UnitPair
+    public struct UnitPair
     {
         public UnitType Attacker { get; set; }
         public UnitType Defender { get; set; }
@@ -164,6 +208,22 @@ namespace Wartorn.GameData
         {
             Attacker = att;
             Defender = def;
+        }
+    }
+
+    public struct Range
+    {
+        public int Max { get; set; }
+        public int Min { get; set; }        
+        public Range(int max,int min)
+        {
+            Max = max;
+            Min = min;
+        }
+        public Range(int max)
+        {
+            Max = max;
+            Min = max;
         }
     }
 

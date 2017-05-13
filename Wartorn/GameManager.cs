@@ -52,6 +52,7 @@ namespace Wartorn
                 settings.Converters.Add(new UnitTypeJsonConverter());
                 settings.Converters.Add(new MovementTypeJsonConverter());
                 settings.Converters.Add(new TerrainTypeJsonConverter());
+                settings.Converters.Add(new RangeJsonConverter());
                 settings.Converters.Add(new MapJsonConverter());
                 settings.Converters.Add(new MapCellJsonConverter());
                 settings.Converters.Add(new Dictionary_MovementType_Dictionary_TerrainType_int_JsonConverter());
@@ -146,9 +147,8 @@ namespace Wartorn
 
             if (HelperFunction.IsKeyPress(Keys.F2))
             {
-                var options = (Enum.GetNames(typeof(TerrainType))).Aggregate((current, next) => current + "|" + next);
-                var selected = CONTENT_MANAGER.ShowDropdownBox("select terrain:" + "|" + options);
-                CONTENT_MANAGER.ShowMessageBox(selected);
+                Unit.Load();
+                CONTENT_MANAGER.ShowMessageBox("Unit stats reloaded");
             }
 
             SCREEN_MANAGER.Update(gameTime);

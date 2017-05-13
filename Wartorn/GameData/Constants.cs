@@ -68,11 +68,13 @@ namespace Wartorn.GameData
     public enum MovementType
     {
         None,
-        Foot,
+        Soldier,
+        Mech,
         Tires,
         Track,
         Air,
-        Ship
+        Ship,
+        Lander
     }
 
     public enum Weather
