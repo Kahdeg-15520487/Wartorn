@@ -170,6 +170,10 @@ namespace Wartorn
 
             private void Init()
             {
+                MouseClick += (sender, e) =>
+                {
+                    CONTENT_MANAGER.menu_select.Play();
+                };
                 MouseDown += (sender, e) =>
                 {
                     isPressed = true;

@@ -1148,3 +1148,429 @@
 /processorParam:TextureFormat=Color
 /build:sprite/MoveOverlay.png
 
+#begin sound/dead/dedman1.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/dead/dedman1.ogg
+
+#begin sound/dead/dedman10.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/dead/dedman10.ogg
+
+#begin sound/dead/dedman2.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/dead/dedman2.ogg
+
+#begin sound/dead/dedman3.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/dead/dedman3.ogg
+
+#begin sound/dead/dedman4.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/dead/dedman4.ogg
+
+#begin sound/dead/dedman5.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/dead/dedman5.ogg
+
+#begin sound/dead/dedman6.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/dead/dedman6.ogg
+
+#begin sound/dead/dedman7.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/dead/dedman7.ogg
+
+#begin sound/dead/dedman8.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/dead/dedman8.ogg
+
+#begin sound/gundsound/anti_air_cannon.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/gundsound/anti_air_cannon.ogg
+
+#begin sound/gundsound/cannon1.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/gundsound/cannon1.ogg
+
+#begin sound/gundsound/cannon2.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/gundsound/cannon2.ogg
+
+#begin sound/gundsound/gun11.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/gundsound/gun11.ogg
+
+#begin sound/gundsound/gun13.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/gundsound/gun13.ogg
+
+#begin sound/gundsound/gun27.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/gundsound/gun27.ogg
+
+#begin sound/gundsound/gun5.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/gundsound/gun5.ogg
+
+#begin sound/gundsound/mguninf1.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/gundsound/mguninf1.ogg
+
+#begin sound/gundsound/pillbox1.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/gundsound/pillbox1.ogg
+
+#begin sound/gundsound/tank5.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/gundsound/tank5.ogg
+
+#begin sound/gundsound/tank6.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/gundsound/tank6.ogg
+
+#begin sound/gundsound/torpedo1.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/gundsound/torpedo1.ogg
+
+#begin sound/gundsound/turret1.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/gundsound/turret1.ogg
+
+#begin sound/notification/airborne_unit_lost.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/notification/airborne_unit_lost.ogg
+
+#begin sound/notification/battle_control_terminated.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/notification/battle_control_terminated.ogg
+
+#begin sound/notification/mission_accomplished.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/notification/mission_accomplished.ogg
+
+#begin sound/notification/mission_failed.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/notification/mission_failed.ogg
+
+#begin sound/notification/our_base_is_under_attack.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/notification/our_base_is_under_attack.ogg
+
+#begin sound/notification/select_your_target.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/notification/select_your_target.ogg
+
+#begin sound/notification/unit_lost.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/notification/unit_lost.ogg
+
+#begin sound/notification/unit_ready.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/notification/unit_ready.ogg
+
+#begin sound/notification/unit_repaired.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/notification/unit_repaired.ogg
+
+#begin sound/sfx/bleep6.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/sfx/bleep6.ogg
+
+#begin sound/sfx/build.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/sfx/build.ogg
+
+#begin sound/sfx/buzzy.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/sfx/buzzy.ogg
+
+#begin sound/sfx/heal.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/sfx/heal.ogg
+
+#begin sound/sfx/kaboom1.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/sfx/kaboom1.ogg
+
+#begin sound/sfx/kaboom12.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/sfx/kaboom12.ogg
+
+#begin sound/sfx/kaboom15.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/sfx/kaboom15.ogg
+
+#begin sound/sfx/kaboom22.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/sfx/kaboom22.ogg
+
+#begin sound/sfx/kaboom25.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/sfx/kaboom25.ogg
+
+#begin sound/sfx/kaboom30.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/sfx/kaboom30.ogg
+
+#begin sound/sfx/menu_select.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/sfx/menu_select.ogg
+
+#begin sound/sfx/repairing1.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/sfx/repairing1.ogg
+
+#begin sound/speech/eaffirm1.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/speech/eaffirm1.ogg
+
+#begin sound/speech/emovout1.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/speech/emovout1.ogg
+
+#begin sound/speech/for_the_king_and_country.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/speech/for_the_king_and_country.ogg
+
+#begin sound/speech/fully_charge.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/speech/fully_charge.ogg
+
+#begin sound/speech/girlokay.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/speech/girlokay.ogg
+
+#begin sound/speech/girlyeah.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/speech/girlyeah.ogg
+
+#begin sound/speech/guyokay1.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/speech/guyokay1.ogg
+
+#begin sound/speech/guyyeah1.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/speech/guyyeah1.ogg
+
+#begin sound/speech/hahaha.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/speech/hahaha.ogg
+
+#begin sound/speech/ill_be_there.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/speech/ill_be_there.ogg
+
+#begin sound/speech/indeed.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/speech/indeed.ogg
+
+#begin sound/speech/i_hear_ya.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/speech/i_hear_ya.ogg
+
+#begin sound/speech/maffirm1.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/speech/maffirm1.ogg
+
+#begin sound/speech/moving_out.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/speech/moving_out.ogg
+
+#begin sound/speech/moving_out1.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/speech/moving_out1.ogg
+
+#begin sound/speech/myeehaw1.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/speech/myeehaw1.ogg
+
+#begin sound/speech/on_my_way.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/speech/on_my_way.ogg
+
+#begin sound/speech/saffirm1.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/speech/saffirm1.ogg
+
+#begin sound/speech/sokay1.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/speech/sokay1.ogg
+
+#begin sound/speech/syeah1.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/speech/syeah1.ogg
+
+#begin sound/speech/thats_all_you_got.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/speech/thats_all_you_got.ogg
+
+#begin sound/speech/yeah1.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/speech/yeah1.ogg
+
+#begin sound/yessir/eyessir1.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/yessir/eyessir1.ogg
+
+#begin sound/yessir/jyes1.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/yessir/jyes1.ogg
+
+#begin sound/yessir/myes1.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/yessir/myes1.ogg
+
+#begin sound/yessir/myessir1.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/yessir/myessir1.ogg
+
+#begin sound/yessir/syessir1.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/yessir/syessir1.ogg
+
+#begin sound/yessir/yes1.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/yessir/yes1.ogg
+

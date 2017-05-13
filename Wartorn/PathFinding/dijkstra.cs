@@ -98,7 +98,7 @@ namespace Wartorn.PathFinding
             /// <param name="source"> the label of the starting Point</param>
             /// <param name="finish">the label of the destination Point</param>
             /// <returns>the List of the Points that is on the ways</returns>
-            public void Dijkstra(string source)
+            public void Dijkstra(string source,int maxCost = int.MaxValue)
             {
                 Source = source;
                 var previous = new Dictionary<string, string>();
@@ -143,7 +143,7 @@ namespace Wartorn.PathFinding
                     foreach (var neighbor in Vertices[smallest])
                     {
                         var alt = distances[smallest] + neighbor.Value;
-                        if (alt < distances[neighbor.Key])
+                        if (alt < distances[neighbor.Key] && alt < maxCost)
                         {
                             distances[neighbor.Key] = alt;
                             previous[neighbor.Key] = smallest;

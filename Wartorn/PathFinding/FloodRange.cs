@@ -43,9 +43,9 @@ namespace Wartorn.PathFinding
                 }
             }
 
-            graph.Dijkstra(position.toString());
+            graph.Dijkstra(position.toString(), 3 + 1);
             var range = graph.FindReachableVertex(3);
-            //System.IO.File.WriteAllLines("range.txt", range);
+
             var result = new List<Point>();
             foreach (string dest in range)
             {

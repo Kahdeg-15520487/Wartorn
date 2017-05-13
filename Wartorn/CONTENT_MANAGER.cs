@@ -11,6 +11,7 @@ using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using Wartorn.GameData;
 using Wartorn.Drawing.Animation;
+using Microsoft.Xna.Framework.Audio;
 
 namespace Wartorn
 {
@@ -19,6 +20,8 @@ namespace Wartorn
     {
         #region resources
         public static ContentManager Content;
+
+        #region sprite
         public static SpriteBatch spriteBatch;
         public static SpriteFont defaultfont;
         public static SpriteFont arcadefont;
@@ -49,6 +52,8 @@ namespace Wartorn
             moveOverlay = Content.Load<Texture2D>(@"sprite\MoveOverlay");
 
             LoadAnimationContent();
+
+            LoadSound();
         }
 
         private static void LoadAnimationContent()
@@ -184,6 +189,19 @@ namespace Wartorn
                 CONTENT_MANAGER.animationEntities.Add(unittype, temp);
             }
         }
+
+        #endregion
+
+        #region sound
+
+        public static SoundEffect menu_select;
+
+        private static void LoadSound()
+        {
+            menu_select = Content.Load<SoundEffect>(@"sound\sfx\menu_select");
+        }
+
+        #endregion
         #endregion
 
         public static string LocalRootPath = Path.GetDirectoryName(Assembly.GetAssembly(typeof(Program)).Location);
