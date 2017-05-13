@@ -70,7 +70,9 @@ namespace Wartorn.GameData
         None,
         Foot,
         Tires,
-        Track
+        Track,
+        Air,
+        Ship
     }
 
     public enum Weather

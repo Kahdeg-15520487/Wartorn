@@ -74,6 +74,7 @@ namespace Wartorn.Screens.MainGameScreen
 
         //current unit selection
         Point selectedUnit = new Point(0, 0);
+        List<Point> movementRange = null;
 
         //fog of war
         bool[,] mapcellVisibility;
@@ -101,9 +102,6 @@ namespace Wartorn.Screens.MainGameScreen
                     mapcellVisibility[x, y] = false;
                 }
             }
-
-            //init movementgridcost
-            Wartorn.PathFinding.FloodRange range = new PathFinding.FloodRange(session.map);
         }
 
         private void LoadContent()
@@ -299,8 +297,18 @@ namespace Wartorn.Screens.MainGameScreen
             if (temp.unit != null)
             {
                 selectedUnit = selectedMapCell;
-                canvas_generalInfo.GetElementAs<Label>("label_unittype").Text = session.map[selectedMapCell].unit.UnitType.ToString() + Environment.NewLine + session.map[selectedMapCell].unit.Owner.ToString();
+                canvas_generalInfo.GetElementAs<Label>("label_unittype").Text = temp.unit.UnitType.ToString() + Environment.NewLine + temp.unit.Owner.ToString();
+                DisplayMovementRange(temp.unit,selectedUnit);
             }
+            else
+            {
+                canvas_generalInfo.GetElementAs<Label>("label_unittype").Text = " ";
+            }
+        }
+
+        private void DisplayMovementRange(Unit unit,Point position)
+        {
+            movementRange = PathFinding.FloodRange.FindRange(session.map, unit, position);
         }
 
         private void UpdateBuilding()
@@ -458,7 +466,13 @@ namespace Wartorn.Screens.MainGameScreen
 
         private void DrawSelectedUnit(SpriteBatch spriteBatch)
         {
-
+            if (movementRange != null)
+            {
+                foreach (Point dest in movementRange)
+                {
+                    spriteBatch.Draw(CONTENT_MANAGER.moveOverlay, new Vector2(dest.X * Constants.MapCellWidth, dest.Y * Constants.MapCellHeight), null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.GuiBackground);
+                }
+            }
         }
         #endregion
     }

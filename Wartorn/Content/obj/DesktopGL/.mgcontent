@@ -98,6 +98,7 @@
     <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/Cursor/Attack_Cursor.png</File>
     <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/Cursor/Damage_Number.png</File>
     <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/Cursor/Select_Cursor.png</File>
-    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/MapOverlay.png</File>
+    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/AttackOverlay.png</File>
+    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/MoveOverlay.png</File>
   </SourceFiles>
 </SourceFileCollection>

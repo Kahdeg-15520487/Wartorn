@@ -18,7 +18,7 @@ namespace Wartorn.GameData
     {
         public MapCell[,] map { get; private set; }
 
-        public Graph navivationGraph;
+        public Graph navigationGraph;
 
         private bool isProcessed = false;
         public bool IsProcessed
@@ -94,6 +94,8 @@ namespace Wartorn.GameData
         public void Clone(Map m)
         {
             map = m.map;
+            navigationGraph = new Graph();
+            navigationGraph.Vertices = new Dictionary<string, Dictionary<string, int>>(m.navigationGraph.Vertices);
             weather = m.weather;
             theme = m.theme;
             isProcessed = false;
@@ -125,7 +127,7 @@ namespace Wartorn.GameData
 
         public void GenerateNavigationMap()
         {
-            navivationGraph = new Graph();
+            navigationGraph = new Graph();
 
             for (int y = 0; y < Height; y++)
             {
@@ -155,7 +157,7 @@ namespace Wartorn.GameData
                         temp.Add(south.toString(), 0);
                     }
                     var t = currentPoint.toString();//, converter);
-                    navivationGraph.add_vertex(t, temp);
+                    navigationGraph.add_vertex(t, temp);
                 }
             }
         }

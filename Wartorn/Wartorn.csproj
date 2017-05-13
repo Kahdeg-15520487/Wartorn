@@ -50,6 +50,7 @@
     <Compile Include="InputDialog.Designer.cs">
       <DependentUpon>InputDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="CustomJsonConverter.cs" />
     <Compile Include="PathFinding\Dijkstra.cs" />
     <Compile Include="PathFinding\FloodRange.cs" />
     <Compile Include="SpriteRectangle\BuildingSpriteSourceRectangle.cs" />

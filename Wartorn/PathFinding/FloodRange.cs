@@ -9,67 +9,49 @@ using Microsoft.Xna.Framework;
 using Wartorn;
 using Wartorn.GameData;
 using Wartorn.Utility;
+using Wartorn.PathFinding.Dijkstras;
 
 namespace Wartorn.PathFinding
 {
-    class FloodRange
+    static class FloodRange
     {
-        Dictionary<Point, Dictionary<Point, TerrainType>> _MovementCostGrid;
-
-        public FloodRange(Map map)
+        public static List<Point> FindRange(Map map,Unit unit,Point position)
         {
-            _MovementCostGrid = new Dictionary<Point, Dictionary<Point, TerrainType>>();
+            Graph graph = new Graph();
+            graph.Source = position.toString();
 
-            for (int y = 0; y < map.Height; y++)
+            graph.Vertices = new Dictionary<string, Dictionary<string, int>>();
+
+            foreach (string vertex in map.navigationGraph.Vertices.Keys.ToList())
             {
-                for (int x = 0; x < map.Width; x++)
+                graph.Vertices.Add(vertex, new Dictionary<string, int>());
+                foreach (string neighbor in map.navigationGraph.Vertices[vertex].Keys.ToList())
                 {
-                    Point currentPoint = new Point(x, y);
-                    Point east = currentPoint.GetNearbyPoint(Direction.East)
-                        , west = currentPoint.GetNearbyPoint(Direction.West)
-                        , south = currentPoint.GetNearbyPoint(Direction.South)
-                        , north = currentPoint.GetNearbyPoint(Direction.North);
-
-                    Dictionary<Point, TerrainType> temp = new Dictionary<Point, TerrainType>();
-                    if (map[east] != null)
+                    Point point = neighbor.Parse();
+                    int cost = Unit.GetTravelCost(unit.UnitType, map[point].terrain);
+                    //check if point is blocked by enemy unit
+                    if (map[point].unit != null
+                        && map[point].unit.UnitType.GetMovementType() != MovementType.Air
+                        && map[point].unit.Owner != unit.Owner)
                     {
-                        temp.Add(east, map[east].terrain);
+                        cost = int.MaxValue;
                     }
-                    if (map[west] != null)
+                    if (cost < int.MaxValue)
                     {
-                        temp.Add(west, map[west].terrain);
+                        graph.Vertices[vertex].Add(neighbor, cost);
                     }
-                    if (map[north] != null)
-                    {
-                        temp.Add(north, map[north].terrain);
-                    }
-                    if (map[south] != null)
-                    {
-                        temp.Add(south, map[south].terrain);
-                    }
-
-                    _MovementCostGrid.Add(currentPoint, temp);
                 }
             }
-        }
 
-        public List<Point> FindRange(UnitType ut)
-        {
-            return null;
-        }
-
-        public class Node
-        {
-            public Point Location { get; set; }
-            public int TraverseCost { get; set; }
-            public Node PreviousNode { get; set; }
-            public Node NextNode { get; set; }
-
-            public Node(Point location,int traversecost)
+            graph.Dijkstra(position.toString());
+            var range = graph.FindReachableVertex(3);
+            //System.IO.File.WriteAllLines("range.txt", range);
+            var result = new List<Point>();
+            foreach (string dest in range)
             {
-                Location = location;
-                TraverseCost = traversecost;
+                result.Add(dest.Parse());
             }
+            return result;
         }
     }
 }
