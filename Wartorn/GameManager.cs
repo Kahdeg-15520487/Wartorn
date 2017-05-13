@@ -107,7 +107,7 @@ namespace Wartorn
 
         private void LoadAnimationContent()
         {
-            string delimit = "Yellow";
+            //string delimit = "Yellow";
             CONTENT_MANAGER.animationEntities = new Dictionary<SpriteSheetUnit, AnimatedEntity>();
             CONTENT_MANAGER.animationSheets = new Dictionary<SpriteSheetUnit, Texture2D>();
             CONTENT_MANAGER.animationTypes = new List<Animation>();
@@ -119,9 +119,9 @@ namespace Wartorn
             foreach (SpriteSheetUnit unittype in UnitTypes)
             {
                 var paths = unittype.ToString().Split('_');
-                if (paths[0].CompareTo(delimit) == 0)
+                //if (paths[0].CompareTo(delimit) == 0)
                 {
-                    break;
+                  //  break;
                 }
                 CONTENT_MANAGER.animationSheets.Add(unittype, CONTENT_MANAGER.Content.Load<Texture2D>("sprite//Animation//" + paths[0] + "//" + paths[1]));
             }
@@ -201,9 +201,9 @@ namespace Wartorn
             {
                 string unittypestring = unittype.ToString();
                 AnimatedEntity temp = new AnimatedEntity(Vector2.Zero, Vector2.Zero, Color.White, LayerDepth.Unit);
-                if (unittypestring.Contains(delimit))
+                //if (unittypestring.Contains(delimit))
                 {
-                    break;
+                    //break;
                 }
 
                 temp.LoadContent(CONTENT_MANAGER.animationSheets[unittype]);
@@ -215,7 +215,8 @@ namespace Wartorn
                 {
                     //we enter "HIGH" mode
                     //first we set the origin to "HIGH"
-
+                    //because we are drawing from topleft and the sprite size is 64x64
+                    temp.Origin = new Vector2(8, 16);
 
                     //then we load the "HIGH" animation in
                     if (unittypestring.Contains("Copter"))

@@ -18,7 +18,8 @@ namespace Wartorn.Storage
 
         public static Map LoadMap(string data)
         {
-            //TODO: actually load map
+            data = CompressHelper.UnZip(data);
+
             var mapdata = data.Split('|');
             string majorver = string.Empty
                  , minorver = string.Empty;
@@ -75,7 +76,13 @@ namespace Wartorn.Storage
             map.GenerateNavigationMap();
             output.Append(JsonConvert.SerializeObject(map,Formatting.Indented));
 
-            return output.ToString();
+
+            string result = CompressHelper.Zip(output.ToString());
+            File.WriteAllText("notyetzip.txt", output.ToString());
+            File.WriteAllText("zipped.txt", result);
+            File.WriteAllText("zipthenunziped.txt", CompressHelper.UnZip(result));
+            return result;
+            //return output.ToString();
         }
     }
 
@@ -110,7 +117,27 @@ namespace Wartorn.Storage
             }
             writer.WriteEndArray();
             writer.WritePropertyName("NavGraph");
-            serializer.Serialize(writer, temp.navgivationGraph.Vertices.ToArray());
+            writer.WriteStartArray();
+            foreach (var kvp in temp.navivationGraph.Vertices)
+            {
+                writer.WriteStartObject();
+                writer.WritePropertyName("Key");
+                serializer.Serialize(writer, kvp.Key);
+                writer.WritePropertyName("Value");
+                writer.WriteStartArray();
+                foreach (var kvp2 in kvp.Value)
+                {
+                    writer.WriteStartObject();
+                    writer.WritePropertyName("Key");
+                    serializer.Serialize(writer, kvp2.Key);
+                    writer.WritePropertyName("Value");
+                    serializer.Serialize(writer, kvp2.Value);
+                    writer.WriteEndObject();
+                }
+                writer.WriteEndArray();
+                writer.WriteEndObject();
+            }
+            writer.WriteEndArray();
             writer.WriteEndObject();            
         }
 
@@ -121,6 +148,7 @@ namespace Wartorn.Storage
             Theme theme = Theme.Normal;
             Weather weather = Weather.Sunny;
             List<MapCell> map = new List<MapCell>();
+            Dictionary<string, Dictionary<string, int>> navgraph = new Dictionary<string, Dictionary<string, int>>();
 
             while (reader.Read())
             {
@@ -162,9 +190,22 @@ namespace Wartorn.Storage
                         //File.WriteAllText("mapdata.txt", JsonConvert.SerializeObject(map, Formatting.Indented));
                         break;
                     case "NavGraph":
-                        Dictionary<string, Dictionary<string, int>> navgg = new Dictionary<string, Dictionary<string, int>>();
-                        JsonConvert.DeserializeObject<KeyValuePair<string, Dictionary<string, int>>[]>(serializer.Deserialize<string>(reader)).ToList().ForEach(kvp => { navgg.Add(kvp.Key, kvp.Value); });
-                        File.WriteAllText("mapnavigationdata.txt", JsonConvert.SerializeObject(navgg, Formatting.Indented));
+
+                        var navgg = new Dictionary<string, Dictionary<string, int>>();
+
+                        var tempg = serializer.Deserialize(reader);
+                        var firstlvl = JsonConvert.DeserializeObject<KeyValuePair<string, object>[]>(tempg.ToString());
+                        firstlvl.ToList().ForEach(kvp =>
+                        {
+                            var navggg = new Dictionary<string, int>();
+                            var secondlvl = JsonConvert.DeserializeObject<KeyValuePair<string, int>[]>(kvp.Value.ToString());
+                            secondlvl.ToList().ForEach(kvp2 =>
+                            {
+                                navggg.Add(kvp2.Key, kvp2.Value);
+                            });
+                            navgg.Add(kvp.Key, navggg);
+                        });
+                        navgraph = new Dictionary<string, Dictionary<string, int>>(navgg);
                         break;
                     default:
                         break;
@@ -188,6 +229,8 @@ namespace Wartorn.Storage
                     c++;
                 }
             }
+            result.navivationGraph = new PathFinding.Dijkstras.Graph();
+            result.navivationGraph.Vertices = new Dictionary<string, Dictionary<string, int>>(navgraph);
             result.IsProcessed = isProcessed;
 
             return result;

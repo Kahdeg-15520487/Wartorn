@@ -299,6 +299,7 @@ namespace Wartorn.Screens.MainGameScreen
             if (temp.unit != null)
             {
                 selectedUnit = selectedMapCell;
+                canvas_generalInfo.GetElementAs<Label>("label_unittype").Text = session.map[selectedMapCell].unit.UnitType.ToString() + Environment.NewLine + session.map[selectedMapCell].unit.Owner.ToString();
             }
         }
 
@@ -375,8 +376,7 @@ namespace Wartorn.Screens.MainGameScreen
 
         private void UpdateCanvas_generalInfo()
         {
-            ((Label)canvas_generalInfo["label_terraintype"]).Text = session.map[selectedMapCell].terrain.ToString() + Environment.NewLine + session.map[selectedMapCell].owner.ToString();
-            ((Label)canvas_generalInfo["label_unittype"]).Text = session.map[selectedMapCell].unit != null ? session.map[selectedMapCell].unit.UnitType.ToString() + Environment.NewLine + session.map[selectedMapCell].unit.Owner.ToString() : " ";
+            canvas_generalInfo.GetElementAs<Label>("label_terraintype").Text = session.map[selectedMapCell].terrain.ToString() + Environment.NewLine + session.map[selectedMapCell].owner.ToString();
         }
 
         private void UpdateAnimation(GameTime gameTime)

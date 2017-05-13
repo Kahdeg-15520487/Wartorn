@@ -12,45 +12,36 @@ using Wartorn.Drawing.Animation;
 using Wartorn.Utility;
 using Wartorn.GameData;
 using Wartorn;
+using Wartorn.Drawing;
 
 namespace Wartorn.Screens
 {
     class TestAnimationScreen : Screen
     {
-        Dictionary<UnitType, Unit> RedUnitList;
-        Dictionary<UnitType, Unit> BlueUnitList;
-        Dictionary<UnitType, Unit> GreenUnitList;
+        //Dictionary<UnitType, Unit> RedUnitList;
+        //Dictionary<UnitType, Unit> BlueUnitList;
+        //Dictionary<UnitType, Unit> GreenUnitList;
+        //Dictionary<UnitType, Unit> YellowUnitList;
 
         UnitType currentUnit = UnitType.Soldier;
         AnimationName currentAnimation = AnimationName.idle;
         Owner currentColor = Owner.Red;
+        Point position = new Point(4, 4);
+
+        Map map;
+        Camera camera;
 
         public TestAnimationScreen(GraphicsDevice device) : base(device, "TestAnimationScreen")
-        {
-            LoadContent();
-        }
-
-        private void LoadContent()
-        {
-            RedUnitList = new Dictionary<UnitType, Unit>();
-            BlueUnitList = new Dictionary<UnitType, Unit>();
-            GreenUnitList = new Dictionary<UnitType, Unit>();
-        }
+        {   }
 
         public override bool Init()
         {
-            var UnitTypes = new List<UnitType>((IEnumerable<UnitType>)Enum.GetValues(typeof(UnitType)));
-            UnitTypes.Remove(UnitType.None);
+            camera = new Camera(_device.Viewport);
+            map = new Map(9, 9);
+            map.Fill(TerrainType.Plain);
 
-            foreach (UnitType unittype in UnitTypes)
-            {
-                Unit temp = UnitCreationHelper.Create(unittype, Owner.Red);
-                RedUnitList.Add(unittype, temp);
-                temp = UnitCreationHelper.Create(unittype, Owner.Blue);
-                BlueUnitList.Add(unittype, temp);
-                temp = UnitCreationHelper.Create(unittype, Owner.Green);
-                GreenUnitList.Add(unittype, temp);
-            }
+            map[position].unit = UnitCreationHelper.Create(currentUnit, currentColor);
+            map[position].unit.Animation.PlayAnimation(AnimationName.idle.ToString());
 
             return base.Init();
         }
@@ -109,7 +100,7 @@ namespace Wartorn.Screens
             //cycle through color
             if (HelperFunction.IsKeyPress(Keys.E))
             {
-                if (currentColor == Owner.Green)
+                if (currentColor == Owner.Yellow)
                 {
                     currentColor = Owner.Red;
                 }
@@ -122,7 +113,7 @@ namespace Wartorn.Screens
             {
                 if (currentColor == Owner.Red)
                 {
-                    currentColor = Owner.Green;
+                    currentColor = Owner.Yellow;
                 }
                 else
                 {
@@ -130,59 +121,57 @@ namespace Wartorn.Screens
                 }
             }
 
-            switch (currentColor)
+            Unit unit = map[position].unit;
+            UnitType nextUnit = unit.UnitType;
+            Owner nextOwner = unit.Owner;
+            AnimationName nextAnimation = unit.Animation.CurntAnimationName.ToEnum<AnimationName>();
+            bool isChanged = false;
+
+            if (nextUnit != currentUnit)
             {
-                case Owner.Red:
-                    if (RedUnitList[currentUnit].Animation.CurntAnimationName.CompareTo(currentAnimation.ToString()) != 0)
-                    {
-                        RedUnitList[currentUnit].Animation.PlayAnimation(currentAnimation.ToString());
-                    }
-                    RedUnitList[currentUnit].Animation.Update(gameTime);
-                    break;
-                case Owner.Blue:
-                    if (BlueUnitList[currentUnit].Animation.CurntAnimationName.CompareTo(currentAnimation.ToString()) != 0)
-                    {
-                        BlueUnitList[currentUnit].Animation.PlayAnimation(currentAnimation.ToString());
-                    }
-                    BlueUnitList[currentUnit].Animation.Update(gameTime);
-                    break;
-                case Owner.Green:
-                    if (GreenUnitList[currentUnit].Animation.CurntAnimationName.CompareTo(currentAnimation.ToString()) != 0)
-                    {
-                        GreenUnitList[currentUnit].Animation.PlayAnimation(currentAnimation.ToString());
-                    }
-                    GreenUnitList[currentUnit].Animation.Update(gameTime);
-                    break;
-                case Owner.Yellow:
-                    break;
-                default:
-                    break;
+                isChanged = true;
             }
+
+            if (nextOwner != currentColor)
+            {
+                isChanged = true;
+            }
+
+            if (nextAnimation != currentAnimation)
+            {
+                isChanged = true;
+            }
+
+            if (isChanged)
+            {
+                map[position].unit = UnitCreationHelper.Create(currentUnit, currentColor, animation: currentAnimation);
+            }
+
+            map[position].unit.Animation.Update(gameTime);
 
             base.Update(gameTime);
         }
 
         public override void Draw(GameTime gameTime)
         {
-            switch (currentColor)
-            {
-                case Owner.Red:
-                    RedUnitList[currentUnit].Animation.Draw(gameTime, CONTENT_MANAGER.spriteBatch);
-                    break;
-                case Owner.Blue:
-                    BlueUnitList[currentUnit].Animation.Draw(gameTime, CONTENT_MANAGER.spriteBatch);
-                    break;
-                case Owner.Green:
-                    GreenUnitList[currentUnit].Animation.Draw(gameTime, CONTENT_MANAGER.spriteBatch);
-                    break;
-                case Owner.Yellow:
-                    break;
-                default:
-                    break;
-            }
+            DrawMap(CONTENT_MANAGER.spriteBatch, gameTime);
 
             CONTENT_MANAGER.spriteBatch.DrawString(CONTENT_MANAGER.arcadefont, currentColor.ToString() + Environment.NewLine + currentUnit.ToString() + Environment.NewLine + currentAnimation.ToString(), new Vector2(100, 0), Color.White);
             base.Draw(gameTime);
+        }
+
+        private void DrawMap(SpriteBatch spriteBatch, GameTime gameTime)
+        {
+            spriteBatch.End();
+
+            spriteBatch.Begin(SpriteSortMode.FrontToBack, transformMatrix: camera.TransformMatrix);
+
+            //render the map
+            MapRenderer.Render(map, spriteBatch, gameTime);
+
+            spriteBatch.End();
+
+            spriteBatch.Begin(SpriteSortMode.FrontToBack);
         }
     }
 }

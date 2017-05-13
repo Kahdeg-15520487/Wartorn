@@ -28,6 +28,7 @@ namespace Wartorn.GameData
         static Dictionary<UnitPair, int> _DammageTable;
         static Dictionary<UnitType, int> _MovementRange;
         static Dictionary<UnitType, int> _VisionRange;
+        Dictionary<MovementType, Dictionary<TerrainType, int>> _TravelCost;
 
         public static void Init()
         {
@@ -248,10 +249,11 @@ namespace Wartorn.GameData
 
     public static class UnitCreationHelper
     {
-        public static Unit Create(UnitType unittype,Owner owner,int hp = 100)
+        public static Unit Create(UnitType unittype,Owner owner,int hp = 100,AnimationName animation = AnimationName.idle)
         {
-            //todo load the sprite based on the owner of this unit
-            return new Unit(unittype, (AnimatedEntity)CONTENT_MANAGER.animationEntities[unittype.GetSpriteSheetUnit(owner)].Clone(), owner, hp);
+            var result = new Unit(unittype, (AnimatedEntity)CONTENT_MANAGER.animationEntities[unittype.GetSpriteSheetUnit(owner)].Clone(), owner, hp);
+            result.Animation.PlayAnimation(animation.ToString());
+            return result;
         }
     }
 

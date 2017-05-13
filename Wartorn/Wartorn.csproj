@@ -88,6 +88,7 @@
     <Compile Include="Screens\UnitMoveProtypeScreen.cs" />
     <Compile Include="SpriteRectangle\UISpriteSheetSourceRectangle.cs" />
     <Compile Include="SpriteRectangle\SpriteSheetSourceRectangle.cs" />
+    <Compile Include="Storage\CompressHelper.cs" />
     <Compile Include="Storage\MapData.cs" />
     <Compile Include="Storage\NoiseGenerator.cs" />
     <Compile Include="Storage\SessionStorage.cs" />
