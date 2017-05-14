@@ -1574,3 +1574,411 @@
 /processorParam:Quality=Best
 /build:sound/yessir/yes1.ogg
 
+#begin sound/allied/ackno.v00.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/allied/ackno.v00.ogg
+
+#begin sound/allied/ackno.v01.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/allied/ackno.v01.ogg
+
+#begin sound/allied/ackno.v02.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/allied/ackno.v02.ogg
+
+#begin sound/allied/ackno.v03.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/allied/ackno.v03.ogg
+
+#begin sound/allied/affirm1.v00.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/allied/affirm1.v00.ogg
+
+#begin sound/allied/affirm1.v01.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/allied/affirm1.v01.ogg
+
+#begin sound/allied/affirm1.v02.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/allied/affirm1.v02.ogg
+
+#begin sound/allied/affirm1.v03.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/allied/affirm1.v03.ogg
+
+#begin sound/allied/await1.v00.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/allied/await1.v00.ogg
+
+#begin sound/allied/await1.v01.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/allied/await1.v01.ogg
+
+#begin sound/allied/await1.v02.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/allied/await1.v02.ogg
+
+#begin sound/allied/await1.v03.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/allied/await1.v03.ogg
+
+#begin sound/allied/noprob.v01.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/allied/noprob.v01.ogg
+
+#begin sound/allied/noprob.v03.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/allied/noprob.v03.ogg
+
+#begin sound/allied/overout.v01.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/allied/overout.v01.ogg
+
+#begin sound/allied/overout.v03.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/allied/overout.v03.ogg
+
+#begin sound/allied/ready.v01.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/allied/ready.v01.ogg
+
+#begin sound/allied/ready.v03.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/allied/ready.v03.ogg
+
+#begin sound/allied/report1.v00.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/allied/report1.v00.ogg
+
+#begin sound/allied/report1.v01.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/allied/report1.v01.ogg
+
+#begin sound/allied/report1.v02.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/allied/report1.v02.ogg
+
+#begin sound/allied/report1.v03.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/allied/report1.v03.ogg
+
+#begin sound/allied/ritaway.v01.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/allied/ritaway.v01.ogg
+
+#begin sound/allied/ritaway.v03.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/allied/ritaway.v03.ogg
+
+#begin sound/allied/roger.v01.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/allied/roger.v01.ogg
+
+#begin sound/allied/roger.v03.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/allied/roger.v03.ogg
+
+#begin sound/allied/ugotit.v01.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/allied/ugotit.v01.ogg
+
+#begin sound/allied/ugotit.v03.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/allied/ugotit.v03.ogg
+
+#begin sound/allied/vehic1.v00.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/allied/vehic1.v00.ogg
+
+#begin sound/allied/vehic1.v02.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/allied/vehic1.v02.ogg
+
+#begin sound/allied/yessir1.v00.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/allied/yessir1.v00.ogg
+
+#begin sound/allied/yessir1.v01.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/allied/yessir1.v01.ogg
+
+#begin sound/allied/yessir1.v02.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/allied/yessir1.v02.ogg
+
+#begin sound/allied/yessir1.v03.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/allied/yessir1.v03.ogg
+
+#begin sound/russian/ackno.r00.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/russian/ackno.r00.ogg
+
+#begin sound/russian/ackno.r01.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/russian/ackno.r01.ogg
+
+#begin sound/russian/ackno.r02.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/russian/ackno.r02.ogg
+
+#begin sound/russian/ackno.r03.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/russian/ackno.r03.ogg
+
+#begin sound/russian/affirm1.r00.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/russian/affirm1.r00.ogg
+
+#begin sound/russian/affirm1.r01.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/russian/affirm1.r01.ogg
+
+#begin sound/russian/affirm1.r02.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/russian/affirm1.r02.ogg
+
+#begin sound/russian/affirm1.r03.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/russian/affirm1.r03.ogg
+
+#begin sound/russian/await1.r00.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/russian/await1.r00.ogg
+
+#begin sound/russian/await1.r01.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/russian/await1.r01.ogg
+
+#begin sound/russian/await1.r02.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/russian/await1.r02.ogg
+
+#begin sound/russian/await1.r03.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/russian/await1.r03.ogg
+
+#begin sound/russian/noprob.r01.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/russian/noprob.r01.ogg
+
+#begin sound/russian/noprob.r03.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/russian/noprob.r03.ogg
+
+#begin sound/russian/overout.r01.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/russian/overout.r01.ogg
+
+#begin sound/russian/overout.r03.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/russian/overout.r03.ogg
+
+#begin sound/russian/ready.r01.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/russian/ready.r01.ogg
+
+#begin sound/russian/ready.r03.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/russian/ready.r03.ogg
+
+#begin sound/russian/report1.r00.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/russian/report1.r00.ogg
+
+#begin sound/russian/report1.r01.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/russian/report1.r01.ogg
+
+#begin sound/russian/report1.r02.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/russian/report1.r02.ogg
+
+#begin sound/russian/report1.r03.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/russian/report1.r03.ogg
+
+#begin sound/russian/ritaway.r01.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/russian/ritaway.r01.ogg
+
+#begin sound/russian/ritaway.r03.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/russian/ritaway.r03.ogg
+
+#begin sound/russian/roger.r01.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/russian/roger.r01.ogg
+
+#begin sound/russian/roger.r03.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/russian/roger.r03.ogg
+
+#begin sound/russian/ugotit.r01.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/russian/ugotit.r01.ogg
+
+#begin sound/russian/ugotit.r03.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/russian/ugotit.r03.ogg
+
+#begin sound/russian/vehic1.r00.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/russian/vehic1.r00.ogg
+
+#begin sound/russian/vehic1.r02.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/russian/vehic1.r02.ogg
+
+#begin sound/russian/yessir1.r00.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/russian/yessir1.r00.ogg
+
+#begin sound/russian/yessir1.r01.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/russian/yessir1.r01.ogg
+
+#begin sound/russian/yessir1.r02.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/russian/yessir1.r02.ogg
+
+#begin sound/russian/yessir1.r03.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sound/russian/yessir1.r03.ogg
+

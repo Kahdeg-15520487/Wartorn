@@ -195,10 +195,14 @@ namespace Wartorn
         #region sound
 
         public static SoundEffect menu_select;
+        public static SoundEffect yes1;
+        public static SoundEffect moving_out;
 
         private static void LoadSound()
         {
             menu_select = Content.Load<SoundEffect>(@"sound\sfx\menu_select");
+            yes1 = Content.Load<SoundEffect>(@"sound\yessir\yes1");
+            moving_out = Content.Load<SoundEffect>(@"sound\speech\moving_out");
         }
 
         #endregion

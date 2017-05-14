@@ -216,6 +216,7 @@ namespace Wartorn.Screens
             MapCell temp = map[selectedMapCell];
             if (temp.unit != null)
             {
+                CONTENT_MANAGER.yes1.Play();
                 selectedUnit = selectedMapCell;
                 DisplayMovementRange(temp.unit, selectedUnit);
             }
@@ -223,6 +224,8 @@ namespace Wartorn.Screens
             {
                 if ( movementRange!=null && movementRange.Contains(selectedMapCell))
                 {
+                    //we gonna move unit by moving a image of it then teleport it to the destination
+                    CONTENT_MANAGER.moving_out.Play();
                     movementRange = null;
                     destination = selectedMapCell;
                     movingUnit = map[selectedUnit].unit;
@@ -242,7 +245,7 @@ namespace Wartorn.Screens
         }
 
         float totalElapsedTime = 0;
-        float delay = 250; //ms
+        float delay = 50; //ms
         private void UpdateMovingUnit(GameTime gameTime)
         {
             if (isArrived)
