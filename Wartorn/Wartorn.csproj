@@ -52,7 +52,7 @@
     </Compile>
     <Compile Include="CustomJsonConverter.cs" />
     <Compile Include="PathFinding\Dijkstra.cs" />
-    <Compile Include="PathFinding\FloodRange.cs" />
+    <Compile Include="PathFinding\DijkstraHelper.cs" />
     <Compile Include="SpriteRectangle\BuildingSpriteSourceRectangle.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="CONTENT_MANAGER.cs" />

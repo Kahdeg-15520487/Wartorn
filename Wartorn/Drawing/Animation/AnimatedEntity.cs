@@ -33,6 +33,7 @@ namespace Wartorn.Drawing.Animation
         private float scale;
 
         private float depth;
+        private bool isPlaying;
 
         // Tells SpriteBatch how to flip our texture
         private SpriteEffects flipEffect;
@@ -208,8 +209,20 @@ namespace Wartorn.Drawing.Animation
                 }
             }
 
+            isPlaying = true;
+
             currentAnimation = animations[key];
             currentAnimation.Reset();
+        }
+
+        public void StopAnimation()
+        {
+            isPlaying = false;
+        }
+
+        public void ContinueAnimation()
+        {
+            isPlaying = true;
         }
 
         #endregion
@@ -222,7 +235,7 @@ namespace Wartorn.Drawing.Animation
         /// <param name="gameTime">Provides a snapshot of timing values</param>
         public void Update(GameTime gameTime)
         {
-            if (currentAnimation != null)
+            if (currentAnimation != null && isPlaying)
             {
                 //2 câu lệnh sau sẽ làm cho origin của animation ở chính giữa khung hình.
                 //vì nguyên cái game chạy theo origin là vector2.zero nên bỏ
@@ -252,7 +265,7 @@ namespace Wartorn.Drawing.Animation
         /// <param name="spriteBatch">The SpriteBatch object we will us to draw</param>
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            if (currentAnimation != null)
+            if (currentAnimation != null && isPlaying)
             {
                 spriteBatch.Draw(spriteSheet, position, currentAnimation.CurntKeyFrame.Source, tintColor,
                     rotation, origin, scale, flipEffect, depth);

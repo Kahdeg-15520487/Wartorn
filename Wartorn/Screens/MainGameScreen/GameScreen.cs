@@ -21,6 +21,8 @@ using Wartorn.Drawing.Animation;
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Wartorn.PathFinding.Dijkstras;
+using Wartorn.PathFinding;
 
 namespace Wartorn.Screens.MainGameScreen
 {
@@ -75,6 +77,7 @@ namespace Wartorn.Screens.MainGameScreen
         //current unit selection
         Point selectedUnit = new Point(0, 0);
         List<Point> movementRange = null;
+        Graph dijkstraGraph = null;
 
         //fog of war
         bool[,] mapcellVisibility;
@@ -308,7 +311,8 @@ namespace Wartorn.Screens.MainGameScreen
 
         private void DisplayMovementRange(Unit unit,Point position)
         {
-            movementRange = PathFinding.FloodRange.FindRange(session.map, unit, position);
+            dijkstraGraph = DijkstraHelper.CalculateGraph(session.map, unit, position);
+            movementRange = DijkstraHelper.FindRange(dijkstraGraph);
         }
 
         private void UpdateBuilding()

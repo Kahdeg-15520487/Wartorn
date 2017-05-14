@@ -29,6 +29,9 @@ namespace Wartorn.PathFinding
             //usually the location of a Unit
             public string Source;
 
+            //the Maxinum Travel Cost to any point from the source
+            public int MaxCost = int.MaxValue;
+
             //add a Point with its associated distance to nearby Points
             public void add_vertex(string name, Dictionary<string, int> edges)
             {
@@ -76,14 +79,14 @@ namespace Wartorn.PathFinding
             }
 
 
-            public List<string> FindReachableVertex(int maxCost)
+            public List<string> FindReachableVertex()
             {
                 List<string> reachableVertex = new List<string>();
 
                 foreach (string dest in Pathlist.Keys)
                 {
                     int cost = CalculateShortestPathCost(dest);
-                    if (cost<=maxCost)
+                    if (cost<=MaxCost)
                     {
                         reachableVertex.Add(dest);
                     }
@@ -101,6 +104,7 @@ namespace Wartorn.PathFinding
             public void Dijkstra(string source,int maxCost = int.MaxValue)
             {
                 Source = source;
+                MaxCost = maxCost;
                 var previous = new Dictionary<string, string>();
                 var distances = new Dictionary<string, int>();
                 var nodes = new List<string>();
@@ -143,7 +147,7 @@ namespace Wartorn.PathFinding
                     foreach (var neighbor in Vertices[smallest])
                     {
                         var alt = distances[smallest] + neighbor.Value;
-                        if (alt < distances[neighbor.Key] && alt < maxCost)
+                        if (alt < distances[neighbor.Key] && alt < MaxCost)
                         {
                             distances[neighbor.Key] = alt;
                             previous[neighbor.Key] = smallest;
@@ -291,7 +295,7 @@ namespace Wartorn.PathFinding
                 g.Dijkstra(start.toString());
 
                 //find reachable vertex with the unit's max movement cost
-                var range = g.FindReachableVertex(maxcost);
+                var range = g.FindReachableVertex();
             }
         }
     }
