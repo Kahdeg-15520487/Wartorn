@@ -653,5 +653,84 @@ namespace Wartorn
                 return new Range(max, min);
             }
         }
+
+
+        public class Dictionary_UnitType_Dictionary_UnitType_int_JsonConverter : JsonConverter
+        {
+            public override bool CanConvert(Type objectType)
+            {
+                return objectType == typeof(Dictionary<UnitType, Dictionary<UnitType, int>>);
+            }
+
+            public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+            {
+                Dictionary<UnitType, Dictionary<UnitType, int>> temp = (Dictionary<UnitType, Dictionary<UnitType, int>>)value;
+                writer.WriteStartObject();
+                writer.WritePropertyName("data");
+                writer.WriteStartArray();
+
+                foreach (var kvp in temp)
+                {
+                    writer.WriteStartObject();
+                    writer.WritePropertyName("Key");
+                    serializer.Serialize(writer, kvp.Key);
+                    writer.WritePropertyName("Value");
+                    writer.WriteStartArray();
+                    foreach (var kvp2 in kvp.Value)
+                    {
+                        writer.WriteStartObject();
+                        writer.WritePropertyName("Key");
+                        serializer.Serialize(writer, kvp2.Key);
+                        writer.WritePropertyName("Value");
+                        serializer.Serialize(writer, kvp2.Value);
+                        writer.WriteEndObject();
+                    }
+                    writer.WriteEndArray();
+                    writer.WriteEndObject();
+                }
+
+                writer.WriteEndArray();
+                writer.WriteEndObject();
+            }
+
+            public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+            {
+                Dictionary<UnitType, Dictionary<UnitType, int>> result = new Dictionary<UnitType, Dictionary<UnitType, int>>();
+
+                while (reader.Read())
+                {
+                    if (reader.TokenType != JsonToken.PropertyName)
+                    {
+                        break;
+                    }
+
+                    string propertyName = (string)reader.Value;
+                    if (!reader.Read())
+                    {
+                        continue;
+                    }
+
+                    if (propertyName == "data")
+                    {
+                        result = new Dictionary<UnitType, Dictionary<UnitType, int>>();
+
+                        var tempg = serializer.Deserialize(reader);
+                        var firstlvl = JsonConvert.DeserializeObject<KeyValuePair<UnitType, object>[]>(tempg.ToString());
+                        firstlvl.ToList().ForEach(kvp =>
+                        {
+                            result.Add(kvp.Key, new Dictionary<UnitType, int>());
+                            var secondlvl = JsonConvert.DeserializeObject<KeyValuePair<UnitType, int>[]>(kvp.Value.ToString());
+                            secondlvl.ToList().ForEach(kvp2 =>
+                            {
+                                result[kvp.Key].Add(kvp2.Key, kvp2.Value);
+                            });
+                        });
+                    }
+                }
+
+                return new Dictionary<UnitType, Dictionary<UnitType, int>>(result);
+            }
+        }
+
     }
 }

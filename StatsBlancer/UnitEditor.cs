@@ -20,7 +20,7 @@ namespace StatsBlancer
 {
     public partial class UnitEditor : Form
     {
-        private Dictionary<UnitPair, int> _DammageTable;
+        private Dictionary<UnitType, Dictionary<UnitType, int>> _DammageTable;
         private Dictionary<UnitType, int> _Cost;
         private Dictionary<UnitType, int> _Gas;
         private Dictionary<UnitType, int> _MovementRange;
@@ -46,6 +46,7 @@ namespace StatsBlancer
                 settings.Converters.Add(new TerrainTypeJsonConverter());
                 settings.Converters.Add(new RangeJsonConverter());
                 settings.Converters.Add(new Dictionary_MovementType_Dictionary_TerrainType_int_JsonConverter());
+                settings.Converters.Add(new Dictionary_UnitType_Dictionary_UnitType_int_JsonConverter());
                 return settings;
             };
 
@@ -53,14 +54,24 @@ namespace StatsBlancer
 
             LoadData();
 
-            dataGridView_unitdmg.Columns.Add("", "");
+            dataGridView_unitdmg.ColumnHeadersHeight = 200;
+            dataGridView_unitdmg.RowHeadersWidth = 120;
+            dataGridView_unitdmg.TopLeftHeaderCell.Value = "                 Defender ▶" + Environment.NewLine + "Attacker ▼";
             foreach (UnitType unittype in unittypes)
             {
                 listBox_unitSelect.Items.Add(unittype.ToString());
 
-                dataGridView_unitdmg.Columns.Add(unittype.ToString(), unittype.ToString());
-                
-                dataGridView_unitdmg.Rows.Add(unittype.ToString());
+                dataGridView_unitdmg.Columns.Add(unittype.ToString(), unittype.ToString());                
+                dataGridView_unitdmg.Rows.Add();
+                dataGridView_unitdmg.Rows[(int)unittype - 1].HeaderCell.Value = unittype.ToString();
+            }
+
+            foreach (var kvp in _DammageTable)
+            {
+                foreach (var kvp2 in kvp.Value)
+                {
+                    dataGridView_unitdmg[(int)kvp.Key - 1, (int)kvp2.Key - 1].Value = kvp2.Value;
+                }
             }
 
             listBox_unitSelect.SetSelected(0, true);
@@ -90,7 +101,7 @@ namespace StatsBlancer
 
             terraintypes = Enum.GetValues(typeof(TerrainType)).Cast<TerrainType>().ToList();
 
-            _DammageTable = new Dictionary<UnitPair, int>();
+            _DammageTable = new Dictionary<UnitType, Dictionary<UnitType, int>>();
             _Cost = new Dictionary<UnitType, int>();
             _Gas = new Dictionary<UnitType, int>();
             _MovementRange = new Dictionary<UnitType, int>();
@@ -99,10 +110,7 @@ namespace StatsBlancer
             _TravelCost = new Dictionary<MovementType, Dictionary<TerrainType, int>>();
 
             string dmgtable = File.ReadAllText(Path.GetFullPath(@"data\dmgtable.txt"));
-            JsonConvert.DeserializeObject<KeyValuePair<UnitPair, int>[]>(dmgtable).ToList().ForEach(kvp =>
-            {
-                _DammageTable.Add(kvp.Key, kvp.Value);
-            });
+            _DammageTable = JsonConvert.DeserializeObject<Dictionary<UnitType, Dictionary<UnitType, int>>>(dmgtable);
 
             string costtable = File.ReadAllText(@"data\costtable.txt");
             JsonConvert.DeserializeObject<KeyValuePair<UnitType, int>[]>(costtable).ToList().ForEach(kvp =>
@@ -189,7 +197,7 @@ namespace StatsBlancer
         private void button_done_Click(object sender, EventArgs e)
         {
             Directory.CreateDirectory(@"data\");
-            File.WriteAllText(@"data\dmgtable.txt", JsonConvert.SerializeObject(_DammageTable.ToArray(), Formatting.Indented));
+            File.WriteAllText(@"data\dmgtable.txt", JsonConvert.SerializeObject(_DammageTable, Formatting.Indented));
             File.WriteAllText(@"data\costtable.txt", JsonConvert.SerializeObject(_Cost.ToArray(), Formatting.Indented));
             File.WriteAllText(@"data\gastable.txt", JsonConvert.SerializeObject(_Gas.ToArray(), Formatting.Indented));
             File.WriteAllText(@"data\movementrangetable.txt", JsonConvert.SerializeObject(_MovementRange.ToArray(), Formatting.Indented));
@@ -200,7 +208,24 @@ namespace StatsBlancer
 
         private void dataGridView_unitdmg_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
+            UnitType attacker;
+            UnitType defender;
+            int dmg;
 
+            if (e.ColumnIndex < 0)
+            {
+                return;
+            }
+
+            if (!int.TryParse(dataGridView_unitdmg[e.ColumnIndex,e.RowIndex].Value.ToString(),out dmg))
+            {
+                return;
+            }
+
+            attacker = (UnitType)(e.RowIndex + 1);
+            defender = (UnitType)(e.ColumnIndex + 1);
+
+            _DammageTable[attacker][defender] = dmg;
         }
     }
 }

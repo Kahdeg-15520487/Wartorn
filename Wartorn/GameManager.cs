@@ -56,6 +56,7 @@ namespace Wartorn
                 settings.Converters.Add(new MapJsonConverter());
                 settings.Converters.Add(new MapCellJsonConverter());
                 settings.Converters.Add(new Dictionary_MovementType_Dictionary_TerrainType_int_JsonConverter());
+                settings.Converters.Add(new Dictionary_UnitType_Dictionary_UnitType_int_JsonConverter());
                 return settings;
             };
         }
@@ -80,8 +81,8 @@ namespace Wartorn
 
             DrawingHelper.Initialize(GraphicsDevice);
 
-            //Unit.Init();
-            Unit.Load();
+            Unit.Init();
+            //Unit.Load();
 
             base.Initialize();
         }
