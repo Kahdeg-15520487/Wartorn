@@ -203,6 +203,7 @@ namespace Wartorn.Screens
             base.Update(gameTime);
         }
 
+        //information to animate a moving unit
         Unit movingUnit = null;
         Graph dijkstarGraph = null;
         List<Point> movementPath = null;
@@ -214,7 +215,9 @@ namespace Wartorn.Screens
         private void UpdateUnit()
         {
             MapCell temp = map[selectedMapCell];
-            if (temp.unit != null)
+            //check if there is a unit at selectedMapCell
+            //and if there is no animation going on
+            if (temp.unit != null && movingUnit==null)
             {
                 CONTENT_MANAGER.yes1.Play();
                 selectedUnit = selectedMapCell;
@@ -224,14 +227,17 @@ namespace Wartorn.Screens
             {
                 if ( movementRange!=null && movementRange.Contains(selectedMapCell))
                 {
-                    //we gonna move unit by moving a image of it then teleport it to the destination
+                    //we gonna move unit by moving a clone of it then teleport it to the destination
                     CONTENT_MANAGER.moving_out.Play();
                     movementRange = null;
                     destination = selectedMapCell;
                     movingUnit = map[selectedUnit].unit;
                     movingUnit = UnitCreationHelper.Create(movingUnit.UnitType, movingUnit.Owner);
+
+                    //the path
                     movementPath = DijkstraHelper.FindPath(dijkstarGraph, destination);
 
+                    //the starting node
                     currentdest = 0;
                     movingUnitPosition = new Point(selectedUnit.X * Constants.MapCellWidth, selectedUnit.Y * Constants.MapCellHeight);
                     isArrived = false;

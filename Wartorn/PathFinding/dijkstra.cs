@@ -53,7 +53,7 @@ namespace Wartorn.PathFinding
                         path.Add(currentNode);
                         currentNode = Pathlist[currentNode];
                     }
-                    path.Add(Source);
+                    //path.Add(Source);
                     path.Reverse();
                 }
 
