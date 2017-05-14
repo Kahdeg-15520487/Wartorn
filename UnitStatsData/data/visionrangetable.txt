@@ -1,0 +1,110 @@
+[
+  {
+    "Key": {
+      "value": "Soldier"
+    },
+    "Value": 2
+  },
+  {
+    "Key": {
+      "value": "Mech"
+    },
+    "Value": 2
+  },
+  {
+    "Key": {
+      "value": "Recon"
+    },
+    "Value": 5
+  },
+  {
+    "Key": {
+      "value": "APC"
+    },
+    "Value": 1
+  },
+  {
+    "Key": {
+      "value": "Tank"
+    },
+    "Value": 3
+  },
+  {
+    "Key": {
+      "value": "HeavyTank"
+    },
+    "Value": 1
+  },
+  {
+    "Key": {
+      "value": "Artillery"
+    },
+    "Value": 1
+  },
+  {
+    "Key": {
+      "value": "Rocket"
+    },
+    "Value": 1
+  },
+  {
+    "Key": {
+      "value": "AntiAir"
+    },
+    "Value": 2
+  },
+  {
+    "Key": {
+      "value": "Missile"
+    },
+    "Value": 5
+  },
+  {
+    "Key": {
+      "value": "TransportCopter"
+    },
+    "Value": 2
+  },
+  {
+    "Key": {
+      "value": "BattleCopter"
+    },
+    "Value": 3
+  },
+  {
+    "Key": {
+      "value": "Fighter"
+    },
+    "Value": 2
+  },
+  {
+    "Key": {
+      "value": "Bomber"
+    },
+    "Value": 2
+  },
+  {
+    "Key": {
+      "value": "Lander"
+    },
+    "Value": 1
+  },
+  {
+    "Key": {
+      "value": "Cruise"
+    },
+    "Value": 3
+  },
+  {
+    "Key": {
+      "value": "Submarine"
+    },
+    "Value": 5
+  },
+  {
+    "Key": {
+      "value": "Battleship"
+    },
+    "Value": 2
+  }
+]

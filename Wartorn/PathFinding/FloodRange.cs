@@ -17,6 +17,8 @@ namespace Wartorn.PathFinding
     {
         public static List<Point> FindRange(Map map,Unit unit,Point position)
         {
+            UnitInformation unitinfo = new UnitInformation(unit.UnitType);
+
             Graph graph = new Graph();
             graph.Source = position.toString();
 
@@ -43,8 +45,10 @@ namespace Wartorn.PathFinding
                 }
             }
 
-            graph.Dijkstra(position.toString(), 3 + 1);
-            var range = graph.FindReachableVertex(3);
+            graph.Dijkstra(position.toString(), unitinfo.Move + 1);
+            var range = graph.FindReachableVertex(unitinfo.Move);
+
+            CONTENT_MANAGER.ShowMessageBox(range.Count.ToString() + Environment.NewLine + unitinfo.Move.ToString());
 
             var result = new List<Point>();
             foreach (string dest in range)

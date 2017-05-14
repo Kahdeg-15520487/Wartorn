@@ -81,8 +81,7 @@ namespace Wartorn
 
             DrawingHelper.Initialize(GraphicsDevice);
 
-            Unit.Init();
-            //Unit.Load();
+            Unit.Load();
 
             base.Initialize();
         }

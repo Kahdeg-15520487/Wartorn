@@ -25,13 +25,13 @@ namespace Wartorn.GameData
     public class Unit
     {
         #region static stuff
-        static Dictionary<UnitType, Dictionary<UnitType, int>> _DammageTable;
-        static Dictionary<UnitType, int> _Cost;
-        static Dictionary<UnitType, int> _Gas;
-        static Dictionary<UnitType, int> _MovementRange;
-        static Dictionary<UnitType, int> _VisionRange;
-        static Dictionary<UnitType, Range> _AttackRange;
-        static Dictionary<MovementType, Dictionary<TerrainType, int>> _TravelCost;
+        public static Dictionary<UnitType, Dictionary<UnitType, int>> _DammageTable { get; private set; }
+        public static Dictionary<UnitType, int> _Cost{ get; private set; }
+        public static Dictionary<UnitType, int> _Gas{ get; private set; }
+        public static Dictionary<UnitType, int> _MovementRange{ get; private set; }
+        public static Dictionary<UnitType, int> _VisionRange{ get; private set; }
+        public static Dictionary<UnitType, Range> _AttackRange{ get; private set; }
+        public static Dictionary<MovementType, Dictionary<TerrainType, int>> _TravelCost{ get; private set; }
 
         public static void Init()
         {
@@ -222,6 +222,25 @@ namespace Wartorn.GameData
         {
             Max = max;
             Min = max;
+        }
+    }
+
+    public struct UnitInformation
+    {
+        public int Cost { get; }
+        public int Gas { get; }
+        public int Move { get; }
+        public int Vision { get; }
+        public Range AttackRange { get; }
+        public MovementType MoveType { get; }
+        public UnitInformation(UnitType unittype)
+        {
+            Cost = Unit._Cost[unittype];
+            Gas = Unit._Gas[unittype];
+            Move = Unit._MovementRange[unittype];
+            Vision = Unit._VisionRange[unittype];
+            AttackRange = Unit._AttackRange[unittype];
+            MoveType = unittype.GetMovementType();
         }
     }
 

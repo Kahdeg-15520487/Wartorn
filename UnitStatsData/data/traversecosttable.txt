@@ -1,0 +1,851 @@
+{
+  "data": [
+    {
+      "Key": {
+        "value": "Soldier"
+      },
+      "Value": [
+        {
+          "Key": {
+            "value": "Reef"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "Sea"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "River"
+          },
+          "Value": 2
+        },
+        {
+          "Key": {
+            "value": "Coast"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "Cliff"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "Road"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "Bridge"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "Plain"
+          },
+          "Value": 1
+        },
+        {
+          "Key": {
+            "value": "Tree"
+          },
+          "Value": 1
+        },
+        {
+          "Key": {
+            "value": "Mountain"
+          },
+          "Value": 2
+        },
+        {
+          "Key": {
+            "value": "MissileSilo"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "MissileSiloLaunched"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "City"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "Factory"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "AirPort"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "Harbor"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "Radar"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "SupplyBase"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "HQ"
+          },
+          "Value": 2147483647
+        }
+      ]
+    },
+    {
+      "Key": {
+        "value": "Mech"
+      },
+      "Value": [
+        {
+          "Key": {
+            "value": "Reef"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "Sea"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "River"
+          },
+          "Value": 1
+        },
+        {
+          "Key": {
+            "value": "Coast"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "Cliff"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "Road"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "Bridge"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "Plain"
+          },
+          "Value": 1
+        },
+        {
+          "Key": {
+            "value": "Tree"
+          },
+          "Value": 1
+        },
+        {
+          "Key": {
+            "value": "Mountain"
+          },
+          "Value": 1
+        },
+        {
+          "Key": {
+            "value": "MissileSilo"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "MissileSiloLaunched"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "City"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "Factory"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "AirPort"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "Harbor"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "Radar"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "SupplyBase"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "HQ"
+          },
+          "Value": 2147483647
+        }
+      ]
+    },
+    {
+      "Key": {
+        "value": "Tires"
+      },
+      "Value": [
+        {
+          "Key": {
+            "value": "Reef"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "Sea"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "River"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "Coast"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "Cliff"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "Road"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "Bridge"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "Plain"
+          },
+          "Value": 2
+        },
+        {
+          "Key": {
+            "value": "Tree"
+          },
+          "Value": 2
+        },
+        {
+          "Key": {
+            "value": "Mountain"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "MissileSilo"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "MissileSiloLaunched"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "City"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "Factory"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "AirPort"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "Harbor"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "Radar"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "SupplyBase"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "HQ"
+          },
+          "Value": 2147483647
+        }
+      ]
+    },
+    {
+      "Key": {
+        "value": "Track"
+      },
+      "Value": [
+        {
+          "Key": {
+            "value": "Reef"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "Sea"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "River"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "Coast"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "Cliff"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "Road"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "Bridge"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "Plain"
+          },
+          "Value": 1
+        },
+        {
+          "Key": {
+            "value": "Tree"
+          },
+          "Value": 2
+        },
+        {
+          "Key": {
+            "value": "Mountain"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "MissileSilo"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "MissileSiloLaunched"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "City"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "Factory"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "AirPort"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "Harbor"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "Radar"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "SupplyBase"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "HQ"
+          },
+          "Value": 2147483647
+        }
+      ]
+    },
+    {
+      "Key": {
+        "value": "Air"
+      },
+      "Value": [
+        {
+          "Key": {
+            "value": "Reef"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "Sea"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "River"
+          },
+          "Value": 1
+        },
+        {
+          "Key": {
+            "value": "Coast"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "Cliff"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "Road"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "Bridge"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "Plain"
+          },
+          "Value": 1
+        },
+        {
+          "Key": {
+            "value": "Tree"
+          },
+          "Value": 1
+        },
+        {
+          "Key": {
+            "value": "Mountain"
+          },
+          "Value": 1
+        },
+        {
+          "Key": {
+            "value": "MissileSilo"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "MissileSiloLaunched"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "City"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "Factory"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "AirPort"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "Harbor"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "Radar"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "SupplyBase"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "HQ"
+          },
+          "Value": 2147483647
+        }
+      ]
+    },
+    {
+      "Key": {
+        "value": "Ship"
+      },
+      "Value": [
+        {
+          "Key": {
+            "value": "Reef"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "Sea"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "River"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "Coast"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "Cliff"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "Road"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "Bridge"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "Plain"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "Tree"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "Mountain"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "MissileSilo"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "MissileSiloLaunched"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "City"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "Factory"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "AirPort"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "Harbor"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "Radar"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "SupplyBase"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "HQ"
+          },
+          "Value": 2147483647
+        }
+      ]
+    },
+    {
+      "Key": {
+        "value": "Lander"
+      },
+      "Value": [
+        {
+          "Key": {
+            "value": "Reef"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "Sea"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "River"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "Coast"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "Cliff"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "Road"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "Bridge"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "Plain"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "Tree"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "Mountain"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "MissileSilo"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "MissileSiloLaunched"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "City"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "Factory"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "AirPort"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "Harbor"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "Radar"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "SupplyBase"
+          },
+          "Value": 2147483647
+        },
+        {
+          "Key": {
+            "value": "HQ"
+          },
+          "Value": 2147483647
+        }
+      ]
+    }
+  ]
+}

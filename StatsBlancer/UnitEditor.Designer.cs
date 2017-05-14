@@ -335,6 +335,7 @@
             this.dataGridView_unitdmg.Name = "dataGridView_unitdmg";
             this.dataGridView_unitdmg.Size = new System.Drawing.Size(563, 328);
             this.dataGridView_unitdmg.TabIndex = 22;
+            this.dataGridView_unitdmg.TabStop = false;
             this.dataGridView_unitdmg.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_unitdmg_CellValueChanged);
             // 
             // UnitEditor
