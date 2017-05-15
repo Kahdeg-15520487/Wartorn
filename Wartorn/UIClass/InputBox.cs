@@ -125,6 +125,11 @@ namespace Wartorn.UIClass
                 case Keys.Z:
                     result = key.ToString();
                     break;
+
+                case Keys.Space:
+                    result = " ";
+                    break;
+
                 case Keys.NumPad0:
                 case Keys.D0:
                     result = "0";
