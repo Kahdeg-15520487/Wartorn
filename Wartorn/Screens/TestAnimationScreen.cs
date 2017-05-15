@@ -75,6 +75,9 @@ namespace Wartorn.Screens
             map[position].unit = UnitCreationHelper.Create(currentUnit, currentColor);
             map[position].unit.Animation.PlayAnimation(AnimationName.idle.ToString());
 
+            map[0, 0].unit = UnitCreationHelper.Create(UnitType.Tank, currentColor);
+            
+
             return base.Init();
         }
 
@@ -256,8 +259,11 @@ namespace Wartorn.Screens
         {
             if (isArrived)
             {
-                movingUnit = null;
+                //this line is only necessary for this screen
                 position = destination;
+
+                //normal stuff
+                movingUnit = null;
                 map[destination].unit = map[selectedUnit].unit;
                 map[selectedUnit].unit = null;
                 map[destination].unit.Animation.ContinueAnimation();
