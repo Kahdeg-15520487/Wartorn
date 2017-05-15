@@ -14,7 +14,7 @@ using Wartorn.Utility;
 
 namespace Wartorn.GameData
 {
-    class Map : IEnumerable
+    public class Map : IEnumerable
     {
         public MapCell[,] map { get; private set; }
 

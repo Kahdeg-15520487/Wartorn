@@ -88,6 +88,7 @@
     <Compile Include="Screens\RedScreen.cs" />
     <Compile Include="Screens\TestAnimationScreen.cs" />
     <Compile Include="Screens\UnitMoveProtypeScreen.cs" />
+    <Compile Include="SpriteRectangle\DirectionArrowSpriteSourceRectangle.cs" />
     <Compile Include="SpriteRectangle\UISpriteSheetSourceRectangle.cs" />
     <Compile Include="SpriteRectangle\SpriteSheetSourceRectangle.cs" />
     <Compile Include="Storage\CompressHelper.cs" />
