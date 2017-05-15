@@ -59,6 +59,7 @@ namespace Wartorn.UIClass
                 {
                     OnCommandSubmitted(this, e);
                     log.Add(inputbox.Text);
+                    inputbox.Clear();
                     outputbox.Text = log.Skip(Math.Max(0, log.Count - maxLogLine)).Aggregate((current, next) => current + "\n" + next);
                     return;
                 }
@@ -78,14 +79,6 @@ namespace Wartorn.UIClass
 
         public override void Update(InputState inputState, InputState lastInputState)
         {
-            var keyboardState = inputState.keyboardState;
-            var lastKeyboardState = lastInputState.keyboardState;
-
-            if (keyboardState.IsKeyDown(Keys.OemTilde) && lastKeyboardState.IsKeyUp(Keys.OemTilde))
-            {
-                isVisible = !isVisible;
-            }
-
             inputbox.Update(inputState, lastInputState);
             outputbox.Update(inputState, lastInputState);
             base.Update(inputState, lastInputState);

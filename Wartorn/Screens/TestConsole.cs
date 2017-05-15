@@ -65,6 +65,11 @@ namespace Wartorn.Screens
         public override void Update(GameTime gameTime)
         {
             canvas.Update(CONTENT_MANAGER.inputState, CONTENT_MANAGER.lastInputState);
+
+            if (HelperFunction.IsKeyPress(Keys.OemTilde))
+            {
+                console.IsVisible = !console.IsVisible;
+            }
         }
 
         public override void Draw(GameTime gameTime)

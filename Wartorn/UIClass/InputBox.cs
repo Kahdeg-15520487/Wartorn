@@ -191,9 +191,14 @@ namespace Wartorn.UIClass
             return result;
         }
 
+        public void Clear()
+        {
+            textBuffer.Clear();
+            CursorPosition = 0;
+        }
+
         public override void Draw(SpriteBatch spriteBatch)
         {
-            CONTENT_MANAGER.spriteBatch.DrawString(font, textBuffer.Length.ToString(), Vector2.Zero, Color.White);
             spriteBatch.DrawString(font, textBuffer, rect.Location.ToVector2(), foregroundColor, Rotation, origin, scale, SpriteEffects.None, LayerDepth.GuiLower);
 
             //Draw text caret
