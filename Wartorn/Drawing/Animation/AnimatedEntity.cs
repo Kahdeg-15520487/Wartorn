@@ -33,6 +33,7 @@ namespace Wartorn.Drawing.Animation
         private float scale;
 
         private float depth;
+        private bool isPlaying;
 
         // Tells SpriteBatch how to flip our texture
         private SpriteEffects flipEffect;
@@ -48,6 +49,11 @@ namespace Wartorn.Drawing.Animation
         {
             get { return position; }
             set { position = value; }
+        }
+        public Vector2 Origin
+        {
+            get { return origin; }
+            set { origin = value; }
         }
         public float Scale
         {
@@ -90,12 +96,12 @@ namespace Wartorn.Drawing.Animation
             flipEffect = SpriteEffects.None;
             tintColor = Color.White;
         }
-        public AnimatedEntity(Vector2 position, Color? tintColor, float depth, float scale = 1)
+        public AnimatedEntity(Vector2 position,Vector2 origin, Color? tintColor, float depth, float scale = 1)
         {
             //Initialize the Dictionary
             animations = new Dictionary<string, Animation>(24);
             spriteSheet = null;
-            origin = Vector2.Zero;
+            this.origin = origin;
             rotation = 0;
             this.depth = depth;
             flipEffect = SpriteEffects.None;
@@ -151,6 +157,23 @@ namespace Wartorn.Drawing.Animation
                 Utility.HelperFunction.Log(new ApplicationException("Animation Key is already contained in the Dictionary"));
             }
         }
+        public void AddAnimation(params Animation[] anims)
+        {
+            foreach (Animation animation in anims)
+            {
+                // Is this Animation already in the Dictionary?
+                if (!animations.ContainsKey(animation.Name))
+                {
+                    // If not we can safely add it
+                    animations.Add(animation.Name, animation);
+                }
+                else
+                {
+                    // Otherwise we tell are computer to yell at us
+                    Utility.HelperFunction.Log(new ApplicationException("Animation Key is already contained in the Dictionary"));
+                }
+            }
+        }
         public void AddAnimation(List<Animation> anims)
         {
             foreach (Animation animation in anims)
@@ -186,8 +209,20 @@ namespace Wartorn.Drawing.Animation
                 }
             }
 
+            isPlaying = true;
+
             currentAnimation = animations[key];
             currentAnimation.Reset();
+        }
+
+        public void StopAnimation()
+        {
+            isPlaying = false;
+        }
+
+        public void ContinueAnimation()
+        {
+            isPlaying = true;
         }
 
         #endregion
@@ -200,7 +235,7 @@ namespace Wartorn.Drawing.Animation
         /// <param name="gameTime">Provides a snapshot of timing values</param>
         public void Update(GameTime gameTime)
         {
-            if (currentAnimation != null)
+            if (currentAnimation != null && isPlaying)
             {
                 //2 câu lệnh sau sẽ làm cho origin của animation ở chính giữa khung hình.
                 //vì nguyên cái game chạy theo origin là vector2.zero nên bỏ
@@ -230,7 +265,7 @@ namespace Wartorn.Drawing.Animation
         /// <param name="spriteBatch">The SpriteBatch object we will us to draw</param>
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            if (currentAnimation != null)
+            if (currentAnimation != null && isPlaying)
             {
                 spriteBatch.Draw(spriteSheet, position, currentAnimation.CurntKeyFrame.Source, tintColor,
                     rotation, origin, scale, flipEffect, depth);

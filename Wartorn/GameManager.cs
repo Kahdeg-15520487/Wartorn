@@ -15,6 +15,7 @@ using Wartorn.GameData;
 using Wartorn.UIClass;
 using Wartorn.Utility;
 using Wartorn.Utility.Drawing;
+using Wartorn.CustomJsonConverter;
 using Wartorn.Screens;
 using Wartorn.Drawing;
 using Wartorn.Drawing.Animation;
@@ -43,15 +44,21 @@ namespace Wartorn
 
             graphics.PreferMultiSampling = true;
 
-            JsonConvert.DefaultSettings  = () =>
+            JsonConvert.DefaultSettings = () =>
             {
                 var settings = new JsonSerializerSettings();
                 settings.Converters.Add(new UnitPairJsonConverter());
                 settings.Converters.Add(new UnitJsonConverter());
+                settings.Converters.Add(new UnitTypeJsonConverter());
+                settings.Converters.Add(new MovementTypeJsonConverter());
+                settings.Converters.Add(new TerrainTypeJsonConverter());
+                settings.Converters.Add(new RangeJsonConverter());
                 settings.Converters.Add(new MapJsonConverter());
                 settings.Converters.Add(new MapCellJsonConverter());
+                settings.Converters.Add(new Dictionary_MovementType_Dictionary_TerrainType_int_JsonConverter());
+                settings.Converters.Add(new Dictionary_UnitType_Dictionary_UnitType_int_JsonConverter());
                 return settings;
-            };            
+            };
         }
 
         /// <summary>
@@ -63,15 +70,18 @@ namespace Wartorn
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            SpriteSheetSourceRectangle.LoadSprite();
+            TerrainSpriteSheetSourceRectangle.LoadSprite();
             UISpriteSheetSourceRectangle.LoadSprite();
+            UnitSpriteSheetRectangle.LoadSprite();
+            BuildingSpriteSourceRectangle.LoadSprite();
 
             graphics.PreferredBackBufferWidth = Constants.Width;    // set this value to the desired width of your window
             graphics.PreferredBackBufferHeight = Constants.Height;  // set this value to the desired height of your window
             graphics.ApplyChanges();
 
             DrawingHelper.Initialize(GraphicsDevice);
-            //Unit.Load();
+
+            Unit.Load();
 
             base.Initialize();
         }
@@ -86,85 +96,21 @@ namespace Wartorn
             CONTENT_MANAGER.spriteBatch = new SpriteBatch(GraphicsDevice);
             CONTENT_MANAGER.inputState = new InputState(Mouse.GetState(), Keyboard.GetState());
 
-            // TODO: use this.Content to load your game content here
-            CONTENT_MANAGER.defaultfont = CONTENT_MANAGER.Content.Load<SpriteFont>("defaultfont");
-            CONTENT_MANAGER.arcadefont = CONTENT_MANAGER.Content.Load<SpriteFont>(@"sprite\GUI\menufont");
-            CONTENT_MANAGER.spriteSheet = CONTENT_MANAGER.Content.Load<Texture2D>(@"sprite\terrain");
-            CONTENT_MANAGER.buildingSpriteSheet = CONTENT_MANAGER.Content.Load<Texture2D>(@"sprite\building");
-            CONTENT_MANAGER.UIspriteSheet = CONTENT_MANAGER.Content.Load<Texture2D>(@"sprite\ui_sprite_sheet");
-
-            LoadAnimationContent();
-            InitScreen();
-        }
-
-        private void LoadAnimationContent()
-        {
-            CONTENT_MANAGER.animationEntities = new Dictionary<UnitType, AnimatedEntity>();
-            CONTENT_MANAGER.animationSheets = new Dictionary<UnitType, Texture2D>();
-            CONTENT_MANAGER.animationTypes = new List<Animation>();
-
-            //list of unit type
-            var UnitTypes = new List<UnitType>((IEnumerable<UnitType>)Enum.GetValues(typeof(UnitType)));
-            UnitTypes.Remove(UnitType.None);
+            CONTENT_MANAGER.LoadContent();
             
-            //load animation sprite sheet for each unit type
-            foreach (UnitType unittype in UnitTypes)
-            {
-                CONTENT_MANAGER.animationSheets.Add(unittype, CONTENT_MANAGER.Content.Load<Texture2D>("sprite//Alliance_RED//" + unittype.ToString()));
-            }
-
-            //declare animation type
-            Animation idle = new Animation("idle", true, 4, string.Empty);
-            for (int i = 0; i < 4; i++)
-            {
-                idle.AddKeyFrame(i * 48, 0, 48, 48);
-            }
-
-            Animation right = new Animation("right", true, 4, string.Empty);
-            for (int i = 0; i < 4; i++)
-            {
-                right.AddKeyFrame(i * 48, 48, 48, 48);
-            }
-
-            Animation up = new Animation("up", true, 4, string.Empty);
-            for (int i = 0; i < 4; i++)
-            {
-                up.AddKeyFrame(i * 48, 96, 48, 48);
-            }
-
-            Animation down = new Animation("down", true, 4, string.Empty);
-            for (int i = 0; i < 4; i++)
-            {
-                down.AddKeyFrame(i * 48, 144, 48, 48);
-            }
-
-            Animation done = new Animation("done", true, 1, string.Empty);
-            done.AddKeyFrame(0, 192, 48, 48);
-
-            CONTENT_MANAGER.animationTypes.Add(idle);
-            CONTENT_MANAGER.animationTypes.Add(right);
-            CONTENT_MANAGER.animationTypes.Add(up);
-            CONTENT_MANAGER.animationTypes.Add(down);
-            CONTENT_MANAGER.animationTypes.Add(done);
-
-            foreach (var unittype in UnitTypes)
-            {
-                AnimatedEntity temp = new AnimatedEntity(Vector2.Zero, Color.White, LayerDepth.Unit);
-                temp.LoadContent(CONTENT_MANAGER.animationSheets[unittype]);
-                temp.AddAnimation(CONTENT_MANAGER.animationTypes);
-                temp.PlayAnimation("idle");
-                CONTENT_MANAGER.animationEntities.Add(unittype, temp);
-            }
-        }
+            InitScreen();
+        }        
 
         private void InitScreen()
         {
             SCREEN_MANAGER.add_screen(new EditorScreen(GraphicsDevice));
             SCREEN_MANAGER.add_screen(new MainMenuScreen(GraphicsDevice));
             SCREEN_MANAGER.add_screen(new TestAnimationScreen(GraphicsDevice));
-
+            SCREEN_MANAGER.add_screen(new Screens.MainGameScreen.SetupScreen(GraphicsDevice));
+            SCREEN_MANAGER.add_screen(new Screens.MainGameScreen.GameScreen(GraphicsDevice));
 
             //SCREEN_MANAGER.goto_screen("TestAnimationScreen");
+            //SCREEN_MANAGER.goto_screen("SetupScreen");
             SCREEN_MANAGER.goto_screen("MainMenuScreen");
             //SCREEN_MANAGER.goto_screen("EditorScreen");
 
@@ -193,6 +139,17 @@ namespace Wartorn
 
             // TODO: Add your update logic here
             CONTENT_MANAGER.inputState = new InputState(Mouse.GetState(), Keyboard.GetState());
+
+            if (HelperFunction.IsKeyPress(Keys.F1))
+            {
+                SCREEN_MANAGER.goto_screen("TestAnimationScreen");
+            }
+
+            if (HelperFunction.IsKeyPress(Keys.F2))
+            {
+                Unit.Load();
+                CONTENT_MANAGER.ShowMessageBox("Unit stats reloaded");
+            }
 
             SCREEN_MANAGER.Update(gameTime);
 

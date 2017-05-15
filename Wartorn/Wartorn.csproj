@@ -38,7 +38,22 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="AnimationFrame.cs" />
+    <Compile Include="DropdownDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DropdownDialog.Designer.cs">
+      <DependentUpon>DropdownDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="InputDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="InputDialog.Designer.cs">
+      <DependentUpon>InputDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CustomJsonConverter.cs" />
+    <Compile Include="PathFinding\Dijkstra.cs" />
+    <Compile Include="PathFinding\DijkstraHelper.cs" />
+    <Compile Include="SpriteRectangle\BuildingSpriteSourceRectangle.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="CONTENT_MANAGER.cs" />
     <Compile Include="Drawing\Animation\AnimatedEntity.cs" />
@@ -47,11 +62,11 @@
     <Compile Include="Drawing\Camera.cs" />
     <Compile Include="Drawing\DrawingHelper.cs" />
     <Compile Include="Drawing\MapRenderer.cs" />
+    <Compile Include="Drawing\MiniMapGenerator.cs" />
     <Compile Include="GameData\Constants.cs" />
     <Compile Include="GameData\Map.cs" />
     <Compile Include="GameData\MapCell.cs" />
     <Compile Include="GameData\Session.cs" />
-    <Compile Include="GameData\StructData.cs" />
     <Compile Include="GameData\Unit.cs" />
     <Compile Include="GameManager.cs" />
     <Compile Include="Drawing\PrimitiveBatch.cs" />
@@ -66,12 +81,15 @@
     <Compile Include="Screens\BlueScreen.cs" />
     <Compile Include="Screens\Campaign.cs" />
     <Compile Include="Screens\EditorScreen.cs" />
+    <Compile Include="Screens\MainGameScreen\GameScreen.cs" />
+    <Compile Include="Screens\MainGameScreen\SetupScreen.cs" />
     <Compile Include="Screens\MainMenuScreen.cs" />
     <Compile Include="Screens\RedScreen.cs" />
     <Compile Include="Screens\TestAnimationScreen.cs" />
     <Compile Include="Screens\UnitMoveProtypeScreen.cs" />
-    <Compile Include="UISpriteSheetSourceRectangle.cs" />
-    <Compile Include="SpriteSheetSourceRectangle.cs" />
+    <Compile Include="SpriteRectangle\UISpriteSheetSourceRectangle.cs" />
+    <Compile Include="SpriteRectangle\SpriteSheetSourceRectangle.cs" />
+    <Compile Include="Storage\CompressHelper.cs" />
     <Compile Include="Storage\MapData.cs" />
     <Compile Include="Storage\NoiseGenerator.cs" />
     <Compile Include="Storage\SessionStorage.cs" />
@@ -83,6 +101,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UIClass\Canvas.cs" />
     <Compile Include="UIClass\UIObject.cs" />
+    <Compile Include="SpriteRectangle\UnitSpriteSheetRectangle.cs" />
     <Compile Include="Utility.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -106,6 +125,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="DropdownDialog.resx">
+      <DependentUpon>DropdownDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Handler.resx">
       <DependentUpon>Handler.cs</DependentUpon>
     </EmbeddedResource>
@@ -113,6 +135,9 @@
     <Content Include="OpenTK.dll.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <EmbeddedResource Include="InputDialog.resx">
+      <DependentUpon>InputDialog.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <MonoGameContentReference Include="Content\Content.mgcb" />

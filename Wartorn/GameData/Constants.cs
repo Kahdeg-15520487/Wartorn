@@ -31,7 +31,7 @@ namespace Wartorn.GameData
         Harbor,
         Radar,
         SupplyBase,
-        Headquarter
+        HQ
     }
 
 
@@ -39,16 +39,42 @@ namespace Wartorn.GameData
     public enum UnitType
     {
         None,
+
+        //land
         Soldier,
         Mech,
         Recon,
         APC,
         Tank,
-        H_Tank,
+        HeavyTank,
         Artillery,
         Rocket,
-        Anti_Air,
-        Missile
+        AntiAir,
+        Missile,
+
+        //air
+        TransportCopter,
+        BattleCopter,
+        Fighter,
+        Bomber,
+
+        //sea
+        Lander,
+        Cruise,
+        Submarine,
+        Battleship
+    }
+
+    public enum MovementType
+    {
+        None,
+        Soldier,
+        Mech,
+        Tires,
+        Track,
+        Air,
+        Ship,
+        Lander
     }
 
     public enum Weather

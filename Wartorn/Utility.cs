@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.IO;
 using Wartorn.GameData;
+using Wartorn.Drawing;
 
 namespace Wartorn
 {
@@ -33,6 +34,19 @@ namespace Wartorn
             public static void Log(Exception e)
             {
                 File.WriteAllText("crashlog.txt", DateTime.Now.ToString(@"dd\/MM\/yyyy HH:mm") + Environment.NewLine + e.Message + Environment.NewLine + e.StackTrace + Environment.NewLine + e.TargetSite);
+            }
+
+
+            public static Point TranslateMousePosToMapCellPos(Point mousepos, Camera camera, int width, int height)
+            {
+                //calculate currently selected mapcell
+                Vector2 temp = camera.TranslateFromScreenToWorld(mousepos.ToVector2());
+                temp.X = (int)(temp.X / Constants.MapCellWidth);       //mapcell size
+                temp.Y = (int)(temp.Y / Constants.MapCellHeight);
+
+                if (temp.X >= 0 && temp.X < width && temp.Y >= 0 && temp.Y < height)
+                    return temp.ToPoint();
+                return Point.Zero;
             }
         }
 
@@ -87,12 +101,61 @@ namespace Wartorn
                     case TerrainType.Harbor:
                     case TerrainType.Radar:
                     case TerrainType.SupplyBase:
-                    case TerrainType.Headquarter:
+                    case TerrainType.HQ:
                         return true;
                     default:
                         break;
                 }
                 return false;
+            }
+
+            public static MovementType GetMovementType(this UnitType ut)
+            {
+                switch (ut)
+                {
+                    case UnitType.Soldier:
+                        return MovementType.Soldier;
+                    case UnitType.Mech:
+                        return MovementType.Mech;
+
+                    case UnitType.Recon:
+                    case UnitType.Rocket:
+                    case UnitType.Missile:
+                        return MovementType.Tires;
+
+                    case UnitType.APC:
+                    case UnitType.Tank:
+                    case UnitType.HeavyTank:
+                    case UnitType.Artillery:
+                    case UnitType.AntiAir:
+                        return MovementType.Track;
+
+                    case UnitType.TransportCopter:
+                    case UnitType.BattleCopter:
+                    case UnitType.Fighter:
+                    case UnitType.Bomber:
+                        return MovementType.Air;
+
+                    case UnitType.Lander:
+                        return MovementType.Lander;
+
+                    case UnitType.Cruise:
+                    case UnitType.Submarine:
+                    case UnitType.Battleship:
+                        return MovementType.Ship;
+                    default:
+                        break;
+                }
+                return MovementType.None;
+            }
+
+            public static SpriteSheetUnit GetSpriteSheetUnit(this UnitType ut,Owner owner)
+            {
+                StringBuilder result = new StringBuilder();
+                result.Append(owner.ToString());
+                result.Append("_");
+                result.Append(ut.ToString());
+                return result.ToString().ToEnum<SpriteSheetUnit>();
             }
 
             public static TerrainType ToTerrainType(this SpriteSheetTerrain t)
@@ -614,7 +677,7 @@ namespace Wartorn
                     case SpriteSheetTerrain.Blue_Headquarter_Lower:
                     case SpriteSheetTerrain.Green_Headquarter_Lower:
                     case SpriteSheetTerrain.Yellow_Headquarter_Lower:
-                        result = TerrainType.Headquarter;
+                        result = TerrainType.HQ;
                         break;
                 }
 
@@ -644,6 +707,26 @@ namespace Wartorn
                         result = (int)unboxTerrain + count;
                         box = (T)((object)result);
                         break;
+                    case "SpriteSheetUnit":
+                        SpriteSheetUnit unboxSpriteSheetUnit = (SpriteSheetUnit)((object)t);
+                        result = (int)unboxSpriteSheetUnit + count;
+                        box = (T)((object)result);
+                        break;
+                    case "AnimationName":
+                        AnimationName unboxAnimationName = (AnimationName)((object)t);
+                        result = (int)unboxAnimationName + count;
+                        box = (T)((object)result);
+                        break;
+                    case "Owner":
+                        Owner unboxOwner = (Owner)((object)t);
+                        result = (int)unboxOwner + count;
+                        box = (T)((object)result);
+                        break;
+                    case "SpriteSheetBuilding":
+                        SpriteSheetBuilding unboxSpriteSheetBuilding = (SpriteSheetBuilding)((object)t);
+                        result = (int)unboxSpriteSheetBuilding + count;
+                        box = (T)((object)result);
+                        break;
                     default:
                         break;
                 }
@@ -671,6 +754,26 @@ namespace Wartorn
                     case "TerrainType":
                         TerrainType unboxTerrain = (TerrainType)((object)t);
                         result = (int)unboxTerrain - count;
+                        box = (T)((object)result);
+                        break;
+                    case "SpriteSheetUnit":
+                        SpriteSheetUnit unboxSpriteSheetUnit = (SpriteSheetUnit)((object)t);
+                        result = (int)unboxSpriteSheetUnit - count;
+                        box = (T)((object)result);
+                        break;
+                    case "AnimationName":
+                        AnimationName unboxAnimationName = (AnimationName)((object)t);
+                        result = (int)unboxAnimationName - count;
+                        box = (T)((object)result);
+                        break;
+                    case "Owner":
+                        Owner unboxOwner = (Owner)((object)t);
+                        result = (int)unboxOwner - count;
+                        box = (T)((object)result);
+                        break;
+                    case "SpriteSheetBuilding":
+                        SpriteSheetBuilding unboxSpriteSheetBuilding = (SpriteSheetBuilding)((object)t);
+                        result = (int)unboxSpriteSheetBuilding - count;
                         box = (T)((object)result);
                         break;
                     default:
@@ -712,6 +815,44 @@ namespace Wartorn
                         break;
                 }
                 return output;
+            }
+
+            public static string toString(this Point p)
+            {
+                return string.Format("{0}:{1}", p.X, p.Y);
+            }
+
+            public static Point Parse(this string str)
+            {
+                var data = str.Split(':');
+                int x, y;
+
+                if (int.TryParse(data[0], out x) && int.TryParse(data[1], out y))
+                {
+                    return new Point(x, y);
+                }
+                else
+                {
+                    return Point.Zero;
+                }
+            }
+
+            public static bool TryParse(this string str,out Point p)
+            {
+                var data = str.Split(':');
+                int x, y;
+                bool result = false;
+
+                if (int.TryParse(data[0], out x) && int.TryParse(data[1], out y))
+                {
+                    p = new Point(x, y);
+                    return true;
+                }
+                else
+                {
+                    p = Point.Zero;
+                    return result;
+                }
             }
         }
     }

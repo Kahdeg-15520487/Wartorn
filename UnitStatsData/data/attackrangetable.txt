@@ -1,0 +1,164 @@
+[
+  {
+    "Key": {
+      "value": "Soldier"
+    },
+    "Value": {
+      "Max": 1,
+      "Min": 1
+    }
+  },
+  {
+    "Key": {
+      "value": "Mech"
+    },
+    "Value": {
+      "Max": 1,
+      "Min": 1
+    }
+  },
+  {
+    "Key": {
+      "value": "Recon"
+    },
+    "Value": {
+      "Max": 1,
+      "Min": 1
+    }
+  },
+  {
+    "Key": {
+      "value": "APC"
+    },
+    "Value": {
+      "Max": 1,
+      "Min": 1
+    }
+  },
+  {
+    "Key": {
+      "value": "Tank"
+    },
+    "Value": {
+      "Max": 1,
+      "Min": 1
+    }
+  },
+  {
+    "Key": {
+      "value": "HeavyTank"
+    },
+    "Value": {
+      "Max": 1,
+      "Min": 1
+    }
+  },
+  {
+    "Key": {
+      "value": "Artillery"
+    },
+    "Value": {
+      "Max": 2,
+      "Min": 3
+    }
+  },
+  {
+    "Key": {
+      "value": "Rocket"
+    },
+    "Value": {
+      "Max": 3,
+      "Min": 5
+    }
+  },
+  {
+    "Key": {
+      "value": "AntiAir"
+    },
+    "Value": {
+      "Max": 1,
+      "Min": 1
+    }
+  },
+  {
+    "Key": {
+      "value": "Missile"
+    },
+    "Value": {
+      "Max": 3,
+      "Min": 5
+    }
+  },
+  {
+    "Key": {
+      "value": "TransportCopter"
+    },
+    "Value": {
+      "Max": 1,
+      "Min": 1
+    }
+  },
+  {
+    "Key": {
+      "value": "BattleCopter"
+    },
+    "Value": {
+      "Max": 1,
+      "Min": 1
+    }
+  },
+  {
+    "Key": {
+      "value": "Fighter"
+    },
+    "Value": {
+      "Max": 1,
+      "Min": 1
+    }
+  },
+  {
+    "Key": {
+      "value": "Bomber"
+    },
+    "Value": {
+      "Max": 1,
+      "Min": 1
+    }
+  },
+  {
+    "Key": {
+      "value": "Lander"
+    },
+    "Value": {
+      "Max": 1,
+      "Min": 1
+    }
+  },
+  {
+    "Key": {
+      "value": "Cruise"
+    },
+    "Value": {
+      "Max": 1,
+      "Min": 1
+    }
+  },
+  {
+    "Key": {
+      "value": "Submarine"
+    },
+    "Value": {
+      "Max": 1,
+      "Min": 1
+    }
+  },
+  {
+    "Key": {
+      "value": "Battleship"
+    },
+    "Value": {
+      "Max": 2,
+      "Min": 6
+    }
+  }
+]

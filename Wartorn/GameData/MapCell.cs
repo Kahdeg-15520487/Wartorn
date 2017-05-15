@@ -19,7 +19,6 @@ namespace Wartorn.GameData
         public TerrainType terrain;
         public bool isFog;
         public Unit unit;
-        public int unitId;
         public Owner owner = Owner.None;
 
         /*
@@ -50,16 +49,14 @@ namespace Wartorn.GameData
         {
             terrain = t;
             unit = null;
-            unitId = default(int);
             isFog = false;
         }
 
         [JsonConstructor]
-        public MapCell(TerrainType t, Unit u, int? unitid, bool isfog = false)
+        public MapCell(TerrainType t, Unit u, bool isfog = false)
         {
             terrain = t;
             unit = u;
-            unitId = unitid.GetValueOrDefault();
             isFog = isfog;
         }
 
