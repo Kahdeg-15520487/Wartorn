@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Wartorn.UIClass
 {
-    abstract class UIObject:IUIEvent
+    public abstract class UIObject:IUIEvent
     {
         public Rectangle rect = new Rectangle();
         
@@ -135,7 +135,7 @@ namespace Wartorn.UIClass
         
         public virtual void Update(InputState inputState, InputState lastInputState)
         {
-            UIEventArgs arg = new UIEventArgs(inputState.mouseState);
+            UIEventArgs arg = new UIEventArgs(inputState, lastInputState);
 
             //LostFocus
             if (!rect.Contains(inputState.mouseState.Position) && inputState.mouseState.LeftButton == ButtonState.Pressed)
@@ -193,6 +193,12 @@ namespace Wartorn.UIClass
             {
                 OnMouseHover(this, arg);
             }
+
+            //KeyPress
+            if (isFocused && inputState.keyboardState.GetPressedKeys().GetLength(0)>0)
+            {
+                OnKeyPress(this, arg);
+            }
         }
         public abstract void Draw(SpriteBatch spriteBatch);
 
@@ -205,44 +211,51 @@ namespace Wartorn.UIClass
         public event EventHandler<UIEventArgs> GotFocus;
         public event EventHandler<UIEventArgs> LostFocus;
 
+        public event EventHandler<UIEventArgs> KeyPress;
+
         protected virtual void OnMouseClick(object sender, UIEventArgs e)
         {
-            MouseClick?.Invoke(this, e);
+            MouseClick?.Invoke(sender, e);
         }
 
         protected virtual void OnMouseDown(object sender, UIEventArgs e)
         {
-            MouseDown?.Invoke(this, e);
+            MouseDown?.Invoke(sender, e);
         }
 
         protected virtual void OnMouseUp(object sender, UIEventArgs e)
         {
-            MouseUp?.Invoke(this, e);
+            MouseUp?.Invoke(sender, e);
         }
 
         protected virtual void OnMouseHover(object sender, UIEventArgs e)
         {
-            MouseHover?.Invoke(this, e);
+            MouseHover?.Invoke(sender, e);
         }
 
         protected virtual void OnMouseEnter(object sender, UIEventArgs e)
         {
-            MouseEnter?.Invoke(this, e);
+            MouseEnter?.Invoke(sender, e);
         }
 
         protected virtual void OnMouseLeave(object sender, UIEventArgs e)
         {
-            MouseLeave?.Invoke(this, e);
+            MouseLeave?.Invoke(sender, e);
         }
 
         protected virtual void OnGotFocus(object sender, UIEventArgs e)
         {
-            GotFocus?.Invoke(this, e);
+            GotFocus?.Invoke(sender, e);
         }
 
         protected virtual void OnLostFocus(object sender, UIEventArgs e)
         {
-            LostFocus?.Invoke(this, e);
+            LostFocus?.Invoke(sender, e);
+        }
+
+        protected virtual void OnKeyPress(object sender,UIEventArgs e)
+        {
+            KeyPress?.Invoke(sender, e);
         }
     }
 
@@ -261,9 +274,15 @@ namespace Wartorn.UIClass
     public class UIEventArgs : EventArgs
     {
         public MouseState mouseState { get; set; }
-        public UIEventArgs(MouseState mousestate)
+        public MouseState lastMouseState { get; set; }
+        public KeyboardState keyboardState { get; set; }
+        public KeyboardState lastKeyboardState { get; set; }
+        public UIEventArgs(InputState inputState,InputState lastInputState)
         {
-            mouseState = mousestate;
+            mouseState = inputState.mouseState;
+            lastMouseState = lastInputState.mouseState;
+            keyboardState = inputState.keyboardState;
+            lastKeyboardState = lastInputState.keyboardState;
         }
     }
 

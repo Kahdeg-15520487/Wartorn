@@ -15,10 +15,11 @@ using Wartorn;
 using Wartorn.Drawing;
 using Wartorn.PathFinding.Dijkstras;
 using Wartorn.PathFinding;
+using Wartorn.UIClass;
 
 namespace Wartorn.Screens
 {
-    class TestAnimationScreen : Screen
+    public class TestAnimationScreen : Screen
     {
         //Dictionary<UnitType, Unit> RedUnitList;
         //Dictionary<UnitType, Unit> BlueUnitList;
@@ -41,6 +42,8 @@ namespace Wartorn.Screens
 
         Map map;
         Camera camera;
+
+        UIClass.Console console;
 
         public TestAnimationScreen(GraphicsDevice device) : base(device, "TestAnimationScreen")
         {   }
@@ -75,8 +78,10 @@ namespace Wartorn.Screens
             map[position].unit = UnitCreationHelper.Create(currentUnit, currentColor);
             map[position].unit.Animation.PlayAnimation(AnimationName.idle.ToString());
 
-            map[0, 0].unit = UnitCreationHelper.Create(UnitType.Tank, currentColor);
-            
+            console = new UIClass.Console(new Point(0, 0), new Vector2(720, 200), CONTENT_MANAGER.hackfont);
+            console.IsVisible = false;
+
+            console.SetVariable("map", map);
 
             return base.Init();
         }
@@ -90,77 +95,90 @@ namespace Wartorn.Screens
 
             selectedMapCell = Utility.HelperFunction.TranslateMousePosToMapCellPos(mouseInputState.Position, camera, map.Width, map.Height);
 
-            #region change unit and animation
-            //cylce through unit
-            if (HelperFunction.IsKeyPress(Keys.Left))
+            if (HelperFunction.IsKeyPress(Keys.OemTilde))
             {
-                if (currentUnit == UnitType.Soldier)
-                {
-                    currentUnit = UnitType.Battleship;
-                }
-                else
-                {
-                    currentUnit = currentUnit.Previous();
-                }
+                console.IsVisible = !console.IsVisible;
             }
 
-            if (HelperFunction.IsKeyPress(Keys.Right))
+            if (console.IsVisible) //suck all input in to the input box
             {
-                if (currentUnit == UnitType.Battleship)
-                {
-                    currentUnit = UnitType.Soldier;
-                }
-                else
-                {
-                    currentUnit = currentUnit.Next();
-                }
+                console.Update(CONTENT_MANAGER.inputState, CONTENT_MANAGER.lastInputState);
             }
+            else //accept input
+            {
 
-            //cycle through animation
-            if (HelperFunction.IsKeyPress(Keys.Up))
-            {
-                if (currentAnimation == AnimationName.idle)
+                #region change unit and animation
+                //cylce through unit
+                if (HelperFunction.IsKeyPress(Keys.Left))
                 {
-                    currentAnimation = AnimationName.done;
+                    if (currentUnit == UnitType.Soldier)
+                    {
+                        currentUnit = UnitType.Battleship;
+                    }
+                    else
+                    {
+                        currentUnit = currentUnit.Previous();
+                    }
                 }
-                else
-                {
-                    currentAnimation = currentAnimation.Previous();
-                }
-            }
-            if (HelperFunction.IsKeyPress(Keys.Down))
-            {
-                if (currentAnimation == AnimationName.done)
-                {
-                    currentAnimation = AnimationName.idle;
-                }
-                else
-                {
-                    currentAnimation = currentAnimation.Next();
-                }
-            }
 
-            //cycle through color
-            if (HelperFunction.IsKeyPress(Keys.E))
-            {
-                if (currentColor == Owner.Yellow)
+                if (HelperFunction.IsKeyPress(Keys.Right))
                 {
-                    currentColor = Owner.Red;
+                    if (currentUnit == UnitType.Battleship)
+                    {
+                        currentUnit = UnitType.Soldier;
+                    }
+                    else
+                    {
+                        currentUnit = currentUnit.Next();
+                    }
                 }
-                else
+
+                //cycle through animation
+                if (HelperFunction.IsKeyPress(Keys.Up))
                 {
-                    currentColor = currentColor.Next();
+                    if (currentAnimation == AnimationName.idle)
+                    {
+                        currentAnimation = AnimationName.done;
+                    }
+                    else
+                    {
+                        currentAnimation = currentAnimation.Previous();
+                    }
                 }
-            }
-            if (HelperFunction.IsKeyPress(Keys.Q))
-            {
-                if (currentColor == Owner.Red)
+                if (HelperFunction.IsKeyPress(Keys.Down))
                 {
-                    currentColor = Owner.Yellow;
+                    if (currentAnimation == AnimationName.done)
+                    {
+                        currentAnimation = AnimationName.idle;
+                    }
+                    else
+                    {
+                        currentAnimation = currentAnimation.Next();
+                    }
                 }
-                else
+
+                //cycle through color
+                if (HelperFunction.IsKeyPress(Keys.E))
                 {
-                    currentColor = currentColor.Previous();
+                    if (currentColor == Owner.Yellow)
+                    {
+                        currentColor = Owner.Red;
+                    }
+                    else
+                    {
+                        currentColor = currentColor.Next();
+                    }
+                }
+                if (HelperFunction.IsKeyPress(Keys.Q))
+                {
+                    if (currentColor == Owner.Red)
+                    {
+                        currentColor = Owner.Yellow;
+                    }
+                    else
+                    {
+                        currentColor = currentColor.Previous();
+                    }
                 }
             }
 
@@ -349,10 +367,15 @@ namespace Wartorn.Screens
 
             if (movingUnit != null && !isArrived)
             {
-                CONTENT_MANAGER.spriteBatch.DrawString(CONTENT_MANAGER.defaultfont, movingUnitPosition.toString() /* + Environment.NewLine + (new Point(movementPath[currentdest].X * Constants.MapCellWidth, movementPath[currentdest].Y * Constants.MapCellHeight)).toString()*/, new Vector2(500, 0), Color.White);
+                CONTENT_MANAGER.spriteBatch.DrawString(CONTENT_MANAGER.defaultfont, movingUnitPosition.toString(), new Vector2(500, 0), Color.White);
 
                 movingUnit.Animation.Position = movingUnitPosition.ToVector2();
                 movingUnit.Animation.Draw(gameTime, CONTENT_MANAGER.spriteBatch);
+            }
+
+            if (console.IsVisible)
+            {
+                console.Draw(CONTENT_MANAGER.spriteBatch);
             }
 
             base.Draw(gameTime);

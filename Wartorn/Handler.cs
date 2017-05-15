@@ -39,6 +39,8 @@ namespace Wartorn
                 CONTENT_MANAGER.fileopendialog += OpenFile;
                 CONTENT_MANAGER.promptbox += InputBox;
                 CONTENT_MANAGER.dropdownbox += DropdownBox;
+                CONTENT_MANAGER.getclipboard += GetClipboard;
+                CONTENT_MANAGER.setclipboard += SetClipboard;
                 game.Run();
             }
         }
@@ -142,6 +144,36 @@ namespace Wartorn
 
         #endregion
 
+        #region GetClipboard
+
+        private static void GetClipboard(object sender, MessageEventArgs e)
+        {
+            MainThreadOperation temp = GetClipboardMainThread;
+            frm.Invoke(temp, e);
+        }
+
+        private static void GetClipboardMainThread(MessageEventArgs e)
+        {
+            e.message = Clipboard.GetText();
+        }
+
+        #endregion
+
+        #region SetClipboard
+
+        private static void SetClipboard(object sender, MessageEventArgs e)
+        {
+            MainThreadOperation temp = SetClipboardMainThread;
+            frm.Invoke(temp, e);
+        }
+
+        private static void SetClipboardMainThread(MessageEventArgs e)
+        {
+            Clipboard.SetText(e.message);
+        }
+
+        #endregion
+
         private void Handler_Shown(object sender, EventArgs e)
         {
             //MessageBox.Show("lala");
@@ -160,6 +192,7 @@ namespace Wartorn
     public class MessageEventArgs : EventArgs
     {
         public string message = string.Empty;
+        public MessageEventArgs() { }
         public MessageEventArgs(string e)
         {
             message = e;

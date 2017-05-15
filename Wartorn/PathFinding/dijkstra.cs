@@ -15,7 +15,7 @@ namespace Wartorn.PathFinding
 
     namespace Dijkstras
     {
-        class Graph
+        public class Graph
         {
             //vertex list aka 
             //the dictionary of distance from a Point to another Point

@@ -78,7 +78,10 @@ namespace Wartorn
 
                 foreach (var element in UIelements.Values)
                 {
-                    element.Update(inputState, lastInputState);
+                    if (element.IsVisible)
+                    {
+                        element.Update(inputState, lastInputState);
+                    }
                 }
                 lastInputState = inputState;
             }

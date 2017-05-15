@@ -18,13 +18,18 @@ namespace Wartorn
     //singleton to store common data
     public static class CONTENT_MANAGER
     {
+        public static Game gameinstance;
+
         #region resources
         public static ContentManager Content;
 
         #region sprite
         public static SpriteBatch spriteBatch;
+
         public static SpriteFont defaultfont;
         public static SpriteFont arcadefont;
+        public static SpriteFont hackfont;
+
         public static Texture2D spriteSheet;
         public static Texture2D UIspriteSheet;
         public static Texture2D buildingSpriteSheet;
@@ -32,6 +37,7 @@ namespace Wartorn
         public static Texture2D attackOverlay;
         public static Texture2D moveOverlay;
         public static Texture2D unitSpriteSheet;
+        public static Texture2D directionarrow;
 
         #region animation sprite sheet
         public static Dictionary<SpriteSheetUnit, AnimatedEntity> animationEntities;
@@ -43,6 +49,8 @@ namespace Wartorn
         {
             defaultfont = Content.Load<SpriteFont>("defaultfont");
             arcadefont = Content.Load<SpriteFont>(@"sprite\GUI\menufont");
+            hackfont = Content.Load<SpriteFont>(@"hackfont");
+
             spriteSheet = Content.Load<Texture2D>(@"sprite\terrain");
             buildingSpriteSheet = Content.Load<Texture2D>(@"sprite\building");
             UIspriteSheet = Content.Load<Texture2D>(@"sprite\ui_sprite_sheet");
@@ -50,6 +58,7 @@ namespace Wartorn
             blank8x8 = Content.Load<Texture2D>(@"sprite\blank8x8");
             attackOverlay = Content.Load<Texture2D>(@"sprite\AttackOverlay");
             moveOverlay = Content.Load<Texture2D>(@"sprite\MoveOverlay");
+            directionarrow = Content.Load<Texture2D>(@"sprite\directionarrow");
 
             LoadAnimationContent();
 
@@ -231,6 +240,8 @@ namespace Wartorn
         public static event EventHandler<MessageEventArgs> fileopendialog;
         public static event EventHandler<MessageEventArgs> promptbox;
         public static event EventHandler<MessageEventArgs> dropdownbox;
+        public static event EventHandler<MessageEventArgs> getclipboard;
+        public static event EventHandler<MessageEventArgs> setclipboard;
 
         public static string ShowMessageBox(string message)
         {
@@ -258,6 +269,19 @@ namespace Wartorn
             MessageEventArgs e = new MessageEventArgs(prompt);
             dropdownbox?.Invoke(null, e);
             return e.message;
+        }
+
+        public static string GetClipboard()
+        {
+            MessageEventArgs e = new MessageEventArgs();
+            getclipboard?.Invoke(null, e);
+            return e.message;
+        }
+
+        public static void SetClipboard(string text)
+        {
+            MessageEventArgs e = new MessageEventArgs(text);
+            setclipboard?.Invoke(null, e);
         }
 
         public static void ShowFPS(GameTime gameTime)
