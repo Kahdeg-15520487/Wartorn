@@ -36,6 +36,7 @@ namespace Wartorn.Screens
 
         public override bool Init()
         {
+
             canvas = new Canvas();
 
             InitUI();

@@ -18,6 +18,8 @@ namespace Wartorn
     //singleton to store common data
     public static class CONTENT_MANAGER
     {
+        public static Game gameinstance;
+
         #region resources
         public static ContentManager Content;
 
@@ -236,6 +238,8 @@ namespace Wartorn
         public static event EventHandler<MessageEventArgs> fileopendialog;
         public static event EventHandler<MessageEventArgs> promptbox;
         public static event EventHandler<MessageEventArgs> dropdownbox;
+        public static event EventHandler<MessageEventArgs> getclipboard;
+        public static event EventHandler<MessageEventArgs> setclipboard;
 
         public static string ShowMessageBox(string message)
         {
@@ -263,6 +267,19 @@ namespace Wartorn
             MessageEventArgs e = new MessageEventArgs(prompt);
             dropdownbox?.Invoke(null, e);
             return e.message;
+        }
+
+        public static string GetClipboard()
+        {
+            MessageEventArgs e = new MessageEventArgs();
+            getclipboard?.Invoke(null, e);
+            return e.message;
+        }
+
+        public static void SetClipboard(string text)
+        {
+            MessageEventArgs e = new MessageEventArgs(text);
+            setclipboard?.Invoke(null, e);
         }
 
         public static void ShowFPS(GameTime gameTime)

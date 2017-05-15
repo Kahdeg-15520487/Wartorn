@@ -11,7 +11,7 @@ using Wartorn.Utility;
 
 namespace Wartorn.UIClass
 {
-    class InputBox : UIObject
+    public class InputBox : UIObject
     {
         StringBuilder textBuffer = new StringBuilder();
         /// <summary>
@@ -31,6 +31,7 @@ namespace Wartorn.UIClass
         }
         public Color caretColor { get; set; } = Color.DarkGray;
         public int CursorPosition { get; set; }
+        public List<char> ignoreCharacter;
         private int maxTextLength;
         private int textSpacing;
 
@@ -45,6 +46,21 @@ namespace Wartorn.UIClass
             CursorPosition = 0;
             maxTextLength = findMaxTextLength();
             textSpacing = rect.Width / maxTextLength;
+            ignoreCharacter = new List<char>();
+
+            CONTENT_MANAGER.gameinstance.Window.TextInput += TextInputHandler;
+        }
+
+        private void TextInputHandler(object sender, TextInputEventArgs e)
+        {
+            if (isFocused)
+            {
+                if (font.Characters.Contains(e.Character) && !ignoreCharacter.Contains(e.Character))
+                {
+                    textBuffer.Append(e.Character);
+                    CursorPosition++;
+                }
+            }
         }
 
         private int findMaxTextLength()
@@ -61,139 +77,21 @@ namespace Wartorn.UIClass
         {
             base.Update(inputState, lastInputState);
 
-            var keyboardState = inputState.keyboardState;
-            var lastKeyboardState = lastInputState.keyboardState;
-            if (isFocused)
+            if (HelperFunction.IsKeyPress(Keys.Back))
             {
-                if (CursorPosition < maxTextLength)
+                if (textBuffer.Length > 0)
                 {
-                    if (keyboardState.IsKeyDown(Keys.Back) && lastKeyboardState.IsKeyUp(Keys.Back))
-                    {
-                        if (textBuffer.Length > 0)
-                        {
-                            textBuffer.Remove(textBuffer.Length - 1, 1);
-                            CursorPosition--;
-                        }
-                    }
-                    else
-                    {
-                        Keys[] keyInput = keyboardState.GetPressedKeys();
-                        Keys[] lastKeyInput = lastKeyboardState.GetPressedKeys();
-                        foreach (var key in keyInput)
-                        {
-                            if (!lastKeyInput.Contains(key) && GetCharKey(key) != null)
-                            {
-                                textBuffer.Insert(CursorPosition, GetCharKey(key));
-                                CursorPosition++;
-                            }
-                        }
-                    }
+                    textBuffer.Remove((CursorPosition - 1).Clamp(textBuffer.Length, 0), 1);
+                    CursorPosition--;
                 }
             }
-        }
 
-        protected string GetCharKey(Keys key)
-        {
-            string result=null;
-            switch (key)
+            if (inputState.keyboardState.IsKeyDown(Keys.LeftControl) && HelperFunction.IsKeyPress(Keys.V))
             {
-                case Keys.A:
-                case Keys.B:
-                case Keys.C:
-                case Keys.D:
-                case Keys.E:
-                case Keys.F:
-                case Keys.G:
-                case Keys.H:
-                case Keys.I:
-                case Keys.J:
-                case Keys.K:
-                case Keys.L:
-                case Keys.M:
-                case Keys.N:
-                case Keys.O:
-                case Keys.P:
-                case Keys.Q:
-                case Keys.R:
-                case Keys.S:
-                case Keys.T:
-                case Keys.U:
-                case Keys.V:
-                case Keys.W:
-                case Keys.X:
-                case Keys.Y:
-                case Keys.Z:
-                    result = key.ToString();
-                    break;
-
-                case Keys.Space:
-                    result = " ";
-                    break;
-
-                case Keys.NumPad0:
-                case Keys.D0:
-                    result = "0";
-                    break;
-                case Keys.NumPad1:
-                case Keys.D1:
-                    result = "1";
-                    break;
-                case Keys.NumPad2:
-                case Keys.D2:
-                    result = "2";
-                    break;
-                case Keys.NumPad3:
-                case Keys.D3:
-                    result = "3";
-                    break;
-                case Keys.NumPad4:
-                case Keys.D4:
-                    result = "4";
-                    break;
-                case Keys.NumPad5:
-                case Keys.D5:
-                    result = "5";
-                    break;
-                case Keys.NumPad6:
-                case Keys.D6:
-                    result = "6";
-                    break;
-                case Keys.NumPad7:
-                case Keys.D7:
-                    result = "7";
-                    break;
-                case Keys.NumPad8:
-                case Keys.D8:
-                    result = "8";
-                    break;
-                case Keys.NumPad9:
-                case Keys.D9:
-                    result = "9";
-                    break;
-                case Keys.Multiply:
-                    result = "*";
-                    break;
-                case Keys.Add:
-                    result = "+";
-                    break;
-                case Keys.Subtract:
-                    result = "-";
-                    break;
-                case Keys.Divide:
-                    result = "/";
-                    break;
-
-                case Keys.Left:
-                    CursorPosition--;
-                    break;
-                case Keys.Right:
-                    CursorPosition++;
-                    break;
-                default:
-                    break;
+                string paste = CONTENT_MANAGER.GetClipboard();
+                textBuffer.Append(paste);
+                CursorPosition += paste.Length;
             }
-            CursorPosition = CursorPosition.Clamp(maxTextLength, 0);
-            return result;
         }
 
         public void Clear()

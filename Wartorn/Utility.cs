@@ -36,6 +36,11 @@ namespace Wartorn
                 File.WriteAllText("crashlog.txt", DateTime.Now.ToString(@"dd\/MM\/yyyy HH:mm") + Environment.NewLine + e.Message + Environment.NewLine + e.StackTrace + Environment.NewLine + e.TargetSite);
             }
 
+            public static void Log(string msg)
+            {
+                File.WriteAllText("crashlog.txt", DateTime.Now.ToString(@"dd\/MM\/yyyy HH:mm") + Environment.NewLine + msg);
+            }
+
 
             public static Point TranslateMousePosToMapCellPos(Point mousepos, Camera camera, int width, int height)
             {

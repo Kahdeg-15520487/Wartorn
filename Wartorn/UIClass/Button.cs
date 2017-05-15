@@ -14,7 +14,7 @@ namespace Wartorn
             SpriteFromSheet,
             Sprite
         }
-        class Button : Label
+        public class Button : Label
         {
             bool isPressed = false;
             Rectangle internalRect;

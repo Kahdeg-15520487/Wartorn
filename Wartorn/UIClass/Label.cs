@@ -8,7 +8,7 @@ namespace Wartorn
 {
     namespace UIClass
     {
-        class Label : UIObject
+        public class Label : UIObject
         {
             protected string text;
             public virtual string Text

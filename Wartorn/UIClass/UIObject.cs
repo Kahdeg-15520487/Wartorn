@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Wartorn.UIClass
 {
-    abstract class UIObject:IUIEvent
+    public abstract class UIObject:IUIEvent
     {
         public Rectangle rect = new Rectangle();
         

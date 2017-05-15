@@ -31,7 +31,7 @@ using IronPython.Hosting;
 
 namespace Wartorn.UIClass
 {
-    class Console : UIObject
+    public class Console : UIObject
     {
         public Label outputbox;
         public InputBox inputbox;
@@ -71,6 +71,7 @@ namespace Wartorn.UIClass
 
             inputbox = new InputBox("",inputboxPosition,inputboxSize,font, Color.White, Color.DarkGray);
             inputbox.caretColor = Color.LightGray;
+            inputbox.ignoreCharacter.Add('`');
 
             outputbox = new Label("", outputboxPosition, outputboxSize, font);
             outputbox.foregroundColor = Color.White;
@@ -78,62 +79,89 @@ namespace Wartorn.UIClass
             outputbox.Origin = outputboxPosition.ToVector2() + new Vector2(5, 5);
             maxLogLine = findMaxLogLine();
 
-            inputbox.KeyPress += (sender, e) =>
-            {
-                if (e.keyboardState.IsKeyDown(Keys.Enter) && e.lastKeyboardState.IsKeyUp(Keys.Enter))
-                {
-                    OnCommandSubmitted(this, e);
-                    //log.Add(inputbox.Text);
-
-                    ScriptSource source = _engine.CreateScriptSourceFromString(TranslateCommand(inputbox.Text));
-                    CompiledCode code = source.Compile();
-                    try
-                    {
-                        code.Execute(_scope);
-                    }
-                    catch (Exception err)
-                    {
-                        ExceptionOperations eo = _engine.GetService<ExceptionOperations>();
-                        log.Add(eo.FormatException(err));
-                    }
-
-                    inputbox.Clear();
-                    outputbox.Text = log.Skip(Math.Max(0, log.Count - maxLogLine)).Aggregate((current, next) => current + "\n" + next);
-                    return;
-                }
-            };
+            inputbox.KeyPress += ExecuteScript;
 
             InitPythonEngine();
+        }
+
+        private void ExecuteScript(object sender, UIEventArgs e)
+        {
+            if (e.keyboardState.IsKeyDown(Keys.Enter) && e.lastKeyboardState.IsKeyUp(Keys.Enter))
+            {
+                OnCommandSubmitted(this, e);
+                //log.Add(inputbox.Text);
+                //from Microsoft.Xna.Framework import *\n
+                StringBuilder userCode = new StringBuilder();
+                userCode.Append("import clr\nclr.AddReference('IronPython')\nclr.AddReference('MonoGame.Framework')\nclr.AddReference('OpenTK')\nfrom Microsoft.Xna.Framework import *\nfrom IronPython.Hosting import Python\nimport Wartorn\nfrom Wartorn import *\n");
+                userCode.Append(inputbox.Text);
+                inputbox.Clear();
+
+                ScriptSource source = _engine.CreateScriptSourceFromString(userCode.ToString());
+                CompiledCode code = null;
+                //catch compile error
+                try
+                {
+                    code = source.Compile();
+
+                }
+                catch (Exception err)
+                {
+                    ExceptionOperations eo = _engine.GetService<ExceptionOperations>();
+                    Utility.HelperFunction.Log(eo.FormatException(err) + '\n' + userCode.ToString());
+                    log.Add("error when compile script");                    
+                    return;
+                }
+                
+                //catch runtim error
+                try
+                {
+                    code.Execute(_scope);
+                }
+                catch (Exception err)
+                {
+                    ExceptionOperations eo = _engine.GetService<ExceptionOperations>();
+                    Utility.HelperFunction.Log(eo.FormatException(err) + '\n' + userCode.ToString());
+                    log.Add("error when execute script");
+                }
+            }
         }
 
         private void InitPythonEngine()
         {
             _engine = Python.CreateEngine();
             _runtime = _engine.Runtime;
+            _runtime.LoadAssembly(typeof(Wartorn.UIClass.Console).Assembly);
             _scope = _engine.CreateScope();
+            _scope.SetVariable("log", log);
             _scope.SetVariable("this", this);
         }
 
-        private string TranslateCommand(string script)
+        public void SetScope(Dictionary<string,object> variableCollection)
         {
-            var data = script.Split(' ');
-            if (data == null || data.GetLength(0)==0)
+            foreach (var kvp in variableCollection)
             {
-                return string.Empty;
+                if (_scope.ContainsVariable(kvp.Key))
+                {
+                    Log("An variable with the name" + kvp.Key + " already exists");
+                    return;
+                }
+                _scope.SetVariable(kvp.Key, kvp.Value);
             }
-            string cmd = data[0].ToLower();
-            switch (cmd)
+        }
+
+        public void SetVariable(string varname,object var)
+        {
+            if (_scope.ContainsVariable(varname))
             {
-                case "echo":
-                    if (data.GetLength(0)<2)
-                    {
-                        break;
-                    }
-                    return "log.Add(\"" + data[1] + "\")";
-                default:
-                    break;
+                Log("An variable with the name" + varname + " already exists");
+                return;
             }
-            return "log.Add(\"Not enough argument\")";
+            _scope.SetVariable(varname, var);
+        }
+
+        public void Log(object obj)
+        {
+            log.Add(obj.ToString());
         }
 
         private int findMaxLogLine()
@@ -150,7 +178,15 @@ namespace Wartorn.UIClass
         {
             inputbox.Update(inputState, lastInputState);
             outputbox.Update(inputState, lastInputState);
-            base.Update(inputState, lastInputState);
+
+            if (log.Count > 0)
+            {
+                outputbox.Text = log.Skip(Math.Max(0, log.Count - maxLogLine)).Aggregate((current, next) => current + "\n" + next);
+            }
+            else
+            {
+                outputbox.Text = "";
+            }
         }
 
         public void drag(object sender,UIEventArgs e)

@@ -83,6 +83,8 @@ namespace Wartorn
 
             Unit.Load();
 
+            CONTENT_MANAGER.gameinstance = this;
+
             base.Initialize();
         }
 
