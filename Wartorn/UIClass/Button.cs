@@ -62,21 +62,6 @@ namespace Wartorn
                 }
             }
 
-            /// <summary>
-            /// Offset of the text inside the button
-            /// </summary>
-            public Vector2 Origin
-            {
-                get
-                {
-                    return origin;
-                }
-                set
-                {
-                    origin = value;
-                }
-            }
-
             Color buttonColorPressed = Color.LightSlateGray;
             Color buttonColorReleased = Color.LightGray;
             public Color ButtonColorPressed
@@ -193,7 +178,7 @@ namespace Wartorn
                 base.Update(inputState, lastInputState);
                 if (isPressed)
                 {
-                    OnButtonPressed(this, new UIEventArgs(inputState.mouseState));
+                    OnButtonPressed(this, new UIEventArgs(inputState, lastInputState));
                 }
             }
 

@@ -108,6 +108,7 @@ namespace Wartorn
             SCREEN_MANAGER.add_screen(new TestAnimationScreen(GraphicsDevice));
             SCREEN_MANAGER.add_screen(new Screens.MainGameScreen.SetupScreen(GraphicsDevice));
             SCREEN_MANAGER.add_screen(new Screens.MainGameScreen.GameScreen(GraphicsDevice));
+            SCREEN_MANAGER.add_screen(new TestConsole(GraphicsDevice));
 
             //SCREEN_MANAGER.goto_screen("TestAnimationScreen");
             //SCREEN_MANAGER.goto_screen("SetupScreen");
@@ -149,6 +150,11 @@ namespace Wartorn
             {
                 Unit.Load();
                 CONTENT_MANAGER.ShowMessageBox("Unit stats reloaded");
+            }
+
+            if (HelperFunction.IsKeyPress(Keys.F3))
+            {
+                SCREEN_MANAGER.goto_screen("TestConsole");
             }
 
             SCREEN_MANAGER.Update(gameTime);

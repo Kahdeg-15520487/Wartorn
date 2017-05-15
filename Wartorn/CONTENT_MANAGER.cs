@@ -23,8 +23,11 @@ namespace Wartorn
 
         #region sprite
         public static SpriteBatch spriteBatch;
+
         public static SpriteFont defaultfont;
         public static SpriteFont arcadefont;
+        public static SpriteFont hackfont;
+
         public static Texture2D spriteSheet;
         public static Texture2D UIspriteSheet;
         public static Texture2D buildingSpriteSheet;
@@ -43,6 +46,8 @@ namespace Wartorn
         {
             defaultfont = Content.Load<SpriteFont>("defaultfont");
             arcadefont = Content.Load<SpriteFont>(@"sprite\GUI\menufont");
+            hackfont = Content.Load<SpriteFont>(@"hackfont");
+
             spriteSheet = Content.Load<Texture2D>(@"sprite\terrain");
             buildingSpriteSheet = Content.Load<Texture2D>(@"sprite\building");
             UIspriteSheet = Content.Load<Texture2D>(@"sprite\ui_sprite_sheet");

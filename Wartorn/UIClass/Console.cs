@@ -12,25 +12,68 @@ namespace Wartorn.UIClass
 {
     class Console : UIObject
     {
+        public Label outputbox;
         public InputBox inputbox;
         private Vector2 relativePositionToMouse = Vector2.Zero;
-        private string text = null;
+        private List<string> log = new List<string>();
 
-        public Console()
+        public string Text
         {
-            MouseDown += drag;
-            inputbox = new InputBox()
+            get
             {
-                Position = new Point(0,(int)Size.Y-30),
-                Size = new Vector2((int)Size.X,25),
-                backgroundColor = Color.LightGray,
-                foregroundColor = Color.White
-            };
-            //inputbox.font = this.font;
-            if (this.font == null)
-            {
-                //throw new NullReferenceException();
+                return inputbox.Text;
             }
+            set
+            {
+                inputbox.Text = value;
+            }
+        }
+
+        private int maxLogLine = 10;
+
+        public Console(Point position, Vector2 size, SpriteFont font)
+        {
+            Position = position;
+            Size = size;
+            this.font = font;
+
+            MouseDown += drag;
+
+            var inputboxPosition = new Point(position.X, position.Y + (int)size.Y - 50);
+            var inputboxSize = new Vector2(size.X, 50);
+            var outputboxPosition = new Point(position.X,position.Y);
+            var outputboxSize = new Vector2(size.X, size.Y - 50);
+
+            inputbox = new InputBox("",inputboxPosition,inputboxSize,font, Color.White, Color.DarkGray);
+            inputbox.caretColor = Color.LightGray;
+
+            outputbox = new Label("", outputboxPosition, outputboxSize, font);
+            outputbox.foregroundColor = Color.White;
+            outputbox.backgroundColor = Color.LightGray;
+            outputbox.Origin = outputboxPosition.ToVector2() + new Vector2(5, 5);
+            maxLogLine = findMaxLogLine();
+
+            inputbox.KeyPress += (sender, e) =>
+            {
+                if (e.keyboardState.IsKeyDown(Keys.Enter) && e.lastKeyboardState.IsKeyUp(Keys.Enter))
+                {
+                    OnCommandSubmitted(this, e);
+                    log.Add(inputbox.Text);
+                    outputbox.Text = log.Skip(Math.Max(0, log.Count - maxLogLine)).Aggregate((current, next) => current + "\n" + next);
+                    return;
+                }
+            };
+
+        }
+
+        private int findMaxLogLine()
+        {
+            string teststr = "\n";
+            while (font.MeasureString(teststr).Y < outputbox.rect.Height)
+            {
+                teststr += '\n';
+            }
+            return teststr.Length;
         }
 
         public override void Update(InputState inputState, InputState lastInputState)
@@ -44,23 +87,26 @@ namespace Wartorn.UIClass
             }
 
             inputbox.Update(inputState, lastInputState);
+            outputbox.Update(inputState, lastInputState);
             base.Update(inputState, lastInputState);
         }
 
         public void drag(object sender,UIEventArgs e)
         {
-            //text = e.mouseState.Position.ToString() + " " + e.mouseState.LeftButton.ToString();
-
             Position = (Position.ToVector2() + (e.mouseState.Position.ToVector2() - new Vector2(Position.X + Size.X/2,Position.Y + Size.Y/2))).ToPoint();
-            text = Position.ToString();
-
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.DrawString(font != null ? font : CONTENT_MANAGER.defaultfont, (string.IsNullOrEmpty(text)) ? "" : text, new Vector2(rect.X, rect.Y) + Size / 4, foregroundColor, Rotation, Vector2.Zero, scale, SpriteEffects.None, LayerDepth.GuiUpper);
-            DrawingHelper.DrawRectangle(Position.ToVector2(), Size, backgroundColor, true);
             inputbox.Draw(spriteBatch);
+            outputbox.Draw(spriteBatch);
+        }
+
+        public event EventHandler<UIEventArgs> CommandSubmitted;
+
+        protected virtual void OnCommandSubmitted(object sender,UIEventArgs e)
+        {
+            CommandSubmitted?.Invoke(sender, e);
         }
     }
 }

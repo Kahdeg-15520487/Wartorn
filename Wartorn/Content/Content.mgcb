@@ -1982,3 +1982,10 @@
 /processorParam:Quality=Best
 /build:sound/russian/yessir1.r03.ogg
 
+#begin hackfont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:hackfont.spritefont
+

@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Wartorn.Utility.Drawing;
+using Wartorn.Utility;
 
 namespace Wartorn.UIClass
 {
@@ -28,8 +29,33 @@ namespace Wartorn.UIClass
                 textBuffer.Append(value);
             }
         }
+        public Color caretColor { get; set; } = Color.DarkGray;
+        public int CursorPosition { get; set; }
+        private int maxTextLength;
+        private int textSpacing;
 
-        
+        public InputBox(string text, Point position, Vector2 size, SpriteFont font,Color foregroundColor ,Color backgroundColor)
+        {
+            Text = text;
+            Position = position;
+            Size = size;
+            this.font = font;
+            this.foregroundColor = foregroundColor;
+            this.backgroundColor = backgroundColor;
+            CursorPosition = 0;
+            maxTextLength = findMaxTextLength();
+            textSpacing = rect.Width / maxTextLength;
+        }
+
+        private int findMaxTextLength()
+        {
+            string teststr = "A";
+            while (font.MeasureString(teststr).X < rect.Width)
+            {
+                teststr += "A";
+            }
+            return teststr.Length;
+        }
 
         public override void Update(InputState inputState, InputState lastInputState)
         {
@@ -39,22 +65,27 @@ namespace Wartorn.UIClass
             var lastKeyboardState = lastInputState.keyboardState;
             if (isFocused)
             {
-                if (keyboardState.IsKeyDown(Keys.Back) && lastKeyboardState.IsKeyUp(Keys.Back))
+                if (CursorPosition < maxTextLength)
                 {
-                    if (textBuffer.Length > 0)
+                    if (keyboardState.IsKeyDown(Keys.Back) && lastKeyboardState.IsKeyUp(Keys.Back))
                     {
-                        textBuffer.Remove(textBuffer.Length - 1, 1);
-                    }
-                }
-                else
-                {
-                    Keys[] keyInput = keyboardState.GetPressedKeys();
-                    Keys[] lastKeyInput = lastKeyboardState.GetPressedKeys();
-                    foreach (var key in keyInput)
-                    {
-                        if (!lastKeyInput.Contains(key) && GetCharKey(key) != null)
+                        if (textBuffer.Length > 0)
                         {
-                            textBuffer.Append(GetCharKey(key));
+                            textBuffer.Remove(textBuffer.Length - 1, 1);
+                            CursorPosition--;
+                        }
+                    }
+                    else
+                    {
+                        Keys[] keyInput = keyboardState.GetPressedKeys();
+                        Keys[] lastKeyInput = lastKeyboardState.GetPressedKeys();
+                        foreach (var key in keyInput)
+                        {
+                            if (!lastKeyInput.Contains(key) && GetCharKey(key) != null)
+                            {
+                                textBuffer.Insert(CursorPosition, GetCharKey(key));
+                                CursorPosition++;
+                            }
                         }
                     }
                 }
@@ -146,16 +177,29 @@ namespace Wartorn.UIClass
                 case Keys.Divide:
                     result = "/";
                     break;
+
+                case Keys.Left:
+                    CursorPosition--;
+                    break;
+                case Keys.Right:
+                    CursorPosition++;
+                    break;
                 default:
                     break;
             }
+            CursorPosition = CursorPosition.Clamp(maxTextLength, 0);
             return result;
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.DrawString(font, textBuffer, rect.Location.ToVector2(), foregroundColor, Rotation, Vector2.Zero, scale, SpriteEffects.None, 0f);
-            DrawingHelper.DrawRectangle(rect, backgroundColor, false);
+            CONTENT_MANAGER.spriteBatch.DrawString(font, textBuffer.Length.ToString(), Vector2.Zero, Color.White);
+            spriteBatch.DrawString(font, textBuffer, rect.Location.ToVector2(), foregroundColor, Rotation, origin, scale, SpriteEffects.None, LayerDepth.GuiLower);
+
+            //Draw text caret
+            spriteBatch.DrawString(font, "|", rect.Location.ToVector2() + new Vector2(CursorPosition * textSpacing - 5, -2), caretColor);
+
+            DrawingHelper.DrawRectangle(rect, backgroundColor, true);
         }
     }
 }

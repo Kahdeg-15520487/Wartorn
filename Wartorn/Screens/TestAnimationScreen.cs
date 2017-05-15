@@ -349,7 +349,7 @@ namespace Wartorn.Screens
 
             if (movingUnit != null && !isArrived)
             {
-                CONTENT_MANAGER.spriteBatch.DrawString(CONTENT_MANAGER.defaultfont, movingUnitPosition.toString() /* + Environment.NewLine + (new Point(movementPath[currentdest].X * Constants.MapCellWidth, movementPath[currentdest].Y * Constants.MapCellHeight)).toString()*/, new Vector2(500, 0), Color.White);
+                CONTENT_MANAGER.spriteBatch.DrawString(CONTENT_MANAGER.defaultfont, movingUnitPosition.toString(), new Vector2(500, 0), Color.White);
 
                 movingUnit.Animation.Position = movingUnitPosition.ToVector2();
                 movingUnit.Animation.Draw(gameTime, CONTENT_MANAGER.spriteBatch);
