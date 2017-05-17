@@ -12,169 +12,483 @@ using Wartorn.Drawing.Animation;
 using Wartorn.Utility;
 using Wartorn.GameData;
 using Wartorn;
+using Wartorn.Drawing;
+using Wartorn.PathFinding.Dijkstras;
+using Wartorn.PathFinding;
+using Wartorn.UIClass;
+using Wartorn.SpriteRectangle;
 
 namespace Wartorn.Screens
 {
-    class TestAnimationScreen : Screen
+    public class TestAnimationScreen : Screen
     {
-        Dictionary<UnitType, Unit> RedUnitList;
-        Dictionary<UnitType, Unit> BlueUnitList;
+        //Dictionary<UnitType, Unit> RedUnitList;
+        //Dictionary<UnitType, Unit> BlueUnitList;
+        //Dictionary<UnitType, Unit> GreenUnitList;
+        //Dictionary<UnitType, Unit> YellowUnitList;
 
         UnitType currentUnit = UnitType.Soldier;
         AnimationName currentAnimation = AnimationName.idle;
         Owner currentColor = Owner.Red;
+        Point position = new Point(4, 4);
+
+        MouseState mouseInputState;
+        MouseState lastMouseInputState;
+        KeyboardState keyboardInputState;
+        KeyboardState lastKeyboardInputState;
+        Point selectedMapCell;
+        Point lastSelectedMapCell;
+
+        Point selectedUnit = new Point(0, 0);
+        List<Point> movementRange = null;
+
+        Map map;
+        Camera camera;
+
+        UIClass.Console console;
+
+        //information to animate a moving unit
+        Unit movingUnit = null;
+        Graph dijkstarGraph = null;
+        List<Point> movementPath = null;
+        Point movingUnitPosition;
+        Point destination;
+        int currentdest = 0;
+        bool isArrived = false;
+        bool isMovePathCalculated = false;
+        float totalElapsedTime = 0;
+        float delay = 50; //ms
 
         public TestAnimationScreen(GraphicsDevice device) : base(device, "TestAnimationScreen")
-        {
-            LoadContent();
-        }
-
-        private void LoadContent()
-        {
-            RedUnitList = new Dictionary<UnitType, Unit>();
-            BlueUnitList = new Dictionary<UnitType, Unit>();
-        }
+        {   }
 
         public override bool Init()
         {
-            var UnitTypes = new List<UnitType>((IEnumerable<UnitType>)Enum.GetValues(typeof(UnitType)));
-            UnitTypes.Remove(UnitType.None);
+            camera = new Camera(_device.Viewport);
 
-            foreach (UnitType unittype in UnitTypes)
-            {
-                Unit temp = UnitCreationHelper.Create(unittype, Owner.Red);
-                RedUnitList.Add(unittype, temp);
-                temp = UnitCreationHelper.Create(unittype, Owner.Blue);
-                BlueUnitList.Add(unittype, temp);
-            }
+            map = new Map(9, 9);
+            map.Fill(TerrainType.Plain);
+
+            map[3, 3].terrain = TerrainType.Mountain;
+            map[4, 3].terrain = TerrainType.Mountain;
+            map[3, 4].terrain = TerrainType.Mountain;
+            map[3, 5].terrain = TerrainType.Mountain;
+            map[3, 6].terrain = TerrainType.Mountain;
+
+            map[5, 3].terrain = TerrainType.Sea;
+            map[6, 3].terrain = TerrainType.Sea;
+            map[6, 4].terrain = TerrainType.River;
+            map[6, 5].terrain = TerrainType.River;
+
+            map[5, 6].terrain = TerrainType.Road;
+            map[6, 6].terrain = TerrainType.Road;
+            map[7, 6].terrain = TerrainType.Road;
+            map[7, 5].terrain = TerrainType.Road;
+            map[7, 4].terrain = TerrainType.Road;
+            map[7, 3].terrain = TerrainType.Road;
+
+            map.GenerateNavigationMap();
+
+            map[position].unit = UnitCreationHelper.Create(currentUnit, currentColor);
+            map[position].unit.Animation.PlayAnimation(AnimationName.idle.ToString());
+
+            console = new UIClass.Console(new Point(0, 0), new Vector2(720, 200), CONTENT_MANAGER.hackfont);
+            console.IsVisible = false;
+
+            console.SetVariable("map", map);
 
             return base.Init();
         }
 
         public override void Update(GameTime gameTime)
         {
-            //cylce through unit
-            if (HelperFunction.IsKeyPress(Keys.Left))
+            mouseInputState = CONTENT_MANAGER.inputState.mouseState;
+            lastMouseInputState = CONTENT_MANAGER.lastInputState.mouseState;
+            keyboardInputState = CONTENT_MANAGER.inputState.keyboardState;
+            lastKeyboardInputState = CONTENT_MANAGER.lastInputState.keyboardState;
+
+            selectedMapCell = Utility.HelperFunction.TranslateMousePosToMapCellPos(mouseInputState.Position, camera, map.Width, map.Height);
+
+            if (HelperFunction.IsKeyPress(Keys.OemTilde))
             {
-                if (currentUnit == UnitType.Soldier)
-                {
-                    currentUnit = UnitType.Battleship;
-                }
-                else
-                {
-                    currentUnit = currentUnit.Previous();
-                }
+                console.IsVisible = !console.IsVisible;
             }
 
-            if (HelperFunction.IsKeyPress(Keys.Right))
+            #region change unit and animation
+            if (console.IsVisible) //suck all input in to the input box
             {
-                if (currentUnit == UnitType.Battleship)
-                {
-                    currentUnit = UnitType.Soldier;
-                }
-                else
-                {
-                    currentUnit = currentUnit.Next();
-                }
+                console.Update(CONTENT_MANAGER.inputState, CONTENT_MANAGER.lastInputState);
             }
-
-            //cycle through animation
-            if (HelperFunction.IsKeyPress(Keys.Up))
+            else //accept input
             {
-                if (currentAnimation == AnimationName.idle)
+                //cylce through unit
+                if (HelperFunction.IsKeyPress(Keys.Left))
                 {
-                    currentAnimation = AnimationName.done;
-                }
-                else
-                {
-                    currentAnimation = currentAnimation.Previous();
-                }
-            }
-            if (HelperFunction.IsKeyPress(Keys.Down))
-            {
-                if (currentAnimation == AnimationName.done)
-                {
-                    currentAnimation = AnimationName.idle;
-                }
-                else
-                {
-                    currentAnimation = currentAnimation.Next();
-                }
-            }
-
-            //cycle through color
-            if (HelperFunction.IsKeyPress(Keys.E))
-            {
-                if (currentColor == Owner.Blue)
-                {
-                    currentColor = Owner.Red;
-                }
-                else
-                {
-                    currentColor = currentColor.Next();
-                }
-            }
-            if (HelperFunction.IsKeyPress(Keys.Q))
-            {
-                if (currentColor == Owner.Red)
-                {
-                    currentColor = Owner.Blue;
-                }
-                else
-                {
-                    currentColor = currentColor.Previous();
-                }
-            }
-
-            switch (currentColor)
-            {
-                case Owner.Red:
-
-                    if (RedUnitList[currentUnit].Animation.CurntAnimationName.CompareTo(currentAnimation.ToString()) != 0)
+                    if (currentUnit == UnitType.Soldier)
                     {
-                        RedUnitList[currentUnit].Animation.PlayAnimation(currentAnimation.ToString());
+                        currentUnit = UnitType.Battleship;
                     }
-                    RedUnitList[currentUnit].Animation.Update(gameTime);
-                    break;
-                case Owner.Blue:
-
-                    if (BlueUnitList[currentUnit].Animation.CurntAnimationName.CompareTo(currentAnimation.ToString()) != 0)
+                    else
                     {
-                        BlueUnitList[currentUnit].Animation.PlayAnimation(currentAnimation.ToString());
+                        currentUnit = currentUnit.Previous();
                     }
-                    BlueUnitList[currentUnit].Animation.Update(gameTime);
-                    break;
-                case Owner.Green:
-                    break;
-                case Owner.Yellow:
-                    break;
-                default:
-                    break;
+                }
+
+                if (HelperFunction.IsKeyPress(Keys.Right))
+                {
+                    if (currentUnit == UnitType.Battleship)
+                    {
+                        currentUnit = UnitType.Soldier;
+                    }
+                    else
+                    {
+                        currentUnit = currentUnit.Next();
+                    }
+                }
+
+                //cycle through animation
+                if (HelperFunction.IsKeyPress(Keys.Up))
+                {
+                    if (currentAnimation == AnimationName.idle)
+                    {
+                        currentAnimation = AnimationName.done;
+                    }
+                    else
+                    {
+                        currentAnimation = currentAnimation.Previous();
+                    }
+                }
+                if (HelperFunction.IsKeyPress(Keys.Down))
+                {
+                    if (currentAnimation == AnimationName.done)
+                    {
+                        currentAnimation = AnimationName.idle;
+                    }
+                    else
+                    {
+                        currentAnimation = currentAnimation.Next();
+                    }
+                }
+
+                //cycle through color
+                if (HelperFunction.IsKeyPress(Keys.E))
+                {
+                    if (currentColor == Owner.Yellow)
+                    {
+                        currentColor = Owner.Red;
+                    }
+                    else
+                    {
+                        currentColor = currentColor.Next();
+                    }
+                }
+                if (HelperFunction.IsKeyPress(Keys.Q))
+                {
+                    if (currentColor == Owner.Red)
+                    {
+                        currentColor = Owner.Yellow;
+                    }
+                    else
+                    {
+                        currentColor = currentColor.Previous();
+                    }
+                }
+            }
+
+            Unit unit = map[position].unit;
+            UnitType nextUnit = unit.UnitType;
+            Owner nextOwner = unit.Owner;
+            AnimationName nextAnimation = unit.Animation.CurntAnimationName.ToEnum<AnimationName>();
+            bool isChanged = false;
+
+            if (nextUnit != currentUnit)
+            {
+                isChanged = true;
+            }
+
+            if (nextOwner != currentColor)
+            {
+                isChanged = true;
+            }
+
+            if (nextAnimation != currentAnimation)
+            {
+                isChanged = true;
+            }
+
+            if (isChanged)
+            {
+                map[position].unit = UnitCreationHelper.Create(currentUnit, currentColor, animation: currentAnimation);
+            }
+            map[position].unit.Animation.Update(gameTime);
+            #endregion
+
+            if (mouseInputState.LeftButton == ButtonState.Released
+             && lastMouseInputState.LeftButton == ButtonState.Pressed)
+            {
+                SelectUnit();
+            }
+
+            if (movingUnit!=null)
+            {
+                UpdateMovingUnit(gameTime);
+            }
+
+            //calculate movepath
+            if (isMovePathCalculated)
+            {
+                if (movementRange.Contains(selectedMapCell) && selectedMapCell != lastSelectedMapCell)
+                {
+                    //update movement path
+                    movementPath = DijkstraHelper.FindPath(dijkstarGraph, selectedMapCell);
+                    lastSelectedMapCell = selectedMapCell;
+                }
             }
 
             base.Update(gameTime);
         }
 
-        public override void Draw(GameTime gameTime)
+        private void SelectUnit()
         {
-            switch (currentColor)
+            MapCell temp = map[selectedMapCell];
+            //check if there is a unit at selectedMapCell
+            //and if said unit is not already selected
+            //and if there is no animation going on
+            if (temp.unit != null && movingUnit == null && selectedUnit != selectedMapCell)
             {
-                case Owner.Red:
-                    RedUnitList[currentUnit].Animation.Draw(gameTime, CONTENT_MANAGER.spriteBatch);
-                    break;
-                case Owner.Blue:
-                    BlueUnitList[currentUnit].Animation.Draw(gameTime, CONTENT_MANAGER.spriteBatch);
-                    break;
-                case Owner.Green:
-                    break;
-                case Owner.Yellow:
-                    break;
-                default:
-                    break;
+                //play sfx
+                CONTENT_MANAGER.yes1.Play();
+
+                selectedUnit = selectedMapCell;
+                DisplayMovementRange(temp.unit, selectedUnit);
+                isMovePathCalculated = true;
+            }
+            else
+            {
+                if (movementRange != null && movementRange.Contains(selectedMapCell) )
+                {
+                    if (destination != selectedMapCell)
+                    {
+                        //play sfx
+                        CONTENT_MANAGER.moving_out.Play();
+
+                        //we gonna move unit by moving a clone of it then teleport it to the destination
+                        destination = selectedMapCell;
+                        movingUnit = map[selectedUnit].unit;
+                        movingUnit = UnitCreationHelper.Create(movingUnit.UnitType, movingUnit.Owner);
+                        movingUnit.Animation.Depth = LayerDepth.Unit;
+                        //the path
+                        //movementPath = DijkstraHelper.FindPath(dijkstarGraph, destination);
+
+                        //ngung vẽ path
+                        isMovePathCalculated = false;
+
+                        //the starting node
+                        currentdest = 0;
+                        movingUnitPosition = new Point(selectedUnit.X * Constants.MapCellWidth, selectedUnit.Y * Constants.MapCellHeight);
+                        isArrived = false;
+                        map[selectedUnit].unit.Animation.StopAnimation();
+                    }
+                }
+                else
+                {
+                    //bỏ lựa chọn unit sau khi đã chọn unit
+                    DeselectUnit();
+                }
+            }
+        }
+
+        private void DeselectUnit()
+        {
+            movementRange = null;
+            movementPath = null;
+            isMovePathCalculated = false;
+            movingUnit = null;
+            selectedUnit = default(Point);
+            destination = default(Point);
+        }
+
+        private void UpdateMovingUnit(GameTime gameTime)
+        {
+            if (isArrived)
+            {
+                //this line is only necessary for this screen
+                position = destination;
+
+                //normal stuff
+                map[destination].unit = map[selectedUnit].unit;
+                map[selectedUnit].unit = null;
+                map[destination].unit.Animation.ContinueAnimation();
+                DeselectUnit();
+                return;
             }
 
+            totalElapsedTime += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+            AnimationName anim = movingUnit.Animation.CurntAnimationName.ToEnum<AnimationName>();
+            bool isLeft = movingUnit.Animation.FlipEffect == SpriteEffects.FlipHorizontally ? true : false;
+
+            if (totalElapsedTime >= delay)
+            {
+                if (currentdest < movementPath.Count)
+                {
+                    int currentdestX = movementPath[currentdest].X * Constants.MapCellWidth;
+                    int currentdestY = movementPath[currentdest].Y * Constants.MapCellHeight;
+
+                    if (movingUnitPosition.X < currentdestX)
+                    {
+                        //to the right
+                        anim = AnimationName.right;
+                        movingUnitPosition.X += 12;
+                    }
+                    else
+                    {
+                        if (movingUnitPosition.X > currentdestX)
+                        {
+                            //to the left
+                            anim = AnimationName.right;
+                            movingUnitPosition.X -= 12;
+                            isLeft = true;
+                        }
+                    }
+
+                    if (movingUnitPosition.Y < currentdestY)
+                    {
+                        //down
+                        movingUnitPosition.Y += 12;
+                        anim = AnimationName.down;
+                    }
+                    else
+                    {
+                        if (movingUnitPosition.Y > currentdestY)
+                        {
+                            //up
+                            movingUnitPosition.Y -= 12;
+                            anim = AnimationName.up;
+                        }
+                    }
+
+                    if (movingUnitPosition.X == currentdestX
+                     && movingUnitPosition.Y == currentdestY)
+                    {
+                        currentdest++;
+                    }
+                }
+                else
+                {
+                    isArrived = true;
+                    currentdest = 0;
+                }
+
+                totalElapsedTime -= totalElapsedTime;
+            }
+
+
+            movingUnit.Animation.PlayAnimation(anim.ToString());
+            movingUnit.Animation.FlipEffect = isLeft ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
+            movingUnit.Animation.Update(gameTime);
+        }
+
+        private void DisplayMovementRange(Unit unit, Point position)
+        {
+            dijkstarGraph = DijkstraHelper.CalculateGraph(map, unit, position);
+            movementRange = DijkstraHelper.FindRange(dijkstarGraph);
+        }
+
+        public override void Draw(GameTime gameTime)
+        {
+            DrawMap(CONTENT_MANAGER.spriteBatch, gameTime);
+
             CONTENT_MANAGER.spriteBatch.DrawString(CONTENT_MANAGER.arcadefont, currentColor.ToString() + Environment.NewLine + currentUnit.ToString() + Environment.NewLine + currentAnimation.ToString(), new Vector2(100, 0), Color.White);
+
+            if (movingUnit != null && !isArrived)
+            {
+                CONTENT_MANAGER.spriteBatch.DrawString(CONTENT_MANAGER.defaultfont, movingUnitPosition.toString(), new Vector2(500, 0), Color.White);
+
+                movingUnit.Animation.Position = movingUnitPosition.ToVector2();
+                movingUnit.Animation.Draw(gameTime, CONTENT_MANAGER.spriteBatch);
+            }
+
+            if (console.IsVisible)
+            {
+                console.Draw(CONTENT_MANAGER.spriteBatch);
+            }
+
             base.Draw(gameTime);
+        }
+
+        private void DrawMap(SpriteBatch spriteBatch, GameTime gameTime)
+        {
+            spriteBatch.End();
+
+            spriteBatch.Begin(SpriteSortMode.FrontToBack, transformMatrix: camera.TransformMatrix);
+
+            //render the map
+            MapRenderer.Render(map, spriteBatch, gameTime);
+
+            //draw cursor
+            spriteBatch.Draw(CONTENT_MANAGER.selectCursor, new Vector2(selectedMapCell.X * Constants.MapCellWidth, selectedMapCell.Y * Constants.MapCellHeight), null, Color.White, 0f, new Vector2(6, 6), 1f, SpriteEffects.None, LayerDepth.GuiUpper);
+
+            //draw unit movement range
+            DrawSelectedUnitMovementRange(spriteBatch);
+
+            if (movementPath!=null && isMovePathCalculated)
+            {
+                DrawPathDirectionArrow(spriteBatch);
+            }
+
+            spriteBatch.End();
+
+            spriteBatch.Begin(SpriteSortMode.FrontToBack);
+        }
+
+        private void DrawSelectedUnitMovementRange(SpriteBatch spriteBatch)
+        {
+            if (movingUnit == null && movementRange!=null)
+            {
+                foreach (Point dest in movementRange)
+                {
+                    spriteBatch.Draw(CONTENT_MANAGER.moveOverlay, new Vector2(dest.X * Constants.MapCellWidth, dest.Y * Constants.MapCellHeight), null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.GuiBackground);
+                }
+            }
+        }
+
+
+
+        private void DrawPathDirectionArrow(SpriteBatch spriteBatch)
+        {
+            if (movementPath.Count<=2)
+            {
+                return;
+            }
+
+            List<Rectangle> rects = new List<Rectangle>();
+
+            for (int i = 1; i < movementPath.Count-1; i++)
+            {
+                bool isVertical = true;
+                Direction result = HelperFunction.GetIntersectionDir(movementPath[i - 1], movementPath[i], movementPath[i + 1]);
+
+                switch (result)
+                {
+                    case Direction.South:
+                        rects.Add(DirectionArrowSpriteSourceRectangle.GetSpriteRectangle( Direction.Center,true));
+                        break;
+                    case Direction.East:
+                        rects.Add(DirectionArrowSpriteSourceRectangle.GetSpriteRectangle(Direction.Center, false));
+                        break;
+                    default:
+                        rects.Add(DirectionArrowSpriteSourceRectangle.GetSpriteRectangle(result, false));
+                        break;
+                }                
+            }
+            rects.Add(DirectionArrowSpriteSourceRectangle.GetSpriteRectangle(movementPath[movementPath.Count - 2].GetDirectionFromPointAtoPointB(movementPath[movementPath.Count - 1])));
+
+            //CONTENT_MANAGER.ShowMessageBox(lala.ToString());
+            
+            for(int i=1;i<movementPath.Count;i++)
+            {
+                spriteBatch.Draw(CONTENT_MANAGER.directionarrow, new Vector2(movementPath[i].X * Constants.MapCellWidth, movementPath[i].Y * Constants.MapCellHeight), rects[i - 1], Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.GuiLower);
+            }
         }
     }
 }

@@ -21,6 +21,8 @@ using Wartorn.Drawing.Animation;
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Wartorn.PathFinding.Dijkstras;
+using Wartorn.PathFinding;
 
 namespace Wartorn.Screens.MainGameScreen
 {
@@ -74,6 +76,8 @@ namespace Wartorn.Screens.MainGameScreen
 
         //current unit selection
         Point selectedUnit = new Point(0, 0);
+        List<Point> movementRange = null;
+        Graph dijkstraGraph = null;
 
         //fog of war
         bool[,] mapcellVisibility;
@@ -92,6 +96,8 @@ namespace Wartorn.Screens.MainGameScreen
             playerInfos = sessiondata.playerInfos;
             ownedUnit = new List<Unit>();
             mapcellVisibility = new bool[session.map.Width, session.map.Height];
+
+            //init visibility table
             for (int x = 0; x < session.map.Width; x++)
             {
                 for (int y = 0; y < session.map.Height; y++)
@@ -184,18 +190,18 @@ namespace Wartorn.Screens.MainGameScreen
             canvas_action_Factory.IsVisible = false;
 
             //hàng 1
-            Button button_Soldier = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSprite(UnitType.Soldier,playerInfos[localPlayer].owner), new Point(540, 346), 0.5f);
-            Button button_Mech = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSprite(UnitType.Mech, playerInfos[localPlayer].owner), new Point(570, 346), 0.5f);
-            Button button_Recon = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSprite(UnitType.Recon, playerInfos[localPlayer].owner), new Point(600, 346), 0.5f);
-            Button button_APC = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSprite(UnitType.APC, playerInfos[localPlayer].owner), new Point(630, 346), 0.5f);
-            Button button_Tank = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSprite(UnitType.Tank, playerInfos[localPlayer].owner), new Point(660, 346), 0.5f);
-            Button button_H_Tank = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSprite(UnitType.HeavyTank, playerInfos[localPlayer].owner), new Point(690, 346), 0.5f);
+            Button button_Soldier = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Soldier,playerInfos[localPlayer].owner), new Point(540, 346), 0.5f);
+            Button button_Mech = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Mech, playerInfos[localPlayer].owner), new Point(570, 346), 0.5f);
+            Button button_Recon = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Recon, playerInfos[localPlayer].owner), new Point(600, 346), 0.5f);
+            Button button_APC = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.APC, playerInfos[localPlayer].owner), new Point(630, 346), 0.5f);
+            Button button_Tank = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Tank, playerInfos[localPlayer].owner), new Point(660, 346), 0.5f);
+            Button button_H_Tank = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.HeavyTank, playerInfos[localPlayer].owner), new Point(690, 346), 0.5f);
 
             //hàng 2
-            Button button_Artillery = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSprite(UnitType.Artillery, playerInfos[localPlayer].owner), new Point(540, 380), 0.5f);
-            Button button_Rocket = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSprite(UnitType.Rocket, playerInfos[localPlayer].owner), new Point(570, 380), 0.5f);
-            Button button_AntiAir = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSprite(UnitType.AntiAir, playerInfos[localPlayer].owner), new Point(600, 380), 0.5f);
-            Button button_Missile = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSprite(UnitType.Missile, playerInfos[localPlayer].owner), new Point(630, 380), 0.5f);
+            Button button_Artillery = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Artillery, playerInfos[localPlayer].owner), new Point(540, 380), 0.5f);
+            Button button_Rocket = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Rocket, playerInfos[localPlayer].owner), new Point(570, 380), 0.5f);
+            Button button_AntiAir = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.AntiAir, playerInfos[localPlayer].owner), new Point(600, 380), 0.5f);
+            Button button_Missile = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Missile, playerInfos[localPlayer].owner), new Point(630, 380), 0.5f);
 
             List<Button> tempbuttonlist = new List<Button>();
             tempbuttonlist.Add(button_Soldier);
@@ -294,7 +300,19 @@ namespace Wartorn.Screens.MainGameScreen
             if (temp.unit != null)
             {
                 selectedUnit = selectedMapCell;
+                canvas_generalInfo.GetElementAs<Label>("label_unittype").Text = temp.unit.UnitType.ToString() + Environment.NewLine + temp.unit.Owner.ToString();
+                DisplayMovementRange(temp.unit,selectedUnit);
             }
+            else
+            {
+                canvas_generalInfo.GetElementAs<Label>("label_unittype").Text = " ";
+            }
+        }
+
+        private void DisplayMovementRange(Unit unit,Point position)
+        {
+            dijkstraGraph = DijkstraHelper.CalculateGraph(session.map, unit, position);
+            movementRange = DijkstraHelper.FindRange(dijkstraGraph);
         }
 
         private void UpdateBuilding()
@@ -370,8 +388,7 @@ namespace Wartorn.Screens.MainGameScreen
 
         private void UpdateCanvas_generalInfo()
         {
-            ((Label)canvas_generalInfo["label_terraintype"]).Text = session.map[selectedMapCell].terrain.ToString() + Environment.NewLine + session.map[selectedMapCell].owner.ToString();
-            ((Label)canvas_generalInfo["label_unittype"]).Text = session.map[selectedMapCell].unit != null ? session.map[selectedMapCell].unit.UnitType.ToString() + Environment.NewLine + session.map[selectedMapCell].unit.Owner.ToString() : " ";
+            canvas_generalInfo.GetElementAs<Label>("label_terraintype").Text = session.map[selectedMapCell].terrain.ToString() + Environment.NewLine + session.map[selectedMapCell].owner.ToString();
         }
 
         private void UpdateAnimation(GameTime gameTime)
@@ -453,7 +470,13 @@ namespace Wartorn.Screens.MainGameScreen
 
         private void DrawSelectedUnit(SpriteBatch spriteBatch)
         {
-
+            if (movementRange != null)
+            {
+                foreach (Point dest in movementRange)
+                {
+                    spriteBatch.Draw(CONTENT_MANAGER.moveOverlay, new Vector2(dest.X * Constants.MapCellWidth, dest.Y * Constants.MapCellHeight), null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.GuiBackground);
+                }
+            }
         }
         #endregion
     }

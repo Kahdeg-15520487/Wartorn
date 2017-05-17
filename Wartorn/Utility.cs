@@ -36,6 +36,11 @@ namespace Wartorn
                 File.WriteAllText("crashlog.txt", DateTime.Now.ToString(@"dd\/MM\/yyyy HH:mm") + Environment.NewLine + e.Message + Environment.NewLine + e.StackTrace + Environment.NewLine + e.TargetSite);
             }
 
+            public static void Log(string msg)
+            {
+                File.WriteAllText("crashlog.txt", DateTime.Now.ToString(@"dd\/MM\/yyyy HH:mm") + Environment.NewLine + msg);
+            }
+
 
             public static Point TranslateMousePosToMapCellPos(Point mousepos, Camera camera, int width, int height)
             {
@@ -47,6 +52,97 @@ namespace Wartorn
                 if (temp.X >= 0 && temp.X < width && temp.Y >= 0 && temp.Y < height)
                     return temp.ToPoint();
                 return Point.Zero;
+            }
+
+            /// <summary>
+            /// A -> B -> C
+            /// </summary>
+            /// <param name="pA"></param>
+            /// <param name="pB"></param>
+            /// <param name="pC"></param>
+            /// <returns></returns>
+            public static Direction GetIntersectionDir(Point pA, Point pB, Point pC)
+            {
+                var indir = pB.GetDirectionFromPointAtoPointB(pA);
+                var outdir = pB.GetDirectionFromPointAtoPointB(pC);
+
+                Direction result = Direction.Void;
+
+                switch (indir)
+                {
+                    case Direction.North:
+                        switch (outdir)
+                        {
+                            case Direction.West:
+                                result = Direction.NorthWest;
+                                break;
+                            case Direction.East:
+                                result = Direction.NorthEast;
+                                break;
+                            case Direction.South:
+                                result = Direction.South;
+                                break;
+                            default:
+                                break;
+                        }
+                        break;
+
+                    case Direction.South:
+                        switch (outdir)
+                        {
+                            case Direction.West:
+                                result = Direction.SouthWest;
+                                break;
+                            case Direction.East:
+                                result = Direction.SouthEast;
+                                break;
+                            case Direction.North:
+                                result = Direction.South;
+                                break;
+                            default:
+                                break;
+                        }
+                        break;
+
+                    case Direction.West:
+                        switch (outdir)
+                        {
+                            case Direction.North:
+                                result = Direction.NorthWest;
+                                break;
+                            case Direction.South:
+                                result = Direction.SouthWest;
+                                break;
+                            case Direction.East:
+                                result = Direction.East;
+                                break;
+                            default:
+                                break;
+                        }
+                        break;
+
+                    case Direction.East:
+                        switch (outdir)
+                        {
+                            case Direction.North:
+                                result = Direction.NorthEast;
+                                break;
+                            case Direction.South:
+                                result = Direction.SouthEast;
+                                break;
+                            case Direction.West:
+                                result = Direction.East;
+                                break;
+                            default:
+                                break;
+                        }
+                        break;
+
+                    default:
+                        break;
+                }
+
+                return result;
             }
         }
 
@@ -114,8 +210,9 @@ namespace Wartorn
                 switch (ut)
                 {
                     case UnitType.Soldier:
+                        return MovementType.Soldier;
                     case UnitType.Mech:
-                        return MovementType.Foot;
+                        return MovementType.Mech;
 
                     case UnitType.Recon:
                     case UnitType.Rocket:
@@ -127,7 +224,21 @@ namespace Wartorn
                     case UnitType.HeavyTank:
                     case UnitType.Artillery:
                     case UnitType.AntiAir:
-                        return MovementType.Treads;
+                        return MovementType.Track;
+
+                    case UnitType.TransportCopter:
+                    case UnitType.BattleCopter:
+                    case UnitType.Fighter:
+                    case UnitType.Bomber:
+                        return MovementType.Air;
+
+                    case UnitType.Lander:
+                        return MovementType.Lander;
+
+                    case UnitType.Cruise:
+                    case UnitType.Submarine:
+                    case UnitType.Battleship:
+                        return MovementType.Ship;
                     default:
                         break;
                 }
@@ -707,6 +818,11 @@ namespace Wartorn
                         result = (int)unboxOwner + count;
                         box = (T)((object)result);
                         break;
+                    case "SpriteSheetBuilding":
+                        SpriteSheetBuilding unboxSpriteSheetBuilding = (SpriteSheetBuilding)((object)t);
+                        result = (int)unboxSpriteSheetBuilding + count;
+                        box = (T)((object)result);
+                        break;
                     default:
                         break;
                 }
@@ -751,6 +867,11 @@ namespace Wartorn
                         result = (int)unboxOwner - count;
                         box = (T)((object)result);
                         break;
+                    case "SpriteSheetBuilding":
+                        SpriteSheetBuilding unboxSpriteSheetBuilding = (SpriteSheetBuilding)((object)t);
+                        result = (int)unboxSpriteSheetBuilding - count;
+                        box = (T)((object)result);
+                        break;
                     default:
                         return t;
                 }
@@ -790,6 +911,121 @@ namespace Wartorn
                         break;
                 }
                 return output;
+            }
+
+            public static string toString(this Point p)
+            {
+                return string.Format("{0}:{1}", p.X, p.Y);
+            }
+
+            public static Point Parse(this string str)
+            {
+                var data = str.Split(':');
+                int x, y;
+
+                if (int.TryParse(data[0], out x) && int.TryParse(data[1], out y))
+                {
+                    return new Point(x, y);
+                }
+                else
+                {
+                    return Point.Zero;
+                }
+            }
+
+            public static bool TryParse(this string str,out Point p)
+            {
+                var data = str.Split(':');
+                int x, y;
+                bool result = false;
+
+                if (int.TryParse(data[0], out x) && int.TryParse(data[1], out y))
+                {
+                    p = new Point(x, y);
+                    return true;
+                }
+                else
+                {
+                    p = Point.Zero;
+                    return result;
+                }
+            }
+
+            public static Direction GetDirectionFromPointAtoPointB(this Point pA,Point pB)
+            {
+                int deltaX = pA.X - pB.X;
+                int deltaY = pA.Y - pB.Y;
+
+                bool isLeft = false;
+                bool isRight = false;
+                bool isUp = false;
+                bool isDown = false;
+
+                if (deltaX>0)
+                {
+                    isLeft = true;
+                }
+                else
+                {
+                    if (deltaX < 0)
+                    {
+                        isRight = true;
+                    }
+                }
+
+                if (deltaY>0)
+                {
+                    isUp = true;
+                }
+                else
+                {
+                    if (deltaY < 0)
+                    {
+                        isDown = true;
+                    }
+                }
+
+                if (isLeft && isUp)
+                {
+                    return Direction.NorthWest;
+                }
+
+                if (isRight && isUp)
+                {
+                    return Direction.NorthEast;
+                }
+
+                if (isLeft && isDown)
+                {
+                    return Direction.SouthWest;
+                }
+
+                if (isRight && isDown)
+                {
+                    return Direction.SouthEast;
+                }
+
+                if (isLeft)
+                {
+                    return Direction.West;
+                }
+
+                if (isRight)
+                {
+                    return Direction.East;
+                }
+
+                if (isUp)
+                {
+                    return Direction.North;
+                }
+
+                if (isDown)
+                {
+                    return Direction.South;
+                }
+
+                return Direction.Center;
             }
         }
     }

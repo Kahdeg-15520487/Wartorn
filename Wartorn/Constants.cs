@@ -11,7 +11,9 @@ namespace Wartorn
 {
     public static class VersionNumber
     {
+        //version in which break backward compatible
         public static string MajorVersion = "0";
+        //version in which new feature is added
         public static string MinorVersion = "3";
         public static string GetVersionNumber { get { return MajorVersion + "." + MinorVersion; } }
     }
@@ -40,7 +42,8 @@ namespace Wartorn
     {
         NorthWest,  North   ,   NorthEast,
         West     ,  Center  ,   East,
-        SouthWest,  South   ,   SouthEast
+        SouthWest,  South   ,   SouthEast,
+        Void
     }
 
     public enum AnimationName

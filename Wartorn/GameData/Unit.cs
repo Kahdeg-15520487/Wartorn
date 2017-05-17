@@ -25,23 +25,44 @@ namespace Wartorn.GameData
     public class Unit
     {
         #region static stuff
-        static Dictionary<UnitPair, int> _DammageTable;
-        static Dictionary<UnitType, int> _MovementRange;
-        static Dictionary<UnitType, int> _VisionRange;
+        public static Dictionary<UnitType, Dictionary<UnitType, int>> _DammageTable { get; private set; }
+        public static Dictionary<UnitType, int> _Cost{ get; private set; }
+        public static Dictionary<UnitType, int> _Gas{ get; private set; }
+        public static Dictionary<UnitType, int> _MovementRange{ get; private set; }
+        public static Dictionary<UnitType, int> _VisionRange{ get; private set; }
+        public static Dictionary<UnitType, Range> _AttackRange{ get; private set; }
+        public static Dictionary<MovementType, Dictionary<TerrainType, int>> _TravelCost{ get; private set; }
 
         public static void Init()
         {
             List<UnitType> unittypes = Enum.GetValues(typeof(UnitType)).Cast<UnitType>().ToList();
             unittypes.Remove(UnitType.None);
-            
 
-            _DammageTable = new Dictionary<UnitPair, int>();
+            List<MovementType> movementtypes = Enum.GetValues(typeof(MovementType)).Cast<MovementType>().ToList();
+            movementtypes.Remove(MovementType.None);
+
+            List<TerrainType> terraintypes = Enum.GetValues(typeof(TerrainType)).Cast<TerrainType>().ToList();
+
+            _DammageTable = new Dictionary<UnitType, Dictionary<UnitType, int>>();
             foreach (UnitType attacker in unittypes)
             {
+                _DammageTable.Add(attacker, new Dictionary<UnitType, int>());
                 foreach (UnitType defender in unittypes)
                 {
-                    _DammageTable.Add(new UnitPair(attacker, defender), 0);
+                    _DammageTable[attacker].Add(defender, 0);
                 }
+            }
+
+            _Cost = new Dictionary<UnitType, int>();
+            foreach (UnitType unittype in unittypes)
+            {
+                _Cost.Add(unittype, 0);
+            }
+
+            _Gas = new Dictionary<UnitType, int>();
+            foreach (UnitType unittype in unittypes)
+            {
+                _Gas.Add(unittype, 99);
             }
 
             _MovementRange = new Dictionary<UnitType, int>();
@@ -57,150 +78,92 @@ namespace Wartorn.GameData
                 _VisionRange.Add(unittype, 0);
             }
 
-            //File.WriteAllText("dmgtable.txt", JsonConvert.SerializeObject(_DammageTable.ToArray(), Formatting.Indented));
-            //File.WriteAllText("movementrangetable.txt", JsonConvert.SerializeObject(_MovementRange.ToArray(), Formatting.Indented));
-            File.WriteAllText("visionrangetable.txt", JsonConvert.SerializeObject(_VisionRange.ToArray(), Formatting.Indented));
+            _AttackRange = new Dictionary<UnitType, Range>();
+            foreach (UnitType unittype in unittypes)
+            {
+                _AttackRange.Add(unittype, new Range(1));
+            }
+
+            _TravelCost = new Dictionary<MovementType, Dictionary<TerrainType, int>>();
+            foreach (MovementType movetype in movementtypes)
+            {
+                _TravelCost.Add(movetype, new Dictionary<TerrainType, int>());
+                foreach (TerrainType terraintype in terraintypes)
+                {
+                    _TravelCost[movetype].Add(terraintype, int.MaxValue);
+                }
+            }
+
+            Directory.CreateDirectory(@"data\");
+            //File.WriteAllText(@"data\dmgtable.txt", JsonConvert.SerializeObject(_DammageTable, Formatting.Indented));
+            //File.WriteAllText(@"data\costtable.txt", JsonConvert.SerializeObject(_Cost.ToArray(), Formatting.Indented));
+            //File.WriteAllText(@"data\gastable.txt", JsonConvert.SerializeObject(_Gas.ToArray(), Formatting.Indented));
+            //File.WriteAllText(@"data\movementrangetable.txt", JsonConvert.SerializeObject(_MovementRange.ToArray(), Formatting.Indented));
+            //File.WriteAllText(@"data\visionrangetable.txt", JsonConvert.SerializeObject(_VisionRange.ToArray(), Formatting.Indented));
+            //File.WriteAllText(@"data\attackrangetable.txt", JsonConvert.SerializeObject(_AttackRange.ToArray(), Formatting.Indented));
+            //File.WriteAllText(@"data\traversecosttable.txt", JsonConvert.SerializeObject(_TravelCost, Formatting.Indented));
         }
 
         public static void Load()
         {
-            string dmgtable = File.ReadAllText("dmgtable.txt");
-            _DammageTable = JsonConvert.DeserializeObject<KeyValuePair<UnitPair, int>[]>(dmgtable).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+            _DammageTable = new Dictionary<UnitType, Dictionary<UnitType, int>>();
+            _Cost = new Dictionary<UnitType, int>();
+            _Gas = new Dictionary<UnitType, int>();
+            _MovementRange = new Dictionary<UnitType, int>();
+            _VisionRange = new Dictionary<UnitType, int>();
+            _AttackRange = new Dictionary<UnitType, Range>();
+            _TravelCost = new Dictionary<MovementType, Dictionary<TerrainType, int>>();
+            
+            string dmgtable = File.ReadAllText(@"data\dmgtable.txt");
+            _DammageTable = JsonConvert.DeserializeObject<Dictionary<UnitType, Dictionary<UnitType, int>>>(dmgtable);
 
-            string movrangetable = File.ReadAllText("movementrangetable.txt");
-            _MovementRange = JsonConvert.DeserializeObject<KeyValuePair<UnitType, int>[]>(movrangetable).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+            string costtable = File.ReadAllText(@"data\costtable.txt");
+            JsonConvert.DeserializeObject<KeyValuePair<UnitType, int>[]>(costtable).ToList().ForEach(kvp =>
+            {
+                _Cost.Add(kvp.Key, kvp.Value);
+            });
 
-            string visionrangetable = File.ReadAllText("visionrangetable.txt");
-            _VisionRange = JsonConvert.DeserializeObject<KeyValuePair<UnitType, int>[]>(visionrangetable).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+            string gastable = File.ReadAllText(@"data\gastable.txt");
+            JsonConvert.DeserializeObject<KeyValuePair<UnitType, int>[]>(gastable).ToList().ForEach(kvp =>
+            {
+                _Gas.Add(kvp.Key, kvp.Value);
+            });
+
+            string movrangetable = File.ReadAllText(@"data\movementrangetable.txt");
+            JsonConvert.DeserializeObject<KeyValuePair<UnitType, int>[]>(movrangetable).ToList().ForEach(kvp =>
+            {
+                _MovementRange.Add(kvp.Key, kvp.Value);
+            });
+
+            string visionrangetable = File.ReadAllText(@"data\visionrangetable.txt");
+            JsonConvert.DeserializeObject<KeyValuePair<UnitType, int>[]>(visionrangetable).ToList().ForEach(kvp =>
+            {
+                _VisionRange.Add(kvp.Key, kvp.Value);
+            });
+
+            string attackrangetable = File.ReadAllText(@"data\attackrangetable.txt");
+            JsonConvert.DeserializeObject<KeyValuePair<UnitType, Range>[]>(attackrangetable).ToList().ForEach(kvp =>
+            {
+                _AttackRange.Add(kvp.Key, kvp.Value);
+            });
+
+            string traversecosttable = File.ReadAllText(@"data\traversecosttable.txt");
+            _TravelCost = JsonConvert.DeserializeObject<Dictionary<MovementType, Dictionary<TerrainType, int>>>(traversecosttable);
         }
 
         /// <summary>
         /// 0 : normal travel,
         /// 1 : troubled travel,
-        /// 2 : cant travel
+        /// horizontal 8 : can not travel
         /// </summary>
         /// <param name="unitType"></param>
         /// <param name="TerrainType"></param>
         /// <returns></returns>
-        public static int CanTravel(UnitType unitType,TerrainType TerrainType)
+        public static int GetTravelCost(UnitType unitType,TerrainType terrainType)
         {
             MovementType movementType = unitType.GetMovementType();
-            int result = 0;
-            switch (TerrainType)
-            {
-                case TerrainType.Reef:
-                    break;
-                case TerrainType.Sea:
-                    break;
-
-                case TerrainType.River:
-                    if (movementType == MovementType.Foot)
-                    {
-                        result = 1;
-                    }
-
-                    break;
-
-                case TerrainType.Coast:
-                    result = 0;
-                    break;
-
-                case TerrainType.Cliff:
-                    result = 2;
-                    break;
-
-                case TerrainType.Road:
-                case TerrainType.Bridge:
-                    result = 0;
-                    break;
-
-                case TerrainType.Plain:
-                    if (movementType == MovementType.Foot || movementType == MovementType.Treads)
-                    {
-                        result = 0;
-                    }
-                    else
-                    {
-                        result = 1;
-                    }
-                    break;
-
-                case TerrainType.Tree:
-                    if (movementType == MovementType.Foot)
-                    {
-                        result = 0;
-                    }
-                    else
-                    {
-                        result = 1;
-                    }
-                    break;
-
-                case TerrainType.Mountain:
-                    if (movementType == MovementType.Foot)
-                    {
-                        result = 1;
-                    }
-                    else
-                    {
-                        result = 2;
-                    }
-                    break;
-
-                case TerrainType.MissileSilo:
-                case TerrainType.MissileSiloLaunched:
-                case TerrainType.City:
-                case TerrainType.Factory:
-                case TerrainType.AirPort:
-                case TerrainType.Harbor:
-                case TerrainType.Radar:
-                case TerrainType.SupplyBase:
-                case TerrainType.HQ:
-                    result = 0;
-                    break;
-                default:
-                    break;
-            }
-
-            return result;
+            return _TravelCost[movementType][terrainType];
         }
-
-        public static int CalculateMovementCost(UnitType unitType,TerrainType terrainType)
-        {
-            int result = 1;
-            switch (unitType)
-            {
-                //move by foot
-                case UnitType.Soldier:
-                    break;
-                case UnitType.Mech:
-                    break;
-
-                // move by tires
-                case UnitType.Recon:
-                    break;
-                case UnitType.Rocket:
-                    break;
-                case UnitType.Missile:
-                    break;
-                
-                //move by treads
-                case UnitType.APC:
-                    break;
-                case UnitType.Tank:
-                    break;
-                case UnitType.HeavyTank:
-                    break;
-                case UnitType.Artillery:
-                    break;
-                case UnitType.AntiAir:
-                    break;
-                default:
-                    break;
-            }
-            return result;
-        }
-
         #endregion
 
         #region private field
@@ -227,15 +190,15 @@ namespace Wartorn.GameData
             fuel = 100;
         }
 
-        public int ReceiveDammage(UnitType other)
+        public int GetBaseDammage(UnitType other)
         {
-            return hitPoint = _DammageTable[new UnitPair(other, unitType)];
+            return  _DammageTable[other][unitType];
         }
         #endregion
     }
 
     
-    public class UnitPair
+    public struct UnitPair
     {
         public UnitType Attacker { get; set; }
         public UnitType Defender { get; set; }
@@ -246,190 +209,53 @@ namespace Wartorn.GameData
         }
     }
 
+    public struct Range
+    {
+        public int Max { get; set; }
+        public int Min { get; set; }        
+        public Range(int max,int min)
+        {
+            Max = max;
+            Min = min;
+        }
+        public Range(int max)
+        {
+            Max = max;
+            Min = max;
+        }
+    }
+
+    public struct UnitInformation
+    {
+        public int Cost { get; }
+        public int Gas { get; }
+        public int Move { get; }
+        public int Vision { get; }
+        public Range AttackRange { get; }
+        public MovementType MoveType { get; }
+        public UnitInformation(UnitType unittype)
+        {
+            Cost = Unit._Cost[unittype];
+            Gas = Unit._Gas[unittype];
+            Move = Unit._MovementRange[unittype];
+            Vision = Unit._VisionRange[unittype];
+            AttackRange = Unit._AttackRange[unittype];
+            MoveType = unittype.GetMovementType();
+        }
+    }
+
     public static class UnitCreationHelper
     {
-        public static Unit Create(UnitType unittype,Owner owner,int hp = 100)
+        public static Unit Create(UnitType unittype,Owner owner,int hp = 100,AnimationName animation = AnimationName.idle)
         {
-            //todo load the sprite based on the owner of this unit
-            return new Unit(unittype, (AnimatedEntity)CONTENT_MANAGER.animationEntities[unittype.GetSpriteSheetUnit(owner)].Clone(), owner, hp);
+            var result = new Unit(unittype, (AnimatedEntity)CONTENT_MANAGER.animationEntities[unittype.GetSpriteSheetUnit(owner)].Clone(), owner, hp);
+            result.Animation.PlayAnimation(animation.ToString());
+            return result;
         }
     }
 
     #region JsonConverter class
 
-    public class UnitJsonConverter : JsonConverter
-    {
-        public override bool CanConvert(Type objectType)
-        {
-            return objectType == typeof(Unit);
-        }
-
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
-        {
-            Unit temp = (Unit)value;
-            writer.WriteStartObject();
-            writer.WritePropertyName("UnitType");
-            serializer.Serialize(writer, temp.UnitType.ToString());
-            writer.WritePropertyName("Owner");
-            serializer.Serialize(writer, temp.Owner.ToString());
-            writer.WritePropertyName("HP");
-            serializer.Serialize(writer, temp.HitPoint);
-            writer.WriteEndObject();
-        }
-
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
-        {
-            UnitType unittype = UnitType.None;
-            Owner owner = Owner.None;
-            int hp = 0;
-
-            bool gotUnittype = false;
-            bool gotOwner = false;
-            bool gotHp = false;
-
-            while (reader.Read())
-            {
-                if (reader.TokenType != JsonToken.PropertyName)
-                {
-                    break;
-                }
-
-                string propertyName = (string)reader.Value;
-                if (!reader.Read())
-                {
-                    continue;
-                }
-                switch (propertyName)
-                {
-                    case "UnitType":
-                        unittype = (serializer.Deserialize<string>(reader)).ToEnum<UnitType>();
-                        gotUnittype = true;
-                        break;
-                    case "Owner":
-                        owner = (serializer.Deserialize<string>(reader)).ToEnum<Owner>();
-                        gotOwner = true;
-                        break;
-                    case "HP":
-                        hp = serializer.Deserialize<int>(reader);
-                        gotHp = true;
-                        break;
-                    default:
-                        break;
-                }
-            }
-
-            if (!(gotUnittype && gotHp && gotOwner))
-            {
-                //throw new InvalidDataException("Not enought data");
-                return null;
-            }
-
-            return UnitCreationHelper.Create(unittype, owner, hp);
-        }
-    }
-
-    public class UnitTypeJsonConverter : JsonConverter
-    {
-        public override bool CanConvert(Type objectType)
-        {
-            return objectType == typeof(UnitType);
-        }
-
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
-        {
-            UnitType temp = (UnitType)value;
-            writer.WriteStartObject();
-            writer.WritePropertyName("value");
-            serializer.Serialize(writer, temp.ToString());
-            writer.WriteEndObject();
-        }
-
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
-        {
-            UnitType result = UnitType.None;
-            while (reader.Read())
-            {
-                if (reader.TokenType != JsonToken.PropertyName)
-                {
-                    break;
-                }
-
-                string propertyName = (string)reader.Value;
-                if (!reader.Read())
-                {
-                    continue;
-                }
-
-                if (propertyName == "")
-                {
-                    result = (serializer.Deserialize<string>(reader)).ToEnum<UnitType>();
-                }
-            }
-
-            return result;
-        }
-    }
-
-    public class UnitPairJsonConverter : JsonConverter
-    {
-        public override bool CanConvert(Type objectType)
-        {
-            return objectType == typeof(UnitPair);
-        }
-
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
-        {
-            UnitPair temp = (UnitPair)value;
-
-            writer.WriteStartObject();
-            writer.WritePropertyName("Attacker");
-            serializer.Serialize(writer, temp.Attacker.ToString());
-            writer.WritePropertyName("Defender");
-            serializer.Serialize(writer, temp.Defender.ToString());
-            writer.WriteEndObject();
-        }
-
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
-        {
-            UnitType attacker = default(UnitType);
-            UnitType defender = default(UnitType);
-
-            bool gotAttacker = false;
-            bool gotDefender = false;
-
-            while (reader.Read())
-            {
-                if (reader.TokenType != JsonToken.PropertyName)
-                {
-                    break;
-                }
-
-                string propertyName = (string)reader.Value;
-                if (!reader.Read())
-                {
-                    continue;
-                }
-
-                if (propertyName == "Attacker")
-                {
-                    attacker = (serializer.Deserialize<string>(reader)).ToEnum<UnitType>();
-                    gotAttacker = true;
-                }
-
-                if (propertyName == "Defender")
-                {
-                    defender = (serializer.Deserialize<string>(reader)).ToEnum<UnitType>();
-                    gotDefender = true;
-                }
-            }
-
-            if (!(gotAttacker && gotDefender))
-            {
-                throw new InvalidDataException("Not enought data");
-            }
-
-            return new UnitPair(attacker, defender);
-        }
-    }
+    
     #endregion
 }

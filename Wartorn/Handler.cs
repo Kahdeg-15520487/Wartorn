@@ -37,6 +37,10 @@ namespace Wartorn
                 Constants.Height = 480;
                 CONTENT_MANAGER.messagebox += MessageShow;
                 CONTENT_MANAGER.fileopendialog += OpenFile;
+                CONTENT_MANAGER.promptbox += InputBox;
+                CONTENT_MANAGER.dropdownbox += DropdownBox;
+                CONTENT_MANAGER.getclipboard += GetClipboard;
+                CONTENT_MANAGER.setclipboard += SetClipboard;
                 game.Run();
             }
         }
@@ -47,31 +51,13 @@ namespace Wartorn
             frm.Opacity = 0;
         }
 
-        private static void ToggleForm(object sender, MessageEventArgs e)
-        {
-            MainThreadOperation temp = frm.ToggleFormMainThread;
-            frm.Invoke(temp, e);
-        }
-
-        private void ToggleFormMainThread(MessageEventArgs e)
-        {
-            if (allowshowdisplay)
-            {
-                this.Hide();
-            }
-            else
-            {
-                this.Show();
-            }
-
-            this.allowshowdisplay = !allowshowdisplay;
-        }
-
         private static void MessageShow(object sender, MessageEventArgs e)
         {
-            MessageBox.Show(e.message);
+            DialogResult result = MessageBox.Show(e.message);
+            e.message = result.ToString();
         }
 
+        #region Open file dialog
         private static void OpenFile(object sender, MessageEventArgs e)
         {
             MainThreadOperation temp = OpenFileMainThread;
@@ -80,15 +66,15 @@ namespace Wartorn
 
         private static void OpenFileMainThread(MessageEventArgs e)
         {
-            var lala = new OpenFileDialog();
-            lala.InitialDirectory = e.message;
+            var filedialog = new OpenFileDialog();
+            filedialog.InitialDirectory = e.message;
             try
             {
-                if (lala.ShowDialog() == DialogResult.OK)
+                if (filedialog.ShowDialog() == DialogResult.OK)
                 {
                     try
                     {
-                        e.message = lala.FileName;
+                        e.message = filedialog.FileName;
                     }
                     catch (Exception er)
                     {
@@ -104,6 +90,89 @@ namespace Wartorn
                 throw;
             }
         }
+        #endregion
+
+        #region InputDialog
+
+        private static void InputBox(object sender, MessageEventArgs e)
+        {
+            MainThreadOperation temp = ShowInputBoxMainThread;
+            frm.Invoke(temp, e);
+        }
+
+        private static void ShowInputBoxMainThread(MessageEventArgs e)
+        {
+            InputDialog inputDialog = new InputDialog();
+            inputDialog.Prompt = e.message;
+            var result = inputDialog.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                e.message = inputDialog.Input;
+            }
+            else
+            {
+                e.message = result.ToString();
+            }
+        }
+        #endregion
+
+        #region DropdownDialog
+
+        private static void DropdownBox(object sender, MessageEventArgs e)
+        {
+            MainThreadOperation temp = ShowDropdownBoxMainThread;
+            frm.Invoke(temp, e);
+        }
+
+        private static void ShowDropdownBoxMainThread(MessageEventArgs e)
+        {
+            DropdownDialog dropdownDialog = new DropdownDialog();
+            var options = e.message.Split('|').ToList();
+            dropdownDialog.Prompt = options[0];
+            options.RemoveAt(0);
+            dropdownDialog.Options = options;
+            var result = dropdownDialog.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                e.message = dropdownDialog.Selected;
+            }
+            else
+            {
+                e.message = result.ToString();
+            }
+        }
+
+        #endregion
+
+        #region GetClipboard
+
+        private static void GetClipboard(object sender, MessageEventArgs e)
+        {
+            MainThreadOperation temp = GetClipboardMainThread;
+            frm.Invoke(temp, e);
+        }
+
+        private static void GetClipboardMainThread(MessageEventArgs e)
+        {
+            e.message = Clipboard.GetText();
+        }
+
+        #endregion
+
+        #region SetClipboard
+
+        private static void SetClipboard(object sender, MessageEventArgs e)
+        {
+            MainThreadOperation temp = SetClipboardMainThread;
+            frm.Invoke(temp, e);
+        }
+
+        private static void SetClipboardMainThread(MessageEventArgs e)
+        {
+            Clipboard.SetText(e.message);
+        }
+
+        #endregion
 
         private void Handler_Shown(object sender, EventArgs e)
         {
@@ -123,6 +192,7 @@ namespace Wartorn
     public class MessageEventArgs : EventArgs
     {
         public string message = string.Empty;
+        public MessageEventArgs() { }
         public MessageEventArgs(string e)
         {
             message = e;

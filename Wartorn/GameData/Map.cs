@@ -9,12 +9,16 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Wartorn.Utility.Drawing;
+using Wartorn.PathFinding.Dijkstras;
+using Wartorn.Utility;
 
 namespace Wartorn.GameData
 {
-    class Map : IEnumerable
+    public class Map : IEnumerable
     {
         public MapCell[,] map { get; private set; }
+
+        public Graph navigationGraph;
 
         private bool isProcessed = false;
         public bool IsProcessed
@@ -90,6 +94,8 @@ namespace Wartorn.GameData
         public void Clone(Map m)
         {
             map = m.map;
+            navigationGraph = new Graph();
+            navigationGraph.Vertices = new Dictionary<string, Dictionary<string, int>>(m.navigationGraph.Vertices);
             weather = m.weather;
             theme = m.theme;
             isProcessed = false;
@@ -102,9 +108,57 @@ namespace Wartorn.GameData
 
         public void Fill(TerrainType terrain)
         {
-            foreach (var mapcell in map)
+            for (int y = 0; y < Height; y++)
             {
-                mapcell.terrain = terrain;
+                for (int x = 0; x < Width; x++)
+                {
+                    if (map[x,y] == null)
+                    {
+                        map[x, y] = new MapCell(terrain);
+                    }
+                    else
+                    {
+                        map[x, y].terrain = terrain;
+                    }
+                }
+            }
+            isProcessed = false;
+        }
+
+        public void GenerateNavigationMap()
+        {
+            navigationGraph = new Graph();
+
+            for (int y = 0; y < Height; y++)
+            {
+                for (int x = 0; x < Width; x++)
+                {
+                    Point currentPoint = new Point(x, y);
+                    Point east = currentPoint.GetNearbyPoint(Direction.East)
+                        , west = currentPoint.GetNearbyPoint(Direction.West)
+                        , south = currentPoint.GetNearbyPoint(Direction.South)
+                        , north = currentPoint.GetNearbyPoint(Direction.North);
+
+                    Dictionary<string, int> temp = new Dictionary<string, int>();
+                    if (this[east] != null)
+                    {
+                        temp.Add(east.toString(), 0);
+                    }
+                    if (this[west] != null)
+                    {
+                        temp.Add(west.toString(), 0);
+                    }
+                    if (this[north] != null)
+                    {
+                        temp.Add(north.toString(), 0);
+                    }
+                    if (this[south] != null)
+                    {
+                        temp.Add(south.toString(), 0);
+                    }
+                    var t = currentPoint.toString();//, converter);
+                    navigationGraph.add_vertex(t, temp);
+                }
             }
         }
     }

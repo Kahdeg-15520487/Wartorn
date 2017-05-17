@@ -14,7 +14,7 @@ namespace Wartorn
             SpriteFromSheet,
             Sprite
         }
-        class Button : Label
+        public class Button : Label
         {
             bool isPressed = false;
             Rectangle internalRect;
@@ -65,21 +65,6 @@ namespace Wartorn
                 {
                     rect.Size = (value.X > 0 && value.Y > 0) ? value.ToPoint() : sprite.Bounds.Size;
                     internalRect.Size = new Point(rect.Size.X - 1, rect.Size.Y - 1);
-                }
-            }
-
-            /// <summary>
-            /// Offset of the text inside the button
-            /// </summary>
-            public Vector2 Origin
-            {
-                get
-                {
-                    return origin;
-                }
-                set
-                {
-                    origin = value;
                 }
             }
 
@@ -253,6 +238,10 @@ namespace Wartorn
 
             private void Init()
             {
+                MouseClick += (sender, e) =>
+                {
+                    CONTENT_MANAGER.menu_select.Play();
+                };
                 MouseDown += (sender, e) =>
                 {
                     isPressed = true;
@@ -272,7 +261,7 @@ namespace Wartorn
                 base.Update(inputState, lastInputState);
                 if (isPressed)
                 {
-                    OnButtonPressed(this, new UIEventArgs(inputState.mouseState));
+                    OnButtonPressed(this, new UIEventArgs(inputState, lastInputState));
                 }
             }
 

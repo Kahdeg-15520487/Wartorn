@@ -11,7 +11,7 @@ using Newtonsoft.Json;
 
 namespace Wartorn.GameData
 {
-    class MapCell
+    public class MapCell
     {
         public SpriteSheetTerrain terrainLower = SpriteSheetTerrain.None;
         public SpriteSheetTerrain terrainUpper = SpriteSheetTerrain.None;
