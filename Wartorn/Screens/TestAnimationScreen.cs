@@ -16,6 +16,7 @@ using Wartorn.Drawing;
 using Wartorn.PathFinding.Dijkstras;
 using Wartorn.PathFinding;
 using Wartorn.UIClass;
+using Wartorn.SpriteRectangle;
 
 namespace Wartorn.Screens
 {
@@ -36,6 +37,7 @@ namespace Wartorn.Screens
         KeyboardState keyboardInputState;
         KeyboardState lastKeyboardInputState;
         Point selectedMapCell;
+        Point lastSelectedMapCell;
 
         Point selectedUnit = new Point(0, 0);
         List<Point> movementRange = null;
@@ -44,6 +46,18 @@ namespace Wartorn.Screens
         Camera camera;
 
         UIClass.Console console;
+
+        //information to animate a moving unit
+        Unit movingUnit = null;
+        Graph dijkstarGraph = null;
+        List<Point> movementPath = null;
+        Point movingUnitPosition;
+        Point destination;
+        int currentdest = 0;
+        bool isArrived = false;
+        bool isMovePathCalculated = false;
+        float totalElapsedTime = 0;
+        float delay = 50; //ms
 
         public TestAnimationScreen(GraphicsDevice device) : base(device, "TestAnimationScreen")
         {   }
@@ -100,14 +114,13 @@ namespace Wartorn.Screens
                 console.IsVisible = !console.IsVisible;
             }
 
+            #region change unit and animation
             if (console.IsVisible) //suck all input in to the input box
             {
                 console.Update(CONTENT_MANAGER.inputState, CONTENT_MANAGER.lastInputState);
             }
             else //accept input
             {
-
-                #region change unit and animation
                 //cylce through unit
                 if (HelperFunction.IsKeyPress(Keys.Left))
                 {
@@ -213,7 +226,7 @@ namespace Wartorn.Screens
             if (mouseInputState.LeftButton == ButtonState.Released
              && lastMouseInputState.LeftButton == ButtonState.Pressed)
             {
-                UpdateUnit();
+                SelectUnit();
             }
 
             if (movingUnit!=null)
@@ -221,58 +234,80 @@ namespace Wartorn.Screens
                 UpdateMovingUnit(gameTime);
             }
 
+            //calculate movepath
+            if (isMovePathCalculated)
+            {
+                if (movementRange.Contains(selectedMapCell) && selectedMapCell != lastSelectedMapCell)
+                {
+                    //update movement path
+                    movementPath = DijkstraHelper.FindPath(dijkstarGraph, selectedMapCell);
+                    lastSelectedMapCell = selectedMapCell;
+                }
+            }
+
             base.Update(gameTime);
         }
 
-        //information to animate a moving unit
-        Unit movingUnit = null;
-        Graph dijkstarGraph = null;
-        List<Point> movementPath = null;
-        Point movingUnitPosition;
-        Point destination;
-        int currentdest = 0;
-        bool isArrived = false;
-
-        private void UpdateUnit()
+        private void SelectUnit()
         {
             MapCell temp = map[selectedMapCell];
             //check if there is a unit at selectedMapCell
+            //and if said unit is not already selected
             //and if there is no animation going on
-            if (temp.unit != null && movingUnit==null)
+            if (temp.unit != null && movingUnit == null && selectedUnit != selectedMapCell)
             {
+                //play sfx
                 CONTENT_MANAGER.yes1.Play();
+
                 selectedUnit = selectedMapCell;
                 DisplayMovementRange(temp.unit, selectedUnit);
+                isMovePathCalculated = true;
             }
             else
             {
-                if ( movementRange!=null && movementRange.Contains(selectedMapCell))
+                if (movementRange != null && movementRange.Contains(selectedMapCell) )
                 {
-                    //we gonna move unit by moving a clone of it then teleport it to the destination
-                    CONTENT_MANAGER.moving_out.Play();
-                    movementRange = null;
-                    destination = selectedMapCell;
-                    movingUnit = map[selectedUnit].unit;
-                    movingUnit = UnitCreationHelper.Create(movingUnit.UnitType, movingUnit.Owner);
+                    if (destination != selectedMapCell)
+                    {
+                        //play sfx
+                        CONTENT_MANAGER.moving_out.Play();
 
-                    //the path
-                    movementPath = DijkstraHelper.FindPath(dijkstarGraph, destination);
+                        //we gonna move unit by moving a clone of it then teleport it to the destination
+                        destination = selectedMapCell;
+                        movingUnit = map[selectedUnit].unit;
+                        movingUnit = UnitCreationHelper.Create(movingUnit.UnitType, movingUnit.Owner);
+                        movingUnit.Animation.Depth = LayerDepth.Unit;
+                        //the path
+                        //movementPath = DijkstraHelper.FindPath(dijkstarGraph, destination);
 
-                    //the starting node
-                    currentdest = 0;
-                    movingUnitPosition = new Point(selectedUnit.X * Constants.MapCellWidth, selectedUnit.Y * Constants.MapCellHeight);
-                    isArrived = false;
-                    map[selectedUnit].unit.Animation.StopAnimation();
+                        //ngung vẽ path
+                        isMovePathCalculated = false;
+
+                        //the starting node
+                        currentdest = 0;
+                        movingUnitPosition = new Point(selectedUnit.X * Constants.MapCellWidth, selectedUnit.Y * Constants.MapCellHeight);
+                        isArrived = false;
+                        map[selectedUnit].unit.Animation.StopAnimation();
+                    }
                 }
                 else
                 {
-                    movementRange = null;
+                    //bỏ lựa chọn unit sau khi đã chọn unit
+                    DeselectUnit();
                 }
             }
         }
 
-        float totalElapsedTime = 0;
-        float delay = 50; //ms
+        private void DeselectUnit()
+        {
+            movementRange = null;
+            movementPath = null;
+            isMovePathCalculated = false;
+            movingUnit = null;
+            selectedUnit = default(Point);
+            destination = default(Point);
+        }
+
         private void UpdateMovingUnit(GameTime gameTime)
         {
             if (isArrived)
@@ -281,10 +316,10 @@ namespace Wartorn.Screens
                 position = destination;
 
                 //normal stuff
-                movingUnit = null;
                 map[destination].unit = map[selectedUnit].unit;
                 map[selectedUnit].unit = null;
                 map[destination].unit.Animation.ContinueAnimation();
+                DeselectUnit();
                 return;
             }
 
@@ -389,22 +424,70 @@ namespace Wartorn.Screens
 
             //render the map
             MapRenderer.Render(map, spriteBatch, gameTime);
-            spriteBatch.Draw(CONTENT_MANAGER.UIspriteSheet, new Vector2(selectedMapCell.X * Constants.MapCellWidth, selectedMapCell.Y * Constants.MapCellHeight), new Rectangle(0, 0, 48, 48), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.GuiUpper);
-            DrawSelectedUnit(spriteBatch);
+
+            //draw cursor
+            spriteBatch.Draw(CONTENT_MANAGER.selectCursor, new Vector2(selectedMapCell.X * Constants.MapCellWidth, selectedMapCell.Y * Constants.MapCellHeight), null, Color.White, 0f, new Vector2(6, 6), 1f, SpriteEffects.None, LayerDepth.GuiUpper);
+
+            //draw unit movement range
+            DrawSelectedUnitMovementRange(spriteBatch);
+
+            if (movementPath!=null && isMovePathCalculated)
+            {
+                DrawPathDirectionArrow(spriteBatch);
+            }
 
             spriteBatch.End();
 
             spriteBatch.Begin(SpriteSortMode.FrontToBack);
         }
 
-        private void DrawSelectedUnit(SpriteBatch spriteBatch)
+        private void DrawSelectedUnitMovementRange(SpriteBatch spriteBatch)
         {
-            if (movementRange != null)
+            if (movingUnit == null && movementRange!=null)
             {
                 foreach (Point dest in movementRange)
                 {
                     spriteBatch.Draw(CONTENT_MANAGER.moveOverlay, new Vector2(dest.X * Constants.MapCellWidth, dest.Y * Constants.MapCellHeight), null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.GuiBackground);
                 }
+            }
+        }
+
+
+
+        private void DrawPathDirectionArrow(SpriteBatch spriteBatch)
+        {
+            if (movementPath.Count<=2)
+            {
+                return;
+            }
+
+            List<Rectangle> rects = new List<Rectangle>();
+
+            for (int i = 1; i < movementPath.Count-1; i++)
+            {
+                bool isVertical = true;
+                Direction result = HelperFunction.GetIntersectionDir(movementPath[i - 1], movementPath[i], movementPath[i + 1]);
+
+                switch (result)
+                {
+                    case Direction.South:
+                        rects.Add(DirectionArrowSpriteSourceRectangle.GetSpriteRectangle( Direction.Center,true));
+                        break;
+                    case Direction.East:
+                        rects.Add(DirectionArrowSpriteSourceRectangle.GetSpriteRectangle(Direction.Center, false));
+                        break;
+                    default:
+                        rects.Add(DirectionArrowSpriteSourceRectangle.GetSpriteRectangle(result, false));
+                        break;
+                }                
+            }
+            rects.Add(DirectionArrowSpriteSourceRectangle.GetSpriteRectangle(movementPath[movementPath.Count - 2].GetDirectionFromPointAtoPointB(movementPath[movementPath.Count - 1])));
+
+            //CONTENT_MANAGER.ShowMessageBox(lala.ToString());
+            
+            for(int i=1;i<movementPath.Count;i++)
+            {
+                spriteBatch.Draw(CONTENT_MANAGER.directionarrow, new Vector2(movementPath[i].X * Constants.MapCellWidth, movementPath[i].Y * Constants.MapCellHeight), rects[i - 1], Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.GuiLower);
             }
         }
     }

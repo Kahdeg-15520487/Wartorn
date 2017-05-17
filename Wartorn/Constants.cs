@@ -42,7 +42,8 @@ namespace Wartorn
     {
         NorthWest,  North   ,   NorthEast,
         West     ,  Center  ,   East,
-        SouthWest,  South   ,   SouthEast
+        SouthWest,  South   ,   SouthEast,
+        Void
     }
 
     public enum AnimationName

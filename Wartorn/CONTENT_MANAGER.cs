@@ -39,6 +39,9 @@ namespace Wartorn
         public static Texture2D unitSpriteSheet;
         public static Texture2D directionarrow;
 
+        public static Texture2D selectCursor;
+        public static Texture2D attackCursor;
+
         #region animation sprite sheet
         public static Dictionary<SpriteSheetUnit, AnimatedEntity> animationEntities;
         public static Dictionary<SpriteSheetUnit, Texture2D> animationSheets;
@@ -59,6 +62,9 @@ namespace Wartorn
             attackOverlay = Content.Load<Texture2D>(@"sprite\AttackOverlay");
             moveOverlay = Content.Load<Texture2D>(@"sprite\MoveOverlay");
             directionarrow = Content.Load<Texture2D>(@"sprite\directionarrow");
+
+            selectCursor = Content.Load<Texture2D>(@"sprite\Cursor\Select_Cursor");
+            attackCursor = Content.Load<Texture2D>(@"sprite\Cursor\Attack_Cursor");
 
             LoadAnimationContent();
 
