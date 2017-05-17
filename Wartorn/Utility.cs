@@ -53,6 +53,97 @@ namespace Wartorn
                     return temp.ToPoint();
                 return Point.Zero;
             }
+
+            /// <summary>
+            /// A -> B -> C
+            /// </summary>
+            /// <param name="pA"></param>
+            /// <param name="pB"></param>
+            /// <param name="pC"></param>
+            /// <returns></returns>
+            public static Direction GetIntersectionDir(Point pA, Point pB, Point pC)
+            {
+                var indir = pB.GetDirectionFromPointAtoPointB(pA);
+                var outdir = pB.GetDirectionFromPointAtoPointB(pC);
+
+                Direction result = Direction.Void;
+
+                switch (indir)
+                {
+                    case Direction.North:
+                        switch (outdir)
+                        {
+                            case Direction.West:
+                                result = Direction.NorthWest;
+                                break;
+                            case Direction.East:
+                                result = Direction.NorthEast;
+                                break;
+                            case Direction.South:
+                                result = Direction.South;
+                                break;
+                            default:
+                                break;
+                        }
+                        break;
+
+                    case Direction.South:
+                        switch (outdir)
+                        {
+                            case Direction.West:
+                                result = Direction.SouthWest;
+                                break;
+                            case Direction.East:
+                                result = Direction.SouthEast;
+                                break;
+                            case Direction.North:
+                                result = Direction.South;
+                                break;
+                            default:
+                                break;
+                        }
+                        break;
+
+                    case Direction.West:
+                        switch (outdir)
+                        {
+                            case Direction.North:
+                                result = Direction.NorthWest;
+                                break;
+                            case Direction.South:
+                                result = Direction.SouthWest;
+                                break;
+                            case Direction.East:
+                                result = Direction.East;
+                                break;
+                            default:
+                                break;
+                        }
+                        break;
+
+                    case Direction.East:
+                        switch (outdir)
+                        {
+                            case Direction.North:
+                                result = Direction.NorthEast;
+                                break;
+                            case Direction.South:
+                                result = Direction.SouthEast;
+                                break;
+                            case Direction.West:
+                                result = Direction.East;
+                                break;
+                            default:
+                                break;
+                        }
+                        break;
+
+                    default:
+                        break;
+                }
+
+                return result;
+            }
         }
 
         public static class ExtensionMethod
@@ -858,6 +949,83 @@ namespace Wartorn
                     p = Point.Zero;
                     return result;
                 }
+            }
+
+            public static Direction GetDirectionFromPointAtoPointB(this Point pA,Point pB)
+            {
+                int deltaX = pA.X - pB.X;
+                int deltaY = pA.Y - pB.Y;
+
+                bool isLeft = false;
+                bool isRight = false;
+                bool isUp = false;
+                bool isDown = false;
+
+                if (deltaX>0)
+                {
+                    isLeft = true;
+                }
+                else
+                {
+                    if (deltaX < 0)
+                    {
+                        isRight = true;
+                    }
+                }
+
+                if (deltaY>0)
+                {
+                    isUp = true;
+                }
+                else
+                {
+                    if (deltaY < 0)
+                    {
+                        isDown = true;
+                    }
+                }
+
+                if (isLeft && isUp)
+                {
+                    return Direction.NorthWest;
+                }
+
+                if (isRight && isUp)
+                {
+                    return Direction.NorthEast;
+                }
+
+                if (isLeft && isDown)
+                {
+                    return Direction.SouthWest;
+                }
+
+                if (isRight && isDown)
+                {
+                    return Direction.SouthEast;
+                }
+
+                if (isLeft)
+                {
+                    return Direction.West;
+                }
+
+                if (isRight)
+                {
+                    return Direction.East;
+                }
+
+                if (isUp)
+                {
+                    return Direction.North;
+                }
+
+                if (isDown)
+                {
+                    return Direction.South;
+                }
+
+                return Direction.Center;
             }
         }
     }
