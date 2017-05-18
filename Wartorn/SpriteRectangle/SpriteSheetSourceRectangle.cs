@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using Wartorn.GameData;
 using Wartorn.Utility;
 
-namespace Wartorn
+namespace Wartorn.SpriteRectangle
 {
     public enum SpriteSheetTerrain
     {
