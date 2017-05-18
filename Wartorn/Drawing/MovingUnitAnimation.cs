@@ -36,7 +36,7 @@ namespace Wartorn.Drawing
         int currentdest = 0;
         bool isArrived = false;
         float totalElapsedTime = 0;
-        float delay = 50; //ms
+        float delay = 25; //ms
 
         public MovingUnitAnimation(Unit unit,List<Point> movementPath,Point startingPoint)
         {

@@ -59,7 +59,7 @@ namespace Wartorn.Screens.MainGameScreen
         KeyboardState keyboardInputState;
         KeyboardState lastKeyboardInputState;
         Point selectedMapCell;
-
+        Point lastSelectedMapCell;
 
         //constants
         readonly Rectangle minimapbound = new Rectangle(2, 312, 234, 166);
@@ -79,9 +79,17 @@ namespace Wartorn.Screens.MainGameScreen
         Point selectedFactoryToBuild = new Point(0, 0);
 
         //current unit selection
-        Point selectedUnit = new Point(0, 0);
+        Point selectedUnit = default(Point);
         List<Point> movementRange = null;
-        Graph dijkstraGraph = null;
+
+        //moving unit animation
+        Graph dijkstraGraph;
+        List<Point> movementPath;
+        Point destination;
+        bool isMovingUnitAnimPlaying = false;
+        bool isMovePathCalculated = false;
+        MovingUnitAnimation movingAnim;
+        DirectionArrowRenderer dirarrowRenderer = new DirectionArrowRenderer();
 
         //fog of war
         bool[,] mapcellVisibility;
@@ -283,8 +291,25 @@ namespace Wartorn.Screens.MainGameScreen
             if (mouseInputState.LeftButton == ButtonState.Released
              && lastMouseInputState.LeftButton == ButtonState.Pressed)
             {
-                UpdateBuilding();
-                UpdateUnit();
+                SelectUnit();
+                SelectBuilding();
+            }
+
+            if (isMovingUnitAnimPlaying)
+            {
+                UpdateMovingUnit(gameTime);
+            }
+
+            //calculate movepath
+            if (isMovePathCalculated)
+            {
+                if (movementRange.Contains(selectedMapCell) && selectedMapCell != lastSelectedMapCell)
+                {
+                    //update movement path
+                    movementPath = DijkstraHelper.FindPath(dijkstraGraph, selectedMapCell);
+                    dirarrowRenderer.UpdatePath(movementPath);
+                    lastSelectedMapCell = selectedMapCell;
+                }
             }
         }
 
@@ -298,19 +323,74 @@ namespace Wartorn.Screens.MainGameScreen
             }
         }
 
-        private void UpdateUnit()
+        #region Unit handler
+        private void SelectUnit()
         {
             MapCell temp = session.map[selectedMapCell];
-            if (temp.unit != null)
+            if (temp.unit != null && !isMovingUnitAnimPlaying && selectedUnit != selectedMapCell)
             {
+                CONTENT_MANAGER.yes1.Play();
+
                 selectedUnit = selectedMapCell;
                 canvas_generalInfo.GetElementAs<Label>("label_unittype").Text = temp.unit.UnitType.ToString() + Environment.NewLine + temp.unit.Owner.ToString();
                 DisplayMovementRange(temp.unit,selectedUnit);
+                isMovePathCalculated = true;
             }
             else
             {
-                canvas_generalInfo.GetElementAs<Label>("label_unittype").Text = " ";
+                if (!isMovingUnitAnimPlaying)
+                {
+                    if (movementRange != null && movementRange.Contains(selectedMapCell))
+                    {
+
+                        //play sfx
+                        CONTENT_MANAGER.moving_out.Play();
+
+                        //we gonna move unit by moving a clone of it then teleport it to the destination
+                        destination = selectedMapCell;
+                        isMovingUnitAnimPlaying = true;
+
+                        //create a new animation object
+                        movingAnim = new MovingUnitAnimation(session.map[selectedUnit].unit, movementPath, new Point(selectedUnit.X * Constants.MapCellWidth, selectedUnit.Y * Constants.MapCellHeight));
+
+                        //ngung vẽ path
+                        isMovePathCalculated = false;
+
+                        //ngưng update animation cho unit gốc                        
+                        session.map[selectedUnit].unit.Animation.StopAnimation();
+                    }
+                    else
+                    {
+                        //bỏ lựa chọn unit sau khi đã chọn unit
+                        DeselectUnit();
+                    }
+                }
             }
+        }
+
+        private void DeselectUnit()
+        {
+            canvas_generalInfo.GetElementAs<Label>("label_unittype").Text = " ";
+            movementRange = null;
+            movementPath = null;
+            isMovePathCalculated = false;
+            isMovingUnitAnimPlaying = false;
+            selectedUnit = default(Point);
+            destination = default(Point);
+        }
+        private void UpdateMovingUnit(GameTime gameTime)
+        {
+            if (movingAnim.IsArrived)
+            {
+                //normal stuff
+                session.map[destination].unit = session.map[selectedUnit].unit;
+                session.map[selectedUnit].unit = null;
+                session.map[destination].unit.Animation.ContinueAnimation();
+                DeselectUnit();
+                return;
+            }
+
+            movingAnim.Update(gameTime);
         }
 
         private void DisplayMovementRange(Unit unit,Point position)
@@ -318,8 +398,9 @@ namespace Wartorn.Screens.MainGameScreen
             dijkstraGraph = DijkstraHelper.CalculateGraph(session.map, unit, position);
             movementRange = DijkstraHelper.FindRange(dijkstraGraph);
         }
+        #endregion
 
-        private void UpdateBuilding()
+        private void SelectBuilding()
         {
             MapCell temp = session.map[selectedMapCell];
             if (temp.unit == null
@@ -461,8 +542,24 @@ namespace Wartorn.Screens.MainGameScreen
             //render the map
             MapRenderer.Render(session.map, spriteBatch, gameTime);
 
+            //draw moving animation
+            if (isMovingUnitAnimPlaying)
+            {
+                movingAnim.Draw(spriteBatch, gameTime);
+            }
+
             //draw selected unit's movement range
-            DrawSelectedUnit(spriteBatch);
+            if (!isMovingUnitAnimPlaying)
+            {
+                DrawSelectedUnit(spriteBatch);
+            }
+
+            //draw movementpath direction arrow if exist
+            if (movementPath != null && isMovePathCalculated)
+            {
+                dirarrowRenderer.UpdatePath(movementPath);
+                dirarrowRenderer.Draw(spriteBatch);
+            }
 
             //draw the cursor
             spriteBatch.Draw(CONTENT_MANAGER.UIspriteSheet, new Vector2(selectedMapCell.X * Constants.MapCellWidth, selectedMapCell.Y * Constants.MapCellHeight), new Rectangle(0, 0, 48, 48), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.GuiUpper);
