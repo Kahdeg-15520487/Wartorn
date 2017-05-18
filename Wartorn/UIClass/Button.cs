@@ -20,6 +20,12 @@ namespace Wartorn
             Rectangle internalRect;
             ButtonContentType contentType;
             private Rectangle? _spriteSourceRectangle = null;
+
+            //Add region to draw text
+            private Vector2 stringRect;
+            //
+            private bool autoSize= false;
+
             public Rectangle spriteSourceRectangle
             {
                 get
@@ -87,6 +93,35 @@ namespace Wartorn
                 }
             }
 
+            /// <summary>
+            /// Region to draw text
+            /// </summary>
+            public Vector2 StringRect
+            {
+                get
+                {
+                    return stringRect;
+                }
+
+                set
+                {
+                    stringRect = value;
+                }
+            }
+
+            public bool AutoSize
+            {
+                get
+                {
+                    return autoSize;
+                }
+
+                set
+                {
+                    autoSize = value;
+                }
+            }
+
             public Button()
             {
                 Init();
@@ -99,16 +134,62 @@ namespace Wartorn
             /// <param name="position">Position of the top left corner</param>
             /// <param name="size">Size of the button</param>
             /// <param name="font">Font to use</param>
-            public Button(string text, Point position, Vector2 size, SpriteFont font)
+            /// 
+            //public Button(string text, Point position, Vector2 size, SpriteFont font)
+            //{
+            //    contentType = ButtonContentType.Text;
+            //    Text = text;
+            //    Position = position;
+            //    Size = size;
+            //    this.font = font;
+            //    Init();
+            //}
+
+            private void CalculateSize(Vector2 size)
+            {
+                //Distance between text and border
+                Size= new Vector2 (size.X + size.X / 2, size.Y + size.Y / 2);
+
+                //Region to draw text
+                StringRect = new Vector2(Position.X+ size.X / 4, Position.Y+ size.Y / 4);
+            }
+
+            //Add new constructor
+            public Button(string text, Point position,  SpriteFont font)
+            {
+
+                contentType = ButtonContentType.Text;
+                Text = text;
+                Position = position;
+
+                
+
+                CalculateSize(font.MeasureString(text));
+                
+                this.font = font;
+                
+
+                Init();
+            }
+
+
+            public Button(string text,Point position,Vector2 size ,SpriteFont font,bool _autoSize)
             {
                 contentType = ButtonContentType.Text;
                 Text = text;
                 Position = position;
-                Size = size;
                 this.font = font;
+                if (_autoSize)
+                {
+                    CalculateSize(font.MeasureString(text));
+                    AutoSize = _autoSize;
+                }
+                else
+                {
+                    Size = size;
+                }
                 Init();
             }
-
             /// <summary>
             /// Sprite button
             /// </summary>
@@ -142,6 +223,8 @@ namespace Wartorn
                 Init();
             }
 
+
+           
             public Button(Texture2D sprite,Rectangle? spriterect, Point position, float scale = 1)
             {
                 contentType = ButtonContentType.Sprite;
@@ -187,7 +270,8 @@ namespace Wartorn
                 switch (contentType)
                 {
                     case ButtonContentType.Text:
-                        spriteBatch.DrawString(font != null ? font : CONTENT_MANAGER.defaultfont, (string.IsNullOrEmpty(text)) ? "" : text, new Vector2(rect.X, rect.Y) + Size / 4, foregroundColor, Rotation, origin, scale, SpriteEffects.None, LayerDepth.GuiUpper);
+                        spriteBatch.DrawString(font != null ? font : CONTENT_MANAGER.defaultfont, (string.IsNullOrEmpty(text)) ? "" : text, StringRect, foregroundColor, Rotation, origin, scale, SpriteEffects.None, LayerDepth.GuiUpper);
+                        
                         DrawingHelper.DrawRectangle(internalRect, isPressed ? buttonColorPressed : buttonColorReleased, true);
                         DrawingHelper.DrawRectangle(rect, borderColor, false);
                         break;

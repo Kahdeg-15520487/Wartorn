@@ -66,7 +66,6 @@ namespace Wartorn.PathFinding
         {
             var path = graph.FindShortestPath(destination.toString());
 
-
             var result = new List<Point>();
             foreach (string node in path)
             {
