@@ -270,8 +270,6 @@ namespace Wartorn.Screens.MainGameScreen
                 return;
             }
 
-            UpdateAnimation(gameTime);
-
             //update canvas
             canvas.Update(CONTENT_MANAGER.inputState, CONTENT_MANAGER.lastInputState);
             ((Label)canvas["label_mousepos"]).Text = mouseInputState.Position.ToString();
@@ -311,6 +309,8 @@ namespace Wartorn.Screens.MainGameScreen
                     lastSelectedMapCell = selectedMapCell;
                 }
             }
+
+            UpdateAnimation(gameTime);
         }
 
         #region Update game logic
