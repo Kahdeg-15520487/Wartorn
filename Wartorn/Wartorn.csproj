@@ -39,6 +39,7 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Drawing\DirectionArrowRenderer.cs" />
     <Compile Include="Drawing\MovingUnitAnimation.cs" />
     <Compile Include="DropdownDialog.cs">
       <SubType>Form</SubType>

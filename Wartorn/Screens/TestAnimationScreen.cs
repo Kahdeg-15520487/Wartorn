@@ -54,6 +54,7 @@ namespace Wartorn.Screens
         bool isMovingUnitAnimPlaying = false;
         bool isMovePathCalculated = false;
         MovingUnitAnimation movingAnim;
+        DirectionArrowRenderer dirarrowRenderer = new DirectionArrowRenderer();
 
         public TestAnimationScreen(GraphicsDevice device) : base(device, "TestAnimationScreen")
         {   }
@@ -237,6 +238,7 @@ namespace Wartorn.Screens
                 {
                     //update movement path
                     movementPath = DijkstraHelper.FindPath(dijkstarGraph, selectedMapCell);
+                    dirarrowRenderer.UpdatePath(movementPath);
                     lastSelectedMapCell = selectedMapCell;
                 }
             }
@@ -261,10 +263,11 @@ namespace Wartorn.Screens
             }
             else
             {
-                if (movementRange != null && movementRange.Contains(selectedMapCell))
+                if (!isMovingUnitAnimPlaying)
                 {
-                    if (!isMovingUnitAnimPlaying)
+                    if (movementRange != null && movementRange.Contains(selectedMapCell))
                     {
+
                         //play sfx
                         CONTENT_MANAGER.moving_out.Play();
 
@@ -273,19 +276,19 @@ namespace Wartorn.Screens
                         isMovingUnitAnimPlaying = true;
 
                         //create a new animation object
-                        movingAnim = new MovingUnitAnimation(map[selectedUnit].unit,movementPath, new Point(selectedUnit.X * Constants.MapCellWidth, selectedUnit.Y * Constants.MapCellHeight));
-                        
+                        movingAnim = new MovingUnitAnimation(map[selectedUnit].unit, movementPath, new Point(selectedUnit.X * Constants.MapCellWidth, selectedUnit.Y * Constants.MapCellHeight));
+
                         //ngung vẽ path
                         isMovePathCalculated = false;
 
                         //ngưng update animation cho unit gốc                        
                         map[selectedUnit].unit.Animation.StopAnimation();
                     }
-                }
-                else
-                {
-                    //bỏ lựa chọn unit sau khi đã chọn unit
-                    DeselectUnit();
+                    else
+                    {
+                        //bỏ lựa chọn unit sau khi đã chọn unit
+                        DeselectUnit();
+                    }
                 }
             }
         }
@@ -329,16 +332,7 @@ namespace Wartorn.Screens
             DrawMap(CONTENT_MANAGER.spriteBatch, gameTime);
 
             CONTENT_MANAGER.spriteBatch.DrawString(CONTENT_MANAGER.arcadefont, currentColor.ToString() + Environment.NewLine + currentUnit.ToString() + Environment.NewLine + currentAnimation.ToString(), new Vector2(100, 0), Color.White);
-
-            //draw moving anim
-            //if (movingAnim != null && !movingAnim.IsArrived)
-            //{
-            //    CONTENT_MANAGER.spriteBatch.DrawString(CONTENT_MANAGER.defaultfont, movingUnitPosition.toString(), new Vector2(500, 0), Color.White);
-
-            //    movingUnit.Animation.Position = movingUnitPosition.ToVector2();
-            //    movingUnit.Animation.Draw(gameTime, CONTENT_MANAGER.spriteBatch);
-            //}
-
+            
             if (console.IsVisible)
             {
                 console.Draw(CONTENT_MANAGER.spriteBatch);
@@ -370,7 +364,8 @@ namespace Wartorn.Screens
 
             if (movementPath!=null && isMovePathCalculated)
             {
-                DrawPathDirectionArrow(spriteBatch);
+                dirarrowRenderer.UpdatePath(movementPath);
+                dirarrowRenderer.Draw(spriteBatch);
             }
 
             spriteBatch.End();
@@ -386,45 +381,6 @@ namespace Wartorn.Screens
                 {
                     spriteBatch.Draw(CONTENT_MANAGER.moveOverlay, new Vector2(dest.X * Constants.MapCellWidth, dest.Y * Constants.MapCellHeight), null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.GuiBackground);
                 }
-            }
-        }
-
-
-
-        private void DrawPathDirectionArrow(SpriteBatch spriteBatch)
-        {
-            if (movementPath.Count<=2)
-            {
-                return;
-            }
-
-            List<Rectangle> rects = new List<Rectangle>();
-
-            for (int i = 1; i < movementPath.Count-1; i++)
-            {
-                bool isVertical = true;
-                Direction result = HelperFunction.GetIntersectionDir(movementPath[i - 1], movementPath[i], movementPath[i + 1]);
-
-                switch (result)
-                {
-                    case Direction.South:
-                        rects.Add(DirectionArrowSpriteSourceRectangle.GetSpriteRectangle( Direction.Center,true));
-                        break;
-                    case Direction.East:
-                        rects.Add(DirectionArrowSpriteSourceRectangle.GetSpriteRectangle(Direction.Center, false));
-                        break;
-                    default:
-                        rects.Add(DirectionArrowSpriteSourceRectangle.GetSpriteRectangle(result, false));
-                        break;
-                }                
-            }
-            rects.Add(DirectionArrowSpriteSourceRectangle.GetSpriteRectangle(movementPath[movementPath.Count - 2].GetDirectionFromPointAtoPointB(movementPath[movementPath.Count - 1])));
-
-            //CONTENT_MANAGER.ShowMessageBox(lala.ToString());
-            
-            for(int i=1;i<movementPath.Count;i++)
-            {
-                spriteBatch.Draw(CONTENT_MANAGER.directionarrow, new Vector2(movementPath[i].X * Constants.MapCellWidth, movementPath[i].Y * Constants.MapCellHeight), rects[i - 1], Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.GuiLower);
             }
         }
     }
