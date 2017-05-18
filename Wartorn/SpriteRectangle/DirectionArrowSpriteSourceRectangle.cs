@@ -32,7 +32,7 @@ namespace Wartorn.SpriteRectangle
         public static void LoadSprite()
         {
             DirArrowSprite = new Dictionary<SpriteSheetDirectionArrow, Rectangle>();
-
+            
             for (int i = 0; i < 10; i++)
             {
                 DirArrowSprite.Add((SpriteSheetDirectionArrow)i, new Rectangle(i * 48, 0, 48, 48));

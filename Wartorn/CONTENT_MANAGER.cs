@@ -42,6 +42,8 @@ namespace Wartorn
         public static Texture2D selectCursor;
         public static Texture2D attackCursor;
 
+        public static Texture2D caigidoSpriteSheet;
+
         #region animation sprite sheet
         public static Dictionary<SpriteSheetUnit, AnimatedEntity> animationEntities;
         public static Dictionary<SpriteSheetUnit, Texture2D> animationSheets;
@@ -65,6 +67,8 @@ namespace Wartorn
 
             selectCursor = Content.Load<Texture2D>(@"sprite\Cursor\Select_Cursor");
             attackCursor = Content.Load<Texture2D>(@"sprite\Cursor\Attack_Cursor");
+
+            caigidoSpriteSheet = Content.Load<Texture2D>(@"sprite\building");
 
             LoadAnimationContent();
 

@@ -61,7 +61,7 @@ namespace Wartorn.Screens.MainGameScreen
 
             Button button_selectmap = new Button(UISpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetUI.Open), new Point(650, 20), 0.5f);
             Button button_exit = new Button(UISpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetUI.Exit), new Point(5, 5), 0.5f);
-            Button button_start = new Button("Start", new Point(100,50), CONTENT_MANAGER.arcadefont);
+            Button button_start = new Button("Start", new Point(100,50),null, CONTENT_MANAGER.arcadefont);
 
             //bind event
             button_selectmap.MouseClick += (sender, e) =>
