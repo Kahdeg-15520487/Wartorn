@@ -19,10 +19,10 @@ using Wartorn.CustomJsonConverter;
 using Wartorn.Screens;
 using Wartorn.Drawing;
 using Wartorn.Drawing.Animation;
+using Wartorn.SpriteRectangle;
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Wartorn.SpriteRectangle;
 
 namespace Wartorn
 {
@@ -71,7 +71,7 @@ namespace Wartorn
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            TerrainSpriteSheetSourceRectangle.LoadSprite();
+            TerrainSpriteSourceRectangle.LoadSprite();
             UISpriteSheetSourceRectangle.LoadSprite();
             UnitSpriteSheetRectangle.LoadSprite();
             BuildingSpriteSourceRectangle.LoadSprite();

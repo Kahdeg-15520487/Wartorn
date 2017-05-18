@@ -48,16 +48,12 @@ namespace Wartorn.Screens
         UIClass.Console console;
 
         //information to animate a moving unit
-        Unit movingUnit = null;
-        Graph dijkstarGraph = null;
-        List<Point> movementPath = null;
-        Point movingUnitPosition;
+        Graph dijkstarGraph;
+        List<Point> movementPath;
         Point destination;
-        int currentdest = 0;
-        bool isArrived = false;
+        bool isMovingUnitAnimPlaying = false;
         bool isMovePathCalculated = false;
-        float totalElapsedTime = 0;
-        float delay = 50; //ms
+        MovingUnitAnimation movingAnim;
 
         public TestAnimationScreen(GraphicsDevice device) : base(device, "TestAnimationScreen")
         {   }
@@ -229,7 +225,7 @@ namespace Wartorn.Screens
                 SelectUnit();
             }
 
-            if (movingUnit!=null)
+            if (isMovingUnitAnimPlaying)
             {
                 UpdateMovingUnit(gameTime);
             }
@@ -254,7 +250,7 @@ namespace Wartorn.Screens
             //check if there is a unit at selectedMapCell
             //and if said unit is not already selected
             //and if there is no animation going on
-            if (temp.unit != null && movingUnit == null && selectedUnit != selectedMapCell)
+            if (temp.unit != null && !isMovingUnitAnimPlaying && selectedUnit != selectedMapCell)
             {
                 //play sfx
                 CONTENT_MANAGER.yes1.Play();
@@ -265,28 +261,24 @@ namespace Wartorn.Screens
             }
             else
             {
-                if (movementRange != null && movementRange.Contains(selectedMapCell) )
+                if (movementRange != null && movementRange.Contains(selectedMapCell))
                 {
-                    if (destination != selectedMapCell)
+                    if (!isMovingUnitAnimPlaying)
                     {
                         //play sfx
                         CONTENT_MANAGER.moving_out.Play();
 
                         //we gonna move unit by moving a clone of it then teleport it to the destination
                         destination = selectedMapCell;
-                        movingUnit = map[selectedUnit].unit;
-                        movingUnit = UnitCreationHelper.Create(movingUnit.UnitType, movingUnit.Owner);
-                        movingUnit.Animation.Depth = LayerDepth.Unit;
-                        //the path
-                        //movementPath = DijkstraHelper.FindPath(dijkstarGraph, destination);
+                        isMovingUnitAnimPlaying = true;
 
+                        //create a new animation object
+                        movingAnim = new MovingUnitAnimation(map[selectedUnit].unit,movementPath, new Point(selectedUnit.X * Constants.MapCellWidth, selectedUnit.Y * Constants.MapCellHeight));
+                        
                         //ngung vẽ path
                         isMovePathCalculated = false;
 
-                        //the starting node
-                        currentdest = 0;
-                        movingUnitPosition = new Point(selectedUnit.X * Constants.MapCellWidth, selectedUnit.Y * Constants.MapCellHeight);
-                        isArrived = false;
+                        //ngưng update animation cho unit gốc                        
                         map[selectedUnit].unit.Animation.StopAnimation();
                     }
                 }
@@ -303,14 +295,14 @@ namespace Wartorn.Screens
             movementRange = null;
             movementPath = null;
             isMovePathCalculated = false;
-            movingUnit = null;
+            isMovingUnitAnimPlaying = false;
             selectedUnit = default(Point);
             destination = default(Point);
         }
 
         private void UpdateMovingUnit(GameTime gameTime)
         {
-            if (isArrived)
+            if (movingAnim.IsArrived)
             {
                 //this line is only necessary for this screen
                 position = destination;
@@ -323,69 +315,7 @@ namespace Wartorn.Screens
                 return;
             }
 
-            totalElapsedTime += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-            AnimationName anim = movingUnit.Animation.CurntAnimationName.ToEnum<AnimationName>();
-            bool isLeft = movingUnit.Animation.FlipEffect == SpriteEffects.FlipHorizontally ? true : false;
-
-            if (totalElapsedTime >= delay)
-            {
-                if (currentdest < movementPath.Count)
-                {
-                    int currentdestX = movementPath[currentdest].X * Constants.MapCellWidth;
-                    int currentdestY = movementPath[currentdest].Y * Constants.MapCellHeight;
-
-                    if (movingUnitPosition.X < currentdestX)
-                    {
-                        //to the right
-                        anim = AnimationName.right;
-                        movingUnitPosition.X += 12;
-                    }
-                    else
-                    {
-                        if (movingUnitPosition.X > currentdestX)
-                        {
-                            //to the left
-                            anim = AnimationName.right;
-                            movingUnitPosition.X -= 12;
-                            isLeft = true;
-                        }
-                    }
-
-                    if (movingUnitPosition.Y < currentdestY)
-                    {
-                        //down
-                        movingUnitPosition.Y += 12;
-                        anim = AnimationName.down;
-                    }
-                    else
-                    {
-                        if (movingUnitPosition.Y > currentdestY)
-                        {
-                            //up
-                            movingUnitPosition.Y -= 12;
-                            anim = AnimationName.up;
-                        }
-                    }
-
-                    if (movingUnitPosition.X == currentdestX
-                     && movingUnitPosition.Y == currentdestY)
-                    {
-                        currentdest++;
-                    }
-                }
-                else
-                {
-                    isArrived = true;
-                    currentdest = 0;
-                }
-
-                totalElapsedTime -= totalElapsedTime;
-            }
-
-
-            movingUnit.Animation.PlayAnimation(anim.ToString());
-            movingUnit.Animation.FlipEffect = isLeft ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
-            movingUnit.Animation.Update(gameTime);
+            movingAnim.Update(gameTime);
         }
 
         private void DisplayMovementRange(Unit unit, Point position)
@@ -400,13 +330,14 @@ namespace Wartorn.Screens
 
             CONTENT_MANAGER.spriteBatch.DrawString(CONTENT_MANAGER.arcadefont, currentColor.ToString() + Environment.NewLine + currentUnit.ToString() + Environment.NewLine + currentAnimation.ToString(), new Vector2(100, 0), Color.White);
 
-            if (movingUnit != null && !isArrived)
-            {
-                CONTENT_MANAGER.spriteBatch.DrawString(CONTENT_MANAGER.defaultfont, movingUnitPosition.toString(), new Vector2(500, 0), Color.White);
+            //draw moving anim
+            //if (movingAnim != null && !movingAnim.IsArrived)
+            //{
+            //    CONTENT_MANAGER.spriteBatch.DrawString(CONTENT_MANAGER.defaultfont, movingUnitPosition.toString(), new Vector2(500, 0), Color.White);
 
-                movingUnit.Animation.Position = movingUnitPosition.ToVector2();
-                movingUnit.Animation.Draw(gameTime, CONTENT_MANAGER.spriteBatch);
-            }
+            //    movingUnit.Animation.Position = movingUnitPosition.ToVector2();
+            //    movingUnit.Animation.Draw(gameTime, CONTENT_MANAGER.spriteBatch);
+            //}
 
             if (console.IsVisible)
             {
@@ -428,6 +359,12 @@ namespace Wartorn.Screens
             //draw cursor
             spriteBatch.Draw(CONTENT_MANAGER.selectCursor, new Vector2(selectedMapCell.X * Constants.MapCellWidth, selectedMapCell.Y * Constants.MapCellHeight), null, Color.White, 0f, new Vector2(6, 6), 1f, SpriteEffects.None, LayerDepth.GuiUpper);
 
+            //draw moving animation
+            if (isMovingUnitAnimPlaying)
+            {
+                movingAnim.Draw(spriteBatch, gameTime);
+            }
+
             //draw unit movement range
             DrawSelectedUnitMovementRange(spriteBatch);
 
@@ -443,7 +380,7 @@ namespace Wartorn.Screens
 
         private void DrawSelectedUnitMovementRange(SpriteBatch spriteBatch)
         {
-            if (movingUnit == null && movementRange!=null)
+            if (!isMovingUnitAnimPlaying && movementRange!=null)
             {
                 foreach (Point dest in movementRange)
                 {

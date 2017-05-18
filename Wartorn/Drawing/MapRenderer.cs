@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Wartorn.GameData;
 using Wartorn.Drawing.Animation;
 using Wartorn.Utility;
-using System.IO;
+using Wartorn.SpriteRectangle;
 
 namespace Wartorn.Drawing
 {
@@ -32,15 +33,15 @@ namespace Wartorn.Drawing
                     tempmapcell = map[i, j];
                     if (tempmapcell.terrainbase != SpriteSheetTerrain.None)
                     {
-                        spriteBatch.Draw(CONTENT_MANAGER.spriteSheet, curpos, TerrainSpriteSheetSourceRectangle.GetSpriteRectangle(tempmapcell.terrainbase), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.TerrainBase);
+                        spriteBatch.Draw(CONTENT_MANAGER.spriteSheet, curpos, TerrainSpriteSourceRectangle.GetSpriteRectangle(tempmapcell.terrainbase), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.TerrainBase);
                     }
                     if (tempmapcell.terrainLower != SpriteSheetTerrain.None)
                     {
-                        spriteBatch.Draw(CONTENT_MANAGER.spriteSheet, curpos, TerrainSpriteSheetSourceRectangle.GetSpriteRectangle(tempmapcell.terrainLower), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.TerrainLower);
+                        spriteBatch.Draw(CONTENT_MANAGER.spriteSheet, curpos, TerrainSpriteSourceRectangle.GetSpriteRectangle(tempmapcell.terrainLower), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.TerrainLower);
                     }
                     if (tempmapcell.terrainUpper != SpriteSheetTerrain.None)
                     {
-                        spriteBatch.Draw(CONTENT_MANAGER.spriteSheet, curpos, TerrainSpriteSheetSourceRectangle.GetSpriteRectangle(tempmapcell.terrainUpper), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.TerrainUpper);
+                        spriteBatch.Draw(CONTENT_MANAGER.spriteSheet, curpos, TerrainSpriteSourceRectangle.GetSpriteRectangle(tempmapcell.terrainUpper), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.TerrainUpper);
                     }
 
                     if (tempmapcell.unit != null)
@@ -71,15 +72,15 @@ namespace Wartorn.Drawing
                     {
                         if (tempmapcell.terrainbase != SpriteSheetTerrain.None)
                         {
-                            spriteBatch.Draw(CONTENT_MANAGER.spriteSheet, curpos, TerrainSpriteSheetSourceRectangle.GetSpriteRectangle(tempmapcell.terrainbase), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.TerrainBase);
+                            spriteBatch.Draw(CONTENT_MANAGER.spriteSheet, curpos, TerrainSpriteSourceRectangle.GetSpriteRectangle(tempmapcell.terrainbase), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.TerrainBase);
                         }
                         if (tempmapcell.terrainLower != SpriteSheetTerrain.None)
                         {
-                            spriteBatch.Draw(CONTENT_MANAGER.spriteSheet, curpos, TerrainSpriteSheetSourceRectangle.GetSpriteRectangle(tempmapcell.terrainLower), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.TerrainLower);
+                            spriteBatch.Draw(CONTENT_MANAGER.spriteSheet, curpos, TerrainSpriteSourceRectangle.GetSpriteRectangle(tempmapcell.terrainLower), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.TerrainLower);
                         }
                         if (tempmapcell.terrainUpper != SpriteSheetTerrain.None)
                         {
-                            spriteBatch.Draw(CONTENT_MANAGER.spriteSheet, curpos, TerrainSpriteSheetSourceRectangle.GetSpriteRectangle(tempmapcell.terrainUpper), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.TerrainUpper);
+                            spriteBatch.Draw(CONTENT_MANAGER.spriteSheet, curpos, TerrainSpriteSourceRectangle.GetSpriteRectangle(tempmapcell.terrainUpper), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.TerrainUpper);
                         }
 
                         if (tempmapcell.unit != null)
