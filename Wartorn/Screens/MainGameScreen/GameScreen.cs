@@ -30,6 +30,13 @@ using Wartorn.PathFinding;
 
 namespace Wartorn.Screens.MainGameScreen
 {
+    enum GameState
+    {
+        None,
+        UnitSelected,
+        BuildingSelected
+    }
+
     class GameScreen : Screen
     {
         //information of this game session
@@ -76,7 +83,7 @@ namespace Wartorn.Screens.MainGameScreen
 
         //build unit information
         UnitType selectedUnitToBuild = UnitType.None;
-        Point selectedFactoryToBuild = new Point(0, 0);
+        Point selectedBuilding = default(Point);
 
         //current unit selection
         Point selectedUnit = default(Point);
@@ -93,6 +100,9 @@ namespace Wartorn.Screens.MainGameScreen
 
         //fog of war
         bool[,] mapcellVisibility;
+
+        //game state
+        GameState currentGameState = GameState.None;
 
         public GameScreen(GraphicsDevice device) : base(device, "GameScreen")
         {
@@ -189,11 +199,15 @@ namespace Wartorn.Screens.MainGameScreen
         {
             //declare ui elements
             InitCanvas_Factory();
+            InitCanvas_Airport();
+            InitCanvas_Harbor();
 
             //bind event
 
             //add to canvas
             canvas_action.AddElement("canvas_Factory", canvas_action_Factory);
+            canvas_action.AddElement("canvas_Airport", canvas_action_Airport);
+            canvas_action.AddElement("canvas_Harbor", canvas_action_Harbor);
         }
 
         private void InitCanvas_Factory()
@@ -247,6 +261,16 @@ namespace Wartorn.Screens.MainGameScreen
             canvas_action_Factory.AddElement("button_Rocket", button_Rocket);
             canvas_action_Factory.AddElement("button_AntiAir", button_AntiAir);
             canvas_action_Factory.AddElement("button_Missile", button_Missile);
+        }
+
+        private void InitCanvas_Airport()
+        {
+            canvas_action_Airport = new Canvas();
+        }
+
+        private void InitCanvas_Harbor()
+        {
+            canvas_action_Harbor = new Canvas();
         }
         #endregion
 
@@ -333,8 +357,9 @@ namespace Wartorn.Screens.MainGameScreen
 
                 selectedUnit = selectedMapCell;
                 canvas_generalInfo.GetElementAs<Label>("label_unittype").Text = temp.unit.UnitType.ToString() + Environment.NewLine + temp.unit.Owner.ToString();
-                DisplayMovementRange(temp.unit,selectedUnit);
+                DisplayMovementRange(temp.unit, selectedUnit);
                 isMovePathCalculated = true;
+                currentGameState = GameState.UnitSelected;
             }
             else
             {
@@ -377,6 +402,7 @@ namespace Wartorn.Screens.MainGameScreen
             isMovingUnitAnimPlaying = false;
             selectedUnit = default(Point);
             destination = default(Point);
+            currentGameState = GameState.None;
         }
         private void UpdateMovingUnit(GameTime gameTime)
         {
@@ -406,17 +432,26 @@ namespace Wartorn.Screens.MainGameScreen
             if (temp.unit == null
              && isBuildingThatProduceUnit(temp.terrain)
              && currentPlayer == localPlayer
-             && temp.owner == playerInfos[localPlayer].owner)
+             && temp.owner == playerInfos[localPlayer].owner
+             && selectedBuilding != selectedMapCell)
             {
+                
                 switch (temp.terrain)
                 {
                     case TerrainType.Factory:
                         canvas_action_Factory.IsVisible = true;
-                        selectedFactoryToBuild = selectedMapCell;
+                        selectedBuilding = selectedMapCell;
+                        currentGameState = GameState.BuildingSelected;
                         break;
                     case TerrainType.AirPort:
+                        canvas_action_Airport.IsVisible = true;
+                        selectedBuilding = selectedMapCell;
+                        currentGameState = GameState.BuildingSelected;
                         break;
                     case TerrainType.Harbor:
+                        canvas_action_Harbor.IsVisible = true;
+                        selectedBuilding = selectedMapCell;
+                        currentGameState = GameState.BuildingSelected;
                         break;
                     default:
                         break;
@@ -426,15 +461,24 @@ namespace Wartorn.Screens.MainGameScreen
             {
                 if (!actionbound.Contains(mouseInputState.Position))
                 {
-                    canvas_action_Factory.IsVisible = false;
+                    DeselectBuilding();
                 }
             }
 
             if (selectedUnitToBuild != UnitType.None)
             {
-                SpawnUnit(selectedUnitToBuild, playerInfos[localPlayer], selectedFactoryToBuild);
+                SpawnUnit(selectedUnitToBuild, playerInfos[localPlayer], selectedBuilding);
                 selectedUnitToBuild = UnitType.None;
             }
+        }
+
+        private void DeselectBuilding()
+        {
+            selectedBuilding = default(Point);
+            canvas_action_Factory.IsVisible = false;
+            canvas_action_Airport.IsVisible = false;
+            canvas_action_Harbor.IsVisible = false;
+            currentGameState = GameState.None;
         }
 
         private bool SpawnUnit(UnitType unittype,PlayerInfo owner,Point location)
@@ -519,6 +563,8 @@ namespace Wartorn.Screens.MainGameScreen
             //draw the guibackground
             CONTENT_MANAGER.spriteBatch.Draw(guibackground, new Vector2(0, 0), null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.GuiBackground);
             canvas.Draw(CONTENT_MANAGER.spriteBatch);
+
+            CONTENT_MANAGER.spriteBatch.DrawString(CONTENT_MANAGER.defaultfont, currentGameState.ToString(), new Vector2(100, 100), Color.Red);
 
             //draw canvas_generalInfo
             DrawCanvas_generalInfo();

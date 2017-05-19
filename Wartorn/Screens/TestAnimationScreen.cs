@@ -22,10 +22,6 @@ namespace Wartorn.Screens
 {
     public class TestAnimationScreen : Screen
     {
-        //Dictionary<UnitType, Unit> RedUnitList;
-        //Dictionary<UnitType, Unit> BlueUnitList;
-        //Dictionary<UnitType, Unit> GreenUnitList;
-        //Dictionary<UnitType, Unit> YellowUnitList;
 
         UnitType currentUnit = UnitType.Soldier;
         AnimationName currentAnimation = AnimationName.idle;
