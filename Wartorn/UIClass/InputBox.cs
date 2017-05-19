@@ -29,13 +29,28 @@ namespace Wartorn.UIClass
                 textBuffer.Append(value);
             }
         }
+
+        //Chau Van Sang adds 
+        /// <summary>
+        /// Speed of flicker (change between "" and "|")
+        /// </summary>       
+        private const int speed_flick = 25;
+        /// <summary>
+        /// Increase until equal to speed_flicker and change isCursor_flicker value then reset to 0
+        /// </summary>
+        private int temp_speed_flicker = 0;
+        /// <summary>
+        /// Use to change between "" and "|"
+        /// </summary>
+        private bool isCursor_flicker = false;
+
         public Color caretColor { get; set; } = Color.DarkGray;
         public int CursorPosition { get; set; }
         public List<char> ignoreCharacter;
         private int maxTextLength;
         private int textSpacing;
 
-        public InputBox(string text, Point position, Vector2 size, SpriteFont font,Color foregroundColor ,Color backgroundColor)
+        public InputBox(string text, Point position, Vector2 size, SpriteFont font, Color foregroundColor, Color backgroundColor)
         {
             Text = text;
             Position = position;
@@ -77,6 +92,15 @@ namespace Wartorn.UIClass
         {
             base.Update(inputState, lastInputState);
 
+            //Chau Van Sang adds isCursor for cursor flickering
+
+            temp_speed_flicker += 1;
+            if (temp_speed_flicker == speed_flick)
+            {
+                isCursor_flicker = !isCursor_flicker;
+                temp_speed_flicker = 0;
+            }
+
             if (HelperFunction.IsKeyPress(Keys.Back))
             {
                 if (textBuffer.Length > 0)
@@ -102,10 +126,11 @@ namespace Wartorn.UIClass
 
         public override void Draw(SpriteBatch spriteBatch)
         {
+
             spriteBatch.DrawString(font, textBuffer, rect.Location.ToVector2(), foregroundColor, Rotation, origin, scale, SpriteEffects.None, LayerDepth.GuiLower);
 
             //Draw text caret
-            spriteBatch.DrawString(font, "|", rect.Location.ToVector2() + new Vector2(CursorPosition * textSpacing - 5, -2), caretColor);
+            spriteBatch.DrawString(font, isCursor_flicker ? "" : "|", rect.Location.ToVector2() + new Vector2(CursorPosition * textSpacing - 5, -2), caretColor);
 
             DrawingHelper.DrawRectangle(rect, backgroundColor, true);
         }
