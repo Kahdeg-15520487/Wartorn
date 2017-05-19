@@ -70,9 +70,14 @@ namespace Wartorn.UIClass
         {
             if (isFocused)
             {
+                if (font.MeasureString(textBuffer).X > rect.X - 1)
+                {
+                    return;
+                }
                 if (font.Characters.Contains(e.Character) && !ignoreCharacter.Contains(e.Character))
                 {
                     textBuffer.Append(e.Character);
+                    
                     CursorPosition++;
                 }
             }
