@@ -10,7 +10,7 @@ namespace Client
 {
     public class Player : IDisposable
     {
-
+        #region Event
         public event EventHandler<string> received_message;
 
         public event EventHandler entered_succeed;
@@ -22,27 +22,54 @@ namespace Client
         public event EventHandler another_left;
 
         public event EventHandler<string> received_chat;
-        /// <summary>
-        /// Đối tượng SimpleTcpClient kết nối với server
-        /// </summary>
+     
         private SimpleTCP.SimpleTcpClient simpleClient;
-        /// <summary>
-        /// Số phòng của Client
-        /// </summary>
+        #endregion
+
         private int room;
         /// <summary>
         /// Số thứ thự trong phòng
         /// </summary>
         private int index;
-        public SimpleTcpClient SimpleClient { get => simpleClient; set => simpleClient = value; }
 
-        public int Room { get => room; set => room = value; }
+        /// <summary>
+        /// Số phòng của Client
+        /// </summary>
+        public int Room
+        {
+            get
+            {
+                return room;
+            }
+
+            set
+            {
+                room = value;
+            }
+        }
+
+        /// <summary>
+        /// Đối tượng SimpleTcpClient kết nối với server
+        /// </summary>
+        public SimpleTcpClient SimpleClient
+        {
+            get
+            {
+                return simpleClient;
+            }
+
+            set
+            {
+                simpleClient = value;
+            }
+        }
+
         public Player(string IP)
         {
 
             try
             {
-                simpleClient = new SimpleTcpClient().Connect(IP, 9000);
+                SimpleClient = new SimpleTcpClient().Connect(IP, 9000);
                 SimpleClient.DataReceived += SimpleClient_DataReceived;
             }
             catch (Exception)
@@ -64,11 +91,11 @@ namespace Client
                 {
                     case "your room is":
 
-                        room = System.Convert.ToInt32(temp[1]);
+                        Room = System.Convert.ToInt32(temp[1]);
                         index = System.Convert.ToInt32(temp[2]);
                         if (created_room != null)
                         {
-                            created_room(null, room);
+                            created_room(null, Room);
                         }
 
                         break;
@@ -84,7 +111,7 @@ namespace Client
                         break;
                     case "enter succeed":
 
-                        room = Convert.ToInt32(temp[1]);
+                        Room = Convert.ToInt32(temp[1]);
                         index = Convert.ToInt32(temp[2]);
                         if (entered_succeed != null)
                         {
@@ -119,23 +146,20 @@ namespace Client
 
 
 
-        public void SendToAnother(string message)
-        {
-            StringBuilder temp = new StringBuilder();
-            temp.Append(message);
+       
 
-            temp.AppendFormat("update|{0}|{1}", room, index);
-            simpleClient.WriteLine(temp.ToString());
-        }
-
+        /// <summary>
+        /// Send update state to another phayer
+        /// </summary>
+        /// <param name="obj"></param>
         public void SendOjectToAnother(Object obj)
         {
             try
             {
                 string send_message = JsonConvert.SerializeObject(obj);
                 StringBuilder temp = new StringBuilder();
-                temp.AppendFormat("send message|{0}|{1}|{2}", send_message, room, index);
-                simpleClient.WriteLine(temp.ToString());
+                temp.AppendFormat("update|{0}|{1}|{2}", send_message, Room, index);
+                SimpleClient.WriteLine(temp.ToString());
             }
             catch (Exception e)
             {
@@ -143,24 +167,38 @@ namespace Client
             }
 
         }
+        /// <summary>
+        /// Chat with another phayer in same room
+        /// </summary>
+        /// <param name="message"></param>
         public void ChatWithAnother(string message)
         {
             StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.AppendFormat("chat with another player|{0}|{1}|{2}", room, index, message);
-            simpleClient.WriteLine(stringBuilder.ToString());
+            stringBuilder.AppendFormat("chat with another player|{0}|{1}|{2}", Room, index, message);
+            SimpleClient.WriteLine(stringBuilder.ToString());
         }
+        /// <summary>
+        /// Create new room
+        /// </summary>
         public void CreateRoom()
         {
-            simpleClient.WriteLine("create room|");
+            SimpleClient.WriteLine("create room|");
         }
+        /// <summary>
+        /// Go to room
+        /// </summary>
+        /// <param name="roomNumber"></param>
         public void GotoRoom(int roomNumber)
         {
-            simpleClient.WriteLine("go to room|" + roomNumber.ToString());
+            SimpleClient.WriteLine("go to room|" + roomNumber.ToString());
         }
+        /// <summary>
+        /// Leave room
+        /// </summary>
         public void LeaveRoom()
         {
             StringBuilder temp = new StringBuilder();
-            temp.AppendFormat("leave room|{0}|{1}", room, index);
+            temp.AppendFormat("leave room|{0}|{1}", Room, index);
             SimpleClient.WriteLine(temp.ToString());
         }
 
