@@ -14,6 +14,8 @@ namespace Wartorn.UIClass
     public class InputBox : UIObject
     {
         StringBuilder textBuffer = new StringBuilder();
+
+        private string temp_text;
         /// <summary>
         /// The current text in the buffer. Assign text to this will clear the buffer.
         /// </summary>
@@ -70,14 +72,23 @@ namespace Wartorn.UIClass
         {
             if (isFocused)
             {
-                if (font.MeasureString(textBuffer).X > rect.X - 1)
-                {
-                    return;
-                }
+               
                 if (font.Characters.Contains(e.Character) && !ignoreCharacter.Contains(e.Character))
                 {
+                    if (font.MeasureString(textBuffer).X == rect.X)
+                    {
+                        temp_text = textBuffer.ToString();
+                        textBuffer.Append(e.Character);
+                    }
+                    if (font.MeasureString(textBuffer).X > rect.X - 1)
+                    {
+
+                        textBuffer.Append(e.Character);
+                        return;
+                    }
+
                     textBuffer.Append(e.Character);
-                    
+
                     CursorPosition++;
                 }
             }
@@ -108,8 +119,15 @@ namespace Wartorn.UIClass
 
             if (HelperFunction.IsKeyPress(Keys.Back))
             {
+
+
                 if (textBuffer.Length > 0)
                 {
+                    if (font.MeasureString(textBuffer).X > rect.X )
+                    {
+                        textBuffer.Remove(textBuffer.Length - 1, 1);
+                        return;
+                    }
                     textBuffer.Remove((CursorPosition - 1).Clamp(textBuffer.Length, 0), 1);
                     CursorPosition--;
                 }
@@ -131,8 +149,22 @@ namespace Wartorn.UIClass
 
         public override void Draw(SpriteBatch spriteBatch)
         {
+            try
+            {
+                if (font.MeasureString(textBuffer).X <= rect.X)
+                {
+                    spriteBatch.DrawString(font, textBuffer, rect.Location.ToVector2(), foregroundColor, Rotation, origin, scale, SpriteEffects.None, LayerDepth.GuiLower);
+                }
+                else
+                {
+                    spriteBatch.DrawString(font, temp_text, rect.Location.ToVector2(), foregroundColor, Rotation, origin, scale, SpriteEffects.None, LayerDepth.GuiLower);
+                }
+            }
+            catch (Exception)
+            {
 
-            spriteBatch.DrawString(font, textBuffer, rect.Location.ToVector2(), foregroundColor, Rotation, origin, scale, SpriteEffects.None, LayerDepth.GuiLower);
+
+            }
 
             //Draw text caret
             spriteBatch.DrawString(font, isCursor_flicker ? "" : "|", rect.Location.ToVector2() + new Vector2(CursorPosition * textSpacing - 5, -2), caretColor);
