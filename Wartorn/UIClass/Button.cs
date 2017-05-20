@@ -24,7 +24,18 @@ namespace Wartorn
             //Add region to draw text
             private Vector2 stringRect;
             //
-            private bool autoSize = false;
+            public override bool AutoSize
+            {
+                get
+                {
+                    return base.AutoSize;
+                }
+
+                set
+                {
+                    base.AutoSize = value;
+                }
+            }
 
             public Rectangle spriteSourceRectangle
             {
@@ -109,18 +120,7 @@ namespace Wartorn
                 }
             }
 
-            public bool AutoSize
-            {
-                get
-                {
-                    return autoSize;
-                }
-
-                set
-                {
-                    autoSize = value;
-                }
-            }
+         
 
             public Button()
             {
