@@ -51,5 +51,11 @@
     <Compile Include="Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Wartorn\Wartorn.csproj">
+      <Project>{861b7ca4-14d2-4051-a098-05baf4b86c77}</Project>
+      <Name>Wartorn</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

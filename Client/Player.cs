@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Wartorn;
 namespace Client
 {
     public class Player : IDisposable
@@ -72,9 +72,9 @@ namespace Client
                 SimpleClient = new SimpleTcpClient().Connect(IP, 9000);
                 SimpleClient.DataReceived += SimpleClient_DataReceived;
             }
-            catch (Exception)
+            catch (Exception er)
             {
-
+                Wartorn.Utility.HelperFunction.Log(er);
 
             }
 
@@ -136,17 +136,13 @@ namespace Client
                         break;
                 }
             }
-            catch (Exception)
+            catch (Exception er) 
             {
 
-
+                Wartorn.Utility.HelperFunction.Log(er); 
             }
 
         }
-
-
-
-       
 
         /// <summary>
         /// Send update state to another phayer
@@ -163,7 +159,8 @@ namespace Client
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+
+                Wartorn.Utility.HelperFunction.Log(e);
             }
 
         }
