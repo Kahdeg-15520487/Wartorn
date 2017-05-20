@@ -31,7 +31,18 @@ namespace Wartorn.UIClass
                 textBuffer.Append(value);
             }
         }
+        public override Vector2 Size
+        {
+            get
+            {
+                return base.Size;
+            }
 
+            set
+            {
+                base.Size = value;
+            }
+        }
         //Chau Van Sang adds 
         /// <summary>
         /// Speed of flicker (change between "" and "|")
@@ -52,11 +63,18 @@ namespace Wartorn.UIClass
         private int maxTextLength;
         private int textSpacing;
 
-        public InputBox(string text, Point position, Vector2 size, SpriteFont font, Color foregroundColor, Color backgroundColor)
+        public InputBox(string text, Point position, Vector2? size, SpriteFont font, Color foregroundColor, Color backgroundColor)
         {
             Text = text;
             Position = position;
-            Size = size;
+            if (size != null)
+            {
+                Size = size.Value;
+            }
+            else
+            {
+                
+            }
             this.font = font;
             this.foregroundColor = foregroundColor;
             this.backgroundColor = backgroundColor;
@@ -75,12 +93,12 @@ namespace Wartorn.UIClass
                
                 if (font.Characters.Contains(e.Character) && !ignoreCharacter.Contains(e.Character))
                 {
-                    if (font.MeasureString(textBuffer).X == rect.X)
+                    if (font.MeasureString(textBuffer).X == rect.Width)
                     {
                         temp_text = textBuffer.ToString();
                         textBuffer.Append(e.Character);
                     }
-                    if (font.MeasureString(textBuffer).X > rect.X - 1)
+                    if (font.MeasureString(textBuffer).X > rect.Width - 1)
                     {
 
                         textBuffer.Append(e.Character);
@@ -123,7 +141,7 @@ namespace Wartorn.UIClass
 
                 if (textBuffer.Length > 0)
                 {
-                    if (font.MeasureString(textBuffer).X > rect.X )
+                    if (font.MeasureString(textBuffer).X > rect.Width )
                     {
                         textBuffer.Remove(textBuffer.Length - 1, 1);
                         return;
@@ -151,7 +169,7 @@ namespace Wartorn.UIClass
         {
             try
             {
-                if (font.MeasureString(textBuffer).X <= rect.X)
+                if (font.MeasureString(textBuffer).X <= rect.Width)
                 {
                     spriteBatch.DrawString(font, textBuffer, rect.Location.ToVector2(), foregroundColor, Rotation, origin, scale, SpriteEffects.None, LayerDepth.GuiLower);
                 }

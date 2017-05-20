@@ -22,7 +22,7 @@ using Wartorn.Drawing.Animation;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Microsoft.Xna.Framework.Content;
-
+using Client;
 namespace Wartorn.Screens.MainGameScreen
 {
     class SetupScreen : Screen
@@ -39,7 +39,7 @@ namespace Wartorn.Screens.MainGameScreen
 
         public SetupScreen(GraphicsDevice device) : base(device, "SetupScreen")
         {
-
+            
         }
 
         public override bool Init()
@@ -57,12 +57,14 @@ namespace Wartorn.Screens.MainGameScreen
         private void InitUI()
         {
             //declare ui elements
-            Label label_playerinfo = new Label("kahdeg", new Point(10, 20), new Vector2(80, 30), CONTENT_MANAGER.arcadefont);
+            
 
             Button button_selectmap = new Button(UISpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetUI.Open), new Point(650, 20), 0.5f);
             Button button_exit = new Button(UISpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetUI.Exit), new Point(5, 5), 0.5f);
             Button button_start = new Button("Start", new Point(100, 50), null, CONTENT_MANAGER.arcadefont);
-            InputBox ip_address = new InputBox("", new Point(100, 100), new Vector2(100, 20), CONTENT_MANAGER.hackfont, Color.Black, Color.White);
+            InputBox ip_address = new InputBox("", new Point(100, 100), new Vector2(150, 20), CONTENT_MANAGER.hackfont, Color.Black, Color.White);
+            Button button_connect = new Button("Connect to server", new Point(100, 150), null, CONTENT_MANAGER.arcadefont);
+            
             //bind event
             button_selectmap.MouseClick += (sender, e) =>
             {
@@ -109,14 +111,23 @@ namespace Wartorn.Screens.MainGameScreen
                 ((GameScreen)SCREEN_MANAGER.get_screen("GameScreen")).InitSession(sessiondata);
                 SCREEN_MANAGER.goto_screen("GameScreen");
             };
-
+            //Intial all event for connect to server
+            button_connect.MouseClick += (sender, e) =>
+            {
+                Player.Instance.ConnectToServer(ip_address.Text);               
+            };
             //add to canvas
-            canvas.AddElement("label_playerinfo", label_playerinfo);
+           
             canvas.AddElement("button_selectmap", button_selectmap);
             canvas.AddElement("button_exit", button_exit);
             canvas.AddElement("button_start", button_start);
             canvas.AddElement("ip_address", ip_address);
+            canvas.AddElement("button_connect", button_connect);
         }
+
+       
+
+       
 
         public override void Shutdown()
         {

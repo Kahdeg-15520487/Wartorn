@@ -5,17 +5,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Wartorn;
+using System.Windows.Forms;
+
 namespace Client
 {
+    /// <summary>
+    /// Singleton Player
+    /// </summary>
     public class Player : IDisposable
     {
+        private static Player instance;
+        /// <summary>
+        /// Use to singleton in multithread
+        /// </summary>
+        private static object syncRoot = new Object();
         #region Event
-        public event EventHandler<string> received_message;
+        public event EventHandler<string> update;
 
         public event EventHandler entered_succeed;
-
-        public event EventHandler left_room;
 
         public event EventHandler<int> created_room;
 
@@ -26,30 +33,30 @@ namespace Client
         private SimpleTCP.SimpleTcpClient simpleClient;
         #endregion
 
-        private int room;
+        private int roomNumber;
         /// <summary>
-        /// Số thứ thự trong phòng
+        /// Index in room : 0 or 1
         /// </summary>
         private int index;
 
         /// <summary>
-        /// Số phòng của Client
+        /// Room number of client
         /// </summary>
-        public int Room
+        public int RoomNumber
         {
             get
             {
-                return room;
+                return roomNumber;
             }
 
             set
             {
-                room = value;
+                roomNumber = value;
             }
         }
 
         /// <summary>
-        /// Đối tượng SimpleTcpClient kết nối với server
+        /// Instance use to connect to server
         /// </summary>
         public SimpleTcpClient SimpleClient
         {
@@ -64,7 +71,34 @@ namespace Client
             }
         }
 
-        public Player(string IP)
+        /// <summary>
+        /// Instance of class
+        /// </summary>
+        public static Player Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    lock (syncRoot)
+                    {
+                        instance = new Player();
+                    }
+                }
+                return instance;
+            }
+
+        }
+
+        private Player()
+        {
+
+        }
+        /// <summary>
+        /// Connect to server with ip of server
+        /// </summary>
+        /// <param name="IP"></param>
+        public void ConnectToServer(string IP)
         {
 
             try
@@ -74,13 +108,13 @@ namespace Client
             }
             catch (Exception er)
             {
-                Wartorn.Utility.HelperFunction.Log(er);
+                MessageBox.Show(er.Message);
 
             }
 
         }
 
-        private void SimpleClient_DataReceived(object sender, Message e)
+        private void SimpleClient_DataReceived(object sender, SimpleTCP.Message e)
         {
             try
             {
@@ -91,33 +125,28 @@ namespace Client
                 {
                     case "your room is":
 
-                        Room = System.Convert.ToInt32(temp[1]);
+                        RoomNumber = System.Convert.ToInt32(temp[1]);
                         index = System.Convert.ToInt32(temp[2]);
                         if (created_room != null)
                         {
-                            created_room(null, Room);
+                            created_room(null, RoomNumber);
                         }
 
                         break;
-                    case "you have message":
-
-                        string recieved = temp[1];
-                        if (received_message != null)
+                    case "update":                      
+                        if (update != null)
                         {
-                            received_message(null, recieved);
+                            update(null,temp[1]);
                         }
-
-
                         break;
                     case "enter succeed":
 
-                        Room = Convert.ToInt32(temp[1]);
+                        RoomNumber = Convert.ToInt32(temp[1]);
                         index = Convert.ToInt32(temp[2]);
                         if (entered_succeed != null)
                         {
                             entered_succeed(null, EventArgs.Empty);
                         }
-
                         break;
                     case "Another player leave room":
                         index = 0;
@@ -126,20 +155,19 @@ namespace Client
                             another_left(null, EventArgs.Empty);
                         }
                         break;
-                    case "another player give you message":
+                    case "you have message":
 
                         if (received_chat != null)
                         {
                             received_chat(null, temp[1]);
                         }
-
                         break;
                 }
             }
             catch (Exception er) 
             {
 
-                Wartorn.Utility.HelperFunction.Log(er); 
+                //Wartorn.Utility.HelperFunction.Log(er); 
             }
 
         }
@@ -148,19 +176,19 @@ namespace Client
         /// Send update state to another phayer
         /// </summary>
         /// <param name="obj"></param>
-        public void SendOjectToAnother(Object obj)
+        public void Update(Object obj)
         {
             try
             {
                 string send_message = JsonConvert.SerializeObject(obj);
                 StringBuilder temp = new StringBuilder();
-                temp.AppendFormat("update|{0}|{1}|{2}", send_message, Room, index);
+                temp.AppendFormat("update|{0}|{1}|{2}", send_message, RoomNumber, index);
                 SimpleClient.WriteLine(temp.ToString());
             }
             catch (Exception e)
             {
 
-                Wartorn.Utility.HelperFunction.Log(e);
+                //Wartorn.Utility.HelperFunction.Log(e);
             }
 
         }
@@ -171,7 +199,7 @@ namespace Client
         public void ChatWithAnother(string message)
         {
             StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.AppendFormat("chat with another player|{0}|{1}|{2}", Room, index, message);
+            stringBuilder.AppendFormat("chat with another player|{0}|{1}|{2}", RoomNumber, index, message);
             SimpleClient.WriteLine(stringBuilder.ToString());
         }
         /// <summary>
@@ -195,11 +223,13 @@ namespace Client
         public void LeaveRoom()
         {
             StringBuilder temp = new StringBuilder();
-            temp.AppendFormat("leave room|{0}|{1}", Room, index);
+            temp.AppendFormat("leave room|{0}|{1}", RoomNumber, index);
             SimpleClient.WriteLine(temp.ToString());
         }
 
-
+        /// <summary>
+        /// Disconnect to server
+        /// </summary>
         public void Dispose()
         {
             SimpleClient.Disconnect();
