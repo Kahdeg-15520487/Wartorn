@@ -46,9 +46,8 @@ namespace Wartorn.Drawing
 
                     if (tempmapcell.unit != null)
                     {
-                        var tempunit = tempmapcell.unit;
-                        tempunit.Animation.Position = curpos;
-                        tempunit.Animation.Draw(gameTime, spriteBatch);
+                        map[i, j].unit.Animation.Position = curpos;
+                        map[i, j].unit.Animation.Draw(gameTime, spriteBatch);
                     }
                 }
             }
@@ -182,6 +181,9 @@ namespace Wartorn.Drawing
                             default:
                                 break;
                         }
+
+                        if (map[pos.GetNearbyPoint(Direction.North)] != null)
+                            map[pos.GetNearbyPoint(Direction.North)].terrainUpper = SpriteSheetTerrain.None;
 
                         switch (map[x, y].terrain)
                         {

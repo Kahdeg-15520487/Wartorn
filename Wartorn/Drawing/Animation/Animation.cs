@@ -27,7 +27,7 @@ namespace Wartorn.Drawing.Animation
         private float timePerFrame;
 
         //We add the elapsed time to this variable each frame
-        private float totalElapsedTime;
+        private double totalElapsedTime;
 
         //Holds a value that points to an element in a list of frames
         private int currentFrame;
@@ -148,7 +148,7 @@ namespace Wartorn.Drawing.Animation
         /// <param name="gameTime">provides a snapshot of timing values</param>
         public void Update(GameTime gameTime)
         {
-            totalElapsedTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
+            totalElapsedTime += gameTime.ElapsedGameTime.TotalSeconds;
             Frame keyFrame = keyFrames[currentFrame];
 
             if (totalElapsedTime >= timePerFrame)
@@ -170,7 +170,8 @@ namespace Wartorn.Drawing.Animation
                     currentFrame++;
                 }
 
-                totalElapsedTime -= totalElapsedTime;
+                //totalElapsedTime -= totalElapsedTime;
+                totalElapsedTime = 0;
             }
         }
 
