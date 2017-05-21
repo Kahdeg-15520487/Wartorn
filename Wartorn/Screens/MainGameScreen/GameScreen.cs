@@ -266,11 +266,69 @@ namespace Wartorn.Screens.MainGameScreen
         private void InitCanvas_Airport()
         {
             canvas_action_Airport = new Canvas();
+            canvas_action_Airport.IsVisible = false;
+
+            //hàng 1
+            Button button_transportcopter = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.TransportCopter, playerInfos[localPlayer].owner), new Point(540, 346), 0.5f);
+            Button button_battlecopter = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.BattleCopter, playerInfos[localPlayer].owner), new Point(570, 346), 0.5f);
+            Button button_fighter = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Fighter, playerInfos[localPlayer].owner), new Point(600, 346), 0.5f);
+            Button button_bomber = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Bomber, playerInfos[localPlayer].owner), new Point(630, 346), 0.5f);
+            
+            List<Button> tempbuttonlist = new List<Button>();
+            tempbuttonlist.Add(button_transportcopter);
+            tempbuttonlist.Add(button_battlecopter);
+            tempbuttonlist.Add(button_fighter);
+            tempbuttonlist.Add(button_bomber);
+            
+
+            #region bind event
+            foreach (Button button in tempbuttonlist)
+            {
+                button.MouseClick += (sender, e) =>
+                {
+                    selectedUnitToBuild = UnitSpriteSheetRectangle.GetUnitType(button.spriteSourceRectangle);
+                };
+            }
+            #endregion
+
+            canvas_action_Airport.AddElement("button_transportcopter", button_transportcopter);
+            canvas_action_Airport.AddElement("button_battlecopter", button_battlecopter);
+            canvas_action_Airport.AddElement("button_fighter", button_fighter);
+            canvas_action_Airport.AddElement("button_bomber", button_bomber);
         }
 
         private void InitCanvas_Harbor()
         {
             canvas_action_Harbor = new Canvas();
+            canvas_action_Harbor.IsVisible = false;
+
+            //hàng 1
+            Button button_lander = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Lander, playerInfos[localPlayer].owner), new Point(540, 346), 0.5f);
+            Button button_cruiser = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Cruise, playerInfos[localPlayer].owner), new Point(570, 346), 0.5f);
+            Button button_submarine = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Submarine, playerInfos[localPlayer].owner), new Point(600, 346), 0.5f);
+            Button button_battleship = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Battleship,playerInfos[localPlayer].owner), new Point(630, 346), 0.5f);
+
+            List<Button> tempbuttonlist = new List<Button>();
+            tempbuttonlist.Add(button_lander);
+            tempbuttonlist.Add(button_cruiser);
+            tempbuttonlist.Add(button_submarine);
+            tempbuttonlist.Add(button_battleship);
+
+
+            #region bind event
+            foreach (Button button in tempbuttonlist)
+            {
+                button.MouseClick += (sender, e) =>
+                {
+                    selectedUnitToBuild = UnitSpriteSheetRectangle.GetUnitType(button.spriteSourceRectangle);
+                };
+            }
+            #endregion
+
+            canvas_action_Harbor.AddElement("button_lander", button_lander);
+            canvas_action_Harbor.AddElement("button_cruiser", button_cruiser);
+            canvas_action_Harbor.AddElement("button_submarine", button_submarine);
+            canvas_action_Harbor.AddElement("button_battleship", button_battleship);
         }
         #endregion
 
@@ -402,7 +460,10 @@ namespace Wartorn.Screens.MainGameScreen
             isMovingUnitAnimPlaying = false;
             selectedUnit = default(Point);
             destination = default(Point);
-            currentGameState = GameState.None;
+            if (currentGameState == GameState.UnitSelected)
+            {
+                currentGameState = GameState.None;
+            }
         }
         private void UpdateMovingUnit(GameTime gameTime)
         {
@@ -459,7 +520,7 @@ namespace Wartorn.Screens.MainGameScreen
             }
             else
             {
-                if (!actionbound.Contains(mouseInputState.Position))
+                if (!actionbound.Contains(mouseInputState.Position) && currentGameState == GameState.BuildingSelected)
                 {
                     DeselectBuilding();
                 }
