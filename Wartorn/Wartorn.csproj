@@ -39,6 +39,8 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Drawing\DirectionArrowRenderer.cs" />
+    <Compile Include="Drawing\MovingUnitAnimation.cs" />
     <Compile Include="DropdownDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -91,7 +93,7 @@
     <Compile Include="Screens\UnitMoveProtypeScreen.cs" />
     <Compile Include="SpriteRectangle\DirectionArrowSpriteSourceRectangle.cs" />
     <Compile Include="SpriteRectangle\UISpriteSheetSourceRectangle.cs" />
-    <Compile Include="SpriteRectangle\SpriteSheetSourceRectangle.cs" />
+    <Compile Include="SpriteRectangle\TerrainSpriteSourceRectangle.cs" />
     <Compile Include="Storage\CompressHelper.cs" />
     <Compile Include="Storage\MapData.cs" />
     <Compile Include="Storage\NoiseGenerator.cs" />

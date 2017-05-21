@@ -33,9 +33,8 @@ namespace Wartorn.UIClass
 {
     public class Console : UIObject
     {
-        public Label outputbox;
-        public InputBox inputbox;
-        private Vector2 relativePositionToMouse = Vector2.Zero;
+        private Label outputbox;
+        private InputBox inputbox;
         private List<string> log = new List<string>();
 
         ScriptEngine _engine;
@@ -61,8 +60,6 @@ namespace Wartorn.UIClass
             Position = position;
             Size = size;
             this.font = font;
-
-            MouseDown += drag;
 
             var inputboxPosition = new Point(position.X, position.Y + (int)size.Y - 50);
             var inputboxSize = new Vector2(size.X, 50);
@@ -133,7 +130,7 @@ namespace Wartorn.UIClass
             _runtime.LoadAssembly(typeof(Wartorn.UIClass.Console).Assembly);
             _scope = _engine.CreateScope();
             _scope.SetVariable("log", log);
-            _scope.SetVariable("this", this);
+            _scope.SetVariable("console", this);
         }
 
         public void SetScope(Dictionary<string,object> variableCollection)
@@ -187,11 +184,6 @@ namespace Wartorn.UIClass
             {
                 outputbox.Text = "";
             }
-        }
-
-        public void drag(object sender,UIEventArgs e)
-        {
-            Position = (Position.ToVector2() + (e.mouseState.Position.ToVector2() - new Vector2(Position.X + Size.X/2,Position.Y + Size.Y/2))).ToPoint();
         }
 
         public override void Draw(SpriteBatch spriteBatch)

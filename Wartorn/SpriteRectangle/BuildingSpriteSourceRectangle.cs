@@ -18,7 +18,7 @@ using Wartorn.Drawing;
 using Newtonsoft.Json;
 using Wartorn.Drawing.Animation;
 
-namespace Wartorn
+namespace Wartorn.SpriteRectangle
 {
     enum SpriteSheetBuilding
     {

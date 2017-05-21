@@ -22,7 +22,7 @@ namespace Wartorn.SpriteRectangle
 {
     enum SpriteSheetDirectionArrow
     {
-        Horizontal,Vertical,DownRight,DownLeft,UpRight,UpLeft,Left,Right,Down,Up
+        Horizontal, Vertical, DownRight, DownLeft, UpRight, UpLeft, Left, Right, Down, Up
     }
 
     static class DirectionArrowSpriteSourceRectangle
@@ -32,7 +32,7 @@ namespace Wartorn.SpriteRectangle
         public static void LoadSprite()
         {
             DirArrowSprite = new Dictionary<SpriteSheetDirectionArrow, Rectangle>();
-            
+
             for (int i = 0; i < 10; i++)
             {
                 DirArrowSprite.Add((SpriteSheetDirectionArrow)i, new Rectangle(i * 48, 0, 48, 48));
@@ -44,7 +44,7 @@ namespace Wartorn.SpriteRectangle
             return DirArrowSprite[t];
         }
 
-        public static Rectangle GetSpriteRectangle(Direction dir,bool isVertical = true)
+        public static Rectangle GetSpriteRectangle(Direction dir, bool isVertical = true)
         {
             Rectangle result = Rectangle.Empty;
             switch (dir)
@@ -74,7 +74,7 @@ namespace Wartorn.SpriteRectangle
                 case Direction.SouthWest:
                     result = DirArrowSprite[SpriteSheetDirectionArrow.UpLeft];
                     break;
-                
+
                 case Direction.SouthEast:
                     result = DirArrowSprite[SpriteSheetDirectionArrow.UpRight];
                     break;

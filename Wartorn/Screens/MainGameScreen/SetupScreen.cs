@@ -18,6 +18,7 @@ using Wartorn.Utility.Drawing;
 using Wartorn.Screens;
 using Wartorn.Drawing;
 using Wartorn.Drawing.Animation;
+using Wartorn.SpriteRectangle;
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;

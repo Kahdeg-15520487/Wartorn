@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Wartorn.GameData;
 
-namespace Wartorn
+namespace Wartorn.SpriteRectangle
 {
     enum SpriteSheetUI
     {
