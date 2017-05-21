@@ -119,7 +119,7 @@ namespace Wartorn.Screens
             canvas_Menu.AddElement("button_FillMap", button_FillMap);
             canvas_Menu.IsVisible = isMenuOpen;
 
-            //bind action to ui event
+            #region  bind action to ui event
             button_Undo.MouseClick += (sender, e) =>
             {
                 if (undostack.Count > 0)
@@ -183,10 +183,22 @@ namespace Wartorn.Screens
                     return;
                 }
 
+                if (x<15)
+                {
+                    CONTENT_MANAGER.ShowMessageBox("Map width must be at least 15");
+                    return;
+                }
+
                 input = CONTENT_MANAGER.ShowPromptBox("Nhap chieu cao cua map:");
                 if (!int.TryParse(input,out y))
                 {
                     CONTENT_MANAGER.ShowMessageBox("Please input number");
+                    return;
+                }
+
+                if (y < 10)
+                {
+                    CONTENT_MANAGER.ShowMessageBox("Map height must be at least 10");
                     return;
                 }
 
@@ -204,23 +216,32 @@ namespace Wartorn.Screens
 
                 if (selected != "Cancel")
                 {
-
                     TerrainType tempterrain = selected.ToEnum<TerrainType>();
-
                     Map temp = new Map(map.Width, map.Height);
                     temp.Fill(tempterrain);
                     map.Clone(temp);
                 }
             };
+            #endregion
 
             canvas.AddElement("canvas_Menu", canvas_Menu);
         }
 
         private void InitTileSelectMenu()
         {
+            //unit selection menu
+            Canvas canvas_unit_selection = new Canvas();
+            canvas_unit_selection.IsVisible = false;
+            List<Button> unitbuttonlist = new List<Button>();
+
             //terrain selection menu
             Canvas canvas_terrain_selection = new Canvas();
+            List<Button> terrainbuttonlist = new List<Button>();
 
+            Canvas canvas_building_selection = new Canvas();
+            List<Button> buildingbuttonlist = new List<Button>();
+
+            #region terrain button
             Button button_changeTerrainTheme = new Button("Normal", new Point(10, 50),null, CONTENT_MANAGER.arcadefont);
             button_changeTerrainTheme.Origin = new Vector2(10, 0);
             button_changeTerrainTheme.backgroundColor = Color.White;
@@ -229,7 +250,6 @@ namespace Wartorn.Screens
             button_changeWeather.backgroundColor = Color.White;
             button_changeWeather.foregroundColor = Color.Black;
 
-            List<Button> terrainbuttonlist = new List<Button>();
 
             //terrain button
             Button button_bridge = new Button(TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Bridge_hor), new Point(10, 80), 0.75f, false);
@@ -384,24 +404,14 @@ namespace Wartorn.Screens
             canvas_terrain_selection.AddElement("button_mountain", button_mountain);
             canvas_terrain_selection.AddElement("button_sea", button_sea);
             canvas_terrain_selection.AddElement("button_plain", button_plain);
+            #endregion
 
-            //building button
+            #region building button
             Button button_changeOwner = new Button("None", new Point(10, 120),null, CONTENT_MANAGER.arcadefont);
             button_changeOwner.Origin = new Vector2(10, 0);
             button_changeOwner.backgroundColor = Color.White;
             button_changeOwner.foregroundColor = Color.Black;
-
-            List<Button> buildingbuttonlist = new List<Button>();
-
-            //Button button_city = new Button(CONTENT_MANAGER.buildingSpriteSheet, new Rectangle(0, 0, 48, 96), new Point(10, 140), 0.75f);
-            //Button button_factory = new Button(CONTENT_MANAGER.buildingSpriteSheet, new Rectangle(48, 0, 48, 96), new Point(50, 140), 0.75f);
-            //Button button_airport = new Button(CONTENT_MANAGER.buildingSpriteSheet, new Rectangle(96, 0, 48, 96), new Point(90, 140), 0.75f);
-            //Button button_harbor = new Button(CONTENT_MANAGER.buildingSpriteSheet, new Rectangle(144, 0, 48, 96), new Point(130, 140), 0.75f);
-            //Button button_radar = new Button(CONTENT_MANAGER.buildingSpriteSheet, new Rectangle(192, 0, 48, 96), new Point(170, 140), 0.75f);
-            //Button button_supplybase = new Button(CONTENT_MANAGER.buildingSpriteSheet, new Rectangle(240, 0, 48, 96), new Point(210, 140), 0.75f);
-            //Button button_headquarter = new Button(CONTENT_MANAGER.buildingSpriteSheet, new Rectangle(288, 0, 48, 96), new Point(250, 140), 0.75f);
-            //Button button_missilesilo = new Button(CONTENT_MANAGER.buildingSpriteSheet, new Rectangle(336, 0, 48, 96), new Point(290, 140), 0.75f);
-
+            
             Button button_city = new Button(CONTENT_MANAGER.buildingSpriteSheet, BuildingSpriteSourceRectangle.GetSpriteRectangle(BuildingType.City), new Point(10, 140), 0.75f);
             Button button_factory = new Button(CONTENT_MANAGER.buildingSpriteSheet, BuildingSpriteSourceRectangle.GetSpriteRectangle(BuildingType.Factory), new Point(50, 140), 0.75f);
             Button button_airport = new Button(CONTENT_MANAGER.buildingSpriteSheet, BuildingSpriteSourceRectangle.GetSpriteRectangle(BuildingType.Airport), new Point(90, 140), 0.75f);
@@ -428,22 +438,27 @@ namespace Wartorn.Screens
                     case "None":
                         button_changeOwner.Text = "Red";
                         currentlySelectedOwner = Owner.Red;
+                        canvas_unit_selection.IsVisible = true;
                         break;
                     case "Red":
                         button_changeOwner.Text = "Blue";
                         currentlySelectedOwner = Owner.Blue;
+                        canvas_unit_selection.IsVisible = true;
                         break;
                     case "Blue":
                         button_changeOwner.Text = "Green";
                         currentlySelectedOwner = Owner.Green;
+                        canvas_unit_selection.IsVisible = true;
                         break;
                     case "Green":
                         button_changeOwner.Text = "Yellow";
                         currentlySelectedOwner = Owner.Yellow;
+                        canvas_unit_selection.IsVisible = true;
                         break;
                     case "Yellow":
                         button_changeOwner.Text = "None";
                         currentlySelectedOwner = Owner.None;
+                        canvas_unit_selection.IsVisible = false;
                         break;
                     default:
                         break;
@@ -458,6 +473,13 @@ namespace Wartorn.Screens
                     buildingbuttonlist[i].spriteSourceRectangle = BuildingSpriteSourceRectangle.GetSpriteRectangle(tempbuilding, currentlySelectedOwner);
                 }
 
+                UnitType tempunit;
+                for (int i = 0; i < unitbuttonlist.Count; i++)
+                {
+                    temp = unitbuttonlist[i].spriteSourceRectangle;
+                    tempunit = UnitSpriteSheetRectangle.GetUnitType(temp);
+                    unitbuttonlist[i].spriteSourceRectangle = UnitSpriteSheetRectangle.GetSpriteRectangle(tempunit, currentlySelectedOwner);
+                }
             };
 
             button_city.MouseClick += (sender, e) =>
@@ -515,28 +537,61 @@ namespace Wartorn.Screens
             };
             #endregion
 
-            canvas_terrain_selection.AddElement("button_changeOwner", button_changeOwner);
-            canvas_terrain_selection.AddElement("button_city", button_city);
-            canvas_terrain_selection.AddElement("button_factory", button_factory);
-            canvas_terrain_selection.AddElement("button_airport", button_airport);
-            canvas_terrain_selection.AddElement("button_harbor", button_harbor);
-            canvas_terrain_selection.AddElement("button_radar", button_radar);
-            canvas_terrain_selection.AddElement("button_supplybase", button_supplybase);
-            canvas_terrain_selection.AddElement("button_headquarter", button_headquarter);
-            canvas_terrain_selection.AddElement("button_missilesilo", button_missilesilo);
+            canvas_building_selection.AddElement("button_changeOwner", button_changeOwner);
+            canvas_building_selection.AddElement("button_city", button_city);
+            canvas_building_selection.AddElement("button_factory", button_factory);
+            canvas_building_selection.AddElement("button_airport", button_airport);
+            canvas_building_selection.AddElement("button_harbor", button_harbor);
+            canvas_building_selection.AddElement("button_radar", button_radar);
+            canvas_building_selection.AddElement("button_supplybase", button_supplybase);
+            canvas_building_selection.AddElement("button_headquarter", button_headquarter);
+            canvas_building_selection.AddElement("button_missilesilo", button_missilesilo);            
+            #endregion
 
-            canvas.AddElement("canvas_terrain_selection", canvas_terrain_selection);
-
-
-            Canvas canvas_unit_selection = new Canvas();
-            List<Button> unitbuttonlist = new List<Button>();
+            #region unit button
 
             //TODO make the unit button
             Button button_soldier = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Soldier),new Point(10,230), 0.75f);
             Button button_mech = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Mech), new Point(50, 230), 0.75f);
+            Button button_recon = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Recon), new Point(90, 230), 0.75f);
+            Button button_apc = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.APC), new Point(130, 230), 0.75f);
+            Button button_tank = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Tank), new Point(170, 230), 0.75f);
+            Button button_heavytank = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.HeavyTank), new Point(210, 230), 0.75f);
+            Button button_artilerry = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Artillery), new Point(250, 230), 0.75f);
+            Button button_rocket = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Rocket), new Point(290, 230), 0.75f);
+            Button button_antiair = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.AntiAir), new Point(330, 230), 0.75f);
+            Button button_missile = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Missile), new Point(370, 230), 0.75f);
+
+            Button button_tcopter = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.TransportCopter), new Point(10, 270), 0.75f);
+            Button button_bcopter = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.BattleCopter), new Point(50, 270), 0.75f);
+            Button button_fighter = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Fighter), new Point(90, 270), 0.75f);
+            Button button_bomber = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Bomber), new Point(130, 270), 0.75f);
+
+            Button button_lander = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Lander), new Point(170, 270), 0.75f);
+            Button button_cruiser = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Cruise), new Point(210, 270), 0.75f);
+            Button button_submarine = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Submarine), new Point(250, 270), 0.75f);
+            Button button_battleship = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Battleship), new Point(290, 270), 0.75f);
 
             unitbuttonlist.Add(button_soldier);
             unitbuttonlist.Add(button_mech);
+            unitbuttonlist.Add(button_recon);
+            unitbuttonlist.Add(button_apc);
+            unitbuttonlist.Add(button_tank);
+            unitbuttonlist.Add(button_heavytank);
+            unitbuttonlist.Add(button_artilerry);
+            unitbuttonlist.Add(button_rocket);
+            unitbuttonlist.Add(button_antiair);
+            unitbuttonlist.Add(button_missile);
+
+            unitbuttonlist.Add(button_tcopter);
+            unitbuttonlist.Add(button_bcopter);
+            unitbuttonlist.Add(button_fighter);
+            unitbuttonlist.Add(button_bomber);
+
+            unitbuttonlist.Add(button_lander);
+            unitbuttonlist.Add(button_cruiser);
+            unitbuttonlist.Add(button_submarine);
+            unitbuttonlist.Add(button_battleship);
 
             #region bind event
             foreach (Button button in unitbuttonlist)
@@ -550,7 +605,28 @@ namespace Wartorn.Screens
 
             canvas_unit_selection.AddElement("button_soldier", button_soldier);
             canvas_unit_selection.AddElement("button_mech", button_mech);
+            canvas_unit_selection.AddElement("button_recon", button_recon);
+            canvas_unit_selection.AddElement("button_apc", button_apc);
+            canvas_unit_selection.AddElement("button_tank", button_tank);
+            canvas_unit_selection.AddElement("button_heavytank", button_heavytank);
+            canvas_unit_selection.AddElement("button_artilerry", button_artilerry);
+            canvas_unit_selection.AddElement("button_rocket", button_rocket);
+            canvas_unit_selection.AddElement("button_antiair", button_antiair);
+            canvas_unit_selection.AddElement("button_missile", button_missile);
 
+            canvas_unit_selection.AddElement("button_tcopter", button_tcopter);
+            canvas_unit_selection.AddElement("button_bcopter", button_bcopter);
+            canvas_unit_selection.AddElement("button_fighter", button_fighter);
+            canvas_unit_selection.AddElement("button_bomber", button_bomber);
+
+            canvas_unit_selection.AddElement("button_lander", button_lander);
+            canvas_unit_selection.AddElement("button_cruiser", button_cruiser);
+            canvas_unit_selection.AddElement("button_submarine", button_submarine);
+            canvas_unit_selection.AddElement("button_battleship", button_battleship);            
+            #endregion
+
+            canvas.AddElement("canvas_terrain_selection", canvas_terrain_selection);
+            canvas.AddElement("canvas_building_selection", canvas_building_selection);
             canvas.AddElement("canvas_unit_selection", canvas_unit_selection);
         }
 
@@ -642,9 +718,13 @@ namespace Wartorn.Screens
             if (Utility.HelperFunction.IsKeyPress(Keys.Escape))
             {
                 isMenuOpen = !isMenuOpen;
-                ((Canvas)canvas.GetElement("canvas_Menu")).IsVisible = isMenuOpen;
-                ((Canvas)canvas.GetElement("canvas_terrain_selection")).IsVisible = isMenuOpen;
-                ((Canvas)canvas.GetElement("canvas_unit_selection")).IsVisible = isMenuOpen;
+                canvas.GetElementAs<Canvas>("canvas_Menu").IsVisible = isMenuOpen;
+                canvas.GetElementAs<Canvas>("canvas_terrain_selection").IsVisible = isMenuOpen;
+                canvas.GetElementAs<Canvas>("canvas_building_selection").IsVisible = isMenuOpen;
+                if (currentlySelectedOwner!= Owner.None)
+                {
+                    canvas.GetElementAs<Canvas>("canvas_unit_selection").IsVisible = isMenuOpen;
+                }
             }
         }
 
@@ -691,7 +771,6 @@ namespace Wartorn.Screens
                             Unit temp = UnitCreationHelper.Create(currentlySelectedUnit, currentlySelectedOwner);
                             map[selectedMapCell].unit = temp;
                             map.IsProcessed = false;
-
                         }
                     }
                 }
@@ -701,7 +780,6 @@ namespace Wartorn.Screens
         private void PlaceTile(MouseState mouseInputState)
         {
             var mouseLocationInMap = camera.TranslateFromScreenToWorld(mouseInputState.Position.ToVector2());
-
 
             //check if left mouse click
             if (mouseInputState.LeftButton == ButtonState.Pressed)
@@ -1106,7 +1184,12 @@ namespace Wartorn.Screens
             }
             else
             {
-                //draw unit on cursor
+                if (currentlySelectedOwner != Owner.None)
+                {
+                    //draw unit on cursor
+                    spriteBatch.Draw(CONTENT_MANAGER.UIspriteSheet, new Vector2(selectedMapCell.X * Constants.MapCellWidth, selectedMapCell.Y * Constants.MapCellHeight), UISpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetUI.Select), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.GuiUpper);
+                    spriteBatch.Draw(CONTENT_MANAGER.unitSpriteSheet, new Vector2(selectedMapCell.X * Constants.MapCellWidth, selectedMapCell.Y * Constants.MapCellHeight), UnitSpriteSheetRectangle.GetSpriteRectangle(currentlySelectedUnit, currentlySelectedOwner), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.GuiUpper);
+                }
             }
         }
     }

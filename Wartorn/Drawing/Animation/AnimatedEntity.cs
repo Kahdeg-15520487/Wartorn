@@ -262,7 +262,7 @@ namespace Wartorn.Drawing.Animation
         /// Draws the AnimatedEntity
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values</param>
-        /// <param name="spriteBatch">The SpriteBatch object we will us to draw</param>
+        /// <param name="spriteBatch">The SpriteBatch object we will use to draw</param>
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             if (currentAnimation != null && isPlaying)
