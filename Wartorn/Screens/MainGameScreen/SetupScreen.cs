@@ -89,7 +89,7 @@ namespace Wartorn.Screens.MainGameScreen
 
             Button button_connect = new Button(text_conect, point_conect, null, CONTENT_MANAGER.arcadefont);
 
-            //Label enter_name = new Label("ENTER YOUR NAME AND IP ADDRESS OF SERVER", new Point((this._device.Viewport.Width / 2 )- (int)spriteFont.MeasureString("ENTER YOUR NAME AND IP ADDRESS OF SERVER").X/2 -10,30 ), null, CONTENT_MANAGER.arcadefont,1);
+           
             //bind event
             
             button_exit.MouseClick += (sender, e) =>

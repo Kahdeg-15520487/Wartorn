@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using Utility_Project;
 namespace Client
 {
     /// <summary>
@@ -112,7 +112,7 @@ namespace Client
             catch (Exception er)
             {
                 MessageBox.Show(er.Message);
-
+                Logger.Log(er);
             }
 
         }
@@ -175,8 +175,8 @@ namespace Client
             }
             catch (Exception er) 
             {
+                Logger.Log(er);
 
-                //Wartorn.Utility.HelperFunction.Log(er); 
             }
 
         }
@@ -185,19 +185,19 @@ namespace Client
         /// Send update state to another phayer
         /// </summary>
         /// <param name="obj"></param>
-        public void Update(Object obj)
+        public void Update(string obj)
         {
             try
             {
-                string send_message = JsonConvert.SerializeObject(obj);
-                StringBuilder temp = new StringBuilder();
-                temp.AppendFormat("update|{0}|{1}|{2}", send_message, RoomNumber, index);
-                SimpleClient.WriteLine(temp.ToString());
+                //string send_message = JsonConvert.SerializeObject(obj);
+                //StringBuilder temp = new StringBuilder();
+                //temp.AppendFormat("update|{0}|{1}|{2}", send_message, RoomNumber, index);
+                SimpleClient.WriteLine(obj);
             }
-            catch (Exception e)
+            catch (Exception er)
             {
 
-                //Wartorn.Utility.HelperFunction.Log(e);
+                Logger.Log(er);
             }
 
         }
@@ -207,16 +207,34 @@ namespace Client
         /// <param name="message"></param>
         public void ChatWithAnother(string message)
         {
-            StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.AppendFormat("chat with another player|{0}|{1}|{2}", RoomNumber, index, message);
-            SimpleClient.WriteLine(stringBuilder.ToString());
+            try
+            {
+                StringBuilder stringBuilder = new StringBuilder();
+                stringBuilder.AppendFormat("chat with another player|{0}|{1}|{2}", RoomNumber, index, message);
+                SimpleClient.WriteLine(stringBuilder.ToString());
+            }
+            catch (Exception er)
+            {
+
+                Logger.Log(er);
+            }
+ 
         }
         /// <summary>
         /// Create new room
         /// </summary>
         public void CreateRoom()
         {
-            SimpleClient.WriteLine("create room|");
+            try
+            {
+                SimpleClient.WriteLine("create room|");
+            }
+            catch (Exception er)
+            {
+                Logger.Log(er);
+
+            }
+            
         }
         /// <summary>
         /// Go to room
@@ -224,16 +242,32 @@ namespace Client
         /// <param name="roomNumber"></param>
         public void GotoRoom(int roomNumber)
         {
-            SimpleClient.WriteLine("go to room|" + roomNumber.ToString());
+            try
+            {
+                SimpleClient.WriteLine("go to room|" + roomNumber.ToString());
+            }
+            catch (Exception er)
+            {
+                Logger.Log(er);
+            }
+           
         }
         /// <summary>
         /// Leave room
         /// </summary>
         public void LeaveRoom()
         {
-            StringBuilder temp = new StringBuilder();
-            temp.AppendFormat("leave room|{0}|{1}", RoomNumber, index);
-            SimpleClient.WriteLine(temp.ToString());
+            try
+            {
+                StringBuilder temp = new StringBuilder();
+                temp.AppendFormat("leave room|{0}|{1}", RoomNumber, index);
+                SimpleClient.WriteLine(temp.ToString());
+            }
+            catch (Exception er)
+            {
+                Logger.Log(er);
+            }
+            
         }
 
         /// <summary>

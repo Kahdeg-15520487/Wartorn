@@ -64,11 +64,11 @@ namespace Wartorn.Screens.MainGameScreen
 
             Button button_start = new Button("Start", new Point(100, 50), null, CONTENT_MANAGER.arcadefont);
 
-            Button btn_create_room = new Button("Create Room", new Point(50, 50), null, CONTENT_MANAGER.arcadefont);
+            Button btn_create_room = new Button("Create Room", new Point(100, 100), null, CONTENT_MANAGER.arcadefont);
 
-            Button btn_goto_room = new Button("Go To Room", new Point(50, 100), null, CONTENT_MANAGER.arcadefont);
+            Button btn_goto_room = new Button("Go To Room", new Point(100, 150), null, CONTENT_MANAGER.arcadefont);
 
-            InputBox roomNumber = new InputBox("", new Point(150, 100), new Vector2(150, 20), CONTENT_MANAGER.arcadefont, Color.Black, Color.White);
+            //InputBox roomNumber = new InputBox("", new Point(150, 100), new Vector2(150, 20), CONTENT_MANAGER.arcadefont, Color.Black, Color.White);
 
 
             //bind event
@@ -171,7 +171,7 @@ namespace Wartorn.Screens.MainGameScreen
             canvas.AddElement("button_start", button_start);
             canvas.AddElement("btn_create_room", btn_create_room);
             canvas.AddElement("btn_gpto_room", btn_goto_room);
-            canvas.AddElement("roomNumber", roomNumber);
+            //canvas.AddElement("roomNumber", roomNumber);
         }
 
         public override void Update(GameTime gameTime)
