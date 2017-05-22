@@ -19,6 +19,8 @@ namespace Client
         /// Use to singleton in multithread
         /// </summary>
         private static object syncRoot = new Object();
+
+        private SimpleTCP.SimpleTcpClient simpleClient;
         #region Event
         public event EventHandler<string> update;
 
@@ -29,8 +31,9 @@ namespace Client
         public event EventHandler another_left;
 
         public event EventHandler<string> received_chat;
-     
-        private SimpleTCP.SimpleTcpClient simpleClient;
+             
+
+        public event EventHandler connect_succeed;
         #endregion
 
         private int roomNumber;
@@ -160,6 +163,12 @@ namespace Client
                         if (received_chat != null)
                         {
                             received_chat(null, temp[1]);
+                        }
+                        break;
+                    case "connect succeed":
+                        if (connect_succeed != null)
+                        {
+                            connect_succeed(null, EventArgs.Empty);
                         }
                         break;
                 }

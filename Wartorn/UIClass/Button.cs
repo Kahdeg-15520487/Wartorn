@@ -152,6 +152,8 @@ namespace Wartorn
 
                 //Region to draw text
                 StringRect = new Vector2(Position.X + size.X / 4, Position.Y + size.Y / 4);
+
+
             }
 
 
@@ -256,7 +258,7 @@ namespace Wartorn
                 switch (contentType)
                 {
                     case ButtonContentType.Text:
-                        spriteBatch.DrawString(font != null ? font : CONTENT_MANAGER.defaultfont, (string.IsNullOrEmpty(text)) ? "" : text, StringRect, foregroundColor, Rotation, origin, scale, SpriteEffects.None, LayerDepth.GuiUpper);
+                        spriteBatch.DrawString(font != null ? font : CONTENT_MANAGER.defaultfont, (string.IsNullOrEmpty(text)) ? "" : text,AutoSize? StringRect: new Vector2(rect.X, rect.Y) + Size / 4, foregroundColor, Rotation, origin, scale, SpriteEffects.None, LayerDepth.GuiUpper);
 
                         DrawingHelper.DrawRectangle(internalRect, isPressed ? buttonColorPressed : buttonColorReleased, true);
                         DrawingHelper.DrawRectangle(rect, borderColor, false);

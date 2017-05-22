@@ -185,7 +185,7 @@ namespace Wartorn.UIClass
             }
 
             //Draw text caret
-            spriteBatch.DrawString(font, isCursor_flicker ? "" : "|", rect.Location.ToVector2() + new Vector2(CursorPosition * textSpacing - 5, -2), caretColor);
+            spriteBatch.DrawString(font,IsFocused? isCursor_flicker ? "" : "|" :"|", rect.Location.ToVector2() + new Vector2(CursorPosition * textSpacing - 5, -2), caretColor);
 
             DrawingHelper.DrawRectangle(rect, backgroundColor, true);
         }

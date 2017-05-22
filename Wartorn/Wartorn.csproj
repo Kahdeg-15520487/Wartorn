@@ -54,6 +54,7 @@
     <Compile Include="CustomJsonConverter.cs" />
     <Compile Include="PathFinding\Dijkstra.cs" />
     <Compile Include="PathFinding\DijkstraHelper.cs" />
+    <Compile Include="Screens\MainGameScreen\Client_Screen.cs" />
     <Compile Include="Screens\TestConsole.cs" />
     <Compile Include="SpriteRectangle\BuildingSpriteSourceRectangle.cs" />
     <Compile Include="Constants.cs" />
