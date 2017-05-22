@@ -17,6 +17,8 @@ namespace Wartorn.Screens.MainGameScreen
     class Client_Screen : Screen
     {
         private bool isCreated_room;
+
+        InputDialog enterRoom;
         SessionData sessiondata;
         Canvas canvas;
 
@@ -33,12 +35,19 @@ namespace Wartorn.Screens.MainGameScreen
 
         }
 
-        
+
         public override bool Init()
         {
 
             isCreated_room = false;
+
+            enterRoom = new InputDialog();
+
+
+
             canvas = new Canvas();
+
+
 
             sessiondata = new SessionData();
 
@@ -59,18 +68,48 @@ namespace Wartorn.Screens.MainGameScreen
 
             Button btn_goto_room = new Button("Go To Room", new Point(50, 100), null, CONTENT_MANAGER.arcadefont);
 
-            InputBox roomNumber = new InputBox("", new Point(150, 100), new Vector2(150,20),CONTENT_MANAGER.arcadefont, Color.Black,Color.White );
+            InputBox roomNumber = new InputBox("", new Point(150, 100), new Vector2(150, 20), CONTENT_MANAGER.arcadefont, Color.Black, Color.White);
 
 
             //bind event
 
-            btn_create_room.MouseClick += (sender,e) => 
+            btn_goto_room.MouseClick += (sender, e) =>
             {
-                if (map!=null)
+                enterRoom.ShowDialog();
+            };
+
+            enterRoom.button_OK.Click += (sender, e) =>
+            {
+                if (enterRoom.textBox_Input.Text != "")
+                {
+
+                    Player.Instance.GotoRoom(Convert.ToInt32(enterRoom.textBox_Input.Text));
+
+                }
+                else
+                {
+                    CONTENT_MANAGER.ShowMessageBox("You have't enter room number");
+                }
+            };
+
+            enterRoom.button_Cancel.Click += (sender, e) =>
+            {
+                enterRoom.Hide();
+            };
+
+
+            Player.Instance.entered_succeed += (sender, e) =>
+            {
+                
+            };
+
+            btn_create_room.MouseClick += (sender, e) =>
+            {
+                if (map != null)
                 {
                     Player.Instance.created_room += (_sender, _e) =>
                     {
-                        
+
                     };
                     isCreated_room = true;
                     Player.Instance.CreateRoom();
@@ -80,7 +119,6 @@ namespace Wartorn.Screens.MainGameScreen
                     CONTENT_MANAGER.ShowMessageBox("You don't have map");
                 }
             };
-
 
 
             button_selectmap.MouseClick += (sender, e) =>
@@ -124,7 +162,7 @@ namespace Wartorn.Screens.MainGameScreen
                     ((GameScreen)SCREEN_MANAGER.get_screen("GameScreen")).InitSession(sessiondata);
                     SCREEN_MANAGER.goto_screen("GameScreen");
                 }
-              
+
             };
 
 

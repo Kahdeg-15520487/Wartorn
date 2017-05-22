@@ -92,8 +92,8 @@
         #endregion
 
         private System.Windows.Forms.Label label_prompt;
-        private System.Windows.Forms.TextBox textBox_Input;
-        private System.Windows.Forms.Button button_OK;
-        private System.Windows.Forms.Button button_Cancel;
+        public System.Windows.Forms.TextBox textBox_Input;
+        public System.Windows.Forms.Button button_OK;
+        public System.Windows.Forms.Button button_Cancel;
     }
 }

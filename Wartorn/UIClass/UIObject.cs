@@ -148,6 +148,7 @@ namespace Wartorn.UIClass
             if (rect.Contains(inputState.mouseState.Position) && inputState.mouseState.LeftButton == ButtonState.Pressed)
             {
                 isFocused = true;
+               
                 OnGotFocus(this, arg);
             }
 

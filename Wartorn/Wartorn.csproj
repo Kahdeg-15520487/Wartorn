@@ -54,6 +54,12 @@
     <Compile Include="CustomJsonConverter.cs" />
     <Compile Include="PathFinding\Dijkstra.cs" />
     <Compile Include="PathFinding\DijkstraHelper.cs" />
+    <Compile Include="Screens\MainGameScreen\ClientScreen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Screens\MainGameScreen\ClientScreen.Designer.cs">
+      <DependentUpon>ClientScreen.cs</DependentUpon>
+    </Compile>
     <Compile Include="Screens\MainGameScreen\Client_Screen.cs" />
     <Compile Include="Screens\TestConsole.cs" />
     <Compile Include="SpriteRectangle\BuildingSpriteSourceRectangle.cs" />
@@ -174,6 +180,9 @@
     </Content>
     <EmbeddedResource Include="InputDialog.resx">
       <DependentUpon>InputDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Screens\MainGameScreen\ClientScreen.resx">
+      <DependentUpon>ClientScreen.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

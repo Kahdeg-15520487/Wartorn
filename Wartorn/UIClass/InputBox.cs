@@ -127,36 +127,40 @@ namespace Wartorn.UIClass
             base.Update(inputState, lastInputState);
 
             //Chau Van Sang adds isCursor for cursor flickering
-
-            temp_speed_flicker += 1;
-            if (temp_speed_flicker == speed_flick)
+            if (isFocused == true)
             {
-                isCursor_flicker = !isCursor_flicker;
-                temp_speed_flicker = 0;
-            }
-
-            if (HelperFunction.IsKeyPress(Keys.Back))
-            {
-
-
-                if (textBuffer.Length > 0)
+                temp_speed_flicker += 1;
+                if (temp_speed_flicker == speed_flick)
                 {
-                    if (font.MeasureString(textBuffer).X > rect.Width )
+                    isCursor_flicker = !isCursor_flicker;
+                    temp_speed_flicker = 0;
+                }
+
+                if (HelperFunction.IsKeyPress(Keys.Back))
+                {
+
+
+                    if (textBuffer.Length > 0)
                     {
-                        textBuffer.Remove(textBuffer.Length - 1, 1);
-                        return;
+                        if (font.MeasureString(textBuffer).X > rect.Width)
+                        {
+                            textBuffer.Remove(textBuffer.Length - 1, 1);
+                            return;
+                        }
+                        textBuffer.Remove((CursorPosition - 1).Clamp(textBuffer.Length, 0), 1);
+                        CursorPosition--;
                     }
-                    textBuffer.Remove((CursorPosition - 1).Clamp(textBuffer.Length, 0), 1);
-                    CursorPosition--;
+                }
+
+                if (inputState.keyboardState.IsKeyDown(Keys.LeftControl) && HelperFunction.IsKeyPress(Keys.V))
+                {
+                    string paste = CONTENT_MANAGER.GetClipboard();
+                    textBuffer.Append(paste);
+                    CursorPosition += paste.Length;
                 }
             }
 
-            if (inputState.keyboardState.IsKeyDown(Keys.LeftControl) && HelperFunction.IsKeyPress(Keys.V))
-            {
-                string paste = CONTENT_MANAGER.GetClipboard();
-                textBuffer.Append(paste);
-                CursorPosition += paste.Length;
-            }
+           
         }
 
         public void Clear()
