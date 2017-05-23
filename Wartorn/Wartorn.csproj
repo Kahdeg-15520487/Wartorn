@@ -56,13 +56,6 @@
     <Compile Include="CustomJsonConverter.cs" />
     <Compile Include="PathFinding\Dijkstra.cs" />
     <Compile Include="PathFinding\DijkstraHelper.cs" />
-    <Compile Include="Screens\MainGameScreen\ClientScreen.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Screens\MainGameScreen\ClientScreen.Designer.cs">
-      <DependentUpon>ClientScreen.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Screens\MainGameScreen\Client_Screen.cs" />
     <Compile Include="Screens\TestConsole.cs" />
     <Compile Include="SpriteRectangle\BuildingSpriteSourceRectangle.cs" />
     <Compile Include="Constants.cs" />
@@ -183,9 +176,6 @@
     <EmbeddedResource Include="InputDialog.resx">
       <DependentUpon>InputDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Screens\MainGameScreen\ClientScreen.resx">
-      <DependentUpon>ClientScreen.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <MonoGameContentReference Include="Content\Content.mgcb" />
@@ -195,12 +185,6 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Client\Client.csproj">
-      <Project>{7adffba4-afd8-4cb4-a58b-097cf4d982aa}</Project>
-      <Name>Client</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />

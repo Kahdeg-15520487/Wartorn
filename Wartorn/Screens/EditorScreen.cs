@@ -177,20 +177,20 @@ namespace Wartorn.Screens
             {
                 int x, y;
                 string input = CONTENT_MANAGER.ShowPromptBox("Nhap chieu rong cua map:");
-                if (!int.TryParse(input,out x))
+                if (!int.TryParse(input, out x))
                 {
                     CONTENT_MANAGER.ShowMessageBox("Please input number");
                     return;
                 }
 
-                if (x<15)
+                if (x < 15)
                 {
                     CONTENT_MANAGER.ShowMessageBox("Map width must be at least 15");
                     return;
                 }
 
                 input = CONTENT_MANAGER.ShowPromptBox("Nhap chieu cao cua map:");
-                if (!int.TryParse(input,out y))
+                if (!int.TryParse(input, out y))
                 {
                     CONTENT_MANAGER.ShowMessageBox("Please input number");
                     return;
@@ -242,13 +242,11 @@ namespace Wartorn.Screens
             List<Button> buildingbuttonlist = new List<Button>();
 
             #region terrain button
-            Button button_changeTerrainTheme = new Button("Normal", new Point(10, 50),null, CONTENT_MANAGER.arcadefont);
+            Button button_changeTerrainTheme = new Button("Normal", new Point(10, 50), null, CONTENT_MANAGER.arcadefont);
             button_changeTerrainTheme.Origin = new Vector2(10, 0);
             button_changeTerrainTheme.backgroundColor = Color.White;
             button_changeTerrainTheme.foregroundColor = Color.Black;
-            
             Button button_changeWeather = new Button("Sunny", new Point(100, 50), null, CONTENT_MANAGER.arcadefont);
-
             button_changeWeather.backgroundColor = Color.White;
             button_changeWeather.foregroundColor = Color.Black;
 
@@ -409,14 +407,11 @@ namespace Wartorn.Screens
             #endregion
 
             #region building button
-            Button button_changeOwner = new Button("None", new Point(10, 120),null, CONTENT_MANAGER.arcadefont);
-            //building button
-            Button button_changeOwner = new Button("None", new Point(10, 120), null,CONTENT_MANAGER.arcadefont);
-            
+            Button button_changeOwner = new Button("None", new Point(10, 120), null, CONTENT_MANAGER.arcadefont);
             button_changeOwner.Origin = new Vector2(10, 0);
             button_changeOwner.backgroundColor = Color.White;
             button_changeOwner.foregroundColor = Color.Black;
-            
+
             Button button_city = new Button(CONTENT_MANAGER.buildingSpriteSheet, BuildingSpriteSourceRectangle.GetSpriteRectangle(BuildingType.City), new Point(10, 140), 0.75f);
             Button button_factory = new Button(CONTENT_MANAGER.buildingSpriteSheet, BuildingSpriteSourceRectangle.GetSpriteRectangle(BuildingType.Factory), new Point(50, 140), 0.75f);
             Button button_airport = new Button(CONTENT_MANAGER.buildingSpriteSheet, BuildingSpriteSourceRectangle.GetSpriteRectangle(BuildingType.Airport), new Point(90, 140), 0.75f);
@@ -550,13 +545,13 @@ namespace Wartorn.Screens
             canvas_building_selection.AddElement("button_radar", button_radar);
             canvas_building_selection.AddElement("button_supplybase", button_supplybase);
             canvas_building_selection.AddElement("button_headquarter", button_headquarter);
-            canvas_building_selection.AddElement("button_missilesilo", button_missilesilo);            
+            canvas_building_selection.AddElement("button_missilesilo", button_missilesilo);
             #endregion
 
             #region unit button
 
             //TODO make the unit button
-            Button button_soldier = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Soldier),new Point(10,230), 0.75f);
+            Button button_soldier = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Soldier), new Point(10, 230), 0.75f);
             Button button_mech = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Mech), new Point(50, 230), 0.75f);
             Button button_recon = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Recon), new Point(90, 230), 0.75f);
             Button button_apc = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.APC), new Point(130, 230), 0.75f);
@@ -627,7 +622,7 @@ namespace Wartorn.Screens
             canvas_unit_selection.AddElement("button_lander", button_lander);
             canvas_unit_selection.AddElement("button_cruiser", button_cruiser);
             canvas_unit_selection.AddElement("button_submarine", button_submarine);
-            canvas_unit_selection.AddElement("button_battleship", button_battleship);            
+            canvas_unit_selection.AddElement("button_battleship", button_battleship);
             #endregion
 
             canvas.AddElement("canvas_terrain_selection", canvas_terrain_selection);
@@ -726,7 +721,7 @@ namespace Wartorn.Screens
                 canvas.GetElementAs<Canvas>("canvas_Menu").IsVisible = isMenuOpen;
                 canvas.GetElementAs<Canvas>("canvas_terrain_selection").IsVisible = isMenuOpen;
                 canvas.GetElementAs<Canvas>("canvas_building_selection").IsVisible = isMenuOpen;
-                if (currentlySelectedOwner!= Owner.None)
+                if (currentlySelectedOwner != Owner.None)
                 {
                     canvas.GetElementAs<Canvas>("canvas_unit_selection").IsVisible = isMenuOpen;
                 }
@@ -870,19 +865,19 @@ namespace Wartorn.Screens
             {
                 camera.Location += new Vector2(-1, 0) * speed;
             }
-            if (keyboardInputState.IsKeyDown(Keys.Right) 
+            if (keyboardInputState.IsKeyDown(Keys.Right)
                 || keyboardInputState.IsKeyDown(Keys.D)
                 || mouseInputState.Position.X.Between(720, 620))
             {
                 camera.Location += new Vector2(1, 0) * speed;
             }
-            if (keyboardInputState.IsKeyDown(Keys.Up) 
+            if (keyboardInputState.IsKeyDown(Keys.Up)
                 || keyboardInputState.IsKeyDown(Keys.W)
                 || mouseInputState.Position.Y.Between(50, 0))
             {
                 camera.Location += new Vector2(0, -1) * speed;
             }
-            if (keyboardInputState.IsKeyDown(Keys.Down) 
+            if (keyboardInputState.IsKeyDown(Keys.Down)
                 || keyboardInputState.IsKeyDown(Keys.S)
                 || mouseInputState.Position.Y.Between(480, 430))
             {

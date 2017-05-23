@@ -239,7 +239,6 @@ namespace Wartorn
                         case "unit":
                             unit = serializer.Deserialize<Unit>(reader);
                             break;
-                            break;
                         case "base":
                             terrainbase = (serializer.Deserialize<string>(reader)).ToEnum<SpriteSheetTerrain>();
                             break;
