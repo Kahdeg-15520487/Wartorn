@@ -246,7 +246,9 @@ namespace Wartorn.Screens
             button_changeTerrainTheme.Origin = new Vector2(10, 0);
             button_changeTerrainTheme.backgroundColor = Color.White;
             button_changeTerrainTheme.foregroundColor = Color.Black;
-            Button button_changeWeather = new Button("Sunny", new Point(100, 50),null,  CONTENT_MANAGER.arcadefont);
+            
+            Button button_changeWeather = new Button("Sunny", new Point(100, 50), null, CONTENT_MANAGER.arcadefont);
+
             button_changeWeather.backgroundColor = Color.White;
             button_changeWeather.foregroundColor = Color.Black;
 
@@ -408,6 +410,9 @@ namespace Wartorn.Screens
 
             #region building button
             Button button_changeOwner = new Button("None", new Point(10, 120),null, CONTENT_MANAGER.arcadefont);
+            //building button
+            Button button_changeOwner = new Button("None", new Point(10, 120), null,CONTENT_MANAGER.arcadefont);
+            
             button_changeOwner.Origin = new Vector2(10, 0);
             button_changeOwner.backgroundColor = Color.White;
             button_changeOwner.foregroundColor = Color.Black;

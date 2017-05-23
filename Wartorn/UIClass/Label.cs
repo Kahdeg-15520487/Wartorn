@@ -10,6 +10,13 @@ namespace Wartorn
     {
         public class Label : UIObject
         {
+
+            public virtual bool AutoSize
+            {
+                get;
+                set;
+            }
+            
             protected string text;
             public virtual string Text
             {
@@ -23,6 +30,18 @@ namespace Wartorn
                 }
             }
 
+            public override Vector2 Size
+            {
+                get
+                {
+                    return base.Size;
+                }
+
+                set
+                {
+                    base.Size = value;
+                }
+            }
             /// <summary>
             /// Offset of the text inside the button
             /// </summary>
@@ -52,9 +71,26 @@ namespace Wartorn
                 origin = new Vector2(rect.X, rect.Y) + Size / 4;
             }
 
+            public Label(string text, Point position, Vector2? size, SpriteFont font,float _scale)
+            {
+                Text = text;
+                Position = position;
+                if (size != null)
+                {
+                    Size = size.Value;
+                }
+                else
+                {
+                    Size = font.MeasureString(text);
+                    origin = position.ToVector2();
+                }
+                this.font = font;
+                Scale = _scale;
+            }
+
             public override void Draw(SpriteBatch spriteBatch)
             {
-                spriteBatch.DrawString(font!= null?font:CONTENT_MANAGER.defaultfont, (string.IsNullOrEmpty(text)) ? "" : text, origin, foregroundColor, Rotation, Vector2.Zero, scale, SpriteEffects.None, LayerDepth.GuiUpper);
+                spriteBatch.DrawString(font!= null?font:CONTENT_MANAGER.defaultfont, (string.IsNullOrEmpty(text)) ? "" : text,origin , foregroundColor, Rotation, Vector2.Zero, scale, SpriteEffects.None, LayerDepth.GuiUpper);
                 DrawingHelper.DrawRectangle(rect, backgroundColor, true);
                 DrawingHelper.DrawRectangle(rect, borderColor, false);
             }

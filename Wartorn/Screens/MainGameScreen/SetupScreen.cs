@@ -23,11 +23,13 @@ using Wartorn.SpriteRectangle;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Microsoft.Xna.Framework.Content;
-
+using Client;
 namespace Wartorn.Screens.MainGameScreen
 {
     class SetupScreen : Screen
     {
+        
+        
         SessionData sessiondata;
         Canvas canvas;
 
@@ -40,83 +42,87 @@ namespace Wartorn.Screens.MainGameScreen
 
         public SetupScreen(GraphicsDevice device) : base(device, "SetupScreen")
         {
-
+            
         }
 
         public override bool Init()
         {
+            SCREEN_MANAGER.add_screen(new Client_Screen(_device,"Client_Screen"));
+
             canvas = new Canvas();
             sessiondata = new SessionData();
 
             InitUI();
 
             minimapgen = new MiniMapGenerator(_device, CONTENT_MANAGER.spriteBatch);
+           
 
             return base.Init();
         }
 
+      
+
         private void InitUI()
         {
-            //declare ui elements
-            Label label_playerinfo = new Label("kahdeg", new Point(10, 20), new Vector2(80, 30), CONTENT_MANAGER.arcadefont);
 
-            Button button_selectmap = new Button(UISpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetUI.Open), new Point(650, 20), 0.5f);
-            Button button_exit = new Button(UISpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetUI.Exit), new Point(5, 5), 0.5f);
-            Button button_start = new Button("Start", new Point(100,50),null, CONTENT_MANAGER.arcadefont);
-
-            //bind event
-            button_selectmap.MouseClick += (sender, e) =>
+            Player.Instance.connect_succeed += (sender, e) =>
             {
-                string path = CONTENT_MANAGER.ShowFileOpenDialog(CONTENT_MANAGER.LocalRootPath);
-                string content = string.Empty;
-                try
-                {
-                    content = File.ReadAllText(path);
-                }
-                catch (Exception er)
-                {
-                    Utility.HelperFunction.Log(er);
-                }
-
-                if (!string.IsNullOrEmpty(content))
-                {
-                    mapdata = content;
-                    var temp = Storage.MapData.LoadMap(content);
-                    if (temp != null)
-                    {
-                        minimap = minimapgen.GenerateMapTexture(temp);
-                        map = new Map();
-                        map.Clone(temp);
-                    }
-                }
+                SCREEN_MANAGER.goto_screen("Client_Screen");
             };
+            //declare ui elements
+
+            SpriteFont spriteFont = CONTENT_MANAGER.arcadefont;
+
+      
+            Button button_exit = new Button(UISpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetUI.Exit), new Point(5, 5), 0.5f);
+
+
+            Label enter_name = new Label("Enter your name", new Point((this._device.Viewport.Width / 2) - (int)spriteFont.MeasureString("Enter your name").X / 2 , this._device.Viewport.Height / 2 - 140), null, CONTENT_MANAGER.arcadefont, 1);
+
+            InputBox player_name = new InputBox("", new Point(this._device.Viewport.Width / 2 - 75, this._device.Viewport.Height / 2 - 120), new Vector2(150, 20), CONTENT_MANAGER.hackfont, Color.Black, Color.White);
+
+            Label enter_ip_address = new Label("Enter server ip address", new Point((this._device.Viewport.Width / 2) - (int)spriteFont.MeasureString("Enter server ip address").X / 2 , this._device.Viewport.Height / 2 - 90), null, CONTENT_MANAGER.arcadefont, 1);
+
+            InputBox ip_address = new InputBox("", new Point(this._device.Viewport.Width/2-75, this._device.Viewport.Height / 2-70), new Vector2(150, 20), CONTENT_MANAGER.hackfont, Color.Black, Color.White);
+
+            string text_conect = "Connect to server";
+
+            Point point_conect = new Point(this._device.Viewport.Width / 2 - (int)(spriteFont.MeasureString(text_conect).X + spriteFont.MeasureString(text_conect).X/2) / 2, this._device.Viewport.Height / 2 - 20);
+
+            Button button_connect = new Button(text_conect, point_conect, null, CONTENT_MANAGER.arcadefont);
+
+           
+            //bind event
+            
             button_exit.MouseClick += (sender, e) =>
             {
                 SCREEN_MANAGER.goto_screen("MainMenuScreen");
             };
-            button_start.MouseClick += (sender, e) =>
+    
+            //Intial all event for connect to server
+            button_connect.MouseClick += (sender, e) =>
             {
-                if (map == null)
+                if (player_name.Text != "" && ip_address.Text != "")
                 {
-                    return;
+                    Player.Instance.ConnectToServer(ip_address.Text);
                 }
-                sessiondata = new SessionData();
-                sessiondata.map = new Map();
-                sessiondata.map.Clone(Storage.MapData.LoadMap(mapdata));
-                sessiondata.gameMode = GameMode.campaign;
-                sessiondata.playerInfos = new PlayerInfo[2];
-                sessiondata.playerInfos[0] = new PlayerInfo(0, Owner.Red);
-                sessiondata.playerInfos[1] = new PlayerInfo(1, Owner.Blue);
-                ((GameScreen)SCREEN_MANAGER.get_screen("GameScreen")).InitSession(sessiondata);
-                SCREEN_MANAGER.goto_screen("GameScreen");
+                else
+                {
+                    CONTENT_MANAGER.ShowMessageBox("You don't fill full infomation. Please fill all infomation");
+                }           
             };
-
             //add to canvas
-            canvas.AddElement("label_playerinfo", label_playerinfo);
-            canvas.AddElement("button_selectmap", button_selectmap);
-            canvas.AddElement("button_exit", button_exit);
-            canvas.AddElement("button_start", button_start);
+           
+           
+            canvas.AddElement("button_exit", button_exit);     
+            canvas.AddElement("ip_address", ip_address);
+            canvas.AddElement("button_connect", button_connect);
+            canvas.AddElement("enter_name", enter_name);
+            canvas.AddElement("player_name", player_name);
+            canvas.AddElement("enter_ip_address", enter_ip_address);
         }
+
+      
 
         public override void Shutdown()
         {
@@ -142,5 +148,5 @@ namespace Wartorn.Screens.MainGameScreen
         }
     }
 
-    
+
 }

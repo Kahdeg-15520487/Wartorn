@@ -24,7 +24,18 @@ namespace Wartorn
             //Add region to draw text
             private Vector2 stringRect;
             //
-            private bool autoSize= false;
+            public override bool AutoSize
+            {
+                get
+                {
+                    return base.AutoSize;
+                }
+
+                set
+                {
+                    base.AutoSize = value;
+                }
+            }
 
             public Rectangle spriteSourceRectangle
             {
@@ -109,18 +120,7 @@ namespace Wartorn
                 }
             }
 
-            public bool AutoSize
-            {
-                get
-                {
-                    return autoSize;
-                }
-
-                set
-                {
-                    autoSize = value;
-                }
-            }
+         
 
             public Button()
             {
@@ -155,46 +155,32 @@ namespace Wartorn
             private void CalculateSize(Vector2 size)
             {
                 //Distance between text and border
-                Size= new Vector2 (size.X + size.X / 2, size.Y + size.Y / 2);
+                Size = new Vector2(size.X + size.X / 2, size.Y + size.Y / 2);
 
                 //Region to draw text
-                StringRect = new Vector2(Position.X+ size.X / 4, Position.Y+ size.Y / 4);
+                StringRect = new Vector2(Position.X + size.X / 4, Position.Y + size.Y / 4);
+
+
             }
 
-            //Add new constructor
-            //public Button(string text, Point position,  SpriteFont font)
-            //{
 
-            //    contentType = ButtonContentType.Text;
-            //    Text = text;
-            //    Position = position;
-
-                
-
-            //    CalculateSize(font.MeasureString(text));
-                
-            //    this.font = font;
-                
-
-            //    Init();
-            //}
-
-
-            public Button(string text,Point position,Vector2 size ,SpriteFont font,bool _autoSize)
+            public Button(string text, Point position, Vector2? size, SpriteFont font)
             {
                 contentType = ButtonContentType.Text;
                 Text = text;
                 Position = position;
                 this.font = font;
-                if (_autoSize)
+                if (size != null)
                 {
-                    CalculateSize(font.MeasureString(text));
-                    AutoSize = _autoSize;
+                    Size = size.Value;
+                    AutoSize = false;
                 }
                 else
                 {
-                    Size = size;
+                    AutoSize = true;
+                    CalculateSize(font.MeasureString(text));
                 }
+
                 Init();
             }
             /// <summary>
@@ -231,8 +217,8 @@ namespace Wartorn
             }
 
 
-           
-            public Button(Texture2D sprite,Rectangle? spriterect, Point position, float scale = 1)
+
+            public Button(Texture2D sprite, Rectangle? spriterect, Point position, float scale = 1)
             {
                 contentType = ButtonContentType.Sprite;
                 _spriteSourceRectangle = spriterect;
@@ -277,8 +263,8 @@ namespace Wartorn
                 switch (contentType)
                 {
                     case ButtonContentType.Text:
-                        spriteBatch.DrawString(font != null ? font : CONTENT_MANAGER.defaultfont, (string.IsNullOrEmpty(text)) ? "" : text, StringRect, foregroundColor, Rotation, origin, scale, SpriteEffects.None, LayerDepth.GuiUpper);
-                        
+                        spriteBatch.DrawString(font != null ? font : CONTENT_MANAGER.defaultfont, (string.IsNullOrEmpty(text)) ? "" : text,AutoSize? StringRect: new Vector2(rect.X, rect.Y) + Size / 4, foregroundColor, Rotation, origin, scale, SpriteEffects.None, LayerDepth.GuiUpper);
+
                         DrawingHelper.DrawRectangle(internalRect, isPressed ? buttonColorPressed : buttonColorReleased, true);
                         DrawingHelper.DrawRectangle(rect, borderColor, false);
                         break;
