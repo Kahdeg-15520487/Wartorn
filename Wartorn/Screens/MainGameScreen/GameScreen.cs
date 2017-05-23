@@ -52,6 +52,9 @@ namespace Wartorn.Screens.MainGameScreen
         Canvas canvas_action_Unit;
         Canvas canvas_action_Building;
 
+        //debug console
+        UIClass.Console console;
+
         //resources
         Texture2D guibackground;
         Texture2D minimap;
@@ -110,7 +113,7 @@ namespace Wartorn.Screens.MainGameScreen
             minimapgen = new MiniMapGenerator(device, CONTENT_MANAGER.spriteBatch);
         }
 
-        #region Innit
+        #region Init
         public void InitSession(SessionData sessiondata)
         {
             session = new Session(sessiondata);
@@ -154,6 +157,7 @@ namespace Wartorn.Screens.MainGameScreen
             return base.Init();
         }
 
+        #region init ui
         private void InitUI()
         {
             //declare ui elements
@@ -165,12 +169,18 @@ namespace Wartorn.Screens.MainGameScreen
 
             Label label_mousepos = new Label(" ", new Point(0, 0), new Vector2(80, 20), CONTENT_MANAGER.defaultfont);
 
+            console = new UIClass.Console(new Point(0, 0), new Vector2(720, 200), CONTENT_MANAGER.hackfont);
+            console.IsVisible = false;
+            console.SetVariable("player", localPlayer);
+            console.SetVariable("changeTurn", new Action(this.ChangeTurn));
+
             //bind event
 
             //add to canvas
             canvas.AddElement("generalInfo", canvas_generalInfo);
             canvas.AddElement("action", canvas_action);
             canvas.AddElement("label_mousepos", label_mousepos);
+            canvas.AddElement("console", console);
         }
 
         private void InitCanvas_generalInfo()
@@ -331,6 +341,7 @@ namespace Wartorn.Screens.MainGameScreen
             canvas_action_Harbor.AddElement("button_battleship", button_battleship);
         }
         #endregion
+        #endregion
 
         public override void Shutdown()
         {
@@ -350,6 +361,11 @@ namespace Wartorn.Screens.MainGameScreen
             {
                 SCREEN_MANAGER.goto_screen("SetupScreen");
                 return;
+            }
+
+            if (HelperFunction.IsKeyPress(Keys.OemTilde))
+            {
+                console.IsVisible = !console.IsVisible;
             }
 
             //update canvas
@@ -406,10 +422,23 @@ namespace Wartorn.Screens.MainGameScreen
         }
 
         #region Unit handler
+        //the folowing only handle unit move command
+        //TODO 
         private void SelectUnit()
         {
             MapCell temp = session.map[selectedMapCell];
-            if (temp.unit != null && !isMovingUnitAnimPlaying && selectedUnit != selectedMapCell)
+            if (//check if there is a unit to select
+                temp.unit != null
+                //check if 
+             && temp.unit.ActionPoint>0
+                //check if there is a moving unit animation playing
+             && !isMovingUnitAnimPlaying 
+                //check if this unit is not already selected
+             && selectedUnit != selectedMapCell
+                //check if this unit is the local player's unit
+             && temp.unit.Owner == playerInfos[localPlayer].owner 
+                //check if this is the local player's turn
+             && currentPlayer == localPlayer)
             {
                 CONTENT_MANAGER.yes1.Play();
 
@@ -425,6 +454,15 @@ namespace Wartorn.Screens.MainGameScreen
                 {
                     if (movementRange != null && movementRange.Contains(selectedMapCell))
                     {
+                        //destination confirmed, moving to destination
+
+                        Unit tempunit = session.map[selectedUnit].unit;
+
+                        //substract fuel
+                        tempunit.Fuel -= movementPath.Count;
+
+                        //substract actionpoint
+                        tempunit.UpdateActionPoint(Command.Move);
 
                         //play sfx
                         CONTENT_MANAGER.moving_out.Play();
@@ -435,12 +473,12 @@ namespace Wartorn.Screens.MainGameScreen
 
                         //create a new animation object
                         movingAnim = new MovingUnitAnimation(session.map[selectedUnit].unit, movementPath, new Point(selectedUnit.X * Constants.MapCellWidth, selectedUnit.Y * Constants.MapCellHeight));
-
+                        
                         //ngung vẽ path
                         isMovePathCalculated = false;
 
                         //ngưng update animation cho unit gốc                        
-                        session.map[selectedUnit].unit.Animation.StopAnimation();
+                        tempunit.Animation.StopAnimation();
                     }
                     else
                     {
@@ -469,10 +507,21 @@ namespace Wartorn.Screens.MainGameScreen
         {
             if (movingAnim.IsArrived)
             {
-                //normal stuff
+                //teleport the unit to destination
                 session.map[destination].unit = session.map[selectedUnit].unit;
+                //dereference the unit from the origin 
                 session.map[selectedUnit].unit = null;
-                session.map[destination].unit.Animation.ContinueAnimation();
+                //check if the unit's action point is above zero
+                //TODO make sure that the unit can only move once
+                if (session.map[destination].unit.ActionPoint>0)
+                {
+                    session.map[destination].unit.Animation.ContinueAnimation();
+                }
+                else
+                {
+                    session.map[destination].unit.Animation.PlayAnimation(AnimationName.done.ToString());
+                    session.map[destination].unit.Animation.ContinueAnimation();
+                }
                 DeselectUnit();
                 return;
             }
@@ -487,6 +536,53 @@ namespace Wartorn.Screens.MainGameScreen
         }
         #endregion
 
+        #region only use to demo gameplay
+        private void ChangeTurn()
+        {
+            if (currentPlayer == 1)
+            {
+                currentPlayer = 0;
+            }
+            else
+            {
+                currentPlayer = 1;
+            }
+
+            if (localPlayer == 1)
+            {
+                localPlayer = 0;
+            }
+            else
+            {
+                localPlayer = 1;
+            }
+
+            ChangeUnitCanvasColor(playerInfos[currentPlayer].owner);
+        }
+
+        private void ChangeUnitCanvasColor(Owner owner)
+        {
+            foreach (string uiname in canvas_action_Factory.UInames)
+            {
+                Rectangle temp = canvas_action_Factory.GetElementAs<Button>(uiname).spriteSourceRectangle;
+                UnitType tempunittype = UnitSpriteSheetRectangle.GetUnitType(temp);
+                canvas_action_Factory.GetElementAs<Button>(uiname).spriteSourceRectangle = UnitSpriteSheetRectangle.GetSpriteRectangle(tempunittype, owner);
+            }
+            foreach (string uiname in canvas_action_Airport.UInames)
+            {
+                Rectangle temp = canvas_action_Airport.GetElementAs<Button>(uiname).spriteSourceRectangle;
+                UnitType tempunittype = UnitSpriteSheetRectangle.GetUnitType(temp);
+                canvas_action_Airport.GetElementAs<Button>(uiname).spriteSourceRectangle = UnitSpriteSheetRectangle.GetSpriteRectangle(tempunittype, owner);
+            }
+            foreach (string uiname in canvas_action_Harbor.UInames)
+            {
+                Rectangle temp = canvas_action_Harbor.GetElementAs<Button>(uiname).spriteSourceRectangle;
+                UnitType tempunittype = UnitSpriteSheetRectangle.GetUnitType(temp);
+                canvas_action_Harbor.GetElementAs<Button>(uiname).spriteSourceRectangle = UnitSpriteSheetRectangle.GetSpriteRectangle(tempunittype, owner);
+            }
+        }
+
+        #endregion
         private void SelectBuilding()
         {
             MapCell temp = session.map[selectedMapCell];
@@ -496,7 +592,7 @@ namespace Wartorn.Screens.MainGameScreen
              && temp.owner == playerInfos[localPlayer].owner
              && selectedBuilding != selectedMapCell)
             {
-                
+                DeselectBuilding();
                 switch (temp.terrain)
                 {
                     case TerrainType.Factory:
@@ -530,6 +626,7 @@ namespace Wartorn.Screens.MainGameScreen
             {
                 SpawnUnit(selectedUnitToBuild, playerInfos[localPlayer], selectedBuilding);
                 selectedUnitToBuild = UnitType.None;
+                DeselectBuilding();
             }
         }
 

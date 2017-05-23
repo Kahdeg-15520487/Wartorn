@@ -28,6 +28,7 @@ namespace Wartorn.GameData
         public static Dictionary<UnitType, Dictionary<UnitType, int>> _DammageTable { get; private set; }
         public static Dictionary<UnitType, int> _Cost{ get; private set; }
         public static Dictionary<UnitType, int> _Gas{ get; private set; }
+        public static Dictionary<UnitType, int> _ActionPoint { get; private set; }
         public static Dictionary<UnitType, int> _MovementRange{ get; private set; }
         public static Dictionary<UnitType, int> _VisionRange{ get; private set; }
         public static Dictionary<UnitType, Range> _AttackRange{ get; private set; }
@@ -65,6 +66,12 @@ namespace Wartorn.GameData
                 _Gas.Add(unittype, 99);
             }
 
+            _ActionPoint = new Dictionary<UnitType, int>();
+            foreach (UnitType unittype in unittypes)
+            {
+                _ActionPoint.Add(unittype, 3);
+            }
+
             _MovementRange = new Dictionary<UnitType, int>();
             foreach (UnitType unittype in unittypes)
             {
@@ -98,6 +105,7 @@ namespace Wartorn.GameData
             //File.WriteAllText(@"data\dmgtable.txt", JsonConvert.SerializeObject(_DammageTable, Formatting.Indented));
             //File.WriteAllText(@"data\costtable.txt", JsonConvert.SerializeObject(_Cost.ToArray(), Formatting.Indented));
             //File.WriteAllText(@"data\gastable.txt", JsonConvert.SerializeObject(_Gas.ToArray(), Formatting.Indented));
+            //File.WriteAllText(@"data\aptable.txt", JsonConvert.SerializeObject(_ActionPoint.ToArray(), Formatting.Indented));
             //File.WriteAllText(@"data\movementrangetable.txt", JsonConvert.SerializeObject(_MovementRange.ToArray(), Formatting.Indented));
             //File.WriteAllText(@"data\visionrangetable.txt", JsonConvert.SerializeObject(_VisionRange.ToArray(), Formatting.Indented));
             //File.WriteAllText(@"data\attackrangetable.txt", JsonConvert.SerializeObject(_AttackRange.ToArray(), Formatting.Indented));
@@ -109,6 +117,7 @@ namespace Wartorn.GameData
             _DammageTable = new Dictionary<UnitType, Dictionary<UnitType, int>>();
             _Cost = new Dictionary<UnitType, int>();
             _Gas = new Dictionary<UnitType, int>();
+            _ActionPoint = new Dictionary<UnitType, int>();
             _MovementRange = new Dictionary<UnitType, int>();
             _VisionRange = new Dictionary<UnitType, int>();
             _AttackRange = new Dictionary<UnitType, Range>();
@@ -127,6 +136,12 @@ namespace Wartorn.GameData
             JsonConvert.DeserializeObject<KeyValuePair<UnitType, int>[]>(gastable).ToList().ForEach(kvp =>
             {
                 _Gas.Add(kvp.Key, kvp.Value);
+            });
+
+            string aptable = File.ReadAllText(@"data\aptable.txt");
+            JsonConvert.DeserializeObject<KeyValuePair<UnitType, int>[]>(aptable).ToList().ForEach(kvp =>
+            {
+                _ActionPoint.Add(kvp.Key, kvp.Value);
             });
 
             string movrangetable = File.ReadAllText(@"data\movementrangetable.txt");
@@ -170,31 +185,48 @@ namespace Wartorn.GameData
         AnimatedEntity animation;
         UnitType unitType;
         int hitPoint;
+        int actionpoint;
         int fuel;
         #endregion
 
-        #region public
+        #region property
         public AnimatedEntity Animation { get { return animation; } }
         public UnitType UnitType { get { return unitType; } }
         public int HitPoint { get { return hitPoint; } }
-        public int Fuel { get { return fuel; } }
+        public int ActionPoint { get { return actionpoint; } }
+        public int Fuel { get { return fuel; } set { fuel = value; } }
         public Owner Owner { get; set; }
         public int UnitID { get; set; }
-        
+        #endregion
         public Unit(UnitType unittype, AnimatedEntity anim,Owner owner,int hp = 100)
         {
             unitType = unittype;
             animation = anim;
             Owner = owner;
             hitPoint = hp;
-            fuel = 100;
+            fuel = _Gas[unitType];
+            actionpoint = _ActionPoint[unitType];
         }
 
         public int GetBaseDammage(UnitType other)
         {
             return  _DammageTable[other][unitType];
         }
-        #endregion
+
+        public void UpdateActionPoint(Command cmd)
+        {
+            switch (cmd)
+            {
+                case Command.Move:
+                    actionpoint -= 1;
+                    break;
+                case Command.Attack:
+                    actionpoint -= 2;
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 
     
@@ -253,9 +285,4 @@ namespace Wartorn.GameData
             return result;
         }
     }
-
-    #region JsonConverter class
-
-    
-    #endregion
 }

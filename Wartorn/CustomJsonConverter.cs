@@ -27,6 +27,7 @@ namespace Wartorn
 {
     namespace CustomJsonConverter
     {
+        #region map
         public class MapJsonConverter : JsonConverter
         {
             public override bool CanConvert(Type objectType)
@@ -177,7 +178,9 @@ namespace Wartorn
                 return result;
             }
         }
+        #endregion
 
+        #region mapcell
         public class MapCellJsonConverter : JsonConverter
         {
             public override bool CanConvert(Type objectType)
@@ -263,7 +266,9 @@ namespace Wartorn
                 return result;
             }
         }
+        #endregion
 
+        #region unit
         public class UnitJsonConverter : JsonConverter
         {
             public override bool CanConvert(Type objectType)
@@ -334,7 +339,9 @@ namespace Wartorn
                 return UnitCreationHelper.Create(unittype, owner, hp);
             }
         }
+        #endregion
 
+        #region unittype
         public class UnitTypeJsonConverter : JsonConverter
         {
             public override bool CanConvert(Type objectType)
@@ -376,7 +383,9 @@ namespace Wartorn
                 return result;
             }
         }
+        #endregion
 
+        #region unitpair
         public class UnitPairJsonConverter : JsonConverter
         {
             public override bool CanConvert(Type objectType)
@@ -438,7 +447,9 @@ namespace Wartorn
                 return new UnitPair(attacker, defender);
             }
         }
+        #endregion
 
+        #region movementtype
         public class MovementTypeJsonConverter : JsonConverter
         {
             public override bool CanConvert(Type objectType)
@@ -480,7 +491,9 @@ namespace Wartorn
                 return result;
             }
         }
+        #endregion
 
+        #region terraintype
         public class TerrainTypeJsonConverter : JsonConverter
         {
             public override bool CanConvert(Type objectType)
@@ -522,7 +535,9 @@ namespace Wartorn
                 return result;
             }
         }
+        #endregion
 
+        #region Dictionary_MovementType_Dictionary_TerrainType_int
         public class Dictionary_MovementType_Dictionary_TerrainType_int_JsonConverter : JsonConverter
         {
             public override bool CanConvert(Type objectType)
@@ -599,7 +614,9 @@ namespace Wartorn
                 return new Dictionary<MovementType, Dictionary<TerrainType, int>>(result);
             }
         }
+        #endregion
 
+        #region range
         public class RangeJsonConverter : JsonConverter
         {
             public override bool CanConvert(Type objectType)
@@ -653,8 +670,9 @@ namespace Wartorn
                 return new Range(max, min);
             }
         }
+        #endregion
 
-
+        #region Dictionary_UnitType_Dictionary_UnitType_int
         public class Dictionary_UnitType_Dictionary_UnitType_int_JsonConverter : JsonConverter
         {
             public override bool CanConvert(Type objectType)
@@ -731,6 +749,6 @@ namespace Wartorn
                 return new Dictionary<UnitType, Dictionary<UnitType, int>>(result);
             }
         }
-
+        #endregion
     }
 }
