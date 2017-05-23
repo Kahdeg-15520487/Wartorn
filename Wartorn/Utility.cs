@@ -1,17 +1,14 @@
 ﻿using System;
-using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-
+using System.IO;
 using Wartorn.GameData;
 using Wartorn.Drawing;
-using Wartorn.SpriteRectangle;
 
 namespace Wartorn
 {

@@ -95,15 +95,7 @@ namespace Wartorn.GameData
         {
             map = m.map;
             navigationGraph = new Graph();
-
-            if (m.navigationGraph != null)
-            {
-                navigationGraph.Vertices = new Dictionary<string, Dictionary<string, int>>(m.navigationGraph.Vertices);
-            }
-            else
-            {
-                this.GenerateNavigationMap();
-            }
+            navigationGraph.Vertices = new Dictionary<string, Dictionary<string, int>>(m.navigationGraph.Vertices);
             weather = m.weather;
             theme = m.theme;
             isProcessed = false;
