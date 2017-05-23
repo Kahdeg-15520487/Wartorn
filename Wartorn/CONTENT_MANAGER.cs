@@ -1,17 +1,32 @@
-﻿using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using Wartorn.Utility.Drawing;
-using Wartorn.UIClass;
-using System.Linq;
-using System;
+﻿using System;
 using System.IO;
-using System.Reflection;
-using Microsoft.Xna.Framework;
 using System.Collections.Generic;
-using Wartorn.GameData;
-using Wartorn.Drawing.Animation;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Reflection;
+
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Content;
+
+using Wartorn.ScreenManager;
+using Wartorn.Storage;
+using Wartorn.GameData;
+using Wartorn.UIClass;
+using Wartorn.Utility;
+using Wartorn.Utility.Drawing;
+using Wartorn.Screens;
+using Wartorn.Drawing;
+using Wartorn.Drawing.Animation;
+using Wartorn.SpriteRectangle;
+
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using Wartorn.PathFinding.Dijkstras;
+using Wartorn.PathFinding;
 
 namespace Wartorn
 {
@@ -42,6 +57,8 @@ namespace Wartorn
         public static Texture2D selectCursor;
         public static Texture2D attackCursor;
 
+        public static Texture2D caigidoSpriteSheet;
+
         #region animation sprite sheet
         public static Dictionary<SpriteSheetUnit, AnimatedEntity> animationEntities;
         public static Dictionary<SpriteSheetUnit, Texture2D> animationSheets;
@@ -65,6 +82,8 @@ namespace Wartorn
 
             selectCursor = Content.Load<Texture2D>(@"sprite\Cursor\Select_Cursor");
             attackCursor = Content.Load<Texture2D>(@"sprite\Cursor\Attack_Cursor");
+
+            caigidoSpriteSheet = Content.Load<Texture2D>(@"sprite\building");
 
             LoadAnimationContent();
 

@@ -18,6 +18,7 @@ using Wartorn.Utility.Drawing;
 using Wartorn.Screens;
 using Wartorn.Drawing;
 using Wartorn.Drawing.Animation;
+using Wartorn.SpriteRectangle;
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -74,6 +75,7 @@ namespace Wartorn.Screens.MainGameScreen
 
       
             Button button_exit = new Button(UISpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetUI.Exit), new Point(5, 5), 0.5f);
+
 
             Label enter_name = new Label("Enter your name", new Point((this._device.Viewport.Width / 2) - (int)spriteFont.MeasureString("Enter your name").X / 2 , this._device.Viewport.Height / 2 - 140), null, CONTENT_MANAGER.arcadefont, 1);
 

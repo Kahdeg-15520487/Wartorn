@@ -135,15 +135,22 @@ namespace Wartorn
             /// <param name="size">Size of the button</param>
             /// <param name="font">Font to use</param>
             /// 
-            //public Button(string text, Point position, Vector2 size, SpriteFont font)
-            //{
-            //    contentType = ButtonContentType.Text;
-            //    Text = text;
-            //    Position = position;
-            //    Size = size;
-            //    this.font = font;
-            //    Init();
-            //}
+            public Button(string text, Point position, Vector2? size, SpriteFont font)
+            {
+                contentType = ButtonContentType.Text;
+                Text = text;
+                Position = position;
+                if (size != null)
+                {
+                    Size = size.Value;
+                }
+                else
+                {
+                    CalculateSize(font.MeasureString(text));
+                }
+                this.font = font;
+                Init();
+            }
 
             private void CalculateSize(Vector2 size)
             {
@@ -155,8 +162,6 @@ namespace Wartorn
 
 
             }
-
-
 
 
             public Button(string text, Point position, Vector2? size, SpriteFont font)
