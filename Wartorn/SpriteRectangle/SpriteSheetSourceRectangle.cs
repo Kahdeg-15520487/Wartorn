@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using Wartorn.GameData;
 using Wartorn.Utility;
 
-namespace Wartorn.SpriteRectangle
+namespace Wartorn
 {
     public enum SpriteSheetTerrain
     {
@@ -60,7 +60,7 @@ namespace Wartorn.SpriteRectangle
         None
     }
 
-    static class TerrainSpriteSourceRectangle
+    static class TerrainSpriteSheetSourceRectangle
     {
         private static Dictionary<SpriteSheetTerrain, Rectangle> TerrainSprite;
         private static Dictionary<Rectangle, SpriteSheetTerrain> _TerrainSprite;
