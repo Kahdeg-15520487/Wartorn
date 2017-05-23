@@ -116,8 +116,8 @@ namespace Wartorn
 
             //SCREEN_MANAGER.goto_screen("TestAnimationScreen");
             //SCREEN_MANAGER.goto_screen("SetupScreen");
-            //SCREEN_MANAGER.goto_screen("MainMenuScreen");
-            SCREEN_MANAGER.goto_screen("EditorScreen");
+            SCREEN_MANAGER.goto_screen("MainMenuScreen");
+            //SCREEN_MANAGER.goto_screen("EditorScreen");
 
             SCREEN_MANAGER.Init();
         }
