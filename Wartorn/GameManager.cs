@@ -43,7 +43,7 @@ namespace Wartorn
             IsMouseVisible = true;
             lastInputState = new InputState();
 
-            graphics.PreferMultiSampling = true;
+            //graphics.PreferMultiSampling = true;
 
             JsonConvert.DefaultSettings = () =>
             {
@@ -113,11 +113,13 @@ namespace Wartorn
             SCREEN_MANAGER.add_screen(new Screens.MainGameScreen.SetupScreen(GraphicsDevice));
             SCREEN_MANAGER.add_screen(new Screens.MainGameScreen.GameScreen(GraphicsDevice));
             SCREEN_MANAGER.add_screen(new TestConsole(GraphicsDevice));
+            SCREEN_MANAGER.add_screen(new IntroScreen(GraphicsDevice));
 
             //SCREEN_MANAGER.goto_screen("TestAnimationScreen");
             //SCREEN_MANAGER.goto_screen("SetupScreen");
-            SCREEN_MANAGER.goto_screen("MainMenuScreen");
+            //SCREEN_MANAGER.goto_screen("MainMenuScreen");
             //SCREEN_MANAGER.goto_screen("EditorScreen");
+            SCREEN_MANAGER.goto_screen("IntroScreen");
 
             SCREEN_MANAGER.Init();
         }
@@ -130,6 +132,7 @@ namespace Wartorn
         {
             // TODO: Unload any non ContentManager content here
             Environment.Exit(0);
+            
         }
 
         /// <summary>

@@ -29,7 +29,7 @@ namespace Wartorn
             public string Name { get; set; }
 
             /// <summary>
-            /// Virtual Function that's called when entering a Screen
+            /// override Function that's called when entering a Screen
             /// override it and add your own initialization code
             /// </summary>
             /// <returns></returns>
@@ -39,7 +39,7 @@ namespace Wartorn
             }
 
             /// <summary>
-            /// Virtual Function that's called when exiting a Screen
+            /// override Function that's called when exiting a Screen
             /// override it and add your own shutdown code
             /// </summary>
             /// <returns></returns>

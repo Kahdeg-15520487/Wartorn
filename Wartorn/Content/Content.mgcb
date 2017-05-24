@@ -25,11 +25,6 @@
 /processorParam:TextureFormat=Color
 /build:sprite/ui_sprite_sheet.png
 
-#begin sprite/GUI/intro.mp4
-/importer:H264Importer
-/processor:VideoProcessor
-/build:sprite/GUI/intro.mp4
-
 #begin sprite/GUI/Startscreen.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -2000,4 +1995,9 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:sprite/directionarrow.png
+
+#begin intro.mp4
+/importer:H264Importer
+/processor:VideoProcessor
+/build:intro.mp4
 
