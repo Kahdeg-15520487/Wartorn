@@ -53,6 +53,7 @@ namespace Wartorn
         public static Texture2D moveOverlay;
         public static Texture2D unitSpriteSheet;
         public static Texture2D directionarrow;
+        public static Texture2D commandspritesheet;
 
         public static Texture2D selectCursor;
         public static Texture2D attackCursor;
@@ -79,6 +80,7 @@ namespace Wartorn
             attackOverlay = Content.Load<Texture2D>(@"sprite\AttackOverlay");
             moveOverlay = Content.Load<Texture2D>(@"sprite\MoveOverlay");
             directionarrow = Content.Load<Texture2D>(@"sprite\directionarrow");
+            commandspritesheet = Content.Load<Texture2D>(@"sprite\GUI\commandspritesheet");
 
             selectCursor = Content.Load<Texture2D>(@"sprite\Cursor\Select_Cursor");
             attackCursor = Content.Load<Texture2D>(@"sprite\Cursor\Attack_Cursor");

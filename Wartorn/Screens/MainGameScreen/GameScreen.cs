@@ -34,6 +34,7 @@ namespace Wartorn.Screens.MainGameScreen
     {
         None,
         UnitSelected,
+        UnitCommand,
         BuildingSelected
     }
 
@@ -167,6 +168,10 @@ namespace Wartorn.Screens.MainGameScreen
             canvas_action = new Canvas();
             InitCanvas_action();
 
+            canvas_action_Unit = new Canvas();
+            canvas_action_Unit.IsVisible = false;
+            InitCanvas_Unit();
+
             Label label_mousepos = new Label(" ", new Point(0, 0), new Vector2(80, 20), CONTENT_MANAGER.defaultfont);
 
             console = new UIClass.Console(new Point(0, 0), new Vector2(720, 200), CONTENT_MANAGER.hackfont);
@@ -179,8 +184,19 @@ namespace Wartorn.Screens.MainGameScreen
             //add to canvas
             canvas.AddElement("generalInfo", canvas_generalInfo);
             canvas.AddElement("action", canvas_action);
-            canvas.AddElement("label_mousepos", label_mousepos);
+            canvas.AddElement("unit", canvas_action_Unit);
+            //canvas.AddElement("label_mousepos", label_mousepos);
             canvas.AddElement("console", console);
+        }
+
+        private void InitCanvas_Unit()
+        {
+            PictureBox commandslot = new PictureBox(CONTENT_MANAGER.commandspritesheet, Point.Zero, CommandSpriteSourceRectangle.GetSprite(playerInfos[localPlayer].owner == Owner.Red ? SpriteSheetCommandSlot.oneslotred : SpriteSheetCommandSlot.oneslotblue), null, depth: LayerDepth.GuiBackground);
+
+            Button firstcommand = new Button(CONTENT_MANAGER.commandspritesheet, CommandSpriteSourceRectangle.GetSprite(SpriteSheetCommand.Wait), new Point(6, 8));
+
+            canvas_action_Unit.AddElement("commandslot", commandslot);
+            canvas_action_Unit.AddElement("firstcmd", firstcommand);
         }
 
         private void InitCanvas_generalInfo()
@@ -370,8 +386,22 @@ namespace Wartorn.Screens.MainGameScreen
 
             //update canvas
             canvas.Update(CONTENT_MANAGER.inputState, CONTENT_MANAGER.lastInputState);
-            ((Label)canvas["label_mousepos"]).Text = mouseInputState.Position.ToString();
+            //((Label)canvas["label_mousepos"]).Text = mouseInputState.Position.ToString();
             UpdateCanvas_generalInfo();
+
+            //hide/show unit command menu
+            if(currentGameState == GameState.UnitCommand)
+            {
+                canvas_action_Unit.IsVisible = true;
+                int commandcount = GetCommandCount();
+                Rectangle temp = CommandSpriteSourceRectangle.GetSprite(commandcount, playerInfos[localPlayer].owner);
+
+                canvas_action_Unit.GetElementAs<PictureBox>("commandslot").SourceRectangle = temp;
+            }
+            else
+            {
+                canvas_action_Unit.IsVisible = false;
+            }
 
             //camera control
             MoveCamera(keyboardInputState, mouseInputState);
@@ -417,8 +447,20 @@ namespace Wartorn.Screens.MainGameScreen
         {
             foreach (Unit unit in ownedUnit)
             {
-
+                
             }
+        }
+
+        private int GetCommandCount()
+        {
+            //có wait nè
+            //có attack nếu có Unit địch trong tầm tấn công và tầm nhìn nè
+            //có load nếu đi vô transport unit nè
+            //có drop nếu unit đang chở unit khác nè
+            //có capture nếu là lính và đang đứng trên building khác màu nè
+            //có supply nếu là apc và đang đứng cạnh 1 unit bạn nè
+
+            return 1;
         }
 
         #region Unit handler
@@ -500,9 +542,10 @@ namespace Wartorn.Screens.MainGameScreen
             destination = default(Point);
             if (currentGameState == GameState.UnitSelected)
             {
-                currentGameState = GameState.None;
+                currentGameState = GameState.UnitCommand;
             }
         }
+
         private void UpdateMovingUnit(GameTime gameTime)
         {
             if (movingAnim.IsArrived)
@@ -722,10 +765,10 @@ namespace Wartorn.Screens.MainGameScreen
             CONTENT_MANAGER.spriteBatch.Draw(guibackground, new Vector2(0, 0), null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.GuiBackground);
             canvas.Draw(CONTENT_MANAGER.spriteBatch);
 
-            CONTENT_MANAGER.spriteBatch.DrawString(CONTENT_MANAGER.defaultfont, currentGameState.ToString(), new Vector2(100, 100), Color.Red);
+            //CONTENT_MANAGER.spriteBatch.DrawString(CONTENT_MANAGER.defaultfont, currentGameState.ToString(), new Vector2(100, 100), Color.Red);
 
             //draw canvas_generalInfo
-            DrawCanvas_generalInfo();
+            //DrawCanvas_generalInfo();
 
 
             //draw the minimap

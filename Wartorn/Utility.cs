@@ -826,6 +826,11 @@ namespace Wartorn
                         result = (int)unboxSpriteSheetBuilding + count;
                         box = (T)((object)result);
                         break;
+                    case "SpriteSheetCommand":
+                        SpriteSheetCommand unboxSpriteSheetCommand = (SpriteSheetCommand)((object)t);
+                        result = (int)unboxSpriteSheetCommand + count;
+                        box = (T)((object)result);
+                        break;
                     default:
                         break;
                 }
@@ -1029,6 +1034,11 @@ namespace Wartorn
                 }
 
                 return Direction.Center;
+            }
+
+            public static bool DistanceToOtherLessThan(this Point p,Point other,float MaxDistance)
+            {
+                return ((p.X - other.X) * (p.X - other.X) + (p.Y - other.Y) * (p.Y - other.Y)) < MaxDistance * MaxDistance;
             }
         }
     }

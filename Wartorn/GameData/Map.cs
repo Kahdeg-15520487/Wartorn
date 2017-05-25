@@ -16,8 +16,23 @@ namespace Wartorn.GameData
 {
     public class Map : IEnumerable
     {
-        public MapCell[,] map { get; private set; }
+        #region guid stuff
+        List<Point> mapcellthathaveunit;
+        public Point FindUnit(Guid guid)
+        {
+            Point result = Point.Zero;
+            foreach (Point p in mapcellthathaveunit)
+            {
+                if (this[p].unit.guid == guid)
+                {
+                    result = p;
+                }
+            }
+            return result;
+        }
+        #endregion
 
+        public MapCell[,] map { get; private set; }
         public Graph navigationGraph;
 
         private bool isProcessed = false;
@@ -107,6 +122,17 @@ namespace Wartorn.GameData
             weather = m.weather;
             theme = m.theme;
             isProcessed = false;
+
+            for (int x = 0; x < Width; x++)
+            {
+                for (int y = 0; y < Height; y++)
+                {
+                    if (map[x,y].unit!=null)
+                    {
+                        mapcellthathaveunit.Add(new Point(x, y));
+                    }
+                }
+            }
         }
 
         public IEnumerator GetEnumerator()

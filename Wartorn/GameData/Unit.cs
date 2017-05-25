@@ -197,6 +197,8 @@ namespace Wartorn.GameData
         public int Fuel { get { return fuel; } set { fuel = value; } }
         public Owner Owner { get; set; }
         public int UnitID { get; set; }
+        public readonly Guid guid;
+
         #endregion
         public Unit(UnitType unittype, AnimatedEntity anim,Owner owner,int hp = 100)
         {
@@ -206,6 +208,7 @@ namespace Wartorn.GameData
             hitPoint = hp;
             fuel = _Gas[unitType];
             actionpoint = _ActionPoint[unitType];
+            guid = Guid.NewGuid();
         }
 
         public int GetBaseDammage(UnitType other)

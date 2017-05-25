@@ -76,6 +76,7 @@ namespace Wartorn
             UnitSpriteSheetRectangle.LoadSprite();
             BuildingSpriteSourceRectangle.LoadSprite();
             DirectionArrowSpriteSourceRectangle.LoadSprite();
+            CommandSpriteSourceRectangle.LoadSprite();
 
             graphics.PreferredBackBufferWidth = Constants.Width;    // set this value to the desired width of your window
             graphics.PreferredBackBufferHeight = Constants.Height;  // set this value to the desired height of your window

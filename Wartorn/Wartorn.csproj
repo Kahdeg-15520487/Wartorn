@@ -91,6 +91,7 @@
     <Compile Include="Screens\RedScreen.cs" />
     <Compile Include="Screens\TestAnimationScreen.cs" />
     <Compile Include="Screens\UnitMoveProtypeScreen.cs" />
+    <Compile Include="SpriteRectangle\CommandSpriteSourceRectangle.cs" />
     <Compile Include="SpriteRectangle\DirectionArrowSpriteSourceRectangle.cs" />
     <Compile Include="SpriteRectangle\UISpriteSheetSourceRectangle.cs" />
     <Compile Include="SpriteRectangle\TerrainSpriteSourceRectangle.cs" />

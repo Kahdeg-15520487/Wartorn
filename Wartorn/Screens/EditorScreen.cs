@@ -77,7 +77,7 @@ namespace Wartorn.Screens
 
         public override bool Init()
         {
-            map = new Map(50, 30);
+            map = new Map(20, 20);
             mapArea = new Rectangle(0, 0, map.Width * Constants.MapCellWidth, map.Height * Constants.MapCellHeight);
             canvas = new Canvas();
             camera = new Camera(_device.Viewport);
@@ -183,9 +183,9 @@ namespace Wartorn.Screens
                     return;
                 }
 
-                if (x < 15)
+                if (x < 15 || x > 40)
                 {
-                    CONTENT_MANAGER.ShowMessageBox("Map width must be at least 15");
+                    CONTENT_MANAGER.ShowMessageBox("Map width must be at least 15 and no more than 40");
                     return;
                 }
 
@@ -196,9 +196,9 @@ namespace Wartorn.Screens
                     return;
                 }
 
-                if (y < 10)
+                if (y < 10 || y > 40)
                 {
-                    CONTENT_MANAGER.ShowMessageBox("Map height must be at least 10");
+                    CONTENT_MANAGER.ShowMessageBox("Map height must be at least 10 and no more than 40");
                     return;
                 }
 

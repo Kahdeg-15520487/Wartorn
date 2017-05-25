@@ -105,9 +105,14 @@ namespace Wartorn.GameData
 
     public enum Command
     {
-        Move,
+        Wait,
         Attack,
         Capture,
-        Wait
+        Load,
+        Drop,
+        Rise,
+        Dive,
+        Supply,
+        Move
     }
 }
