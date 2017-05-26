@@ -60,7 +60,7 @@ namespace Wartorn
         None
     }
 
-    static class TerrainSpriteSheetSourceRectangle
+    static class TerrainSpriteSourceRectangle
     {
         private static Dictionary<SpriteSheetTerrain, Rectangle> TerrainSprite;
         private static Dictionary<Rectangle, SpriteSheetTerrain> _TerrainSprite;

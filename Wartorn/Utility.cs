@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Input;
 using System.IO;
 using Wartorn.GameData;
 using Wartorn.Drawing;
+using Wartorn.SpriteRectangle;
 
 namespace Wartorn
 {

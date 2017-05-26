@@ -39,6 +39,8 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Drawing\DirectionArrowRenderer.cs" />
+    <Compile Include="Drawing\MovingUnitAnimation.cs" />
     <Compile Include="DropdownDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -54,12 +56,9 @@
     <Compile Include="CustomJsonConverter.cs" />
     <Compile Include="PathFinding\Dijkstra.cs" />
     <Compile Include="PathFinding\DijkstraHelper.cs" />
-<<<<<<< HEAD
     <Compile Include="Screens\MainGameScreen\Client_Screen.cs" />
     <Compile Include="Screens\MainGameScreen\Room_Screen.cs" />
-=======
     <Compile Include="Screens\MainGameScreen\GameScreen - Backup.cs" />
->>>>>>> merge-with-server-branch
     <Compile Include="Screens\TestConsole.cs" />
     <Compile Include="SpriteRectangle\BuildingSpriteSourceRectangle.cs" />
     <Compile Include="Constants.cs" />
@@ -98,7 +97,7 @@
     <Compile Include="SpriteRectangle\CommandSpriteSourceRectangle.cs" />
     <Compile Include="SpriteRectangle\DirectionArrowSpriteSourceRectangle.cs" />
     <Compile Include="SpriteRectangle\UISpriteSheetSourceRectangle.cs" />
-    <Compile Include="SpriteRectangle\SpriteSheetSourceRectangle.cs" />
+    <Compile Include="SpriteRectangle\TerrainSpriteSourceRectangle.cs" />
     <Compile Include="Storage\CompressHelper.cs" />
     <Compile Include="Storage\MapData.cs" />
     <Compile Include="Storage\NoiseGenerator.cs" />
