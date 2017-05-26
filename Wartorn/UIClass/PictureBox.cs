@@ -25,24 +25,44 @@ namespace Wartorn.UIClass
                 texture2D = value;
             }
         }
+
+        public float Depth { get; set; }
+
+        private Rectangle? sourceRectangle = null;
+        public Rectangle SourceRectangle
+        {
+            get
+            {
+                return sourceRectangle.GetValueOrDefault();
+            }
+            set
+            {
+                sourceRectangle = value;
+            }
+        }
+
         /// <summary>
         /// Contructor of PictureBox
         /// </summary>
-        /// <param name="_texture2D"> Picture you want to display</param>
-        /// <param name="_position"> Position you want PictrueBox to locate</param>
+        /// <param name="texture2D"> Picture you want to display</param>
+        /// <param name="position"> Position you want PictrueBox to locate</param>
         /// <param name="_size">Size of PictureBox</param>
-        public PictureBox(Texture2D _texture2D,Point _position,float _rotation,float _scale)
+        public PictureBox(Texture2D texture2D, Point position,Rectangle? sourceRectangle, Vector2? origin, float rotation = 0f, float scale = 1f, float depth = 0f)
         {
-            Texture2D = _texture2D;
-            Position = _position;
-            Rotation = _rotation;
-            Scale = _scale;
-            
+            Texture2D = texture2D;
+            Position = position;
+            Rotation = rotation;
+            Scale = scale;
+            Depth = depth;
+            this.origin = origin ?? Vector2.Zero;
+            this.sourceRectangle = sourceRectangle;
         }
+
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(Texture2D, Position.ToVector2(), null, Color.White, Rotation, Vector2.Zero, Scale, SpriteEffects.None, 0);
+            spriteBatch.Draw(Texture2D, Position.ToVector2(), sourceRectangle, Color.White, Rotation, origin, Scale, SpriteEffects.None, Depth);
         }
+
         public override Vector2 Size
         {
             get

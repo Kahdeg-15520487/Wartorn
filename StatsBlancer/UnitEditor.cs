@@ -23,6 +23,7 @@ namespace StatsBlancer
         private Dictionary<UnitType, Dictionary<UnitType, int>> _DammageTable;
         private Dictionary<UnitType, int> _Cost;
         private Dictionary<UnitType, int> _Gas;
+        private Dictionary<UnitType, int> _ActionPoint;
         private Dictionary<UnitType, int> _MovementRange;
         private Dictionary<UnitType, int> _VisionRange;
         private Dictionary<UnitType, Range> _AttackRange;

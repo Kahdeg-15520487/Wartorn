@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
+
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -18,6 +20,14 @@ namespace Wartorn
                 get
                 {
                     return UIelements[uiname];
+                }
+            }
+
+            public List<string> UInames
+            {
+                get
+                {
+                    return UIelements.Keys.ToList();
                 }
             }
 
