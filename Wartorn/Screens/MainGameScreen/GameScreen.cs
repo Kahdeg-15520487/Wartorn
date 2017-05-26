@@ -33,17 +33,22 @@ namespace Wartorn.Screens.MainGameScreen
     enum GameState
     {
         None,
+        TurnEnd,
+        WaitForTurn,
         UnitSelected,
+        UnitMove,
         UnitCommand,
-        BuildingSelected
+        BuildingSelected,
+        BuildingBuildUnit,
     }
 
     class GameScreen : Screen
     {
+        #region private field
         //information of this game session
         Session session;
 
-        //ui canvas
+        #region ui canvas
         Canvas canvas;
         Canvas canvas_generalInfo;
         Canvas canvas_action;
@@ -52,6 +57,7 @@ namespace Wartorn.Screens.MainGameScreen
         Canvas canvas_action_Harbor;
         Canvas canvas_action_Unit;
         Canvas canvas_action_Building;
+        #endregion
 
         //debug console
         UIClass.Console console;
@@ -64,13 +70,14 @@ namespace Wartorn.Screens.MainGameScreen
         //camera ?
         Camera camera;
 
-        //input information
+        #region input information
         MouseState mouseInputState;
         MouseState lastMouseInputState;
         KeyboardState keyboardInputState;
         KeyboardState lastKeyboardInputState;
         Point selectedMapCell;
         Point lastSelectedMapCell;
+        #endregion
 
         //constants
         readonly Rectangle minimapbound = new Rectangle(2, 312, 234, 166);
@@ -79,11 +86,12 @@ namespace Wartorn.Screens.MainGameScreen
         //gui variable
         bool isHideGUI = false;
 
-        //player information
+        #region player information
         PlayerInfo[] playerInfos;
         int currentPlayer = 0;
         int localPlayer = 0;
         List<Unit> ownedUnit;
+        #endregion
 
         //build unit information
         UnitType selectedUnitToBuild = UnitType.None;
@@ -91,22 +99,26 @@ namespace Wartorn.Screens.MainGameScreen
 
         //current unit selection
         Point selectedUnit = default(Point);
+        Point lastSelectedUnit = default(Point);
         List<Point> movementRange = null;
 
-        //moving unit animation
+        #region moving unit animation
         Graph dijkstraGraph;
         List<Point> movementPath;
+        Point lastpos;
         Point destination;
         bool isMovingUnitAnimPlaying = false;
         bool isMovePathCalculated = false;
         MovingUnitAnimation movingAnim;
         DirectionArrowRenderer dirarrowRenderer = new DirectionArrowRenderer();
+        #endregion
 
         //fog of war
         bool[,] mapcellVisibility;
 
         //game state
         GameState currentGameState = GameState.None;
+        #endregion
 
         public GameScreen(GraphicsDevice device) : base(device, "GameScreen")
         {
@@ -193,10 +205,10 @@ namespace Wartorn.Screens.MainGameScreen
         {
             PictureBox commandslot = new PictureBox(CONTENT_MANAGER.commandspritesheet, Point.Zero, CommandSpriteSourceRectangle.GetSprite(playerInfos[localPlayer].owner == Owner.Red ? SpriteSheetCommandSlot.oneslotred : SpriteSheetCommandSlot.oneslotblue), null, depth: LayerDepth.GuiBackground);
 
-            Button firstcommand = new Button(CONTENT_MANAGER.commandspritesheet, CommandSpriteSourceRectangle.GetSprite(SpriteSheetCommand.Wait), new Point(6, 8));
+            Button firstslot = new Button(CONTENT_MANAGER.commandspritesheet, CommandSpriteSourceRectangle.GetSprite(SpriteSheetCommand.Wait), new Point(6, 8));
 
             canvas_action_Unit.AddElement("commandslot", commandslot);
-            canvas_action_Unit.AddElement("firstcmd", firstcommand);
+            canvas_action_Unit.AddElement("firstslot", firstslot);
         }
 
         private void InitCanvas_generalInfo()
@@ -390,17 +402,15 @@ namespace Wartorn.Screens.MainGameScreen
             UpdateCanvas_generalInfo();
 
             //hide/show unit command menu
-            if(currentGameState == GameState.UnitCommand)
+            if(currentGameState == GameState.UnitCommand && !canvas_action_Unit.IsVisible)
             {
                 canvas_action_Unit.IsVisible = true;
                 int commandcount = GetCommandCount();
                 Rectangle temp = CommandSpriteSourceRectangle.GetSprite(commandcount, playerInfos[localPlayer].owner);
 
                 canvas_action_Unit.GetElementAs<PictureBox>("commandslot").SourceRectangle = temp;
-            }
-            else
-            {
-                canvas_action_Unit.IsVisible = false;
+                canvas_action_Unit.GetElementAs<PictureBox>("commandslot").Position = new Point(selectedUnit.X * Constants.MapCellWidth + 50, selectedUnit.Y * Constants.MapCellHeight);
+                canvas_action_Unit.GetElementAs<Button>("firstslot").Position = new Point(selectedUnit.X * Constants.MapCellWidth + 50 + 6, selectedUnit.Y * Constants.MapCellHeight + 8);
             }
 
             //camera control
@@ -414,12 +424,50 @@ namespace Wartorn.Screens.MainGameScreen
             }
 
             //update game logic
-            if (mouseInputState.LeftButton == ButtonState.Released
-             && lastMouseInputState.LeftButton == ButtonState.Pressed)
+            switch (currentGameState)
             {
-                SelectUnit();
-                SelectBuilding();
+                //the normal state of the game where nothing is selected
+                case GameState.None:
+                    if (HelperFunction.IsLeftMousePressed())
+                    {
+                        SelectUnit();
+                        if (currentGameState != GameState.UnitSelected)
+                        {
+                            SelectBuilding();
+                        }
+                    }
+                    break;
+
+                //show movement range
+                //show movement path planning
+                case GameState.UnitSelected:
+                    break;
+
+                //update and draw unit move animation
+                case GameState.UnitMove:
+                    break;
+
+                //select and execute unit command
+                case GameState.UnitCommand:
+                    break;
+
+                //show building's canvas
+                case GameState.BuildingSelected:
+                    break;
+
+                //spawn the unit which was selected to build
+                case GameState.BuildingBuildUnit:
+                    break;
+                default:
+                    break;
             }
+
+
+
+
+            
+
+            HandleUnitCommand();
 
             if (isMovingUnitAnimPlaying)
             {
@@ -463,6 +511,16 @@ namespace Wartorn.Screens.MainGameScreen
             return 1;
         }
 
+        private void HandleUnitCommand()
+        {
+            if (mouseInputState.RightButton == ButtonState.Pressed || currentGameState != GameState.UnitCommand)
+            {
+                currentGameState = GameState.None;
+                canvas_action_Unit.IsVisible = false;
+                return;
+            }
+        }
+
         #region Unit handler
         //the folowing only handle unit move command
         //TODO 
@@ -486,7 +544,7 @@ namespace Wartorn.Screens.MainGameScreen
 
                 selectedUnit = selectedMapCell;
                 canvas_generalInfo.GetElementAs<Label>("label_unittype").Text = temp.unit.UnitType.ToString() + Environment.NewLine + temp.unit.Owner.ToString();
-                DisplayMovementRange(temp.unit, selectedUnit);
+                CalculateMovementRange(temp.unit, selectedUnit);
                 isMovePathCalculated = true;
                 currentGameState = GameState.UnitSelected;
             }
@@ -538,7 +596,8 @@ namespace Wartorn.Screens.MainGameScreen
             movementPath = null;
             isMovePathCalculated = false;
             isMovingUnitAnimPlaying = false;
-            selectedUnit = default(Point);
+            lastSelectedUnit = selectedUnit;
+            selectedUnit = destination;
             destination = default(Point);
             if (currentGameState == GameState.UnitSelected)
             {
@@ -572,14 +631,14 @@ namespace Wartorn.Screens.MainGameScreen
             movingAnim.Update(gameTime);
         }
 
-        private void DisplayMovementRange(Unit unit,Point position)
+        private void CalculateMovementRange(Unit unit,Point position)
         {
             dijkstraGraph = DijkstraHelper.CalculateGraph(session.map, unit, position);
             movementRange = DijkstraHelper.FindRange(dijkstraGraph);
         }
         #endregion
 
-        #region only use to demo gameplay
+        #region only use to demo gameplay these will not be used in game
         private void ChangeTurn()
         {
             if (currentPlayer == 1)
@@ -765,7 +824,7 @@ namespace Wartorn.Screens.MainGameScreen
             CONTENT_MANAGER.spriteBatch.Draw(guibackground, new Vector2(0, 0), null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.GuiBackground);
             canvas.Draw(CONTENT_MANAGER.spriteBatch);
 
-            //CONTENT_MANAGER.spriteBatch.DrawString(CONTENT_MANAGER.defaultfont, currentGameState.ToString(), new Vector2(100, 100), Color.Red);
+            CONTENT_MANAGER.spriteBatch.DrawString(CONTENT_MANAGER.defaultfont, currentGameState.ToString(), new Vector2(100, 100), Color.Red);
 
             //draw canvas_generalInfo
             //DrawCanvas_generalInfo();
