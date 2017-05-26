@@ -1,10 +1,6 @@
-﻿using Newtonsoft.Json;
-using SimpleTCP;
+﻿using SimpleTCP;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using Utility_Project;
 
 namespace Client

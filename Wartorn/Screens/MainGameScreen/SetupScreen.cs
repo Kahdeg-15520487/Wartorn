@@ -22,6 +22,7 @@ using Wartorn.Drawing.Animation;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Microsoft.Xna.Framework.Content;
+using Client;
 
 namespace Wartorn.Screens.MainGameScreen
 {
@@ -48,12 +49,9 @@ namespace Wartorn.Screens.MainGameScreen
 
         private void InitUI()
         {
+            SpriteFont spriteFont = CONTENT_MANAGER.arcadefont;
             //declare ui elements
-            Label label_playerinfo = new Label("kahdeg", new Point(10, 20), new Vector2(80, 30), CONTENT_MANAGER.arcadefont);
-
-            Button button_selectmap = new Button(UISpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetUI.Open), new Point(650, 20), 0.5f);
-            Button button_exit = new Button(UISpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetUI.Exit), new Point(5, 5), 0.5f);
-            Button button_start = new Button("Start", new Point(100, 50), null, CONTENT_MANAGER.arcadefont);
+         
 
             Label enter_name = new Label("Enter your name", new Point((this._device.Viewport.Width / 2) - (int)spriteFont.MeasureString("Enter your name").X / 2 , this._device.Viewport.Height / 2 - 140), null, CONTENT_MANAGER.arcadefont, 1);
 
@@ -70,57 +68,15 @@ namespace Wartorn.Screens.MainGameScreen
             Button button_connect = new Button(text_conect, point_conect, null, CONTENT_MANAGER.arcadefont);
 
             //bind event
-            button_selectmap.MouseClick += (sender, e) =>
-            {
-                string path = CONTENT_MANAGER.ShowFileOpenDialog(CONTENT_MANAGER.LocalRootPath);
-                string content = string.Empty;
-                try
-                {
-                    content = File.ReadAllText(path);
-                }
-                catch (Exception er)
-                {
-                    Utility.HelperFunction.Log(er);
-                }
 
-                if (!string.IsNullOrEmpty(content))
-                {
-                    mapdata = content;
-                    var temp = Storage.MapData.LoadMap(content);
-                    if (temp != null)
-                    {
-                        minimap = minimapgen.GenerateMapTexture(temp);
-                        map = new Map();
-                        map.Clone(temp);
-                    }
-                }
-            };
-            button_exit.MouseClick += (sender, e) =>
-            {
-                SCREEN_MANAGER.goto_screen("MainMenuScreen");
-            };
-            button_start.MouseClick += (sender, e) =>
-            {
-                if (map == null)
-                {
-                    return;
-                }
-                sessiondata = new SessionData();
-                sessiondata.map = new Map();
-                sessiondata.map.Clone(Storage.MapData.LoadMap(mapdata));
-                sessiondata.gameMode = GameMode.campaign;
-                sessiondata.playerInfos = new PlayerInfo[2];
-                sessiondata.playerInfos[0] = new PlayerInfo(0, Owner.Red);
-                sessiondata.playerInfos[1] = new PlayerInfo(1, Owner.Blue);
-                ((GameScreen)SCREEN_MANAGER.get_screen("GameScreen")).InitSession(sessiondata);
-                SCREEN_MANAGER.goto_screen("GameScreen");
-            };
+
 
             //add to canvas
-            canvas.AddElement("label_playerinfo", label_playerinfo);
-            canvas.AddElement("button_selectmap", button_selectmap);
-            canvas.AddElement("button_exit", button_exit);
-            canvas.AddElement("button_start", button_start);
+            canvas.AddElement("enter_name", enter_name);
+            canvas.AddElement("enter_ip_address", enter_ip_address);
+            canvas.AddElement("player_name", player_name);
+            canvas.AddElement("ip_address", ip_address);
+          
         }
 
         public override void Shutdown()

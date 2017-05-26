@@ -33,9 +33,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\..\Source\Repos\Wartorn2\Client\Build\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="SimpleTCP">
+      <HintPath>..\..\..\Source\Repos\SimpleTCP\Main\bin\Debug\SimpleTCP.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -94,6 +96,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Client\Client.csproj">
+      <Project>{7adffba4-afd8-4cb4-a58b-097cf4d982aa}</Project>
+      <Name>Client</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Wartorn\Wartorn.csproj">
       <Project>{861b7ca4-14d2-4051-a098-05baf4b86c77}</Project>
       <Name>Wartorn</Name>
