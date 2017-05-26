@@ -40,5 +40,14 @@ namespace Wartorn
         {
             InitializeComponent();
         }
+
+        private void textBox_Input_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                this.DialogResult = DialogResult.OK;
+                this.Close();
+            }
+        }
     }
 }

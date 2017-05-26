@@ -134,31 +134,7 @@ namespace Wartorn
             /// <param name="position">Position of the top left corner</param>
             /// <param name="size">Size of the button</param>
             /// <param name="font">Font to use</param>
-            /// 
-            //public Button(string text, Point position, Vector2 size, SpriteFont font)
-            //{
-            //    contentType = ButtonContentType.Text;
-            //    Text = text;
-            //    Position = position;
-            //    Size = size;
-            //    this.font = font;
-            //    Init();
-            //}
-
-            private void CalculateSize(Vector2 size)
-            {
-                //Distance between text and border
-                Size = new Vector2(size.X + size.X / 2, size.Y + size.Y / 2);
-
-                //Region to draw text
-                StringRect = new Vector2(Position.X + size.X / 4, Position.Y + size.Y / 4);
-
-
-            }
-
-
-
-
+            ///
             public Button(string text, Point position, Vector2? size, SpriteFont font)
             {
                 contentType = ButtonContentType.Text;
@@ -178,6 +154,17 @@ namespace Wartorn
 
                 Init();
             }
+
+            private void CalculateSize(Vector2 size)
+            {
+                //Distance between text and border
+                Size = new Vector2(size.X + size.X / 2, size.Y + size.Y / 2);
+
+                //Region to draw text
+                StringRect = new Vector2(Position.X + size.X / 4, Position.Y + size.Y / 4);
+
+            }
+            
             /// <summary>
             /// Sprite button
             /// </summary>

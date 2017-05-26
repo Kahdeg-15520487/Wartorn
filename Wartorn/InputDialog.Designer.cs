@@ -48,6 +48,7 @@
             this.textBox_Input.Name = "textBox_Input";
             this.textBox_Input.Size = new System.Drawing.Size(257, 20);
             this.textBox_Input.TabIndex = 1;
+            this.textBox_Input.KeyUp += new System.Windows.Forms.KeyEventHandler(this.textBox_Input_KeyUp);
             // 
             // button_OK
             // 

@@ -56,7 +56,7 @@ namespace Wartorn.UIClass
 
         protected bool isVisible = true;
         /// <summary>
-        /// To draw the controle or not.
+        /// To draw the control or not.
         /// </summary>
         public bool IsVisible
         {

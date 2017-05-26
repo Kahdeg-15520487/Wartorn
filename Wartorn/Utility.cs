@@ -31,6 +31,16 @@ namespace Wartorn
                 return CONTENT_MANAGER.inputState.keyboardState.IsKeyUp(k) && CONTENT_MANAGER.lastInputState.keyboardState.IsKeyDown(k);
             }
 
+            public static bool IsLeftMousePressed()
+            {
+                return CONTENT_MANAGER.inputState.mouseState.LeftButton == ButtonState.Pressed;
+            }
+
+            public static bool IsRightMousePressed()
+            {
+                return CONTENT_MANAGER.inputState.mouseState.RightButton == ButtonState.Pressed;
+            }
+
             public static void Log(Exception e)
             {
                 File.WriteAllText("crashlog.txt", DateTime.Now.ToString(@"dd\/MM\/yyyy HH:mm") + Environment.NewLine + e.Message + Environment.NewLine + e.StackTrace + Environment.NewLine + e.TargetSite);
@@ -823,6 +833,11 @@ namespace Wartorn
                         result = (int)unboxSpriteSheetBuilding + count;
                         box = (T)((object)result);
                         break;
+                    case "SpriteSheetCommand":
+                        SpriteSheetCommand unboxSpriteSheetCommand = (SpriteSheetCommand)((object)t);
+                        result = (int)unboxSpriteSheetCommand + count;
+                        box = (T)((object)result);
+                        break;
                     default:
                         break;
                 }
@@ -1026,6 +1041,11 @@ namespace Wartorn
                 }
 
                 return Direction.Center;
+            }
+
+            public static bool DistanceToOtherLessThan(this Point p,Point other,float MaxDistance)
+            {
+                return ((p.X - other.X) * (p.X - other.X) + (p.Y - other.Y) * (p.Y - other.Y)) < MaxDistance * MaxDistance;
             }
         }
     }

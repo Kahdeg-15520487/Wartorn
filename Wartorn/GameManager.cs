@@ -79,6 +79,7 @@ namespace Wartorn
             UnitSpriteSheetRectangle.LoadSprite();
             BuildingSpriteSourceRectangle.LoadSprite();
             DirectionArrowSpriteSourceRectangle.LoadSprite();
+            CommandSpriteSourceRectangle.LoadSprite();
 
             graphics.PreferredBackBufferWidth = Constants.Width;    // set this value to the desired width of your window
             graphics.PreferredBackBufferHeight = Constants.Height;  // set this value to the desired height of your window
@@ -121,8 +122,8 @@ namespace Wartorn
 
             SCREEN_MANAGER.add_screen(new Room_Screen(GraphicsDevice, "Room_Screen"));
             //SCREEN_MANAGER.goto_screen("TestAnimationScreen");
-            SCREEN_MANAGER.goto_screen("SetupScreen");
-            //SCREEN_MANAGER.goto_screen("MainMenuScreen");
+            //SCREEN_MANAGER.goto_screen("SetupScreen");
+            SCREEN_MANAGER.goto_screen("MainMenuScreen");
             //SCREEN_MANAGER.goto_screen("EditorScreen");
 
             //SCREEN_MANAGER.goto_screen("Client_Screen");

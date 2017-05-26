@@ -33,9 +33,7 @@ namespace Wartorn.GameData
         SupplyBase,
         HQ
     }
-
-
-
+    
     public enum UnitType
     {
         None,
@@ -103,5 +101,18 @@ namespace Wartorn.GameData
     public enum GameMode
     {
         campaign
-    }    
+    }
+
+    public enum Command
+    {
+        Wait,
+        Attack,
+        Capture,
+        Load,
+        Drop,
+        Rise,
+        Dive,
+        Supply,
+        Move
+    }
 }

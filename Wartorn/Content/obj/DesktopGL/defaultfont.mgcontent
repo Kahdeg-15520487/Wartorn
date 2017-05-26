@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>C:/Users/chauvansang/Source/Repos/Wartorn2/Wartorn/Content/defaultfont.spritefont</SourceFile>
-  <SourceTime>2017-05-17T19:42:22.7365262+07:00</SourceTime>
-  <DestFile>C:/Users/chauvansang/Source/Repos/Wartorn2/Wartorn/Content/bin/DesktopGL/defaultfont.xnb</DestFile>
-  <DestTime>2017-05-19T11:24:00.5057182+07:00</DestTime>
+  <SourceFile>G:/Workspace/c#/Wartorn/Wartorn/Content/defaultfont.spritefont</SourceFile>
+  <SourceTime>2017-05-23T18:52:32.2145613+07:00</SourceTime>
+  <DestFile>G:/Workspace/c#/Wartorn/Wartorn/Content/bin/DesktopGL/defaultfont.xnb</DestFile>
+  <DestTime>2017-05-23T18:54:07.7432179+07:00</DestTime>
   <Importer>FontDescriptionImporter</Importer>
   <ImporterTime>2017-03-01T22:05:36+07:00</ImporterTime>
   <Processor>FontDescriptionProcessor</Processor>

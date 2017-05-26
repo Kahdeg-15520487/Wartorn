@@ -26,12 +26,25 @@ using Wartorn.PathFinding;
 
 namespace Wartorn.Screens.MainGameScreen
 {
+    enum GameState
+    {
+        None,
+        TurnEnd,
+        WaitForTurn,
+        UnitSelected,
+        UnitMove,
+        UnitCommand,
+        BuildingSelected,
+        BuildingBuildUnit,
+    }
+	
     class GameScreen : Screen
     {
+        #region private field
         //information of this game session
         Session session;
 
-        //ui canvas
+        #region ui canvas
         Canvas canvas;
         Canvas canvas_generalInfo;
         Canvas canvas_action;
@@ -40,6 +53,10 @@ namespace Wartorn.Screens.MainGameScreen
         Canvas canvas_action_Harbor;
         Canvas canvas_action_Unit;
         Canvas canvas_action_Building;
+        #endregion
+
+        //debug console
+        UIClass.Console console;
 
         //resources
         Texture2D guibackground;
@@ -49,13 +66,14 @@ namespace Wartorn.Screens.MainGameScreen
         //camera ?
         Camera camera;
 
-        //input information
+        #region input information
         MouseState mouseInputState;
         MouseState lastMouseInputState;
         KeyboardState keyboardInputState;
         KeyboardState lastKeyboardInputState;
         Point selectedMapCell;
-
+        Point lastSelectedMapCell;
+        #endregion
 
         //constants
         readonly Rectangle minimapbound = new Rectangle(2, 312, 234, 166);
@@ -64,31 +82,48 @@ namespace Wartorn.Screens.MainGameScreen
         //gui variable
         bool isHideGUI = false;
 
-        //player information
+        #region player information
         PlayerInfo[] playerInfos;
         int currentPlayer = 0;
         int localPlayer = 0;
         List<Unit> ownedUnit;
+        #endregion
 
         //build unit information
         UnitType selectedUnitToBuild = UnitType.None;
         Point selectedFactoryToBuild = new Point(0, 0);
 
         //current unit selection
-        Point selectedUnit = new Point(0, 0);
+        Point selectedUnit = default(Point);
+        Point lastSelectedUnit = default(Point);
         List<Point> movementRange = null;
-        Graph dijkstraGraph = null;
+
+        #region moving unit animation
+        Graph dijkstraGraph;
+        List<Point> movementPath;
+        Point lastpos;
+        Point destination;
+        bool isMovingUnitAnimPlaying = false;
+        bool isMovePathCalculated = false;
+        MovingUnitAnimation movingAnim;
+        DirectionArrowRenderer dirarrowRenderer = new DirectionArrowRenderer();
+        #endregion
 
         //fog of war
         bool[,] mapcellVisibility;
 
+		
+        //game state
+        GameState currentGameState = GameState.None;
+        #endregion
+		
         public GameScreen(GraphicsDevice device) : base(device, "GameScreen")
         {
             LoadContent();
             minimapgen = new MiniMapGenerator(device, CONTENT_MANAGER.spriteBatch);
         }
 
-        #region Innit
+        #region Init
         public void InitSession(SessionData sessiondata)
         {
             session = new Session(sessiondata);
@@ -132,6 +167,7 @@ namespace Wartorn.Screens.MainGameScreen
             return base.Init();
         }
 
+        #region init ui
         private void InitUI()
         {
             //declare ui elements
@@ -141,14 +177,35 @@ namespace Wartorn.Screens.MainGameScreen
             canvas_action = new Canvas();
             InitCanvas_action();
 
+            canvas_action_Unit = new Canvas();
+            canvas_action_Unit.IsVisible = false;
+            InitCanvas_Unit();
+
             Label label_mousepos = new Label(" ", new Point(0, 0), new Vector2(80, 20), CONTENT_MANAGER.defaultfont);
+
+            console = new UIClass.Console(new Point(0, 0), new Vector2(720, 200), CONTENT_MANAGER.hackfont);
+            console.IsVisible = false;
+            console.SetVariable("player", localPlayer);
+            console.SetVariable("changeTurn", new Action(this.ChangeTurn));
 
             //bind event
 
             //add to canvas
             canvas.AddElement("generalInfo", canvas_generalInfo);
             canvas.AddElement("action", canvas_action);
-            canvas.AddElement("label_mousepos", label_mousepos);
+            canvas.AddElement("unit", canvas_action_Unit);
+            //canvas.AddElement("label_mousepos", label_mousepos);
+            canvas.AddElement("console", console);
+        }
+
+        private void InitCanvas_Unit()
+        {
+            PictureBox commandslot = new PictureBox(CONTENT_MANAGER.commandspritesheet, Point.Zero, CommandSpriteSourceRectangle.GetSprite(playerInfos[localPlayer].owner == Owner.Red ? SpriteSheetCommandSlot.oneslotred : SpriteSheetCommandSlot.oneslotblue), null, depth: LayerDepth.GuiBackground);
+
+            Button firstslot = new Button(CONTENT_MANAGER.commandspritesheet, CommandSpriteSourceRectangle.GetSprite(SpriteSheetCommand.Wait), new Point(6, 8));
+
+            canvas_action_Unit.AddElement("commandslot", commandslot);
+            canvas_action_Unit.AddElement("firstslot", firstslot);
         }
 
         private void InitCanvas_generalInfo()
@@ -237,6 +294,7 @@ namespace Wartorn.Screens.MainGameScreen
             canvas_action_Factory.AddElement("button_Missile", button_Missile);
         }
         #endregion
+        #endregion
 
         public override void Shutdown()
         {
@@ -258,12 +316,27 @@ namespace Wartorn.Screens.MainGameScreen
                 return;
             }
 
-            UpdateAnimation(gameTime);
+            if (HelperFunction.IsKeyPress(Keys.OemTilde))
+            {
+                console.IsVisible = !console.IsVisible;
+            }
 
             //update canvas
             canvas.Update(CONTENT_MANAGER.inputState, CONTENT_MANAGER.lastInputState);
-            ((Label)canvas["label_mousepos"]).Text = mouseInputState.Position.ToString();
+            //((Label)canvas["label_mousepos"]).Text = mouseInputState.Position.ToString();
             UpdateCanvas_generalInfo();
+
+            //hide/show unit command menu
+            if(currentGameState == GameState.UnitCommand && !canvas_action_Unit.IsVisible)
+            {
+                canvas_action_Unit.IsVisible = true;
+                int commandcount = GetCommandCount();
+                Rectangle temp = CommandSpriteSourceRectangle.GetSprite(commandcount, playerInfos[localPlayer].owner);
+
+                canvas_action_Unit.GetElementAs<PictureBox>("commandslot").SourceRectangle = temp;
+                canvas_action_Unit.GetElementAs<PictureBox>("commandslot").Position = new Point(selectedUnit.X * Constants.MapCellWidth + 50, selectedUnit.Y * Constants.MapCellHeight);
+                canvas_action_Unit.GetElementAs<Button>("firstslot").Position = new Point(selectedUnit.X * Constants.MapCellWidth + 50 + 6, selectedUnit.Y * Constants.MapCellHeight + 8);
+            }
 
             //camera control
             MoveCamera(keyboardInputState, mouseInputState);
@@ -276,12 +349,69 @@ namespace Wartorn.Screens.MainGameScreen
             }
 
             //update game logic
-            if (mouseInputState.LeftButton == ButtonState.Released
-             && lastMouseInputState.LeftButton == ButtonState.Pressed)
+            switch (currentGameState)
             {
-                UpdateBuilding();
-                UpdateUnit();
+                //the normal state of the game where nothing is selected
+                case GameState.None:
+                    if (HelperFunction.IsLeftMousePressed())
+                    {
+                        SelectUnit();
+                        if (currentGameState != GameState.UnitSelected)
+                        {
+                            SelectBuilding();
+                        }
+                    }
+                    break;
+
+                //show movement range
+                //show movement path planning
+                case GameState.UnitSelected:
+                    break;
+
+                //update and draw unit move animation
+                case GameState.UnitMove:
+                    break;
+
+                //select and execute unit command
+                case GameState.UnitCommand:
+                    break;
+
+                //show building's canvas
+                case GameState.BuildingSelected:
+                    break;
+
+                //spawn the unit which was selected to build
+                case GameState.BuildingBuildUnit:
+                    break;
+                default:
+                    break;
             }
+
+
+
+
+            
+
+            HandleUnitCommand();
+
+            if (isMovingUnitAnimPlaying)
+            {
+                UpdateMovingUnit(gameTime);
+            }
+
+            //calculate movepath
+            if (isMovePathCalculated)
+            {
+                if (movementRange.Contains(selectedMapCell) && selectedMapCell != lastSelectedMapCell)
+                {
+                    //update movement path
+                    movementPath = DijkstraHelper.FindPath(dijkstraGraph, selectedMapCell);
+                    dirarrowRenderer.UpdatePath(movementPath);
+                    lastSelectedMapCell = selectedMapCell;
+                }
+            }
+
+            UpdateAnimation(gameTime);
         }
 
         #region Update game logic
@@ -290,32 +420,196 @@ namespace Wartorn.Screens.MainGameScreen
         {
             foreach (Unit unit in ownedUnit)
             {
-
+                
             }
         }
 
-        private void UpdateUnit()
+        private int GetCommandCount()
+        {
+            //có wait nè
+            //có attack nếu có Unit địch trong tầm tấn công và tầm nhìn nè
+            //có load nếu đi vô transport unit nè
+            //có drop nếu unit đang chở unit khác nè
+            //có capture nếu là lính và đang đứng trên building khác màu nè
+            //có supply nếu là apc và đang đứng cạnh 1 unit bạn nè
+
+            return 1;
+        }
+
+        private void HandleUnitCommand()
+        {
+            if (mouseInputState.RightButton == ButtonState.Pressed || currentGameState != GameState.UnitCommand)
+            {
+                currentGameState = GameState.None;
+                canvas_action_Unit.IsVisible = false;
+                return;
+            }
+        }
+
+        #region Unit handler
+        //the folowing only handle unit move command
+        //TODO 
+        private void SelectUnit()
         {
             MapCell temp = session.map[selectedMapCell];
-            if (temp.unit != null)
+            if (//check if there is a unit to select
+                temp.unit != null
+                //check if 
+             && temp.unit.ActionPoint>0
+                //check if there is a moving unit animation playing
+             && !isMovingUnitAnimPlaying 
+                //check if this unit is not already selected
+             && selectedUnit != selectedMapCell
+                //check if this unit is the local player's unit
+             && temp.unit.Owner == playerInfos[localPlayer].owner 
+                //check if this is the local player's turn
+             && currentPlayer == localPlayer)
             {
                 selectedUnit = selectedMapCell;
                 canvas_generalInfo.GetElementAs<Label>("label_unittype").Text = temp.unit.UnitType.ToString() + Environment.NewLine + temp.unit.Owner.ToString();
-                DisplayMovementRange(temp.unit,selectedUnit);
+
+                CalculateMovementRange(temp.unit, selectedUnit);
+                isMovePathCalculated = true;
+                currentGameState = GameState.UnitSelected;
             }
             else
             {
-                canvas_generalInfo.GetElementAs<Label>("label_unittype").Text = " ";
+                if (!isMovingUnitAnimPlaying)
+                {
+                    if (movementRange != null && movementRange.Contains(selectedMapCell))
+                    {
+                        //destination confirmed, moving to destination
+
+                        Unit tempunit = session.map[selectedUnit].unit;
+
+                        //substract fuel
+                        tempunit.Fuel -= movementPath.Count;
+
+                        //substract actionpoint
+                        tempunit.UpdateActionPoint(Command.Move);
+
+                        //play sfx
+                        CONTENT_MANAGER.moving_out.Play();
+
+                        //we gonna move unit by moving a clone of it then teleport it to the destination
+                        destination = selectedMapCell;
+                        isMovingUnitAnimPlaying = true;
+
+                        //create a new animation object
+                        movingAnim = new MovingUnitAnimation(session.map[selectedUnit].unit, movementPath, new Point(selectedUnit.X * Constants.MapCellWidth, selectedUnit.Y * Constants.MapCellHeight));
+                        
+                        //ngung vẽ path
+                        isMovePathCalculated = false;
+
+                        //ngưng update animation cho unit gốc                        
+                        tempunit.Animation.StopAnimation();
+                    }
+                    else
+                    {
+                        //bỏ lựa chọn unit sau khi đã chọn unit
+                        DeselectUnit();
+                    }
+                }
             }
         }
 
-        private void DisplayMovementRange(Unit unit,Point position)
+        private void DeselectUnit()
+        {
+            canvas_generalInfo.GetElementAs<Label>("label_unittype").Text = " ";
+            movementRange = null;
+            movementPath = null;
+            isMovePathCalculated = false;
+            isMovingUnitAnimPlaying = false;
+            lastSelectedUnit = selectedUnit;
+            selectedUnit = destination;
+            destination = default(Point);
+            if (currentGameState == GameState.UnitSelected)
+            {
+                currentGameState = GameState.UnitCommand;
+            }
+        }
+
+        private void UpdateMovingUnit(GameTime gameTime)
+        {
+            if (movingAnim.IsArrived)
+            {
+                //teleport the unit to destination
+                session.map[destination].unit = session.map[selectedUnit].unit;
+                //dereference the unit from the origin 
+                session.map[selectedUnit].unit = null;
+                //check if the unit's action point is above zero
+                //TODO make sure that the unit can only move once
+                if (session.map[destination].unit.ActionPoint>0)
+                {
+                    session.map[destination].unit.Animation.ContinueAnimation();
+                }
+                else
+                {
+                    session.map[destination].unit.Animation.PlayAnimation(AnimationName.done.ToString());
+                    session.map[destination].unit.Animation.ContinueAnimation();
+                }
+                DeselectUnit();
+                return;
+            }
+
+            movingAnim.Update(gameTime);
+        }
+
+        private void CalculateMovementRange(Unit unit,Point position)
         {
             dijkstraGraph = DijkstraHelper.CalculateGraph(session.map, unit, position);
             movementRange = DijkstraHelper.FindRange(dijkstraGraph);
         }
 
-        private void UpdateBuilding()
+
+        #region only use to demo gameplay these will not be used in game
+        private void ChangeTurn()
+        {
+            if (currentPlayer == 1)
+            {
+                currentPlayer = 0;
+            }
+            else
+            {
+                currentPlayer = 1;
+            }
+
+            if (localPlayer == 1)
+            {
+                localPlayer = 0;
+            }
+            else
+            {
+                localPlayer = 1;
+            }
+
+            ChangeUnitCanvasColor(playerInfos[currentPlayer].owner);
+        }
+
+        private void ChangeUnitCanvasColor(Owner owner)
+        {
+            foreach (string uiname in canvas_action_Factory.UInames)
+            {
+                Rectangle temp = canvas_action_Factory.GetElementAs<Button>(uiname).spriteSourceRectangle;
+                UnitType tempunittype = UnitSpriteSheetRectangle.GetUnitType(temp);
+                canvas_action_Factory.GetElementAs<Button>(uiname).spriteSourceRectangle = UnitSpriteSheetRectangle.GetSpriteRectangle(tempunittype, owner);
+            }
+            foreach (string uiname in canvas_action_Airport.UInames)
+            {
+                Rectangle temp = canvas_action_Airport.GetElementAs<Button>(uiname).spriteSourceRectangle;
+                UnitType tempunittype = UnitSpriteSheetRectangle.GetUnitType(temp);
+                canvas_action_Airport.GetElementAs<Button>(uiname).spriteSourceRectangle = UnitSpriteSheetRectangle.GetSpriteRectangle(tempunittype, owner);
+            }
+            foreach (string uiname in canvas_action_Harbor.UInames)
+            {
+                Rectangle temp = canvas_action_Harbor.GetElementAs<Button>(uiname).spriteSourceRectangle;
+                UnitType tempunittype = UnitSpriteSheetRectangle.GetUnitType(temp);
+                canvas_action_Harbor.GetElementAs<Button>(uiname).spriteSourceRectangle = UnitSpriteSheetRectangle.GetSpriteRectangle(tempunittype, owner);
+            }
+        }
+
+        #endregion
+        private void SelectBuilding()
         {
             MapCell temp = session.map[selectedMapCell];
             if (temp.unit == null
@@ -323,6 +617,7 @@ namespace Wartorn.Screens.MainGameScreen
              && currentPlayer == localPlayer
              && temp.owner == playerInfos[localPlayer].owner)
             {
+                DeselectBuilding();
                 switch (temp.terrain)
                 {
                     case TerrainType.Factory:
@@ -349,6 +644,7 @@ namespace Wartorn.Screens.MainGameScreen
             {
                 SpawnUnit(selectedUnitToBuild, playerInfos[localPlayer], selectedFactoryToBuild);
                 selectedUnitToBuild = UnitType.None;
+                DeselectBuilding();
             }
         }
 
@@ -436,7 +732,7 @@ namespace Wartorn.Screens.MainGameScreen
             canvas.Draw(CONTENT_MANAGER.spriteBatch);
 
             //draw canvas_generalInfo
-            DrawCanvas_generalInfo();
+            //DrawCanvas_generalInfo();
 
 
             //draw the minimap
