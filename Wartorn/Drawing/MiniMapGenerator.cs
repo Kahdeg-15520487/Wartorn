@@ -38,7 +38,7 @@ namespace Wartorn.Drawing
             graphics.Clear(Color.CornflowerBlue);
 
             Color color = Color.White;
-
+            
             spriteBatch.Begin();
             for (int x = 0; x < map.Width; x++)
                 for (int y = 0; y < map.Height; y++)

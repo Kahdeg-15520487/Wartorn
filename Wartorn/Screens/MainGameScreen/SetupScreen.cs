@@ -46,7 +46,7 @@ namespace Wartorn.Screens.MainGameScreen
 
         public override bool Init()
         {
-            SCREEN_MANAGER.add_screen(new Client_Screen(_device,"Client_Screen"));
+            
 
             canvas = new Canvas();
             sessiondata = new SessionData();
@@ -100,14 +100,26 @@ namespace Wartorn.Screens.MainGameScreen
             //Intial all event for connect to server
             button_connect.MouseClick += (sender, e) =>
             {
-                if (player_name.Text != "" && ip_address.Text != "")
+                try
                 {
-                    Player.Instance.ConnectToServer(ip_address.Text);
+                    if (player_name.Text != "" && ip_address.Text != "")
+                    {
+                        PlayerName.Name = player_name.Text;
+
+                        Player.Instance.ConnectToServer(ip_address.Text);
+                        
+                    }
+                    else
+                    {
+                        CONTENT_MANAGER.ShowMessageBox("You don't fill full infomation. Please fill all infomation");
+                    }
                 }
-                else
+                catch (Exception)
                 {
-                    CONTENT_MANAGER.ShowMessageBox("You don't fill full infomation. Please fill all infomation");
-                }           
+
+                    CONTENT_MANAGER.ShowMessageBox("Have some error. Please try again");
+                }
+                         
             };
             //add to canvas
            
@@ -129,6 +141,7 @@ namespace Wartorn.Screens.MainGameScreen
             map = null;
             minimap?.Dispose();
             minimap = null;
+            Player.Instance.Dispose();
         }
 
         public override void Update(GameTime gameTime)

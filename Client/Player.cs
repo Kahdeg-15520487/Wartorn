@@ -5,8 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 using Utility_Project;
+
 namespace Client
 {
     /// <summary>
@@ -14,6 +14,26 @@ namespace Client
     /// </summary>
     public class Player : IDisposable
     {
+
+        private string name;
+        /// <summary>
+        /// Host of room or not?
+        /// </summary>
+        public bool isHost
+        {
+            get
+            {
+                if (index == 1)
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+        }
+        
         private static Player instance;
         /// <summary>
         /// Use to singleton in multithread
@@ -93,6 +113,22 @@ namespace Client
 
         }
 
+        /// <summary>
+        /// Name of player
+        /// </summary>
+        public string Name
+        {
+            get
+            {
+                return name;
+            }
+
+            set
+            {
+                name = value;
+            }
+        }
+
         private Player()
         {
 
@@ -111,12 +147,17 @@ namespace Client
             }
             catch (Exception er)
             {
-                MessageBox.Show(er.Message);
+                
                 Logger.Log(er);
             }
 
         }
 
+        /// <summary>
+        /// Event raise when server send message to client
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e">Message include tcpLient, messageString, ...</param>
         private void SimpleClient_DataReceived(object sender, SimpleTCP.Message e)
         {
             try
@@ -189,13 +230,14 @@ namespace Client
         {
             try
             {
-                //string send_message = JsonConvert.SerializeObject(obj);
-                //StringBuilder temp = new StringBuilder();
-                //temp.AppendFormat("update|{0}|{1}|{2}", send_message, RoomNumber, index);
-                SimpleClient.WriteLine(obj);
+                
+                StringBuilder temp = new StringBuilder();
+                temp.AppendFormat("update|{0}|{1}|{2}", obj, RoomNumber, index);
+                SimpleClient.WriteLine(temp.ToString());
             }
             catch (Exception er)
             {
+                
 
                 Logger.Log(er);
             }
@@ -210,7 +252,7 @@ namespace Client
             try
             {
                 StringBuilder stringBuilder = new StringBuilder();
-                stringBuilder.AppendFormat("chat with another player|{0}|{1}|{2}", RoomNumber, index, message);
+                stringBuilder.AppendFormat("send message|{0}|{1}|{2}", RoomNumber, index, message);
                 SimpleClient.WriteLine(stringBuilder.ToString());
             }
             catch (Exception er)
@@ -227,7 +269,10 @@ namespace Client
         {
             try
             {
-                SimpleClient.WriteLine("create room|");
+                //Name = _name;
+                StringBuilder stringBuilder = new StringBuilder();
+                stringBuilder.AppendFormat("create room|");
+                SimpleClient.WriteLine(stringBuilder.ToString());
             }
             catch (Exception er)
             {
@@ -275,7 +320,6 @@ namespace Client
         /// </summary>
         public void Dispose()
         {
-            SimpleClient.Disconnect();
         }
     }
 }

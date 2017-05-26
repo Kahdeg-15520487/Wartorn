@@ -23,6 +23,7 @@ using Wartorn.Drawing.Animation;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Wartorn.SpriteRectangle;
+using Wartorn.Screens.MainGameScreen;
 
 namespace Wartorn
 {
@@ -31,6 +32,8 @@ namespace Wartorn
     /// </summary>
     public class GameManager : Game
     {
+        
+
         GraphicsDeviceManager graphics;
 
         InputState inputState, lastInputState;
@@ -114,11 +117,15 @@ namespace Wartorn
             SCREEN_MANAGER.add_screen(new Screens.MainGameScreen.GameScreen(GraphicsDevice));
             SCREEN_MANAGER.add_screen(new TestConsole(GraphicsDevice));
 
+            SCREEN_MANAGER.add_screen(new Client_Screen(GraphicsDevice, "Client_Screen"));
+
+            SCREEN_MANAGER.add_screen(new Room_Screen(GraphicsDevice, "Room_Screen"));
             //SCREEN_MANAGER.goto_screen("TestAnimationScreen");
             SCREEN_MANAGER.goto_screen("SetupScreen");
             //SCREEN_MANAGER.goto_screen("MainMenuScreen");
             //SCREEN_MANAGER.goto_screen("EditorScreen");
 
+            //SCREEN_MANAGER.goto_screen("Client_Screen");
             SCREEN_MANAGER.Init();
         }
 
