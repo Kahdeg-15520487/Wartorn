@@ -1,6 +1,7 @@
 ﻿using SimpleTCP;
 using System;
 using System.Text;
+using System.Windows.Forms;
 using Utility_Project;
 
 namespace Client
@@ -150,6 +151,8 @@ namespace Client
             {
                 
                 Logger.Log(er);
+
+                MessageBox.Show(er.Message);
             }
 
         }
@@ -245,7 +248,7 @@ namespace Client
             {
                 
                 StringBuilder temp = new StringBuilder();
-                temp.AppendFormat("update|{0}|{1}|{2}", RoomNumber, index,obj);
+                temp.AppendFormat("update|{0}|{1}|{2}", RoomNumber, index, obj);
                 SimpleClient.WriteLine(temp.ToString());
             }
             catch (Exception er)

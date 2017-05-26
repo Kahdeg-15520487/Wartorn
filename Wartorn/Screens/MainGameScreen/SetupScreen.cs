@@ -69,6 +69,15 @@ namespace Wartorn.Screens.MainGameScreen
 
             //bind event
 
+            Player.Instance.connect_succeed += (sender, e) =>
+            {
+                SCREEN_MANAGER.goto_screen("Client_Screen");
+            };
+
+            button_connect.MouseClick += (sender, e) =>
+            {
+                Player.Instance.ConnectToServer(ip_address.Text);
+            };
 
 
             //add to canvas
@@ -76,7 +85,7 @@ namespace Wartorn.Screens.MainGameScreen
             canvas.AddElement("enter_ip_address", enter_ip_address);
             canvas.AddElement("player_name", player_name);
             canvas.AddElement("ip_address", ip_address);
-          
+            canvas.AddElement("button_connect", button_connect);
         }
 
         public override void Shutdown()

@@ -173,7 +173,7 @@ namespace Wartorn.Screens.MainGameScreen
             Player.Instance.update += (sender, e) =>
             {
                 
-                string path = CONTENT_MANAGER.LocalRootPath + "\\Content\\map\\" + e;
+                string path = CONTENT_MANAGER.LocalRootPath + "\\map\\" + e;
                 if (File.Exists(path))
                 {
 
