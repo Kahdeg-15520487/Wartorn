@@ -13,6 +13,7 @@ using System.IO;
 using Client;
 using Newtonsoft.Json;
 using System.Timers;
+using Wartorn.Storage;
 
 namespace Wartorn.Screens.MainGameScreen
 {
@@ -43,10 +44,7 @@ namespace Wartorn.Screens.MainGameScreen
 
         //true if this player is ready
         bool is_this_ready = false;
-        //
-        bool isStart = false;
-
-
+               
         public override bool Init()
         {
 
@@ -114,21 +112,7 @@ namespace Wartorn.Screens.MainGameScreen
 
         //Notify another phayer that you are ready
         //( This method only use to phayer is no host )
-        private void NotifyAnother()
-        {
-            if (!is_this_ready)
-            {
-                is_this_ready = true;
-                Player.Instance.ChatWithAnother("Ready");
-                
-            }
-            else
-            {
-                is_this_ready = false;
-                Player.Instance.ChatWithAnother("NotReady");
-                
-            }
-        }
+
         private void InitUI()
         {
 
@@ -136,13 +120,23 @@ namespace Wartorn.Screens.MainGameScreen
 
             Button button_selectmap = new Button(UISpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetUI.Open), new Point(650, 20), 0.5f);
 
-            Label label_ready = new Label("", new Point(50, 50), new Vector2(100, 25), CONTENT_MANAGER.arcadefont);
+            Label label_this_ready = new Label("", new Point(50, 50), new Vector2(100, 25), CONTENT_MANAGER.arcadefont);
+
+            Label label_another_ready = new Label("", new Point(490, 227), new Vector2(100, 25), CONTENT_MANAGER.arcadefont);
 
             Button separate = new Button("", new Point(355, 0), new Vector2(10, 480), CONTENT_MANAGER.arcadefont);
 
+            Label player_name = new Label(PlayerName.Name, new Point(130, 0), new Vector2(100, 25), CONTENT_MANAGER.arcadefont);
 
+            Label another_player_name = new Label("", new Point(490, 0), new Vector2(100, 25), CONTENT_MANAGER.arcadefont);
 
             // Bind event
+
+
+            Player.Instance.another_goto_room += (sender, e) =>
+            {
+                another_player_name.Text = e;
+            };
 
             //Khi chủ phòng load map và gửi cho người chơi khác
             //When select map
@@ -195,13 +189,13 @@ namespace Wartorn.Screens.MainGameScreen
                 if (e == "Ready")
                 {
                     is_another_ready = true;
-                    label_ready.Text = "Ready";
+                    label_another_ready.Text = "Ready";
                     
                 }
                 else
                 {
                     is_another_ready = false;
-                    label_ready.Text = "";
+                    label_another_ready.Text = "NotReady";
                 }
             };
 
@@ -220,7 +214,20 @@ namespace Wartorn.Screens.MainGameScreen
                 else
                 {
                     //Tell another phayer, you start
-                    NotifyAnother();
+                    if (!is_this_ready)
+                    {
+                        is_this_ready = true;
+                        label_this_ready.Text = "Ready";
+                        Player.Instance.ChatWithAnother("Ready");
+
+                    }
+                    else
+                    {
+                        is_this_ready = false;
+                        label_this_ready.Text = "";
+                        Player.Instance.ChatWithAnother("NotReady");
+
+                    }
                 }
                 
 
@@ -229,7 +236,7 @@ namespace Wartorn.Screens.MainGameScreen
             //Add to canvas to draw to screen
             canvas.AddElement("button_selectmap", button_selectmap);
             canvas.AddElement("button_ready", button_ready);
-            canvas.AddElement("label_ready", label_ready);
+            canvas.AddElement("label_this_ready", label_this_ready);
             canvas.AddElement("separate", separate);
         }
 
@@ -270,7 +277,7 @@ namespace Wartorn.Screens.MainGameScreen
             canvas.Draw(CONTENT_MANAGER.spriteBatch);
             if (minimap != null)
             {
-                CONTENT_MANAGER.spriteBatch.Draw(minimap, new Vector2(100, 100), Color.White);
+                CONTENT_MANAGER.spriteBatch.Draw(minimap,new Rectangle(new Point(310,190),new Point(100,100)), Color.White);
 
             }
           

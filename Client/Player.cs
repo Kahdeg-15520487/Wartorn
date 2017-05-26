@@ -41,6 +41,7 @@ namespace Client
         private static object syncRoot = new Object();
 
         private SimpleTCP.SimpleTcpClient simpleClient;
+
         #region Event
         public event EventHandler<string> update;
 
@@ -54,6 +55,10 @@ namespace Client
              
 
         public event EventHandler connect_succeed;
+
+        public event EventHandler<string> another_goto_room;
+
+        public event EventHandler room_not_exist;
         #endregion
 
         private int roomNumber;
@@ -162,15 +167,15 @@ namespace Client
         {
             try
             {
-                var temp = e.MessageString.Split('|');
-                string message = temp[0];
+                var info = e.MessageString.Split('|');
+                string message = info[0];
 
                 switch (message)
                 {
                     case "your room is":
 
-                        RoomNumber = System.Convert.ToInt32(temp[1]);
-                        index = System.Convert.ToInt32(temp[2]);
+                        RoomNumber = System.Convert.ToInt32(info[1]);
+                        index = System.Convert.ToInt32(info[2]);
                         if (created_room != null)
                         {
                             created_room(null, RoomNumber);
@@ -180,13 +185,13 @@ namespace Client
                     case "update":                      
                         if (update != null)
                         {
-                            update(null,temp[1]);
+                            update(null,info[1]);
                         }
                         break;
                     case "enter succeed":
 
-                        RoomNumber = Convert.ToInt32(temp[1]);
-                        index = Convert.ToInt32(temp[2]);
+                        RoomNumber = Convert.ToInt32(info[1]);
+                        index = Convert.ToInt32(info[2]);
                         if (entered_succeed != null)
                         {
                             entered_succeed(null, EventArgs.Empty);
@@ -203,13 +208,25 @@ namespace Client
 
                         if (received_chat != null)
                         {
-                            received_chat(null, temp[1]);
+                            received_chat(null, info[1]);
                         }
                         break;
                     case "connect succeed":
                         if (connect_succeed != null)
                         {
                             connect_succeed(null, EventArgs.Empty);
+                        }
+                        break;
+                    case "another player go room":
+                        if (another_goto_room != null)
+                        {
+                            another_goto_room(null,info[1] );
+                        }
+                        break;
+                    case "room not exists":
+                        if (room_not_exist != null)
+                        {
+                            room_not_exist(null, EventArgs.Empty);
                         }
                         break;
                 }
@@ -232,7 +249,7 @@ namespace Client
             {
                 
                 StringBuilder temp = new StringBuilder();
-                temp.AppendFormat("update|{0}|{1}|{2}", obj, RoomNumber, index);
+                temp.AppendFormat("update|{0}|{1}|{2}", RoomNumber, index,obj);
                 SimpleClient.WriteLine(temp.ToString());
             }
             catch (Exception er)
@@ -269,9 +286,8 @@ namespace Client
         {
             try
             {
-                //Name = _name;
                 StringBuilder stringBuilder = new StringBuilder();
-                stringBuilder.AppendFormat("create room|");
+                stringBuilder.AppendFormat("create room");
                 SimpleClient.WriteLine(stringBuilder.ToString());
             }
             catch (Exception er)
@@ -289,7 +305,9 @@ namespace Client
         {
             try
             {
-                SimpleClient.WriteLine("go to room|" + roomNumber.ToString());
+                StringBuilder stringBuilder = new StringBuilder();
+                stringBuilder.AppendFormat("go to room|{0}|{1}", roomNumber, Name);
+                SimpleClient.WriteLine(stringBuilder.ToString());
             }
             catch (Exception er)
             {

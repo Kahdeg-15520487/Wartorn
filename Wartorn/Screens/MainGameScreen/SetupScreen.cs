@@ -29,15 +29,10 @@ namespace Wartorn.Screens.MainGameScreen
     {
         
         
-        SessionData sessiondata;
+   
         Canvas canvas;
 
-        Map map = null;
-
-        MiniMapGenerator minimapgen;
-        Texture2D minimap;
-
-        string mapdata;
+     
 
         public SetupScreen(GraphicsDevice device) : base(device, "SetupScreen")
         {
@@ -49,11 +44,11 @@ namespace Wartorn.Screens.MainGameScreen
             
 
             canvas = new Canvas();
-            sessiondata = new SessionData();
+            
 
             InitUI();
 
-            minimapgen = new MiniMapGenerator(_device, CONTENT_MANAGER.spriteBatch);
+            
            
 
             return base.Init();
@@ -136,11 +131,7 @@ namespace Wartorn.Screens.MainGameScreen
 
         public override void Shutdown()
         {
-            sessiondata.playerInfos = null;
-            sessiondata.map = null;
-            map = null;
-            minimap?.Dispose();
-            minimap = null;
+          
             Player.Instance.Dispose();
         }
 
@@ -152,10 +143,7 @@ namespace Wartorn.Screens.MainGameScreen
         public override void Draw(GameTime gameTime)
         {
             canvas.Draw(CONTENT_MANAGER.spriteBatch);
-            if (minimap != null)
-            {
-                CONTENT_MANAGER.spriteBatch.Draw(minimap, new Vector2(100, 100), Color.White);
-            }
+      
         }
     }
 

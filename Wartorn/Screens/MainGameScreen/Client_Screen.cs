@@ -11,6 +11,7 @@ using Wartorn.UIClass;
 using Wartorn.Drawing;
 using System.IO;
 using Client;
+using Wartorn.Storage;
 
 namespace Wartorn.Screens.MainGameScreen
 {
@@ -43,7 +44,7 @@ namespace Wartorn.Screens.MainGameScreen
 
             Button btn_goto_room = new Button("Go To Room", new Point(285, 200), new Vector2(150, 25), CONTENT_MANAGER.arcadefont);
 
-
+            Label label_player_name = new Label(PlayerName.Name, new Point(620, 0), new Vector2(100, 25), CONTENT_MANAGER.arcadefont);
             //bind event
 
             //Click to button go to room
@@ -94,7 +95,7 @@ namespace Wartorn.Screens.MainGameScreen
 
             canvas.AddElement("btn_create_room", btn_create_room);
             canvas.AddElement("btn_gpto_room", btn_goto_room);
-
+            canvas.AddElement("label_player_name", label_player_name);
         }
 
         public override void Update(GameTime gameTime)
