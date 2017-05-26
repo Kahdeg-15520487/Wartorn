@@ -162,6 +162,7 @@ namespace Wartorn
 
                 //Region to draw text
                 StringRect = new Vector2(Position.X + size.X / 4, Position.Y + size.Y / 4);
+
             }
             
             /// <summary>

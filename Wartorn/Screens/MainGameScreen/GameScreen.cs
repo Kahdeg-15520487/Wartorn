@@ -4,13 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Reflection;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Content;
 
 using Wartorn.ScreenManager;
 using Wartorn.Storage;
@@ -21,7 +18,6 @@ using Wartorn.Utility.Drawing;
 using Wartorn.Screens;
 using Wartorn.Drawing;
 using Wartorn.Drawing.Animation;
-using Wartorn.SpriteRectangle;
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -41,7 +37,7 @@ namespace Wartorn.Screens.MainGameScreen
         BuildingSelected,
         BuildingBuildUnit,
     }
-
+	
     class GameScreen : Screen
     {
         #region private field
@@ -95,7 +91,7 @@ namespace Wartorn.Screens.MainGameScreen
 
         //build unit information
         UnitType selectedUnitToBuild = UnitType.None;
-        Point selectedBuilding = default(Point);
+        Point selectedFactoryToBuild = new Point(0, 0);
 
         //current unit selection
         Point selectedUnit = default(Point);
@@ -116,10 +112,11 @@ namespace Wartorn.Screens.MainGameScreen
         //fog of war
         bool[,] mapcellVisibility;
 
+		
         //game state
         GameState currentGameState = GameState.None;
         #endregion
-
+		
         public GameScreen(GraphicsDevice device) : base(device, "GameScreen")
         {
             LoadContent();
@@ -237,15 +234,11 @@ namespace Wartorn.Screens.MainGameScreen
         {
             //declare ui elements
             InitCanvas_Factory();
-            InitCanvas_Airport();
-            InitCanvas_Harbor();
 
             //bind event
 
             //add to canvas
             canvas_action.AddElement("canvas_Factory", canvas_action_Factory);
-            canvas_action.AddElement("canvas_Airport", canvas_action_Airport);
-            canvas_action.AddElement("canvas_Harbor", canvas_action_Harbor);
         }
 
         private void InitCanvas_Factory()
@@ -299,74 +292,6 @@ namespace Wartorn.Screens.MainGameScreen
             canvas_action_Factory.AddElement("button_Rocket", button_Rocket);
             canvas_action_Factory.AddElement("button_AntiAir", button_AntiAir);
             canvas_action_Factory.AddElement("button_Missile", button_Missile);
-        }
-
-        private void InitCanvas_Airport()
-        {
-            canvas_action_Airport = new Canvas();
-            canvas_action_Airport.IsVisible = false;
-
-            //hàng 1
-            Button button_transportcopter = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.TransportCopter, playerInfos[localPlayer].owner), new Point(540, 346), 0.5f);
-            Button button_battlecopter = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.BattleCopter, playerInfos[localPlayer].owner), new Point(570, 346), 0.5f);
-            Button button_fighter = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Fighter, playerInfos[localPlayer].owner), new Point(600, 346), 0.5f);
-            Button button_bomber = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Bomber, playerInfos[localPlayer].owner), new Point(630, 346), 0.5f);
-            
-            List<Button> tempbuttonlist = new List<Button>();
-            tempbuttonlist.Add(button_transportcopter);
-            tempbuttonlist.Add(button_battlecopter);
-            tempbuttonlist.Add(button_fighter);
-            tempbuttonlist.Add(button_bomber);
-            
-
-            #region bind event
-            foreach (Button button in tempbuttonlist)
-            {
-                button.MouseClick += (sender, e) =>
-                {
-                    selectedUnitToBuild = UnitSpriteSheetRectangle.GetUnitType(button.spriteSourceRectangle);
-                };
-            }
-            #endregion
-
-            canvas_action_Airport.AddElement("button_transportcopter", button_transportcopter);
-            canvas_action_Airport.AddElement("button_battlecopter", button_battlecopter);
-            canvas_action_Airport.AddElement("button_fighter", button_fighter);
-            canvas_action_Airport.AddElement("button_bomber", button_bomber);
-        }
-
-        private void InitCanvas_Harbor()
-        {
-            canvas_action_Harbor = new Canvas();
-            canvas_action_Harbor.IsVisible = false;
-
-            //hàng 1
-            Button button_lander = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Lander, playerInfos[localPlayer].owner), new Point(540, 346), 0.5f);
-            Button button_cruiser = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Cruise, playerInfos[localPlayer].owner), new Point(570, 346), 0.5f);
-            Button button_submarine = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Submarine, playerInfos[localPlayer].owner), new Point(600, 346), 0.5f);
-            Button button_battleship = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Battleship,playerInfos[localPlayer].owner), new Point(630, 346), 0.5f);
-
-            List<Button> tempbuttonlist = new List<Button>();
-            tempbuttonlist.Add(button_lander);
-            tempbuttonlist.Add(button_cruiser);
-            tempbuttonlist.Add(button_submarine);
-            tempbuttonlist.Add(button_battleship);
-
-
-            #region bind event
-            foreach (Button button in tempbuttonlist)
-            {
-                button.MouseClick += (sender, e) =>
-                {
-                    selectedUnitToBuild = UnitSpriteSheetRectangle.GetUnitType(button.spriteSourceRectangle);
-                };
-            }
-            #endregion
-
-            canvas_action_Harbor.AddElement("button_lander", button_lander);
-            canvas_action_Harbor.AddElement("button_cruiser", button_cruiser);
-            canvas_action_Harbor.AddElement("button_submarine", button_submarine);
-            canvas_action_Harbor.AddElement("button_battleship", button_battleship);
         }
         #endregion
         #endregion
@@ -540,10 +465,9 @@ namespace Wartorn.Screens.MainGameScreen
                 //check if this is the local player's turn
              && currentPlayer == localPlayer)
             {
-                CONTENT_MANAGER.yes1.Play();
-
                 selectedUnit = selectedMapCell;
                 canvas_generalInfo.GetElementAs<Label>("label_unittype").Text = temp.unit.UnitType.ToString() + Environment.NewLine + temp.unit.Owner.ToString();
+
                 CalculateMovementRange(temp.unit, selectedUnit);
                 isMovePathCalculated = true;
                 currentGameState = GameState.UnitSelected;
@@ -636,7 +560,7 @@ namespace Wartorn.Screens.MainGameScreen
             dijkstraGraph = DijkstraHelper.CalculateGraph(session.map, unit, position);
             movementRange = DijkstraHelper.FindRange(dijkstraGraph);
         }
-        #endregion
+
 
         #region only use to demo gameplay these will not be used in game
         private void ChangeTurn()
@@ -691,26 +615,18 @@ namespace Wartorn.Screens.MainGameScreen
             if (temp.unit == null
              && isBuildingThatProduceUnit(temp.terrain)
              && currentPlayer == localPlayer
-             && temp.owner == playerInfos[localPlayer].owner
-             && selectedBuilding != selectedMapCell)
+             && temp.owner == playerInfos[localPlayer].owner)
             {
                 DeselectBuilding();
                 switch (temp.terrain)
                 {
                     case TerrainType.Factory:
                         canvas_action_Factory.IsVisible = true;
-                        selectedBuilding = selectedMapCell;
-                        currentGameState = GameState.BuildingSelected;
+                        selectedFactoryToBuild = selectedMapCell;
                         break;
                     case TerrainType.AirPort:
-                        canvas_action_Airport.IsVisible = true;
-                        selectedBuilding = selectedMapCell;
-                        currentGameState = GameState.BuildingSelected;
                         break;
                     case TerrainType.Harbor:
-                        canvas_action_Harbor.IsVisible = true;
-                        selectedBuilding = selectedMapCell;
-                        currentGameState = GameState.BuildingSelected;
                         break;
                     default:
                         break;
@@ -718,27 +634,18 @@ namespace Wartorn.Screens.MainGameScreen
             }
             else
             {
-                if (!actionbound.Contains(mouseInputState.Position) && currentGameState == GameState.BuildingSelected)
+                if (!actionbound.Contains(mouseInputState.Position))
                 {
-                    DeselectBuilding();
+                    canvas_action_Factory.IsVisible = false;
                 }
             }
 
             if (selectedUnitToBuild != UnitType.None)
             {
-                SpawnUnit(selectedUnitToBuild, playerInfos[localPlayer], selectedBuilding);
+                SpawnUnit(selectedUnitToBuild, playerInfos[localPlayer], selectedFactoryToBuild);
                 selectedUnitToBuild = UnitType.None;
                 DeselectBuilding();
             }
-        }
-
-        private void DeselectBuilding()
-        {
-            selectedBuilding = default(Point);
-            canvas_action_Factory.IsVisible = false;
-            canvas_action_Airport.IsVisible = false;
-            canvas_action_Harbor.IsVisible = false;
-            currentGameState = GameState.None;
         }
 
         private bool SpawnUnit(UnitType unittype,PlayerInfo owner,Point location)
@@ -824,8 +731,6 @@ namespace Wartorn.Screens.MainGameScreen
             CONTENT_MANAGER.spriteBatch.Draw(guibackground, new Vector2(0, 0), null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.GuiBackground);
             canvas.Draw(CONTENT_MANAGER.spriteBatch);
 
-            CONTENT_MANAGER.spriteBatch.DrawString(CONTENT_MANAGER.defaultfont, currentGameState.ToString(), new Vector2(100, 100), Color.Red);
-
             //draw canvas_generalInfo
             //DrawCanvas_generalInfo();
 
@@ -848,24 +753,8 @@ namespace Wartorn.Screens.MainGameScreen
             //render the map
             MapRenderer.Render(session.map, spriteBatch, gameTime);
 
-            //draw moving animation
-            if (isMovingUnitAnimPlaying)
-            {
-                movingAnim.Draw(spriteBatch, gameTime);
-            }
-
             //draw selected unit's movement range
-            if (!isMovingUnitAnimPlaying)
-            {
-                DrawSelectedUnit(spriteBatch);
-            }
-
-            //draw movementpath direction arrow if exist
-            if (movementPath != null && isMovePathCalculated)
-            {
-                dirarrowRenderer.UpdatePath(movementPath);
-                dirarrowRenderer.Draw(spriteBatch);
-            }
+            DrawSelectedUnit(spriteBatch);
 
             //draw the cursor
             spriteBatch.Draw(CONTENT_MANAGER.UIspriteSheet, new Vector2(selectedMapCell.X * Constants.MapCellWidth, selectedMapCell.Y * Constants.MapCellHeight), new Rectangle(0, 0, 48, 48), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.GuiUpper);
