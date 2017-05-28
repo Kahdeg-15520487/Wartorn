@@ -54,6 +54,7 @@
       <DependentUpon>InputDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="CustomJsonConverter.cs" />
+    <Compile Include="InputState.cs" />
     <Compile Include="PathFinding\Dijkstra.cs" />
     <Compile Include="PathFinding\DijkstraHelper.cs" />
     <Compile Include="Screens\MainGameScreen\GameScreen - Backup.cs" />

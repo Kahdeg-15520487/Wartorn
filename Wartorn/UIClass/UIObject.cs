@@ -286,26 +286,4 @@ namespace Wartorn.UIClass
             lastKeyboardState = lastInputState.keyboardState;
         }
     }
-
-    public struct InputState
-    {
-        public MouseState mouseState { get; set; }
-        public KeyboardState keyboardState { get; set; }
-        public JoystickState joystickState { get; set; }
-        public GamePadState gamepadState { get; set; }
-        public InputState(MouseState mousestate, KeyboardState keyboardstate)
-        {
-            mouseState = mousestate;
-            keyboardState = keyboardstate;
-            joystickState = new JoystickState();
-            gamepadState = new GamePadState();
-        }
-        public InputState(MouseState mousestate, KeyboardState keyboardstate, JoystickState joystickstate, GamePadState gamepadstate)
-        {
-            mouseState = mousestate;
-            keyboardState = keyboardstate;
-            joystickState = joystickstate;
-            gamepadState = gamepadstate;
-        }
-    }
 }

@@ -36,12 +36,12 @@ namespace Wartorn
 
             public static bool IsLeftMousePressed()
             {
-                return CONTENT_MANAGER.inputState.mouseState.LeftButton == ButtonState.Pressed;
+                return CONTENT_MANAGER.inputState.mouseState.LeftButton == ButtonState.Released && CONTENT_MANAGER.lastInputState.mouseState.LeftButton == ButtonState.Pressed;
             }
 
             public static bool IsRightMousePressed()
             {
-                return CONTENT_MANAGER.inputState.mouseState.RightButton == ButtonState.Pressed;
+                return CONTENT_MANAGER.inputState.mouseState.RightButton == ButtonState.Released && CONTENT_MANAGER.lastInputState.mouseState.RightButton == ButtonState.Pressed;
             }
 
             public static void Log(Exception e)

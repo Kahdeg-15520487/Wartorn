@@ -105,6 +105,7 @@ namespace Wartorn.GameData
 
     public enum Command
     {
+        None,
         Wait,
         Attack,
         Capture,

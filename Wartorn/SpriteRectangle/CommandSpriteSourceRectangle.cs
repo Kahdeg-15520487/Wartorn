@@ -122,7 +122,7 @@ namespace Wartorn.SpriteRectangle
 
         public static Command GetCommand(Rectangle r)
         {
-            return (Command)(r.Y / 16);
+            return (Command)(r.Y / 16 + 1);
         }
     }
 }

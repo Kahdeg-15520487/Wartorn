@@ -123,6 +123,7 @@ namespace Wartorn.GameData
             theme = m.theme;
             isProcessed = false;
 
+            mapcellthathaveunit = new List<Point>();
             for (int x = 0; x < Width; x++)
             {
                 for (int y = 0; y < Height; y++)
