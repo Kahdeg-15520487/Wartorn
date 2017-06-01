@@ -74,6 +74,12 @@ namespace Wartorn.SpriteRectangle
             return CommandSprite[t];
         }
 
+        public static Rectangle GetSprite(Command t)
+        {
+            SpriteSheetCommand temp = (SpriteSheetCommand)((int)t - 1);
+            return CommandSprite[temp];
+        }
+
         public static Rectangle GetSprite(SpriteSheetCommandSlot t)
         {
             return CommandSlotSprite[t];
@@ -123,6 +129,11 @@ namespace Wartorn.SpriteRectangle
         public static Command GetCommand(Rectangle r)
         {
             return (Command)(r.Y / 16 + 1);
+        }
+
+        public static SpriteSheetCommand GetSpriteSheetCommand(Rectangle r)
+        {
+            return (SpriteSheetCommand)(r.Y / 16);
         }
     }
 }

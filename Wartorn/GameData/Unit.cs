@@ -196,7 +196,6 @@ namespace Wartorn.GameData
         public int ActionPoint { get { return actionpoint; } }
         public int Fuel { get { return fuel; } set { fuel = value; } }
         public Owner Owner { get; set; }
-        public int UnitID { get; set; }
         public readonly Guid guid;
 
         #endregion
@@ -214,6 +213,11 @@ namespace Wartorn.GameData
         public int GetBaseDammage(UnitType other)
         {
             return  _DammageTable[other][unitType];
+        }
+
+        public Range GetAttackkRange()
+        {
+            return _AttackRange[unitType];
         }
 
         public void UpdateActionPoint(Command cmd)
@@ -257,6 +261,16 @@ namespace Wartorn.GameData
         {
             Max = max;
             Min = max;
+        }
+
+        public bool IsInRange(int value)
+        {
+            return value <= Max && value >= Min;
+        }
+
+        public override string ToString()
+        {
+            return string.Format("{0}->{1}", Min, Max);
         }
     }
 

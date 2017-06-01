@@ -213,6 +213,11 @@ namespace Wartorn
                 return value < max && value > min;
             }
 
+            public static bool Betweene(this int value, int max, int min)
+            {
+                return value <= max && value >= min;
+            }
+
             public static int CompareWith(this SpriteSheetTerrain t, SpriteSheetTerrain other)
             {
                 return ((int)t).CompareTo((int)other);
@@ -1080,6 +1085,11 @@ namespace Wartorn
             public static bool DistanceToOtherLessThan(this Point p,Point other,float MaxDistance)
             {
                 return ((p.X - other.X) * (p.X - other.X) + (p.Y - other.Y) * (p.Y - other.Y)) < MaxDistance * MaxDistance;
+            }
+
+            public static double DistanceToOther(this Point p,Point other,bool isManhattan = false)
+            {
+                return isManhattan ? Math.Abs(p.X - other.X) + Math.Abs(p.Y - other.Y) : Math.Sqrt((p.X - other.X) * (p.X - other.X) + (p.Y - other.Y) * (p.Y - other.Y));
             }
         }
     }

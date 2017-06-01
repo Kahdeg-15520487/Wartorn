@@ -277,6 +277,13 @@ namespace Wartorn
             return e.message;
         }
 
+        public static string ShowMessageBox(object message)
+        {
+            MessageEventArgs e = new MessageEventArgs(message.ToString());
+            messagebox?.Invoke(null, e);
+            return e.message;
+        }
+
         public static string ShowFileOpenDialog(string rootpath)
         {
             MessageEventArgs e = new MessageEventArgs(rootpath);

@@ -90,17 +90,18 @@ namespace Wartorn.Screens.MainGameScreen
         PlayerInfo[] playerInfos;
         int currentPlayer = 0;
         int localPlayer = 0;
-        List<Unit> ownedUnit;
+        List<Guid> ownedUnit;
         #endregion
 
         //build unit information
-        UnitType selectedUnitToBuild = UnitType.None;
+        UnitType selectedUnitTypeToBuild = UnitType.None;
         Point selectedBuilding = default(Point);
 
         //current unit selection
         Point selectedUnit = default(Point);
         Point lastSelectedUnit = default(Point);
         List<Point> movementRange = null;
+        List<Point> attackRange = null;
 
         #region moving unit animation
         Graph dijkstraGraph;
@@ -134,7 +135,7 @@ namespace Wartorn.Screens.MainGameScreen
             session = new Session(sessiondata);
             minimap = minimapgen.GenerateMapTexture(session.map);
             playerInfos = sessiondata.playerInfos;
-            ownedUnit = new List<Unit>();
+            ownedUnit = new List<Guid>();
             mapcellVisibility = new bool[session.map.Width, session.map.Height];
 
             //init visibility table
@@ -166,7 +167,7 @@ namespace Wartorn.Screens.MainGameScreen
             {
                 if (mapcell.unit!=null && mapcell.unit.Owner == playerInfos[localPlayer].owner)
                 {
-                    ownedUnit.Add(mapcell.unit);
+                    ownedUnit.Add(mapcell.unit.guid);
                 }
             }
             return base.Init();
@@ -307,7 +308,7 @@ namespace Wartorn.Screens.MainGameScreen
             {
                 button.MouseClick += (sender, e) =>
                 {
-                    selectedUnitToBuild = UnitSpriteSheetRectangle.GetUnitType(button.spriteSourceRectangle);
+                    selectedUnitTypeToBuild = UnitSpriteSheetRectangle.GetUnitType(button.spriteSourceRectangle);
                 };
             }
             #endregion
@@ -347,7 +348,7 @@ namespace Wartorn.Screens.MainGameScreen
             {
                 button.MouseClick += (sender, e) =>
                 {
-                    selectedUnitToBuild = UnitSpriteSheetRectangle.GetUnitType(button.spriteSourceRectangle);
+                    selectedUnitTypeToBuild = UnitSpriteSheetRectangle.GetUnitType(button.spriteSourceRectangle);
                 };
             }
             #endregion
@@ -381,7 +382,7 @@ namespace Wartorn.Screens.MainGameScreen
             {
                 button.MouseClick += (sender, e) =>
                 {
-                    selectedUnitToBuild = UnitSpriteSheetRectangle.GetUnitType(button.spriteSourceRectangle);
+                    selectedUnitTypeToBuild = UnitSpriteSheetRectangle.GetUnitType(button.spriteSourceRectangle);
                 };
             }
             #endregion
@@ -425,7 +426,10 @@ namespace Wartorn.Screens.MainGameScreen
             UpdateCanvas_generalInfo();
 
             //camera control
-            MoveCamera(keyboardInputState, mouseInputState);
+            if (currentGameState == GameState.None || currentGameState == GameState.UnitSelected || currentGameState == GameState.BuildingSelected )
+            {
+                MoveCamera(keyboardInputState, mouseInputState);
+            }
             selectedMapCell = Utility.HelperFunction.TranslateMousePosToMapCellPos(mouseInputState.Position, camera, session.map.Width, session.map.Height);
 
             //update minimap
@@ -437,6 +441,7 @@ namespace Wartorn.Screens.MainGameScreen
             //update game logic
             switch (currentGameState)
             {
+                #region GameState.None
                 //the normal state of the game where nothing is selected
                 case GameState.None:
                     if (HelperFunction.IsLeftMousePressed())
@@ -456,14 +461,21 @@ namespace Wartorn.Screens.MainGameScreen
                             break;
                         }
 
-                        if (currentGameState != GameState.UnitSelected)
+                        if (SelectBuilding())
                         {
-                            //SelectBuilding();
+                            selectedBuilding = selectedMapCell;
+                            selectedUnitTypeToBuild = UnitType.None;
+
+                            ShowBuildingMenu();
+
+                            currentGameState = GameState.BuildingSelected;
                             break;
                         }
                     }
                     break;
+                #endregion
 
+                #region GameState.UnitSelected
                 //previous state: None
                 //show movement range
                 //show movement path planning
@@ -508,7 +520,9 @@ namespace Wartorn.Screens.MainGameScreen
                         break;
                     }
                     break;
+                #endregion
 
+                #region GameState.UnitMove
                 //previous state: UnitSelected
                 //update and draw unit move animation
                 //next state: UnitCommand  : end moving animation
@@ -516,7 +530,7 @@ namespace Wartorn.Screens.MainGameScreen
                 //            None         : if the unit is out of action point
                 case GameState.UnitMove:
                     //check if <cancel> is pressed
-                    if (HelperFunction.IsRightMousePressed())
+                    if (HelperFunction.IsRightMousePressed() && movingAnim.IsArrived)
                     {
                         //gobackto unitselected
                         RevertMovingUnitAnimation();
@@ -568,7 +582,9 @@ namespace Wartorn.Screens.MainGameScreen
                         movingAnim.Update(gameTime);
                     }
                     break;
+                #endregion
 
+                #region GameState.UnitCommand
                 //previous state: UnitSelected,UnitMove
                 //select and execute unit command
                 //next state: None         : if a command is selected
@@ -586,31 +602,70 @@ namespace Wartorn.Screens.MainGameScreen
                         break;
                     }
 
-                    Command cmd = GetCommand();
-                    if (cmd != Command.None)
+                    if (selectedCmd != Command.None)
                     {
-                        ExecuteCommand(cmd);
+                        ExecuteCommand(selectedCmd);
+                        selectedCmd = Command.None;
+
                         //clear selectedUnit's information
+
+                        //hide command menu
+                        canvas_action_Unit.IsVisible = false;
+
+                        //goto none
                         currentGameState = GameState.None;
                     }
                     break;
+                #endregion
 
+                #region GameState.BuildingSelected
                 //previous state: None
                 //show building's canvas
                 //next state: None              : if <Cancel> is pressed
                 //            BuildingBuildUnit : if a Unit is selected to build
                 case GameState.BuildingSelected:
-                    break;
+                    //check if <cancel> is pressed or move outside range
+                    if (HelperFunction.IsRightMousePressed())
+                    {
+                        //hide building menu
+                        canvas_action_Factory.IsVisible = false;
+                        canvas_action_Airport.IsVisible = false;
+                        canvas_action_Harbor.IsVisible = false;
 
+                        //goto none
+                        currentGameState = GameState.None;
+                        break;
+                    }
+
+                    //check if there is a unit selected to build
+                    if (selectedUnitTypeToBuild != UnitType.None)
+                    {
+                        currentGameState = GameState.BuildingBuildUnit;
+                        break;
+                    }
+
+                    break;
+                #endregion
+
+                #region GameState.BuildingBuildUnit
                 //previous state: BuildingSelected:
                 //spawn the unit which was selected to build
                 //next state: None
                 case GameState.BuildingBuildUnit:
 
+                    //spawn the selected unit
+                    SpawnUnit(selectedUnitTypeToBuild, playerInfos[localPlayer], selectedBuilding);
 
+                    //hide all the building menu
+                    canvas_action_Factory.IsVisible = false;
+                    canvas_action_Airport.IsVisible = false;
+                    canvas_action_Harbor.IsVisible = false;
 
-                    //currentGameState = GameState.None;
+                    //goto none
+                    currentGameState = GameState.None;
                     break;
+                #endregion
+
                 default:
                     break;
             }
@@ -620,55 +675,113 @@ namespace Wartorn.Screens.MainGameScreen
         
 
         #region Update game logic
-        private Command GetCommand()
-        {
-            return selectedCmd;
-        }
 
+        //todo
         private void ExecuteCommand(Command cmd)
         {
-            selectedCmd = Command.None;
-            CONTENT_MANAGER.ShowMessageBox(cmd.ToString());
+            //CONTENT_MANAGER.ShowMessageBox(cmd.ToString());
+            session.map[selectedUnit].unit.UpdateActionPoint(cmd);
+
+            switch (cmd)
+            {
+                case Command.Wait:
+                    break;
+                case Command.Attack:
+                    break;
+                case Command.Capture:
+                    break;
+                case Command.Load:
+                    break;
+                case Command.Drop:
+                    break;
+                case Command.Rise:
+                    break;
+                case Command.Dive:
+                    break;
+                case Command.Supply:
+                    break;
+                case Command.Move:
+                    break;
+                default:
+                    break;
+            }
         }
 
+        //todo
         private void CalculateVision()
         {
-            foreach (Unit unit in ownedUnit)
+            foreach (Guid id in ownedUnit)
             {
                 
             }
         }
 
-        private int GetCommandCount()
+        private int GetCommands()
         {
             //có wait nè
+            int temp = (int)Command.Wait;
+
             //có attack nếu có Unit địch trong tầm tấn công và tầm nhìn nè
+            //todo làm tầm nhìn
+            foreach (Point p in attackRange)
+            {
+                if (session.map[p].unit!=null && !ownedUnit.Contains(session.map[p].unit.guid))
+                {
+                    temp += (int)Command.Attack;
+                    break;
+                }
+            }
+
             //có load nếu đi vô transport unit nè
+
             //có drop nếu unit đang chở unit khác nè
+
             //có capture nếu là lính và đang đứng trên building khác màu nè
+            if (session.map[selectedUnit].owner!= playerInfos[localPlayer].owner)
+            {
+                temp += (int)Command.Capture;
+            }
+
             //có supply nếu là apc và đang đứng cạnh 1 unit bạn nè
-            int temp = 1;
 
-
-
-            //var cmds = temp.GetContainCommand();
-            //foreach (Command cmd in cmds)
-            //{
-            //    CONTENT_MANAGER.ShowMessageBox(cmd.ToString());
-            //}
-
-            return 1;
+            
+            return temp;
         }
 
         private void ShowCommandMenu()
         {
             canvas_action_Unit.IsVisible = true;
-            int commandcount = GetCommandCount();
-            Rectangle temp = CommandSpriteSourceRectangle.GetSprite(commandcount, playerInfos[localPlayer].owner);
+            int comds = GetCommands();
+
+            CalculateAttackRange(session.map[selectedUnit].unit, selectedUnit);
+
+            var cmds = comds.GetContainCommand();
+
+            Rectangle temp = CommandSpriteSourceRectangle.GetSprite(cmds.Count, playerInfos[localPlayer].owner);
 
             canvas_action_Unit.GetElementAs<PictureBox>("commandslot").SourceRectangle = temp;
             canvas_action_Unit.GetElementAs<PictureBox>("commandslot").Position = new Point(selectedUnit.X * Constants.MapCellWidth + 50, selectedUnit.Y * Constants.MapCellHeight);
             canvas_action_Unit.GetElementAs<Button>("firstslot").Position = new Point(selectedUnit.X * Constants.MapCellWidth + 50 + 6, selectedUnit.Y * Constants.MapCellHeight + 8);
+            canvas_action_Unit.GetElementAs<Button>("firstslot").spriteSourceRectangle = CommandSpriteSourceRectangle.GetSprite(cmds[0]);
+            if (cmds.Count>1)
+            {
+                canvas_action_Unit.GetElementAs<Button>("secondslot").Position = new Point(selectedUnit.X * Constants.MapCellWidth + 50 + 6, selectedUnit.Y * Constants.MapCellHeight + 8);
+                canvas_action_Unit.GetElementAs<Button>("secondslot").spriteSourceRectangle = CommandSpriteSourceRectangle.GetSprite(cmds[1]);
+            }
+            if (cmds.Count > 2)
+            {
+                canvas_action_Unit.GetElementAs<Button>("thirdslot").Position = new Point(selectedUnit.X * Constants.MapCellWidth + 50 + 6, selectedUnit.Y * Constants.MapCellHeight + 8);
+                canvas_action_Unit.GetElementAs<Button>("thirdslot").spriteSourceRectangle = CommandSpriteSourceRectangle.GetSprite(cmds[2]);
+            }
+        }
+
+        private void HideCommandMenu()
+        {
+            canvas_action_Unit.IsVisible = false;
+
+            canvas_action_Unit.GetElementAs<Button>("firstslot").spriteSourceRectangle = Rectangle.Empty;
+            canvas_action_Unit.GetElementAs<Button>("secondslot").spriteSourceRectangle = Rectangle.Empty;
+            canvas_action_Unit.GetElementAs<Button>("thirdslot").spriteSourceRectangle = Rectangle.Empty;
         }
 
         #region Unit handler
@@ -747,6 +860,30 @@ namespace Wartorn.Screens.MainGameScreen
             dijkstraGraph = DijkstraHelper.CalculateGraph(session.map, unit, position);
             movementRange = DijkstraHelper.FindRange(dijkstraGraph);
         }
+
+        private void CalculateAttackRange(Unit unit,Point position)
+        {
+            Range atkrange = unit.GetAttackkRange();
+            attackRange = new List<Point>();
+
+            int minx = (position.X - atkrange.Max);//.Clamp(position.X, 0);
+            int maxx = (position.X + atkrange.Max);//.Clamp(session.map.Width, position.X);
+            int miny = (position.Y - atkrange.Max);//.Clamp(position.Y, 0);
+            int maxy = (position.Y + atkrange.Max);//.Clamp(session.map.Height, position.Y);
+
+            for (int x = minx; x <= maxx; x++)
+            {
+                for (int y = miny; y <= maxy; y++)
+                {
+                    Point temp = new Point(x, y);
+                    int dist = (int)temp.DistanceToOther(position, true);
+                    if (dist>=atkrange.Min && dist<=atkrange.Max)
+                    {
+                        attackRange.Add(temp);
+                    }
+                }
+            }
+        }
         #endregion
 
         #region only use to demo gameplay these will not be used in game
@@ -797,7 +934,7 @@ namespace Wartorn.Screens.MainGameScreen
 
         #endregion
 
-        private bool SelectBuilding(int n)
+        private bool SelectBuilding()
         {
             MapCell temp = session.map[selectedMapCell];
             return (
@@ -811,60 +948,42 @@ namespace Wartorn.Screens.MainGameScreen
              && temp.owner == playerInfos[localPlayer].owner);
         }
 
-        private void SelectBuilding()
+        private void ShowBuildingMenu()
         {
-            MapCell temp = session.map[selectedMapCell];
-            if (temp.unit == null
-             && isBuildingThatProduceUnit(temp.terrain)
-             && currentPlayer == localPlayer
-             && temp.owner == playerInfos[localPlayer].owner
-             && selectedBuilding != selectedMapCell)
+            MapCell temp = session.map[selectedBuilding];
+
+            switch (temp.terrain)
             {
-                DeselectBuilding();
-                switch (temp.terrain)
-                {
-                    case TerrainType.Factory:
-                        canvas_action_Factory.IsVisible = true;
-                        selectedBuilding = selectedMapCell;
-                        currentGameState = GameState.BuildingSelected;
-                        break;
-                    case TerrainType.AirPort:
-                        canvas_action_Airport.IsVisible = true;
-                        selectedBuilding = selectedMapCell;
-                        currentGameState = GameState.BuildingSelected;
-                        break;
-                    case TerrainType.Harbor:
-                        canvas_action_Harbor.IsVisible = true;
-                        selectedBuilding = selectedMapCell;
-                        currentGameState = GameState.BuildingSelected;
-                        break;
-                    default:
-                        break;
-                }
-            }
-            else
-            {
-                if (!actionbound.Contains(mouseInputState.Position) && currentGameState == GameState.BuildingSelected)
-                {
-                    DeselectBuilding();
-                }
+                case TerrainType.Factory:
+                    canvas_action_Factory.IsVisible = true;
+                    currentGameState = GameState.BuildingSelected;
+                    break;
+                case TerrainType.AirPort:
+                    canvas_action_Airport.IsVisible = true;
+                    currentGameState = GameState.BuildingSelected;
+                    break;
+                case TerrainType.Harbor:
+                    canvas_action_Harbor.IsVisible = true;
+                    currentGameState = GameState.BuildingSelected;
+                    break;
+                default:
+                    break;
             }
 
-            if (selectedUnitToBuild != UnitType.None)
-            {
-                SpawnUnit(selectedUnitToBuild, playerInfos[localPlayer], selectedBuilding);
-                selectedUnitToBuild = UnitType.None;
-                DeselectBuilding();
-            }
+            //legacy example to spawn an unit
+            //if (selectedUnitToBuild != UnitType.None)
+            //{
+            //    SpawnUnit(selectedUnitToBuild, playerInfos[localPlayer], selectedBuilding);
+            //    selectedUnitToBuild = UnitType.None;
+            //    DeselectBuilding();
+            //}
         }
 
-        private void DeselectBuilding()
+        private void HideBuildingMenu()
         {
-            selectedBuilding = default(Point);
             canvas_action_Factory.IsVisible = false;
             canvas_action_Airport.IsVisible = false;
             canvas_action_Harbor.IsVisible = false;
-            currentGameState = GameState.None;
         }
 
         private bool SpawnUnit(UnitType unittype,PlayerInfo owner,Point location)
@@ -874,8 +993,8 @@ namespace Wartorn.Screens.MainGameScreen
               &&spawnlocation.unit == null)
             {
                 Unit temp = UnitCreationHelper.Create(unittype, owner.owner);
-                temp.UnitID = 0;
                 session.map[location].unit = temp;
+                ownedUnit.Add(temp.guid);
                 return true;
             }
             return false;
@@ -986,7 +1105,7 @@ namespace Wartorn.Screens.MainGameScreen
             //draw selected unit's movement range
             if (currentGameState == GameState.UnitSelected)
             {
-                DrawSelectedUnit(spriteBatch);
+                DrawMovementRange(spriteBatch);
             }
 
             //draw movementpath direction arrow if exist
@@ -994,6 +1113,12 @@ namespace Wartorn.Screens.MainGameScreen
             {
                 dirarrowRenderer.UpdatePath(movementPath);
                 dirarrowRenderer.Draw(spriteBatch);
+            }
+
+            //draw attackrange
+            if (currentGameState == GameState.UnitCommand)
+            {
+                DrawAttackRange(spriteBatch);
             }
 
             //draw the cursor
@@ -1004,13 +1129,24 @@ namespace Wartorn.Screens.MainGameScreen
             spriteBatch.Begin(SpriteSortMode.FrontToBack);
         }
 
-        private void DrawSelectedUnit(SpriteBatch spriteBatch)
+        private void DrawMovementRange(SpriteBatch spriteBatch)
         {
             if (movementRange != null)
             {
                 foreach (Point dest in movementRange)
                 {
                     spriteBatch.Draw(CONTENT_MANAGER.moveOverlay, new Vector2(dest.X * Constants.MapCellWidth, dest.Y * Constants.MapCellHeight), null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.GuiBackground);
+                }
+            }
+        }
+
+        private void DrawAttackRange(SpriteBatch spriteBatch)
+        {
+            if (attackRange != null)
+            {
+                foreach (Point p in attackRange)
+                {
+                    spriteBatch.Draw(CONTENT_MANAGER.attackOverlay, new Vector2(p.X * Constants.MapCellWidth, p.Y * Constants.MapCellHeight), null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.GuiBackground);
                 }
             }
         }
