@@ -105,9 +105,8 @@ namespace Wartorn.Screens.MainGameScreen
         #region moving unit animation
         Graph dijkstraGraph;
         List<Point> movementPath;
-        Point lastpos;
+        Point origin;
         Point destination;
-        bool isMovingUnitAnimPlaying = false;
         bool isMovePathCalculated = false;
         MovingUnitAnimation movingAnim;
         DirectionArrowRenderer dirarrowRenderer = new DirectionArrowRenderer();
@@ -115,6 +114,9 @@ namespace Wartorn.Screens.MainGameScreen
 
         //fog of war
         bool[,] mapcellVisibility;
+
+        //selected command
+        Command selectedCmd = Command.None;
 
         //game state
         GameState currentGameState = GameState.None;
@@ -201,14 +203,35 @@ namespace Wartorn.Screens.MainGameScreen
             canvas.AddElement("console", console);
         }
 
+
         private void InitCanvas_Unit()
         {
+            //declare ui elements
             PictureBox commandslot = new PictureBox(CONTENT_MANAGER.commandspritesheet, Point.Zero, CommandSpriteSourceRectangle.GetSprite(playerInfos[localPlayer].owner == Owner.Red ? SpriteSheetCommandSlot.oneslotred : SpriteSheetCommandSlot.oneslotblue), null, depth: LayerDepth.GuiBackground);
 
-            Button firstslot = new Button(CONTENT_MANAGER.commandspritesheet, CommandSpriteSourceRectangle.GetSprite(SpriteSheetCommand.Wait), new Point(6, 8));
+            Button firstslot = new Button(CONTENT_MANAGER.commandspritesheet, Rectangle.Empty, new Point(6, 8));
+            Button secondslot = new Button(CONTENT_MANAGER.commandspritesheet, Rectangle.Empty, new Point(6, 8));
+            Button thirdslot = new Button(CONTENT_MANAGER.commandspritesheet, Rectangle.Empty, new Point(6, 8));
 
+            //bind event
+            firstslot.MouseClick += (sender, e) =>
+            {
+                selectedCmd = CommandSpriteSourceRectangle.GetCommand(firstslot.spriteSourceRectangle);
+            };
+            secondslot.MouseClick += (sender, e) =>
+            {
+                selectedCmd = CommandSpriteSourceRectangle.GetCommand(secondslot.spriteSourceRectangle);
+            };
+            thirdslot.MouseClick += (sender, e) =>
+            {
+                selectedCmd = CommandSpriteSourceRectangle.GetCommand(thirdslot.spriteSourceRectangle);
+            };
+
+            //add to canvas
             canvas_action_Unit.AddElement("commandslot", commandslot);
             canvas_action_Unit.AddElement("firstslot", firstslot);
+            canvas_action_Unit.AddElement("secondslot", secondslot);
+            canvas_action_Unit.AddElement("thirdslot", thirdslot);
         }
 
         private void InitCanvas_generalInfo()
@@ -423,10 +446,11 @@ namespace Wartorn.Screens.MainGameScreen
                             //get information of currently selected unit...
                             CONTENT_MANAGER.yes1.Play();
                             selectedUnit = selectedMapCell;
+                            origin = selectedMapCell;
                             MapCell temp = session.map[selectedUnit];
                             canvas_generalInfo.GetElementAs<Label>("label_unittype").Text = temp.unit.UnitType.ToString() + Environment.NewLine + temp.unit.Owner.ToString();
                             CalculateMovementRange(temp.unit, selectedUnit);
-                            isMovePathCalculated = true;
+                            movementPath = null;
 
                             currentGameState = GameState.UnitSelected;
                             break;
@@ -455,14 +479,14 @@ namespace Wartorn.Screens.MainGameScreen
                         break;
                     }
 
-                    //calculate movement path
-                    if (isMovePathCalculated)
+                    //check if movement path calculated
+                    if (!isMovePathCalculated)
                     {
+                        //calculate move path
                         if (movementRange.Contains(selectedMapCell) && selectedMapCell != lastSelectedMapCell)
                         {
                             //update movement path
                             movementPath = DijkstraHelper.FindPath(dijkstraGraph, selectedMapCell);
-                            dirarrowRenderer.UpdatePath(movementPath);
                             lastSelectedMapCell = selectedMapCell;
                         }
                     }
@@ -492,21 +516,22 @@ namespace Wartorn.Screens.MainGameScreen
                 //            None         : if the unit is out of action point
                 case GameState.UnitMove:
                     //check if <cancel> is pressed
-                    if (HelperFunction.IsLeftMousePressed())
+                    if (HelperFunction.IsRightMousePressed())
                     {
                         //gobackto unitselected
+                        RevertMovingUnitAnimation();
                         currentGameState = GameState.UnitSelected;
                         break;
                     }
 
-                    //check if unit has arrived
-                    if (movingAnim.IsArrived)
+                    //check if unit has arrived and not already teleported
+                    if (movingAnim.IsArrived && session.map[origin].unit!=null)
                     {
                         //teleport stuff
                         //teleport the unit to destination
-                        session.map[destination].unit = session.map[selectedUnit].unit;
+                        session.map[destination].unit = session.map[origin].unit;
                         //dereference the unit from the origin 
-                        session.map[selectedUnit].unit = null;
+                        session.map[origin].unit = null;
 
                         //save selectedUnit
                         lastSelectedUnit = selectedUnit;
@@ -525,12 +550,15 @@ namespace Wartorn.Screens.MainGameScreen
                         }
                         else
                         {
+                            //all done for this unit, no more select, no more command, just lay there till next turn
                             session.map[destination].unit.Animation.PlayAnimation(AnimationName.done.ToString());
                             session.map[destination].unit.Animation.ContinueAnimation();
 
                             //clear selectedUnit's information
+
+
                             //goto None
-                            //currentGameState = GameState.None;
+                            currentGameState = GameState.None;
                         }
                         break;
                     }
@@ -549,21 +577,22 @@ namespace Wartorn.Screens.MainGameScreen
                     //check if <cancel> is pressed
                     if (HelperFunction.IsRightMousePressed())
                     {
-                        //
+                        RevertMovingUnitAnimation();
 
                         canvas_action_Unit.IsVisible = false;
                         //revert any movement if exist
+                        RevertMovingUnitAnimation();
                         currentGameState = GameState.UnitSelected;
                         break;
                     }
 
-                    //Command cmd = GetCommand();
-                    //if (cmd != Command.None)
-                    //{
-                    //    ExecuteCommand(cmd);
-                    //    //clear selectedUnit's information
-                    //    currentGameState = GameState.None;
-                    //}
+                    Command cmd = GetCommand();
+                    if (cmd != Command.None)
+                    {
+                        ExecuteCommand(cmd);
+                        //clear selectedUnit's information
+                        currentGameState = GameState.None;
+                    }
                     break;
 
                 //previous state: None
@@ -586,32 +615,20 @@ namespace Wartorn.Screens.MainGameScreen
                     break;
             }
 
-            #region legacy
-
-
-
-
-            //HandleUnitCommand();
-
-            //if (isMovingUnitAnimPlaying)
-            //{
-            //    movingAnim.Update(gameTime);
-            //}
-
-            //calculate movepath
-            
-
-            #endregion
-
             UpdateAnimation(gameTime);
         }
-
         
 
         #region Update game logic
         private Command GetCommand()
         {
-            return Command.None;
+            return selectedCmd;
+        }
+
+        private void ExecuteCommand(Command cmd)
+        {
+            selectedCmd = Command.None;
+            CONTENT_MANAGER.ShowMessageBox(cmd.ToString());
         }
 
         private void CalculateVision()
@@ -630,6 +647,15 @@ namespace Wartorn.Screens.MainGameScreen
             //có drop nếu unit đang chở unit khác nè
             //có capture nếu là lính và đang đứng trên building khác màu nè
             //có supply nếu là apc và đang đứng cạnh 1 unit bạn nè
+            int temp = 1;
+
+
+
+            //var cmds = temp.GetContainCommand();
+            //foreach (Command cmd in cmds)
+            //{
+            //    CONTENT_MANAGER.ShowMessageBox(cmd.ToString());
+            //}
 
             return 1;
         }
@@ -679,7 +705,6 @@ namespace Wartorn.Screens.MainGameScreen
 
             //we gonna move unit by moving a clone of it then teleport it to the destination
             destination = selectedMapCell;
-            isMovingUnitAnimPlaying = true;
 
             //create a new animation object
             movingAnim = new MovingUnitAnimation(session.map[selectedUnit].unit, movementPath, new Point(selectedUnit.X * Constants.MapCellWidth, selectedUnit.Y * Constants.MapCellHeight));
@@ -691,13 +716,23 @@ namespace Wartorn.Screens.MainGameScreen
             tempunit.Animation.StopAnimation();
         }
 
+        private void RevertMovingUnitAnimation()
+        {
+            if (session.map[origin].unit == null)
+            {
+                session.map[origin].unit = session.map[selectedUnit].unit;
+                session.map[selectedUnit].unit = null;
+                selectedUnit = origin;
+            }
+        }
+
+        //deperecated do not use
         private void DeselectUnit()
         {
             canvas_generalInfo.GetElementAs<Label>("label_unittype").Text = " ";
             movementRange = null;
             movementPath = null;
             isMovePathCalculated = false;
-            isMovingUnitAnimPlaying = false;
             lastSelectedUnit = selectedUnit;
             selectedUnit = destination;
             destination = default(Point);
@@ -843,7 +878,6 @@ namespace Wartorn.Screens.MainGameScreen
                 session.map[location].unit = temp;
                 return true;
             }
-
             return false;
         }
 
@@ -916,6 +950,10 @@ namespace Wartorn.Screens.MainGameScreen
             canvas.Draw(CONTENT_MANAGER.spriteBatch);
 
             CONTENT_MANAGER.spriteBatch.DrawString(CONTENT_MANAGER.defaultfont, currentGameState.ToString(), new Vector2(100, 100), Color.Red);
+            if (movingAnim != null)
+            {
+                CONTENT_MANAGER.spriteBatch.DrawString(CONTENT_MANAGER.defaultfont,movingAnim.IsArrived.ToString(), new Vector2(100, 140), Color.Red);
+            }
 
             //draw canvas_generalInfo
             //DrawCanvas_generalInfo();

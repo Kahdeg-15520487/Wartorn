@@ -222,10 +222,10 @@ namespace Wartorn.Screens
                 SelectUnit();
             }
 
-            if (isMovingUnitAnimPlaying)
-            {
-                UpdateMovingUnit(gameTime);
-            }
+            //if (isMovingUnitAnimPlaying)
+            //{
+            //    UpdateMovingUnit(gameTime);
+            //}
 
             //calculate movepath
             if (isMovePathCalculated)

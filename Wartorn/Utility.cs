@@ -161,6 +161,37 @@ namespace Wartorn
 
         public static class ExtensionMethod
         {
+            public static bool IsContainCommand(this int flags, Command flag)
+            {
+                int flagValue = (int)flag;
+                return (flags & flagValue) != 0;
+            }
+
+            public static List<Command> GetContainCommand(this int flags)
+            {
+                List<Command> cmds = new List<Command>();
+
+                foreach (Command cmd in Enum.GetValues(typeof(Command)).Cast<Command>())
+                {
+                    if ((flags & (int)cmd) != 0)
+                    {
+                        cmds.Add(cmd);
+                    }
+                }
+
+                return cmds;
+            }
+
+            public static int Concatenateflags(params Command[] cmds)
+            {
+                int result = 0;
+                for (int i = 0; i < cmds.GetLength(0); i++)
+                {
+                    result += (int)cmds[i];
+                }
+                return result;
+            }
+
             public static T ToEnum<T>(this string value)
             {
                 return (T)Enum.Parse(typeof(T), value, true);
