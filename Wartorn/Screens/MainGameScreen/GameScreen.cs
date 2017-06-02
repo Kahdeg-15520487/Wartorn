@@ -210,22 +210,29 @@ namespace Wartorn.Screens.MainGameScreen
             //declare ui elements
             PictureBox commandslot = new PictureBox(CONTENT_MANAGER.commandspritesheet, Point.Zero, CommandSpriteSourceRectangle.GetSprite(playerInfos[localPlayer].owner == Owner.Red ? SpriteSheetCommandSlot.oneslotred : SpriteSheetCommandSlot.oneslotblue), null, depth: LayerDepth.GuiBackground);
 
-            Button firstslot = new Button(CONTENT_MANAGER.commandspritesheet, Rectangle.Empty, new Point(6, 8));
-            Button secondslot = new Button(CONTENT_MANAGER.commandspritesheet, Rectangle.Empty, new Point(6, 8));
-            Button thirdslot = new Button(CONTENT_MANAGER.commandspritesheet, Rectangle.Empty, new Point(6, 8));
+            Button firstslot = new Button(CONTENT_MANAGER.commandspritesheet, Rectangle.Empty, Point.Zero);
+            Button secondslot = new Button(CONTENT_MANAGER.commandspritesheet, Rectangle.Empty, Point.Zero);
+            Button thirdslot = new Button(CONTENT_MANAGER.commandspritesheet, Rectangle.Empty, Point.Zero);
+
+            //firstslot.isDrawRect = true;
+            //thirdslot.isDrawRect = true;
+            //secondslot.isDrawRect = true;
 
             //bind event
             firstslot.MouseClick += (sender, e) =>
             {
                 selectedCmd = CommandSpriteSourceRectangle.GetCommand(firstslot.spriteSourceRectangle);
+                CONTENT_MANAGER.ShowMessageBox(selectedCmd.ToString());
             };
             secondslot.MouseClick += (sender, e) =>
             {
                 selectedCmd = CommandSpriteSourceRectangle.GetCommand(secondslot.spriteSourceRectangle);
+                CONTENT_MANAGER.ShowMessageBox(selectedCmd.ToString());
             };
             thirdslot.MouseClick += (sender, e) =>
             {
                 selectedCmd = CommandSpriteSourceRectangle.GetCommand(thirdslot.spriteSourceRectangle);
+                CONTENT_MANAGER.ShowMessageBox(selectedCmd.ToString());
             };
 
             //add to canvas
@@ -604,6 +611,12 @@ namespace Wartorn.Screens.MainGameScreen
 
                     if (selectedCmd != Command.None)
                     {
+                        //substract actionpoint
+                        session.map[selectedUnit].unit.UpdateActionPoint(Command.Move);
+
+                        //substract fuel
+                        session.map[selectedUnit].unit.Fuel -= movementPath != null ? movementPath.Count : 0;
+
                         ExecuteCommand(selectedCmd);
                         selectedCmd = Command.None;
 
@@ -672,15 +685,18 @@ namespace Wartorn.Screens.MainGameScreen
 
             UpdateAnimation(gameTime);
         }
-        
+
 
         #region Update game logic
 
-        //todo
+        #region Execute command
         private void ExecuteCommand(Command cmd)
         {
             //CONTENT_MANAGER.ShowMessageBox(cmd.ToString());
-            session.map[selectedUnit].unit.UpdateActionPoint(cmd);
+            Unit tempunit = session.map[selectedUnit].unit;
+
+            //substract action point
+            tempunit.UpdateActionPoint(cmd);
 
             switch (cmd)
             {
@@ -705,9 +721,15 @@ namespace Wartorn.Screens.MainGameScreen
                 default:
                     break;
             }
-        }
 
-        //todo
+            if (tempunit.ActionPoint == 0)
+            {
+                tempunit.Animation.PlayAnimation(AnimationName.done.ToString());
+            }
+        }
+        #endregion
+
+        #region calculate vision
         private void CalculateVision()
         {
             foreach (Guid id in ownedUnit)
@@ -715,6 +737,7 @@ namespace Wartorn.Screens.MainGameScreen
                 
             }
         }
+        #endregion
 
         private int GetCommands()
         {
@@ -725,7 +748,11 @@ namespace Wartorn.Screens.MainGameScreen
             //todo làm tầm nhìn
             foreach (Point p in attackRange)
             {
-                if (session.map[p].unit!=null && !ownedUnit.Contains(session.map[p].unit.guid))
+                if (session.map[p].unit!=null 
+                    //the below check is only for debug
+                 && session.map[p].unit.Owner != session.map[selectedUnit].unit.Owner) 
+                    //the below check is used in final game
+               //&& !ownedUnit.Contains(session.map[p].unit.guid))
                 {
                     temp += (int)Command.Attack;
                     break;
@@ -737,7 +764,10 @@ namespace Wartorn.Screens.MainGameScreen
             //có drop nếu unit đang chở unit khác nè
 
             //có capture nếu là lính và đang đứng trên building khác màu nè
-            if (session.map[selectedUnit].owner!= playerInfos[localPlayer].owner)
+            if ((session.map[selectedUnit].unit.UnitType == UnitType.Soldier
+             || session.map[selectedUnit].unit.UnitType == UnitType.Mech)
+             && isBuilidng(session.map[selectedUnit].terrain)
+             && session.map[selectedUnit].owner!= playerInfos[localPlayer].owner)
             {
                 temp += (int)Command.Capture;
             }
@@ -751,33 +781,53 @@ namespace Wartorn.Screens.MainGameScreen
         private void ShowCommandMenu()
         {
             canvas_action_Unit.IsVisible = true;
-            int comds = GetCommands();
 
             CalculateAttackRange(session.map[selectedUnit].unit, selectedUnit);
+            int comds = GetCommands();
 
             var cmds = comds.GetContainCommand();
+
+            string ttemp = string.Empty;
+            foreach (Command cmd in cmds)
+            {
+                ttemp += cmd.ToString() + '\n';
+            }
+            CONTENT_MANAGER.ShowMessageBox(ttemp);
 
             Rectangle temp = CommandSpriteSourceRectangle.GetSprite(cmds.Count, playerInfos[localPlayer].owner);
 
             canvas_action_Unit.GetElementAs<PictureBox>("commandslot").SourceRectangle = temp;
             canvas_action_Unit.GetElementAs<PictureBox>("commandslot").Position = new Point(selectedUnit.X * Constants.MapCellWidth + 50, selectedUnit.Y * Constants.MapCellHeight);
-            canvas_action_Unit.GetElementAs<Button>("firstslot").Position = new Point(selectedUnit.X * Constants.MapCellWidth + 50 + 6, selectedUnit.Y * Constants.MapCellHeight + 8);
-            canvas_action_Unit.GetElementAs<Button>("firstslot").spriteSourceRectangle = CommandSpriteSourceRectangle.GetSprite(cmds[0]);
+
+            Button firstslot = canvas_action_Unit.GetElementAs<Button>("firstslot");
+            Button secondslot = canvas_action_Unit.GetElementAs<Button>("secondslot");
+            Button thirdslot = canvas_action_Unit.GetElementAs<Button>("thirdslot");
+
+            firstslot.Position = new Point(selectedUnit.X * Constants.MapCellWidth + 50 + 6, selectedUnit.Y * Constants.MapCellHeight + 8);
+            firstslot.spriteSourceRectangle = CommandSpriteSourceRectangle.GetSprite(cmds[0]);
+            firstslot.rect = new Rectangle(firstslot.Position, firstslot.spriteSourceRectangle.Size);
+
             if (cmds.Count>1)
             {
-                canvas_action_Unit.GetElementAs<Button>("secondslot").Position = new Point(selectedUnit.X * Constants.MapCellWidth + 50 + 6, selectedUnit.Y * Constants.MapCellHeight + 8);
-                canvas_action_Unit.GetElementAs<Button>("secondslot").spriteSourceRectangle = CommandSpriteSourceRectangle.GetSprite(cmds[1]);
+                secondslot.Position = new Point(selectedUnit.X * Constants.MapCellWidth + 50 + 6, selectedUnit.Y * Constants.MapCellHeight + 16 + 8 + 8);
+                secondslot.spriteSourceRectangle = CommandSpriteSourceRectangle.GetSprite(cmds[1]);
+                secondslot.rect = new Rectangle(secondslot.Position, secondslot.spriteSourceRectangle.Size);
             }
             if (cmds.Count > 2)
             {
-                canvas_action_Unit.GetElementAs<Button>("thirdslot").Position = new Point(selectedUnit.X * Constants.MapCellWidth + 50 + 6, selectedUnit.Y * Constants.MapCellHeight + 8);
-                canvas_action_Unit.GetElementAs<Button>("thirdslot").spriteSourceRectangle = CommandSpriteSourceRectangle.GetSprite(cmds[2]);
+                thirdslot.Position = new Point(selectedUnit.X * Constants.MapCellWidth + 50 + 6, selectedUnit.Y * Constants.MapCellHeight + 32 + 8 + 8);
+                thirdslot.spriteSourceRectangle = CommandSpriteSourceRectangle.GetSprite(cmds[2]);
+                thirdslot.rect = new Rectangle(thirdslot.Position, thirdslot.spriteSourceRectangle.Size);
             }
         }
 
         private void HideCommandMenu()
         {
             canvas_action_Unit.IsVisible = false;
+
+            canvas_action_Unit.GetElementAs<Button>("firstslot").rect = Rectangle.Empty;
+            canvas_action_Unit.GetElementAs<Button>("secondslot").rect = Rectangle.Empty;
+            canvas_action_Unit.GetElementAs<Button>("thirdslot").rect = Rectangle.Empty;
 
             canvas_action_Unit.GetElementAs<Button>("firstslot").spriteSourceRectangle = Rectangle.Empty;
             canvas_action_Unit.GetElementAs<Button>("secondslot").spriteSourceRectangle = Rectangle.Empty;
@@ -806,12 +856,6 @@ namespace Wartorn.Screens.MainGameScreen
         {
             //destination confirmed, moving to destination
             Unit tempunit = session.map[selectedUnit].unit;
-
-            //substract fuel
-            tempunit.Fuel -= movementPath.Count;
-
-            //substract actionpoint
-            tempunit.UpdateActionPoint(Command.Move);
 
             //play sfx
             CONTENT_MANAGER.moving_out.Play();
@@ -998,6 +1042,25 @@ namespace Wartorn.Screens.MainGameScreen
                 return true;
             }
             return false;
+        }
+
+        private bool isBuilidng(TerrainType t)
+        {
+            switch (t)
+            {
+                case TerrainType.MissileSilo:
+                case TerrainType.MissileSiloLaunched:
+                case TerrainType.City:
+                case TerrainType.Factory:
+                case TerrainType.AirPort:
+                case TerrainType.Harbor:
+                case TerrainType.Radar:
+                case TerrainType.SupplyBase:
+                case TerrainType.HQ:
+                    return true;
+                default:
+                    return false;
+            }
         }
 
         private bool isBuildingThatProduceUnit(TerrainType t)
