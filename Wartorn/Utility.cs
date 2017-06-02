@@ -284,7 +284,7 @@ namespace Wartorn
                     case UnitType.Lander:
                         return MovementType.Lander;
 
-                    case UnitType.Cruise:
+                    case UnitType.Cruiser:
                     case UnitType.Submarine:
                     case UnitType.Battleship:
                         return MovementType.Ship;
@@ -829,59 +829,68 @@ namespace Wartorn
                 return result;
             }
 
-            public static T Next<T>(this T t, int count = 1)
+            public static T Next<T>(this T src,int count = 1) where T : struct
             {
-                var type = typeof(T);
-                int result;
-                T box = default(T);
-                count.Clamp(int.MaxValue, 0);
-                switch (type.Name)
-                {
-                    case "SpriteSheetTerrain":
-                        SpriteSheetTerrain unboxSpriteSheetTerrain = (SpriteSheetTerrain)((object)t);
-                        result = (int)unboxSpriteSheetTerrain + count;
-                        box = (T)((object)result);
-                        return box;
-                    case "UnitType":
-                        UnitType unboxUnit = (UnitType)((object)t);
-                        result = (int)unboxUnit + count;
-                        box = (T)((object)result);
-                        break;
-                    case "TerrainType":
-                        TerrainType unboxTerrain = (TerrainType)((object)t);
-                        result = (int)unboxTerrain + count;
-                        box = (T)((object)result);
-                        break;
-                    case "SpriteSheetUnit":
-                        SpriteSheetUnit unboxSpriteSheetUnit = (SpriteSheetUnit)((object)t);
-                        result = (int)unboxSpriteSheetUnit + count;
-                        box = (T)((object)result);
-                        break;
-                    case "AnimationName":
-                        AnimationName unboxAnimationName = (AnimationName)((object)t);
-                        result = (int)unboxAnimationName + count;
-                        box = (T)((object)result);
-                        break;
-                    case "Owner":
-                        Owner unboxOwner = (Owner)((object)t);
-                        result = (int)unboxOwner + count;
-                        box = (T)((object)result);
-                        break;
-                    case "SpriteSheetBuilding":
-                        SpriteSheetBuilding unboxSpriteSheetBuilding = (SpriteSheetBuilding)((object)t);
-                        result = (int)unboxSpriteSheetBuilding + count;
-                        box = (T)((object)result);
-                        break;
-                    case "SpriteSheetCommand":
-                        SpriteSheetCommand unboxSpriteSheetCommand = (SpriteSheetCommand)((object)t);
-                        result = (int)unboxSpriteSheetCommand + count;
-                        box = (T)((object)result);
-                        break;
-                    default:
-                        break;
-                }
-                return box;
+                if (!typeof(T).IsEnum) throw new ArgumentException(String.Format("Argumnent {0} is not an Enum", typeof(T).FullName));
+
+                T[] Arr = (T[])Enum.GetValues(src.GetType());
+                int j = Array.IndexOf<T>(Arr, src) + count;
+                return (Arr.Length == j) ? Arr[0] : Arr[j];
             }
+
+            //public static T Next<T>(this T t, int count = 1)
+            //{
+            //    var type = typeof(T);
+            //    int result;
+            //    T box = default(T);
+            //    count.Clamp(int.MaxValue, 0);
+            //    switch (type.Name)
+            //    {
+            //        case "SpriteSheetTerrain":
+            //            SpriteSheetTerrain unboxSpriteSheetTerrain = (SpriteSheetTerrain)((object)t);
+            //            result = (int)unboxSpriteSheetTerrain + count;
+            //            box = (T)((object)result);
+            //            return box;
+            //        case "UnitType":
+            //            UnitType unboxUnit = (UnitType)((object)t);
+            //            result = (int)unboxUnit + count;
+            //            box = (T)((object)result);
+            //            break;
+            //        case "TerrainType":
+            //            TerrainType unboxTerrain = (TerrainType)((object)t);
+            //            result = (int)unboxTerrain + count;
+            //            box = (T)((object)result);
+            //            break;
+            //        case "SpriteSheetUnit":
+            //            SpriteSheetUnit unboxSpriteSheetUnit = (SpriteSheetUnit)((object)t);
+            //            result = (int)unboxSpriteSheetUnit + count;
+            //            box = (T)((object)result);
+            //            break;
+            //        case "AnimationName":
+            //            AnimationName unboxAnimationName = (AnimationName)((object)t);
+            //            result = (int)unboxAnimationName + count;
+            //            box = (T)((object)result);
+            //            break;
+            //        case "Owner":
+            //            Owner unboxOwner = (Owner)((object)t);
+            //            result = (int)unboxOwner + count;
+            //            box = (T)((object)result);
+            //            break;
+            //        case "SpriteSheetBuilding":
+            //            SpriteSheetBuilding unboxSpriteSheetBuilding = (SpriteSheetBuilding)((object)t);
+            //            result = (int)unboxSpriteSheetBuilding + count;
+            //            box = (T)((object)result);
+            //            break;
+            //        case "SpriteSheetCommand":
+            //            SpriteSheetCommand unboxSpriteSheetCommand = (SpriteSheetCommand)((object)t);
+            //            result = (int)unboxSpriteSheetCommand + count;
+            //            box = (T)((object)result);
+            //            break;
+            //        default:
+            //            break;
+            //    }
+            //    return box;
+            //}
 
             public static T Previous<T>(this T t, int count = 1)
             {

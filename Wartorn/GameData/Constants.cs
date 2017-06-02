@@ -58,7 +58,7 @@ namespace Wartorn.GameData
 
         //sea
         Lander,
-        Cruise,
+        Cruiser,
         Submarine,
         Battleship
     }

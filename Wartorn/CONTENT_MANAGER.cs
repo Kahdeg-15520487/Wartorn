@@ -55,10 +55,11 @@ namespace Wartorn
         public static Texture2D directionarrow;
         public static Texture2D commandspritesheet;
 
+        public static Texture2D background_terrain;
+        public static Texture2D background_unit;
+
         public static Texture2D selectCursor;
         public static Texture2D attackCursor;
-
-        public static Texture2D caigidoSpriteSheet;
 
         #region animation sprite sheet
         public static Dictionary<SpriteSheetUnit, AnimatedEntity> animationEntities;
@@ -82,10 +83,11 @@ namespace Wartorn
             directionarrow = Content.Load<Texture2D>(@"sprite\directionarrow");
             commandspritesheet = Content.Load<Texture2D>(@"sprite\GUI\commandspritesheet");
 
+            background_terrain = Content.Load<Texture2D>(@"sprite\GUI\background\background_terrain");
+            background_unit = Content.Load<Texture2D>(@"sprite\GUI\background\background_unit");
+
             selectCursor = Content.Load<Texture2D>(@"sprite\Cursor\Select_Cursor");
             attackCursor = Content.Load<Texture2D>(@"sprite\Cursor\Attack_Cursor");
-
-            caigidoSpriteSheet = Content.Load<Texture2D>(@"sprite\building");
 
             LoadAnimationContent();
 

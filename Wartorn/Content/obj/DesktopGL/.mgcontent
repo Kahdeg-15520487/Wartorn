@@ -28,7 +28,6 @@
     <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/Animation/Red/BattleCopter.png</File>
     <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/Animation/Red/Battleship.png</File>
     <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/Animation/Red/Bomber.png</File>
-    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/Animation/Red/Cruise.png</File>
     <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/Animation/Red/Fighter.png</File>
     <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/Animation/Red/HeavyTank.png</File>
     <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/Animation/Red/Lander.png</File>
@@ -56,7 +55,6 @@
     <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/Animation/Blue/Tank.png</File>
     <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/Animation/Blue/TransportCopter.png</File>
     <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/Animation/Blue/Missile.png</File>
-    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/Animation/Blue/Cruise.png</File>
     <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/Animation/Blue/Submarine.png</File>
     <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/Animation/Green/AntiAir.png</File>
     <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/Animation/Green/APC.png</File>
@@ -64,7 +62,6 @@
     <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/Animation/Green/BattleCopter.png</File>
     <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/Animation/Green/Battleship.png</File>
     <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/Animation/Green/Bomber.png</File>
-    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/Animation/Green/Cruise.png</File>
     <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/Animation/Green/Fighter.png</File>
     <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/Animation/Green/HeavyTank.png</File>
     <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/Animation/Green/Lander.png</File>
@@ -82,7 +79,6 @@
     <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/Animation/Yellow/BattleCopter.png</File>
     <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/Animation/Yellow/Battleship.png</File>
     <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/Animation/Yellow/Bomber.png</File>
-    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/Animation/Yellow/Cruise.png</File>
     <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/Animation/Yellow/Fighter.png</File>
     <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/Animation/Yellow/HeavyTank.png</File>
     <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/Animation/Yellow/Lander.png</File>
@@ -242,5 +238,19 @@
     <File>G:/Workspace/c#/Wartorn/Wartorn/Content/hackfont.spritefont</File>
     <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/directionarrow.png</File>
     <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/GUI/commandspritesheet.png</File>
+    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/GUI/selected_cell_info/SC_Border.png</File>
+    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/GUI/selected_cell_info/SC_Buy_A_H.png</File>
+    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/GUI/selected_cell_info/SC_Buy_F.png</File>
+    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/GUI/selected_cell_info/SC_Cap_Point.png</File>
+    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/GUI/selected_cell_info/SC_Def_Star.png</File>
+    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/GUI/selected_cell_info/SC_HP_bar.png</File>
+    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/GUI/selected_cell_info/SC_Loaded.png</File>
+    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/GUI/selected_cell_info/SC_Unit_info.png</File>
+    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/GUI/background/background_terrain.png</File>
+    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/GUI/background/background_unit.png</File>
+    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/Animation/Blue/Cruiser.png</File>
+    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/Animation/Green/Cruiser.png</File>
+    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/Animation/Red/Cruiser.png</File>
+    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/Animation/Yellow/Cruiser.png</File>
   </SourceFiles>
 </SourceFileCollection>

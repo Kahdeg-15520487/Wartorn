@@ -216,7 +216,6 @@ namespace Wartorn
                 SpriteSheetTerrain terrainUpper = SpriteSheetTerrain.None;
                 Owner owner = Owner.None;
                 Unit unit = null;
-                int unitid = 0;
 
                 while (reader.Read())
                 {
