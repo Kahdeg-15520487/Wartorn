@@ -42,7 +42,7 @@ namespace Wartorn.Screens
 
         //private SpriteSheetTerrain currentlySelectedTerrain = SpriteSheetTerrain.Tree_up_left;
         private TerrainType currentlySelectedTerrain = TerrainType.Plain;
-        private Owner currentlySelectedOwner = Owner.None;
+        private GameData.Owner currentlySelectedOwner = GameData.Owner.None;
         private UnitType currentlySelectedUnit = UnitType.None;
 
         private Side GuiSide = Side.Left;
@@ -54,7 +54,7 @@ namespace Wartorn.Screens
         {
             public Point selectedMapCell;
             public TerrainType selectedMapCellTerrain;
-            public Owner selectedMapCellOwner;
+            public GameData.Owner selectedMapCellOwner;
 
             public Action(Point p, MapCell mc)
             {
@@ -437,27 +437,27 @@ namespace Wartorn.Screens
                 {
                     case "None":
                         button_changeOwner.Text = "Red";
-                        currentlySelectedOwner = Owner.Red;
+                        currentlySelectedOwner = GameData.Owner.Red;
                         canvas_unit_selection.IsVisible = true;
                         break;
                     case "Red":
                         button_changeOwner.Text = "Blue";
-                        currentlySelectedOwner = Owner.Blue;
+                        currentlySelectedOwner = GameData.Owner.Blue;
                         canvas_unit_selection.IsVisible = true;
                         break;
                     case "Blue":
                         button_changeOwner.Text = "Green";
-                        currentlySelectedOwner = Owner.Green;
+                        currentlySelectedOwner = GameData.Owner.Green;
                         canvas_unit_selection.IsVisible = true;
                         break;
                     case "Green":
                         button_changeOwner.Text = "Yellow";
-                        currentlySelectedOwner = Owner.Yellow;
+                        currentlySelectedOwner = GameData.Owner.Yellow;
                         canvas_unit_selection.IsVisible = true;
                         break;
                     case "Yellow":
                         button_changeOwner.Text = "None";
-                        currentlySelectedOwner = Owner.None;
+                        currentlySelectedOwner = GameData.Owner.None;
                         canvas_unit_selection.IsVisible = false;
                         break;
                     default:
@@ -721,7 +721,7 @@ namespace Wartorn.Screens
                 canvas.GetElementAs<Canvas>("canvas_Menu").IsVisible = isMenuOpen;
                 canvas.GetElementAs<Canvas>("canvas_terrain_selection").IsVisible = isMenuOpen;
                 canvas.GetElementAs<Canvas>("canvas_building_selection").IsVisible = isMenuOpen;
-                if (currentlySelectedOwner != Owner.None)
+                if (currentlySelectedOwner != GameData.Owner.None)
                 {
                     canvas.GetElementAs<Canvas>("canvas_unit_selection").IsVisible = isMenuOpen;
                 }
@@ -750,7 +750,7 @@ namespace Wartorn.Screens
 
         private void PlaceUnit(MouseState mouseInputState)
         {
-            if (currentlySelectedUnit == UnitType.None || currentlySelectedOwner == Owner.None)
+            if (currentlySelectedUnit == UnitType.None || currentlySelectedOwner == GameData.Owner.None)
             {
                 return;
             }
@@ -1011,19 +1011,19 @@ namespace Wartorn.Screens
 
                 switch (currentlySelectedOwner)
                 {
-                    case Owner.None:
+                    case GameData.Owner.None:
                         nextowner = 0;
                         break;
-                    case Owner.Red:
+                    case GameData.Owner.Red:
                         nextowner = SpriteSheetTerrain.Red_City_Lower - SpriteSheetTerrain.City_Lower;
                         break;
-                    case Owner.Blue:
+                    case GameData.Owner.Blue:
                         nextowner = SpriteSheetTerrain.Blue_City_Lower - SpriteSheetTerrain.City_Lower;
                         break;
-                    case Owner.Green:
+                    case GameData.Owner.Green:
                         nextowner = SpriteSheetTerrain.Green_City_Lower - SpriteSheetTerrain.City_Lower;
                         break;
-                    case Owner.Yellow:
+                    case GameData.Owner.Yellow:
                         nextowner = SpriteSheetTerrain.Yellow_City_Lower - SpriteSheetTerrain.City_Lower;
                         break;
                     default:
@@ -1148,16 +1148,16 @@ namespace Wartorn.Screens
                     case TerrainType.HQ:
                         switch (currentlySelectedOwner)
                         {
-                            case Owner.Red:
+                            case GameData.Owner.Red:
                                 nextowner = 0;
                                 break;
-                            case Owner.Blue:
+                            case GameData.Owner.Blue:
                                 nextowner = SpriteSheetTerrain.Blue_Headquarter_Lower - SpriteSheetTerrain.Red_Headquarter_Lower;
                                 break;
-                            case Owner.Green:
+                            case GameData.Owner.Green:
                                 nextowner = SpriteSheetTerrain.Green_Headquarter_Lower - SpriteSheetTerrain.Red_Headquarter_Lower;
                                 break;
-                            case Owner.Yellow:
+                            case GameData.Owner.Yellow:
                                 nextowner = SpriteSheetTerrain.Yellow_Headquarter_Lower - SpriteSheetTerrain.Red_Headquarter_Lower;
                                 break;
                             default:
@@ -1184,7 +1184,7 @@ namespace Wartorn.Screens
             }
             else
             {
-                if (currentlySelectedOwner != Owner.None)
+                if (currentlySelectedOwner != GameData.Owner.None)
                 {
                     //draw unit on cursor
                     spriteBatch.Draw(CONTENT_MANAGER.UIspriteSheet, new Vector2(selectedMapCell.X * Constants.MapCellWidth, selectedMapCell.Y * Constants.MapCellHeight), UISpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetUI.Select), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.GuiUpper);

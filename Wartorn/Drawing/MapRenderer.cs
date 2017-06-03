@@ -163,19 +163,19 @@ namespace Wartorn.Drawing
 
                         switch (map[pos].owner)
                         {
-                            case Owner.None:
+                            case GameData.Owner.None:
                                 nextowner = 0;
                                 break;
-                            case Owner.Red:
+                            case GameData.Owner.Red:
                                 nextowner = SpriteSheetTerrain.Red_City_Lower - SpriteSheetTerrain.City_Lower;
                                 break;
-                            case Owner.Blue:
+                            case GameData.Owner.Blue:
                                 nextowner = SpriteSheetTerrain.Blue_City_Lower - SpriteSheetTerrain.City_Lower;
                                 break;
-                            case Owner.Green:
+                            case GameData.Owner.Green:
                                 nextowner = SpriteSheetTerrain.Green_City_Lower - SpriteSheetTerrain.City_Lower;
                                 break;
-                            case Owner.Yellow:
+                            case GameData.Owner.Yellow:
                                 nextowner = SpriteSheetTerrain.Yellow_City_Lower - SpriteSheetTerrain.City_Lower;
                                 break;
                             default:
@@ -632,16 +632,16 @@ namespace Wartorn.Drawing
                             case TerrainType.HQ:
                                 switch (map[pos].owner)
                                 {
-                                    case Owner.Red:
+                                    case GameData.Owner.Red:
                                         nextowner = 0;
                                         break;
-                                    case Owner.Blue:
+                                    case GameData.Owner.Blue:
                                         nextowner = SpriteSheetTerrain.Blue_Headquarter_Lower - SpriteSheetTerrain.Red_Headquarter_Lower;
                                         break;
-                                    case Owner.Green:
+                                    case GameData.Owner.Green:
                                         nextowner = SpriteSheetTerrain.Green_Headquarter_Lower - SpriteSheetTerrain.Red_Headquarter_Lower;
                                         break;
-                                    case Owner.Yellow:
+                                    case GameData.Owner.Yellow:
                                         nextowner = SpriteSheetTerrain.Yellow_Headquarter_Lower - SpriteSheetTerrain.Red_Headquarter_Lower;
                                         break;
                                     default:

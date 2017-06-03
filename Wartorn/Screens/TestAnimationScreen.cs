@@ -25,7 +25,7 @@ namespace Wartorn.Screens
 
         UnitType currentUnit = UnitType.Soldier;
         AnimationName currentAnimation = AnimationName.idle;
-        Owner currentColor = Owner.Red;
+        GameData.Owner currentColor = GameData.Owner.Red;
         Point position = new Point(4, 4);
 
         MouseState mouseInputState;
@@ -166,9 +166,9 @@ namespace Wartorn.Screens
                 //cycle through color
                 if (HelperFunction.IsKeyPress(Keys.E))
                 {
-                    if (currentColor == Owner.Yellow)
+                    if (currentColor == GameData.Owner.Yellow)
                     {
-                        currentColor = Owner.Red;
+                        currentColor = GameData.Owner.Red;
                     }
                     else
                     {
@@ -177,9 +177,9 @@ namespace Wartorn.Screens
                 }
                 if (HelperFunction.IsKeyPress(Keys.Q))
                 {
-                    if (currentColor == Owner.Red)
+                    if (currentColor == GameData.Owner.Red)
                     {
-                        currentColor = Owner.Yellow;
+                        currentColor = GameData.Owner.Yellow;
                     }
                     else
                     {
@@ -190,7 +190,7 @@ namespace Wartorn.Screens
 
             Unit unit = map[position].unit;
             UnitType nextUnit = unit.UnitType;
-            Owner nextOwner = unit.Owner;
+            GameData.Owner nextOwner = unit.Owner;
             AnimationName nextAnimation = unit.Animation.CurntAnimationName.ToEnum<AnimationName>();
             bool isChanged = false;
 

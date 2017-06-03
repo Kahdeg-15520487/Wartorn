@@ -294,7 +294,7 @@ namespace Wartorn
                 return MovementType.None;
             }
 
-            public static SpriteSheetUnit GetSpriteSheetUnit(this UnitType ut,Owner owner)
+            public static SpriteSheetUnit GetSpriteSheetUnit(this UnitType ut, GameData.Owner owner)
             {
                 StringBuilder result = new StringBuilder();
                 result.Append(owner.ToString());
@@ -926,7 +926,7 @@ namespace Wartorn
                         box = (T)((object)result);
                         break;
                     case "Owner":
-                        Owner unboxOwner = (Owner)((object)t);
+                        GameData.Owner unboxOwner = (GameData.Owner)((object)t);
                         result = (int)unboxOwner - count;
                         box = (T)((object)result);
                         break;

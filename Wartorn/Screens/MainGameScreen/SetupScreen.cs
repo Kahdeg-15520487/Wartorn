@@ -105,8 +105,8 @@ namespace Wartorn.Screens.MainGameScreen
                 sessiondata.map.Clone(Storage.MapData.LoadMap(mapdata));
                 sessiondata.gameMode = GameMode.campaign;
                 sessiondata.playerInfos = new PlayerInfo[2];
-                sessiondata.playerInfos[0] = new PlayerInfo(0, Owner.Red);
-                sessiondata.playerInfos[1] = new PlayerInfo(1, Owner.Blue);
+                sessiondata.playerInfos[0] = new PlayerInfo(0, GameData.Owner.Red);
+                sessiondata.playerInfos[1] = new PlayerInfo(1, GameData.Owner.Blue);
                 ((GameScreen)SCREEN_MANAGER.get_screen("GameScreen")).InitSession(sessiondata);
                 SCREEN_MANAGER.goto_screen("GameScreen");
             };

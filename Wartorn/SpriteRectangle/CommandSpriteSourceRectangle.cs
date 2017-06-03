@@ -85,10 +85,10 @@ namespace Wartorn.SpriteRectangle
             return CommandSlotSprite[t];
         }
 
-        public static Rectangle GetSprite(int cmdcount,Owner color)
+        public static Rectangle GetSprite(int cmdcount, GameData.Owner color)
         {
             SpriteSheetCommandSlot result = SpriteSheetCommandSlot.oneslotblue;
-            if (color == Owner.Red)
+            if (color == GameData.Owner.Red)
             {
                 switch (cmdcount)
                 {
@@ -105,7 +105,7 @@ namespace Wartorn.SpriteRectangle
                         break;
                 }
             }
-            if (color == Owner.Blue)
+            if (color == GameData.Owner.Blue)
             {
                 switch (cmdcount)
                 {

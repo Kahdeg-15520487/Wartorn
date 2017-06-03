@@ -208,7 +208,7 @@ namespace Wartorn.Screens.MainGameScreen
         private void InitCanvas_Unit()
         {
             //declare ui elements
-            PictureBox commandslot = new PictureBox(CONTENT_MANAGER.commandspritesheet, Point.Zero, CommandSpriteSourceRectangle.GetSprite(playerInfos[localPlayer].owner == Owner.Red ? SpriteSheetCommandSlot.oneslotred : SpriteSheetCommandSlot.oneslotblue), null, depth: LayerDepth.GuiBackground);
+            PictureBox commandslot = new PictureBox(CONTENT_MANAGER.commandspritesheet, Point.Zero, CommandSpriteSourceRectangle.GetSprite(playerInfos[localPlayer].owner == GameData.Owner.Red ? SpriteSheetCommandSlot.oneslotred : SpriteSheetCommandSlot.oneslotblue), null, depth: LayerDepth.GuiBackground);
 
             Button firstslot = new Button(CONTENT_MANAGER.commandspritesheet, Rectangle.Empty, Point.Zero);
             Button secondslot = new Button(CONTENT_MANAGER.commandspritesheet, Rectangle.Empty, Point.Zero);
@@ -248,6 +248,12 @@ namespace Wartorn.Screens.MainGameScreen
             Label label_terraintype = new Label(" ", new Point(465, 365), new Vector2(50, 20), CONTENT_MANAGER.arcadefont);
             label_terraintype.Scale = 0.75f;
             Label label_unittype = new Label(" ", new Point(300, 365), new Vector2(80, 20), CONTENT_MANAGER.arcadefont);
+
+            PictureBox picbox_generalInfoBorder = new PictureBox(CONTENT_MANAGER.generalInfo_border, new Point(175, 364), null, Vector2.Zero);
+            PictureBox picbox_generalInfo
+
+            PictureBox picbox_terrainType = new PictureBox(CONTENT_MANAGER.background_terrain, new Point(175,364), null, Vector2.Zero);
+            PictureBox picbox_unitType = new PictureBox(CONTENT_MANAGER.background_unit, Point.Zero, null, Vector2.Zero);
 
             //bind event
 
@@ -954,7 +960,7 @@ namespace Wartorn.Screens.MainGameScreen
             ChangeUnitCanvasColor(playerInfos[currentPlayer].owner);
         }
 
-        private void ChangeUnitCanvasColor(Owner owner)
+        private void ChangeUnitCanvasColor(GameData.Owner owner)
         {
             foreach (string uiname in canvas_action_Factory.UInames)
             {

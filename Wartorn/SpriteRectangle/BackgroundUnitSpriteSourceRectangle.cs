@@ -87,11 +87,11 @@ namespace Wartorn.SpriteRectangle
             return BackgroundUnitSprite[t];
         }
 
-        public static Rectangle GetSpriteRectangle(UnitType ut, Owner o, TerrainType t)
+        public static Rectangle GetSpriteRectangle(UnitType ut, GameData.Owner o, TerrainType t)
         {
             StringBuilder spritename = new StringBuilder();
 
-            if (o == Owner.None)
+            if (o == GameData.Owner.None)
             {
                 spritename.Append("Red");
             }

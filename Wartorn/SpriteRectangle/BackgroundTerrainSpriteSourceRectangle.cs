@@ -98,7 +98,7 @@ namespace Wartorn.SpriteRectangle
             return BackgroundTerrainSprite[t];
         }
 
-        public static Rectangle GetSpriteRectangle(TerrainType t, Weather w, Theme th, UnitType ut, Owner o = Owner.None)
+        public static Rectangle GetSpriteRectangle(TerrainType t, Weather w, Theme th, UnitType ut, GameData.Owner o = GameData.Owner.None)
         {
             StringBuilder spritename = new StringBuilder();
             switch (w)
@@ -124,7 +124,7 @@ namespace Wartorn.SpriteRectangle
 
             spritename.Append("_");
 
-            if (o != Owner.None)
+            if (o != GameData.Owner.None)
             {
                 spritename.Append(o.ToString());
             }

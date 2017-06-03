@@ -42,7 +42,7 @@ namespace Wartorn.SpriteRectangle
             return UnitSprite[t];
         }
 
-        public static Rectangle GetSpriteRectangle(UnitType unittype, Owner owner = Owner.Red)
+        public static Rectangle GetSpriteRectangle(UnitType unittype, GameData.Owner owner = GameData.Owner.Red)
         {
             int x = ((int)unittype - 1) * 48;
             int y = ((int)owner - 1) * 48;

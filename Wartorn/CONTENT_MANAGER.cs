@@ -58,6 +58,16 @@ namespace Wartorn
         public static Texture2D background_terrain;
         public static Texture2D background_unit;
 
+        public static Texture2D generalInfo_border;
+        public static Texture2D generalInfo_capturePoint;
+        public static Texture2D generalInfo_defenseStar;
+        public static Texture2D generalInfo_HPbar;
+        public static Texture2D generalInfo_loadedUnit;
+        public static Texture2D generalInfo_unitInfo;
+
+        public static Texture2D buymenu_factory;
+        public static Texture2D buymenu_airport_harbor;
+
         public static Texture2D selectCursor;
         public static Texture2D attackCursor;
 
@@ -85,6 +95,16 @@ namespace Wartorn
 
             background_terrain = Content.Load<Texture2D>(@"sprite\GUI\background\background_terrain");
             background_unit = Content.Load<Texture2D>(@"sprite\GUI\background\background_unit");
+
+            generalInfo_border = Content.Load<Texture2D>(@"sprite\GUI\selected_cell_info\SC_Border");
+            generalInfo_capturePoint = Content.Load<Texture2D>(@"sprite\GUI\selected_cell_info\SC_Cap_Point");
+            generalInfo_defenseStar = Content.Load<Texture2D>(@"sprite\GUI\selected_cell_info\SC_Def_Star");
+            generalInfo_HPbar = Content.Load<Texture2D>(@"sprite\GUI\selected_cell_info\SC_HP_Bar");
+            generalInfo_loadedUnit = Content.Load<Texture2D>(@"sprite\GUI\selected_cell_info\SC_Loaded");
+            generalInfo_unitInfo = Content.Load<Texture2D>(@"sprite\GUI\selected_cell_info\SC_Unit_info");
+
+            buymenu_factory = Content.Load<Texture2D>(@"sprite\GUI\selected_cell_info\SC_Buy_F");
+            buymenu_airport_harbor = Content.Load<Texture2D>(@"sprite\GUI\selected_cell_info\SC_Buy_A_H");
 
             selectCursor = Content.Load<Texture2D>(@"sprite\Cursor\Select_Cursor");
             attackCursor = Content.Load<Texture2D>(@"sprite\Cursor\Attack_Cursor");
