@@ -40,7 +40,7 @@ namespace Wartorn.Screens
         private Vector2 offset = new Vector2(70, 70);
         private Rectangle mapArea;
 
-        //private SpriteSheetTerrain currentlySelectedTerrain = SpriteSheetTerrain.Tree_up_left;
+        //private SpriteSheetTerrain currentlySelectedTerrain = SpriteSheetTerrain.Forest_up_left;
         private TerrainType currentlySelectedTerrain = TerrainType.Plain;
         private GameData.Owner currentlySelectedOwner = GameData.Owner.None;
         private UnitType currentlySelectedUnit = UnitType.None;
@@ -254,7 +254,7 @@ namespace Wartorn.Screens
             //terrain button
             Button button_bridge = new Button(TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Bridge_hor), new Point(10, 80), 0.75f, false);
             Button button_road = new Button(TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Road_hor), new Point(50, 80), 0.75f, false);
-            Button button_wood = new Button(TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Tree), new Point(90, 80), 0.75f, false);
+            Button button_wood = new Button(TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Forest), new Point(90, 80), 0.75f, false);
             Button button_mountain = new Button(TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Mountain_Low), new Point(130, 80), 0.75f, false);
             Button button_plain = new Button(TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Plain), new Point(170, 80), 0.75f, false);
 
@@ -284,7 +284,7 @@ namespace Wartorn.Screens
                         button_changeWeather.Text = "Sunny";
                         button_bridge.spriteSourceRectangle = TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Tropical_Bridge_hor);
                         button_road.spriteSourceRectangle = TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Tropical_Road_hor);
-                        button_wood.spriteSourceRectangle = TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Tropical_Tree);
+                        button_wood.spriteSourceRectangle = TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Tropical_Forest);
                         button_mountain.spriteSourceRectangle = TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Tropical_Mountain_Low);
                         button_plain.spriteSourceRectangle = TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Tropical_Plain);
                         map.theme = Theme.Tropical;
@@ -295,7 +295,7 @@ namespace Wartorn.Screens
                         button_changeWeather.Text = "Sunny";
                         button_bridge.spriteSourceRectangle = TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Desert_Bridge_hor);
                         button_road.spriteSourceRectangle = TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Desert_Road_hor);
-                        button_wood.spriteSourceRectangle = TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Desert_Tree);
+                        button_wood.spriteSourceRectangle = TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Desert_Forest);
                         button_mountain.spriteSourceRectangle = TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Desert_Mountain_High_Lower);
                         button_plain.spriteSourceRectangle = TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Desert_Plain);
 
@@ -311,7 +311,7 @@ namespace Wartorn.Screens
                         button_changeWeather.Text = "Sunny";
                         button_bridge.spriteSourceRectangle = TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Bridge_hor);
                         button_road.spriteSourceRectangle = TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Road_hor);
-                        button_wood.spriteSourceRectangle = TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Tree);
+                        button_wood.spriteSourceRectangle = TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Forest);
                         button_mountain.spriteSourceRectangle = TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Mountain_Low);
                         button_plain.spriteSourceRectangle = TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Plain);
 
@@ -338,7 +338,7 @@ namespace Wartorn.Screens
                         button_changeTerrainTheme.Text = "Normal";
                         button_bridge.spriteSourceRectangle = TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Rain_Bridge_hor);
                         button_road.spriteSourceRectangle = TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Rain_Road_hor);
-                        button_wood.spriteSourceRectangle = TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Rain_Tree);
+                        button_wood.spriteSourceRectangle = TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Rain_Forest);
                         button_mountain.spriteSourceRectangle = TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Rain_Mountain_Low);
                         button_plain.spriteSourceRectangle = TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Rain_Plain);
 
@@ -353,7 +353,7 @@ namespace Wartorn.Screens
                         button_changeTerrainTheme.Text = "Normal";
                         button_bridge.spriteSourceRectangle = TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Snow_Bridge_hor);
                         button_road.spriteSourceRectangle = TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Snow_Road_hor);
-                        button_wood.spriteSourceRectangle = TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Snow_Tree);
+                        button_wood.spriteSourceRectangle = TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Snow_Forest);
                         button_mountain.spriteSourceRectangle = TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Snow_Mountain_Low);
                         button_plain.spriteSourceRectangle = TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Snow_Plain);
 
@@ -368,7 +368,7 @@ namespace Wartorn.Screens
                         button_changeTerrainTheme.Text = "Normal";
                         button_bridge.spriteSourceRectangle = TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Bridge_hor);
                         button_road.spriteSourceRectangle = TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Road_hor);
-                        button_wood.spriteSourceRectangle = TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Tree);
+                        button_wood.spriteSourceRectangle = TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Forest);
                         button_mountain.spriteSourceRectangle = TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Mountain_Low);
                         button_plain.spriteSourceRectangle = TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Plain);
 
@@ -974,7 +974,7 @@ namespace Wartorn.Screens
                 Rectangle lowertile = Rectangle.Empty;
                 int nextowner = 0;
                 int nextwater = 0;
-                int nextroadtreemnt = 0;
+                int nextroadForestmnt = 0;
 
                 switch (map.weather)
                 {
@@ -983,15 +983,15 @@ namespace Wartorn.Screens
                         {
                             case Theme.Normal:
                                 nextwater = 0;
-                                nextroadtreemnt = 0;
+                                nextroadForestmnt = 0;
                                 break;
                             case Theme.Tropical:
                                 nextwater = SpriteSheetTerrain.Desert_Reef - SpriteSheetTerrain.Reef;
-                                nextroadtreemnt = SpriteSheetTerrain.Tropical_Road_hor - SpriteSheetTerrain.Road_hor;
+                                nextroadForestmnt = SpriteSheetTerrain.Tropical_Road_hor - SpriteSheetTerrain.Road_hor;
                                 break;
                             case Theme.Desert:
                                 nextwater = SpriteSheetTerrain.Desert_Reef - SpriteSheetTerrain.Reef;
-                                nextroadtreemnt = SpriteSheetTerrain.Desert_Road_hor - SpriteSheetTerrain.Road_hor;
+                                nextroadForestmnt = SpriteSheetTerrain.Desert_Road_hor - SpriteSheetTerrain.Road_hor;
                                 break;
                             default:
                                 break;
@@ -999,11 +999,11 @@ namespace Wartorn.Screens
                         break;
                     case Weather.Rain:
                         nextwater = SpriteSheetTerrain.Rain_Reef - SpriteSheetTerrain.Reef;
-                        nextroadtreemnt = SpriteSheetTerrain.Rain_Road_hor - SpriteSheetTerrain.Road_hor;
+                        nextroadForestmnt = SpriteSheetTerrain.Rain_Road_hor - SpriteSheetTerrain.Road_hor;
                         break;
                     case Weather.Snow:
                         nextwater = SpriteSheetTerrain.Snow_Reef - SpriteSheetTerrain.Reef;
-                        nextroadtreemnt = SpriteSheetTerrain.Snow_Road_hor - SpriteSheetTerrain.Road_hor;
+                        nextroadForestmnt = SpriteSheetTerrain.Snow_Road_hor - SpriteSheetTerrain.Road_hor;
                         break;
                     default:
                         break;
@@ -1053,19 +1053,19 @@ namespace Wartorn.Screens
                         break;
 
                     case TerrainType.Road:
-                        lowertile = TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Road_hor.Next(nextroadtreemnt));
+                        lowertile = TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Road_hor.Next(nextroadForestmnt));
                         break;
 
                     case TerrainType.Bridge:
-                        lowertile = TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Bridge_hor.Next(nextroadtreemnt));
+                        lowertile = TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Bridge_hor.Next(nextroadForestmnt));
                         break;
 
                     case TerrainType.Plain:
-                        lowertile = TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Plain.Next(nextroadtreemnt));
+                        lowertile = TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Plain.Next(nextroadForestmnt));
                         break;
 
-                    case TerrainType.Tree:
-                        lowertile = TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Tree.Next(nextroadtreemnt));
+                    case TerrainType.Forest:
+                        lowertile = TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Forest.Next(nextroadForestmnt));
                         break;
 
                     #region moutain

@@ -17,7 +17,7 @@ namespace Wartorn.GameData
         Road,
         Bridge,
         Plain,
-        Tree,
+        Forest,
         Mountain,
 
         //neutral

@@ -90,7 +90,7 @@ namespace Wartorn
 
             public override void Draw(SpriteBatch spriteBatch)
             {
-                spriteBatch.DrawString(font!= null?font:CONTENT_MANAGER.defaultfont, (string.IsNullOrEmpty(text)) ? "" : text,origin , foregroundColor, Rotation, Vector2.Zero, scale, SpriteEffects.None, LayerDepth.GuiUpper);
+                spriteBatch.DrawString(font != null ? font : CONTENT_MANAGER.defaultfont, (string.IsNullOrEmpty(text)) ? "" : text, Position.ToVector2() - origin, foregroundColor, Rotation, Vector2.Zero, scale, SpriteEffects.None, LayerDepth.GuiUpper);
                 DrawingHelper.DrawRectangle(rect, backgroundColor, true);
                 DrawingHelper.DrawRectangle(rect, borderColor, false);
             }

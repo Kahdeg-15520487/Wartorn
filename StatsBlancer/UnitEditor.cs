@@ -173,7 +173,7 @@ namespace StatsBlancer
             textBox_movecostPlain.Text = _TravelCost[selectedUnit.GetMovementType()][TerrainType.Plain].ToString();
             textBox_movecostRiver.Text = _TravelCost[selectedUnit.GetMovementType()][TerrainType.River].ToString();
             textBox_movecostMountain.Text = _TravelCost[selectedUnit.GetMovementType()][TerrainType.Mountain].ToString();
-            textBox_movecostForest.Text = _TravelCost[selectedUnit.GetMovementType()][TerrainType.Tree].ToString();
+            textBox_movecostForest.Text = _TravelCost[selectedUnit.GetMovementType()][TerrainType.Forest].ToString();
         }
 
         private void button_save_Click(object sender, EventArgs e)
@@ -192,7 +192,7 @@ namespace StatsBlancer
             _TravelCost[selectedUnit.GetMovementType()][TerrainType.Plain] = int.Parse(textBox_movecostPlain.Text);
             _TravelCost[selectedUnit.GetMovementType()][TerrainType.River] = int.Parse(textBox_movecostRiver.Text);
             _TravelCost[selectedUnit.GetMovementType()][TerrainType.Mountain] = int.Parse(textBox_movecostMountain.Text);
-            _TravelCost[selectedUnit.GetMovementType()][TerrainType.Tree] = int.Parse(textBox_movecostForest.Text);
+            _TravelCost[selectedUnit.GetMovementType()][TerrainType.Forest] = int.Parse(textBox_movecostForest.Text);
         }
 
         private void button_done_Click(object sender, EventArgs e)

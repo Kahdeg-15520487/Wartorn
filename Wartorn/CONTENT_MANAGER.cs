@@ -62,6 +62,7 @@ namespace Wartorn
         public static Texture2D generalInfo_capturePoint;
         public static Texture2D generalInfo_defenseStar;
         public static Texture2D generalInfo_HPbar;
+        public static Texture2D generalInfo_HPbarBackground;
         public static Texture2D generalInfo_loadedUnit;
         public static Texture2D generalInfo_unitInfo;
 
@@ -100,6 +101,7 @@ namespace Wartorn
             generalInfo_capturePoint = Content.Load<Texture2D>(@"sprite\GUI\selected_cell_info\SC_Cap_Point");
             generalInfo_defenseStar = Content.Load<Texture2D>(@"sprite\GUI\selected_cell_info\SC_Def_Star");
             generalInfo_HPbar = Content.Load<Texture2D>(@"sprite\GUI\selected_cell_info\SC_HP_Bar");
+            generalInfo_HPbarBackground = Content.Load<Texture2D>(@"sprite\GUI\selected_cell_info\SC_HP_Bar_BG");
             generalInfo_loadedUnit = Content.Load<Texture2D>(@"sprite\GUI\selected_cell_info\SC_Loaded");
             generalInfo_unitInfo = Content.Load<Texture2D>(@"sprite\GUI\selected_cell_info\SC_Unit_info");
 

@@ -30,7 +30,7 @@ namespace Wartorn.SpriteRectangle
         //LINE 3:
         Red_HeavyTank, Red_APC, Red_Lander, Red_Cruiser, Red_Battleship, Red_Submarine,
         //LINE 4:
-        Red_SubMarine_Dive, Red_TransportCopter, Red_BattleCopter, Red_Fighter, Red_Bomber,
+        Red_SubMarine_Dive, Red_TransportCopter, Red_BattleCopter, Red_Fighter, Red_Bomber, Red_None,
 
         //Blue_Unit.png
         //LINE 1:
@@ -40,7 +40,7 @@ namespace Wartorn.SpriteRectangle
         //LINE 3:
         Blue_HeavyTank, Blue_APC, Blue_Lander, Blue_Cruiser, Blue_Battleship, Blue_Submarine,
         //LINE 4:
-        Blue_SubMarine_Dive, Blue_TransportCopter, Blue_BattleCopter, Blue_Fighter, Blue_Bomber,
+        Blue_SubMarine_Dive, Blue_TransportCopter, Blue_BattleCopter, Blue_Fighter, Blue_Bomber, Blue_None,
 
         //Green_Unit.png
         //LINE 1:
@@ -50,7 +50,7 @@ namespace Wartorn.SpriteRectangle
         //LINE 3:
         Green_HeavyTank, Green_APC, Green_Lander, Green_Cruiser, Green_Battleship, Green_Submarine,
         //LINE 4:
-        Green_SubMarine_Dive, Green_TransportCopter, Green_BattleCopter, Green_Fighter, Green_Bomber,
+        Green_SubMarine_Dive, Green_TransportCopter, Green_BattleCopter, Green_Fighter, Green_Bomber, Green_None,
 
         //Yellow_Unit.png
         //LINE 1:
@@ -60,7 +60,7 @@ namespace Wartorn.SpriteRectangle
         //LINE 3:
         Yellow_HeavyTank, Yellow_APC, Yellow_Lander, Yellow_Cruiser, Yellow_Battleship, Yellow_Submarine,
         //LINE 4:
-        Yellow_SubMarine_Dive, Yellow_TransportCopter, Yellow_BattleCopter, Yellow_Fighter, Yellow_Bomber
+        Yellow_SubMarine_Dive, Yellow_TransportCopter, Yellow_BattleCopter, Yellow_Fighter, Yellow_Bomber, Yellow_None
     }
 
     static class BackgroundUnitSpriteSourceRectangle
@@ -73,11 +73,12 @@ namespace Wartorn.SpriteRectangle
 
             SpriteSheetBackgroundUnit c = SpriteSheetBackgroundUnit.Red_Soldier;
 
-            for (int y = 0; y < 20; y++)
+            for (int y = 0; y < 16; y++)
             {
                 for (int x = 0; x < 6; x++)
                 {
                     BackgroundUnitSprite.Add(c, new Rectangle(x * 128, y * 76, 128, 76));
+                    c = c.Next();
                 }
             }
         }

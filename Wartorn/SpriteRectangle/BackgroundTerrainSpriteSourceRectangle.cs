@@ -28,7 +28,7 @@ namespace Wartorn.SpriteRectangle
         //LINE 2:
         Road, Factory, AirPort, Harbor, City,
         //LINE 3:
-        MissleSilo, SupplyBase, Radar, Tree, Mountain,
+        MissleSilo, SupplyBase, Radar, Forest, Mountain,
         //LINE 4:
         Bridge, River, Coast, Sea, Sky,
 
@@ -38,7 +38,7 @@ namespace Wartorn.SpriteRectangle
         //LINE 2:
         Desert_Road, Desert_Factory, Desert_AirPort, Desert_Harbor, Desert_City,
         //LINE 3:
-        Desert_MissleSilo, Desert_SupplyBase, Desert_Radar, Desert_Tree, Desert_Mountain,
+        Desert_MissleSilo, Desert_SupplyBase, Desert_Radar, Desert_Forest, Desert_Mountain,
         //LINE 4:
         Desert_Bridge, Desert_River, Desert_Coast, Desert_Sea, Desert_Sky,
 
@@ -48,7 +48,7 @@ namespace Wartorn.SpriteRectangle
         //LINE 2:
         Rain_Road, Rain_Factory, Rain_AirPort, Rain_Harbor, Rain_City,
         //LINE 3:
-        Rain_MissleSilo, Rain_SupplyBase, Rain_Radar, Rain_Tree, Rain_Mountain,
+        Rain_MissleSilo, Rain_SupplyBase, Rain_Radar, Rain_Forest, Rain_Mountain,
         //LINE 4:
         Rain_Bridge, Rain_River, Rain_Coast, Rain_Sea, Rain_Sky,
 
@@ -58,7 +58,7 @@ namespace Wartorn.SpriteRectangle
         //LINE 2:
         Snow_Road, Snow_Factory, Snow_AirPort, Snow_Harbor, Snow_City,
         //LINE 3:
-        Snow_MissleSilo, Snow_SupplyBase, Snow_Radar, Snow_Tree, Snow_Mountain,
+        Snow_MissleSilo, Snow_SupplyBase, Snow_Radar, Snow_Forest, Snow_Mountain,
         //LINE 4:
         Snow_Bridge, Snow_River, Snow_Coast, Snow_Sea, Snow_Sky,
 
@@ -68,7 +68,7 @@ namespace Wartorn.SpriteRectangle
         //LINE 2:
         Tropical_Road, Tropical_Factory, Tropical_AirPort, Tropical_Harbor, Tropical_City,
         //LINE 3:
-        Tropical_MissleSilo, Tropical_SupplyBase, Tropical_Radar, Tropical_Tree, Tropical_Mountain,
+        Tropical_MissleSilo, Tropical_SupplyBase, Tropical_Radar, Tropical_Forest, Tropical_Mountain,
         //LINE 4:
         Tropical_Bridge, Tropical_River, Tropical_Coast, Tropical_Sea, Tropical_Sky
     }
@@ -109,6 +109,7 @@ namespace Wartorn.SpriteRectangle
                         case Theme.Tropical:
                         case Theme.Desert:
                             spritename.Append(th.ToString());
+                            spritename.Append("_");
                             break;
                         default:
                             break;
@@ -117,19 +118,17 @@ namespace Wartorn.SpriteRectangle
                 case Weather.Rain:
                 case Weather.Snow:
                     spritename.Append(w.ToString());
+                    spritename.Append("_");
                     break;
                 default:
                     break;
             }
 
-            spritename.Append("_");
-
-            if (o != GameData.Owner.None)
+            if (t == TerrainType.HQ && o != Owner.None)
             {
                 spritename.Append(o.ToString());
+                spritename.Append("_");
             }
-
-            spritename.Append("_");
 
             if (ut == UnitType.TransportCopter
              || ut == UnitType.BattleCopter

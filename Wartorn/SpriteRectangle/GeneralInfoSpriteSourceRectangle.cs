@@ -68,19 +68,18 @@ namespace Wartorn.SpriteRectangle
 
     static class GeneralInfoDefenseStarSpriteSourceRectangle
     {
-        private static Dictionary<GameData.Owner, Rectangle> GeneralInfoDefenseStarSprite;
+        private static Dictionary<int, Rectangle> GeneralInfoDefenseStarSprite;
 
         public static void LoadSprite()
         {
-            GeneralInfoDefenseStarSprite = new Dictionary<GameData.Owner, Rectangle>();
+            GeneralInfoDefenseStarSprite = new Dictionary<int, Rectangle>();
 
-            GameData.Owner c = GameData.Owner.Red;
+            GeneralInfoDefenseStarSprite.Add(0, new Rectangle(0, 0, 0, 0));
+            GeneralInfoDefenseStarSprite.Add(1, new Rectangle(0, 0, 9, 9));
+            GeneralInfoDefenseStarSprite.Add(2, new Rectangle(0, 0, 21, 9));
+            GeneralInfoDefenseStarSprite.Add(3, new Rectangle(0, 0, 33, 9));
+            GeneralInfoDefenseStarSprite.Add(4, new Rectangle(0, 0, 45, 9));
 
-            for (int x = 0; x < 4; x++)
-            {
-                GeneralInfoDefenseStarSprite.Add(c, new Rectangle(x * 45, 0, 45, 9));
-                c = c.Next();
-            }
         }
 
         public static Rectangle GetSpriteRectangle(GameData.Owner t)

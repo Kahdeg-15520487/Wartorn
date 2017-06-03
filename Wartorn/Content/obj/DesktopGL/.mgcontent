@@ -252,5 +252,6 @@
     <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/Animation/Green/Cruiser.png</File>
     <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/Animation/Red/Cruiser.png</File>
     <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/Animation/Yellow/Cruiser.png</File>
+    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/GUI/selected_cell_info/SC_HP_bar_BG.png</File>
   </SourceFiles>
 </SourceFileCollection>

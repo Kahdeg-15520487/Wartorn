@@ -234,7 +234,7 @@ namespace Wartorn
                     case TerrainType.Cliff:
                     case TerrainType.Road:
                     case TerrainType.Plain:
-                    case TerrainType.Tree:
+                    case TerrainType.Forest:
                     case TerrainType.MissileSiloLaunched:
                     case TerrainType.Factory:
                         return false;
@@ -677,68 +677,68 @@ namespace Wartorn
                         break;
 
 
-                    case SpriteSheetTerrain.Tree:
-                    case SpriteSheetTerrain.Tree_top_left:
-                    case SpriteSheetTerrain.Tree_top_right:
-                    case SpriteSheetTerrain.Tree_bottom_left:
-                    case SpriteSheetTerrain.Tree_bottom_right:
-                    case SpriteSheetTerrain.Tree_up_left:
-                    case SpriteSheetTerrain.Tree_up_middle:
-                    case SpriteSheetTerrain.Tree_up_right:
-                    case SpriteSheetTerrain.Tree_middle_left:
-                    case SpriteSheetTerrain.Tree_middle_middle:
-                    case SpriteSheetTerrain.Tree_middle_right:
-                    case SpriteSheetTerrain.Tree_down_left:
-                    case SpriteSheetTerrain.Tree_down_middle:
-                    case SpriteSheetTerrain.Tree_down_right:
+                    case SpriteSheetTerrain.Forest:
+                    case SpriteSheetTerrain.Forest_top_left:
+                    case SpriteSheetTerrain.Forest_top_right:
+                    case SpriteSheetTerrain.Forest_bottom_left:
+                    case SpriteSheetTerrain.Forest_bottom_right:
+                    case SpriteSheetTerrain.Forest_up_left:
+                    case SpriteSheetTerrain.Forest_up_middle:
+                    case SpriteSheetTerrain.Forest_up_right:
+                    case SpriteSheetTerrain.Forest_middle_left:
+                    case SpriteSheetTerrain.Forest_middle_middle:
+                    case SpriteSheetTerrain.Forest_middle_right:
+                    case SpriteSheetTerrain.Forest_down_left:
+                    case SpriteSheetTerrain.Forest_down_middle:
+                    case SpriteSheetTerrain.Forest_down_right:
 
-                    case SpriteSheetTerrain.Tropical_Tree:
-                    case SpriteSheetTerrain.Tropical_Tree_top_left:
-                    case SpriteSheetTerrain.Tropical_Tree_top_right:
-                    case SpriteSheetTerrain.Tropical_Tree_bottom_left:
-                    case SpriteSheetTerrain.Tropical_Tree_bottom_right:
-                    case SpriteSheetTerrain.Tropical_Tree_up_left:
-                    case SpriteSheetTerrain.Tropical_Tree_up_middle:
-                    case SpriteSheetTerrain.Tropical_Tree_up_right:
-                    case SpriteSheetTerrain.Tropical_Tree_middle_left:
-                    case SpriteSheetTerrain.Tropical_Tree_middle_middle:
-                    case SpriteSheetTerrain.Tropical_Tree_middle_right:
-                    case SpriteSheetTerrain.Tropical_Tree_down_left:
-                    case SpriteSheetTerrain.Tropical_Tree_down_middle:
-                    case SpriteSheetTerrain.Tropical_Tree_down_right:
+                    case SpriteSheetTerrain.Tropical_Forest:
+                    case SpriteSheetTerrain.Tropical_Forest_top_left:
+                    case SpriteSheetTerrain.Tropical_Forest_top_right:
+                    case SpriteSheetTerrain.Tropical_Forest_bottom_left:
+                    case SpriteSheetTerrain.Tropical_Forest_bottom_right:
+                    case SpriteSheetTerrain.Tropical_Forest_up_left:
+                    case SpriteSheetTerrain.Tropical_Forest_up_middle:
+                    case SpriteSheetTerrain.Tropical_Forest_up_right:
+                    case SpriteSheetTerrain.Tropical_Forest_middle_left:
+                    case SpriteSheetTerrain.Tropical_Forest_middle_middle:
+                    case SpriteSheetTerrain.Tropical_Forest_middle_right:
+                    case SpriteSheetTerrain.Tropical_Forest_down_left:
+                    case SpriteSheetTerrain.Tropical_Forest_down_middle:
+                    case SpriteSheetTerrain.Tropical_Forest_down_right:
 
-                    case SpriteSheetTerrain.Rain_Tree:
-                    case SpriteSheetTerrain.Rain_Tree_top_left:
-                    case SpriteSheetTerrain.Rain_Tree_top_right:
-                    case SpriteSheetTerrain.Rain_Tree_bottom_left:
-                    case SpriteSheetTerrain.Rain_Tree_bottom_right:
-                    case SpriteSheetTerrain.Rain_Tree_up_left:
-                    case SpriteSheetTerrain.Rain_Tree_up_middle:
-                    case SpriteSheetTerrain.Rain_Tree_up_right:
-                    case SpriteSheetTerrain.Rain_Tree_middle_left:
-                    case SpriteSheetTerrain.Rain_Tree_middle_middle:
-                    case SpriteSheetTerrain.Rain_Tree_middle_right:
-                    case SpriteSheetTerrain.Rain_Tree_down_left:
-                    case SpriteSheetTerrain.Rain_Tree_down_middle:
-                    case SpriteSheetTerrain.Rain_Tree_down_right:
+                    case SpriteSheetTerrain.Rain_Forest:
+                    case SpriteSheetTerrain.Rain_Forest_top_left:
+                    case SpriteSheetTerrain.Rain_Forest_top_right:
+                    case SpriteSheetTerrain.Rain_Forest_bottom_left:
+                    case SpriteSheetTerrain.Rain_Forest_bottom_right:
+                    case SpriteSheetTerrain.Rain_Forest_up_left:
+                    case SpriteSheetTerrain.Rain_Forest_up_middle:
+                    case SpriteSheetTerrain.Rain_Forest_up_right:
+                    case SpriteSheetTerrain.Rain_Forest_middle_left:
+                    case SpriteSheetTerrain.Rain_Forest_middle_middle:
+                    case SpriteSheetTerrain.Rain_Forest_middle_right:
+                    case SpriteSheetTerrain.Rain_Forest_down_left:
+                    case SpriteSheetTerrain.Rain_Forest_down_middle:
+                    case SpriteSheetTerrain.Rain_Forest_down_right:
 
-                    case SpriteSheetTerrain.Snow_Tree:
-                    case SpriteSheetTerrain.Snow_Tree_top_left:
-                    case SpriteSheetTerrain.Snow_Tree_top_right:
-                    case SpriteSheetTerrain.Snow_Tree_bottom_left:
-                    case SpriteSheetTerrain.Snow_Tree_bottom_right:
-                    case SpriteSheetTerrain.Snow_Tree_up_left:
-                    case SpriteSheetTerrain.Snow_Tree_up_middle:
-                    case SpriteSheetTerrain.Snow_Tree_up_right:
-                    case SpriteSheetTerrain.Snow_Tree_middle_left:
-                    case SpriteSheetTerrain.Snow_Tree_middle_middle:
-                    case SpriteSheetTerrain.Snow_Tree_middle_right:
-                    case SpriteSheetTerrain.Snow_Tree_down_left:
-                    case SpriteSheetTerrain.Snow_Tree_down_middle:
-                    case SpriteSheetTerrain.Snow_Tree_down_right:
+                    case SpriteSheetTerrain.Snow_Forest:
+                    case SpriteSheetTerrain.Snow_Forest_top_left:
+                    case SpriteSheetTerrain.Snow_Forest_top_right:
+                    case SpriteSheetTerrain.Snow_Forest_bottom_left:
+                    case SpriteSheetTerrain.Snow_Forest_bottom_right:
+                    case SpriteSheetTerrain.Snow_Forest_up_left:
+                    case SpriteSheetTerrain.Snow_Forest_up_middle:
+                    case SpriteSheetTerrain.Snow_Forest_up_right:
+                    case SpriteSheetTerrain.Snow_Forest_middle_left:
+                    case SpriteSheetTerrain.Snow_Forest_middle_middle:
+                    case SpriteSheetTerrain.Snow_Forest_middle_right:
+                    case SpriteSheetTerrain.Snow_Forest_down_left:
+                    case SpriteSheetTerrain.Snow_Forest_down_middle:
+                    case SpriteSheetTerrain.Snow_Forest_down_right:
 
-                    case SpriteSheetTerrain.Desert_Tree:
-                        result = TerrainType.Tree;
+                    case SpriteSheetTerrain.Desert_Forest:
+                        result = TerrainType.Forest;
                         break;
 
                     case SpriteSheetTerrain.Mountain_High_Upper:

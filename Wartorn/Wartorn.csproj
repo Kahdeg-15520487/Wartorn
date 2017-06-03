@@ -95,8 +95,10 @@
     <Compile Include="Screens\TestAnimationScreen.cs" />
     <Compile Include="Screens\UnitMoveProtypeScreen.cs" />
     <Compile Include="SpriteRectangle\BackgroundTerrainSpriteSourceRectangle.cs" />
+    <Compile Include="SpriteRectangle\BuyMenuSpriteSourceRectangle.cs" />
     <Compile Include="SpriteRectangle\CommandSpriteSourceRectangle.cs" />
     <Compile Include="SpriteRectangle\DirectionArrowSpriteSourceRectangle.cs" />
+    <Compile Include="SpriteRectangle\GeneralInfoSpriteSourceRectangle.cs" />
     <Compile Include="SpriteRectangle\UISpriteSheetSourceRectangle.cs" />
     <Compile Include="SpriteRectangle\TerrainSpriteSourceRectangle.cs" />
     <Compile Include="Storage\CompressHelper.cs" />
