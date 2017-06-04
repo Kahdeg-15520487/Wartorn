@@ -93,6 +93,7 @@ namespace Wartorn
 
             DrawingHelper.Initialize(GraphicsDevice);
 
+            Unit.Init();
             Unit.Load();
 
             CONTENT_MANAGER.gameinstance = this;

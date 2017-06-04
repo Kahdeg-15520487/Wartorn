@@ -82,7 +82,7 @@ namespace Wartorn.SpriteRectangle
 
         }
 
-        public static Rectangle GetSpriteRectangle(GameData.Owner t)
+        public static Rectangle GetSpriteRectangle(int t)
         {
             return GeneralInfoDefenseStarSprite[t];
         }

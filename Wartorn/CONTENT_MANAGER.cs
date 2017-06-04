@@ -62,7 +62,6 @@ namespace Wartorn
         public static Texture2D generalInfo_capturePoint;
         public static Texture2D generalInfo_defenseStar;
         public static Texture2D generalInfo_HPbar;
-        public static Texture2D generalInfo_HPbarBackground;
         public static Texture2D generalInfo_loadedUnit;
         public static Texture2D generalInfo_unitInfo;
 
@@ -71,6 +70,7 @@ namespace Wartorn
 
         public static Texture2D selectCursor;
         public static Texture2D attackCursor;
+        public static Texture2D buyCursor;
 
         #region animation sprite sheet
         public static Dictionary<SpriteSheetUnit, AnimatedEntity> animationEntities;
@@ -101,7 +101,6 @@ namespace Wartorn
             generalInfo_capturePoint = Content.Load<Texture2D>(@"sprite\GUI\selected_cell_info\SC_Cap_Point");
             generalInfo_defenseStar = Content.Load<Texture2D>(@"sprite\GUI\selected_cell_info\SC_Def_Star");
             generalInfo_HPbar = Content.Load<Texture2D>(@"sprite\GUI\selected_cell_info\SC_HP_Bar");
-            generalInfo_HPbarBackground = Content.Load<Texture2D>(@"sprite\GUI\selected_cell_info\SC_HP_Bar_BG");
             generalInfo_loadedUnit = Content.Load<Texture2D>(@"sprite\GUI\selected_cell_info\SC_Loaded");
             generalInfo_unitInfo = Content.Load<Texture2D>(@"sprite\GUI\selected_cell_info\SC_Unit_info");
 
@@ -110,6 +109,7 @@ namespace Wartorn
 
             selectCursor = Content.Load<Texture2D>(@"sprite\Cursor\Select_Cursor");
             attackCursor = Content.Load<Texture2D>(@"sprite\Cursor\Attack_Cursor");
+            buyCursor = Content.Load<Texture2D>(@"sprite\Cursor\Buy_Cursor");
 
             LoadAnimationContent();
 

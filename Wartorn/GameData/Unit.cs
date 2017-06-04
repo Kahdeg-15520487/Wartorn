@@ -28,11 +28,14 @@ namespace Wartorn.GameData
         public static Dictionary<UnitType, Dictionary<UnitType, int>> _DammageTable { get; private set; }
         public static Dictionary<UnitType, int> _Cost{ get; private set; }
         public static Dictionary<UnitType, int> _Gas{ get; private set; }
+        public static Dictionary<UnitType, int> _Ammo { get; private set; }
         public static Dictionary<UnitType, int> _ActionPoint { get; private set; }
         public static Dictionary<UnitType, int> _MovementRange{ get; private set; }
         public static Dictionary<UnitType, int> _VisionRange{ get; private set; }
         public static Dictionary<UnitType, Range> _AttackRange{ get; private set; }
         public static Dictionary<MovementType, Dictionary<TerrainType, int>> _TravelCost{ get; private set; }
+
+        public static Dictionary<TerrainType,int> _DefenseStar { get; private set; }
 
         public static void Init()
         {
@@ -64,6 +67,12 @@ namespace Wartorn.GameData
             foreach (UnitType unittype in unittypes)
             {
                 _Gas.Add(unittype, 99);
+            }
+
+            _Ammo = new Dictionary<UnitType, int>();
+            foreach (UnitType unittype in unittypes)
+            {
+                _Ammo.Add(unittype, 99);
             }
 
             _ActionPoint = new Dictionary<UnitType, int>();
@@ -101,15 +110,23 @@ namespace Wartorn.GameData
                 }
             }
 
+            _DefenseStar = new Dictionary<TerrainType, int>();
+            foreach (TerrainType terraintype in terraintypes)
+            {
+                _DefenseStar.Add(terraintype, 0);
+            }
+
             Directory.CreateDirectory(@"data\");
             //File.WriteAllText(@"data\dmgtable.txt", JsonConvert.SerializeObject(_DammageTable, Formatting.Indented));
             //File.WriteAllText(@"data\costtable.txt", JsonConvert.SerializeObject(_Cost.ToArray(), Formatting.Indented));
             //File.WriteAllText(@"data\gastable.txt", JsonConvert.SerializeObject(_Gas.ToArray(), Formatting.Indented));
+            //File.WriteAllText(@"data\ammotable.txt", JsonConvert.SerializeObject(_Ammo.ToArray(), Formatting.Indented));
             //File.WriteAllText(@"data\aptable.txt", JsonConvert.SerializeObject(_ActionPoint.ToArray(), Formatting.Indented));
             //File.WriteAllText(@"data\movementrangetable.txt", JsonConvert.SerializeObject(_MovementRange.ToArray(), Formatting.Indented));
             //File.WriteAllText(@"data\visionrangetable.txt", JsonConvert.SerializeObject(_VisionRange.ToArray(), Formatting.Indented));
             //File.WriteAllText(@"data\attackrangetable.txt", JsonConvert.SerializeObject(_AttackRange.ToArray(), Formatting.Indented));
             //File.WriteAllText(@"data\traversecosttable.txt", JsonConvert.SerializeObject(_TravelCost, Formatting.Indented));
+            //File.WriteAllText(@"data\defensestartable.txt", JsonConvert.SerializeObject(_DefenseStar.ToArray(), Formatting.Indented));
         }
 
         public static void Load()
@@ -117,11 +134,13 @@ namespace Wartorn.GameData
             _DammageTable = new Dictionary<UnitType, Dictionary<UnitType, int>>();
             _Cost = new Dictionary<UnitType, int>();
             _Gas = new Dictionary<UnitType, int>();
+            _Ammo = new Dictionary<UnitType, int>();
             _ActionPoint = new Dictionary<UnitType, int>();
             _MovementRange = new Dictionary<UnitType, int>();
             _VisionRange = new Dictionary<UnitType, int>();
             _AttackRange = new Dictionary<UnitType, Range>();
             _TravelCost = new Dictionary<MovementType, Dictionary<TerrainType, int>>();
+            _DefenseStar = new Dictionary<TerrainType, int>();
             
             string dmgtable = File.ReadAllText(@"data\dmgtable.txt");
             _DammageTable = JsonConvert.DeserializeObject<Dictionary<UnitType, Dictionary<UnitType, int>>>(dmgtable);
@@ -136,6 +155,12 @@ namespace Wartorn.GameData
             JsonConvert.DeserializeObject<KeyValuePair<UnitType, int>[]>(gastable).ToList().ForEach(kvp =>
             {
                 _Gas.Add(kvp.Key, kvp.Value);
+            });
+
+            string ammotable = File.ReadAllText(@"data\ammotable.txt");
+            JsonConvert.DeserializeObject<KeyValuePair<UnitType, int>[]>(ammotable).ToList().ForEach(kvp =>
+            {
+                _Ammo.Add(kvp.Key, kvp.Value);
             });
 
             string aptable = File.ReadAllText(@"data\aptable.txt");
@@ -164,6 +189,12 @@ namespace Wartorn.GameData
 
             string traversecosttable = File.ReadAllText(@"data\traversecosttable.txt");
             _TravelCost = JsonConvert.DeserializeObject<Dictionary<MovementType, Dictionary<TerrainType, int>>>(traversecosttable);
+
+            string defensestartable = File.ReadAllText(@"data\defensestartable.txt");
+            JsonConvert.DeserializeObject<KeyValuePair<TerrainType, int>[]>(defensestartable).ToList().ForEach(kvp =>
+            {
+                _DefenseStar.Add(kvp.Key, kvp.Value);
+            });
         }
 
         /// <summary>
@@ -187,6 +218,7 @@ namespace Wartorn.GameData
         int hitPoint;
         int actionpoint;
         int fuel;
+        int ammo;
         #endregion
 
         #region property
@@ -195,6 +227,7 @@ namespace Wartorn.GameData
         public int HitPoint { get { return hitPoint; } }
         public int ActionPoint { get { return actionpoint; } }
         public int Fuel { get { return fuel; } set { fuel = value; } }
+        public int Ammo { get { return ammo; } set { ammo = value; } }
         public Owner Owner { get; set; }
         public readonly Guid guid;
 
@@ -206,6 +239,7 @@ namespace Wartorn.GameData
             Owner = owner;
             hitPoint = hp;
             fuel = _Gas[unitType];
+            ammo = _Ammo[unitType];
             actionpoint = _ActionPoint[unitType];
             guid = Guid.NewGuid();
         }

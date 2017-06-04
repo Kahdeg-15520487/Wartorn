@@ -247,22 +247,24 @@ namespace Wartorn.Screens.MainGameScreen
             //declare ui elements
             PictureBox picbox_generalInfoBorder = new PictureBox(CONTENT_MANAGER.generalInfo_border, new Point(175, 364), Rectangle.Empty, Vector2.Zero,depth: LayerDepth.GuiBackground);
 
-            PictureBox picbox_generalInfoCapturePoint = new PictureBox(CONTENT_MANAGER.generalInfo_capturePoint, new Point(262, 385), Rectangle.Empty, Vector2.Zero, depth: LayerDepth.GuiUpper);
+            PictureBox picbox_generalInfoCapturePoint = new PictureBox(CONTENT_MANAGER.generalInfo_capturePoint, new Point(262, 385), Rectangle.Empty, Vector2.Zero, depth: LayerDepth.GuiLower);
             Label label_generalInfoCapturePoint = new Label(" ", new Point(), new Vector2(50, 20), CONTENT_MANAGER.arcadefont);
             label_generalInfoCapturePoint.Origin = new Vector2(-3, 2);
 
-            PictureBox picbox_generalInfoDefenseStar = new PictureBox(CONTENT_MANAGER.generalInfo_defenseStar, new Point(265, 371), Rectangle.Empty, Vector2.Zero, depth: LayerDepth.GuiUpper);
+            PictureBox picbox_generalInfoDefenseStar = new PictureBox(CONTENT_MANAGER.generalInfo_defenseStar, new Point(265, 371), Rectangle.Empty, Vector2.Zero, depth: LayerDepth.GuiLower);
             
-            PictureBox picbox_generalInfoUnitInfo = new PictureBox(CONTENT_MANAGER.generalInfo_unitInfo, new Point(181, 453), Rectangle.Empty, Vector2.Zero, depth: LayerDepth.GuiUpper);
+            PictureBox picbox_generalInfoUnitInfo = new PictureBox(CONTENT_MANAGER.generalInfo_unitInfo, new Point(181, 453), Rectangle.Empty, Vector2.Zero, depth: LayerDepth.GuiLower);
             PictureBox picbox_generalInfoLoadedUnit = new PictureBox(CONTENT_MANAGER.generalInfo_loadedUnit, new Point(181, 435), Rectangle.Empty, Vector2.Zero, depth: LayerDepth.GuiLower);
-            PictureBox picbox_generalInfoHPbar = new PictureBox(CONTENT_MANAGER.generalInfo_HPbar, new Point(198, 485), Rectangle.Empty, Vector2.Zero, depth: LayerDepth.GuiUpper);
+            PictureBox picbox_generalInfoHPbar = new PictureBox(CONTENT_MANAGER.generalInfo_HPbar, new Point(198, 485), null, Vector2.Zero, depth: LayerDepth.GuiUpper);
             Label label_generalInfoHP = new Label(" ", new Point(301, 455), new Vector2(20, 20), CONTENT_MANAGER.arcadefont);
-            label_generalInfoHP.Origin = new Vector2(-3, 2);
-            PictureBox picbox_generalInfoHPbarBackground = new PictureBox(CONTENT_MANAGER.generalInfo_HPbarBackground, new Point(198, 485), new Rectangle(0, 0, 100, 3), Vector2.Zero, depth: LayerDepth.GuiUpper);
+            label_generalInfoHP.Origin = new Vector2(1, 2);
+            label_generalInfoHP.Scale = 0.75f;
             Label label_generalInfoUnitInfo_fuel = new Label(" ", new Point(263, 465), new Vector2(20, 20), CONTENT_MANAGER.arcadefont);
             label_generalInfoUnitInfo_fuel.Origin = new Vector2(-3, 2);
+            label_generalInfoUnitInfo_fuel.Scale = 0.75f;
             Label label_generalInfoUnitInfo_ammo = new Label(" ", new Point(294, 465), new Vector2(20, 20), CONTENT_MANAGER.arcadefont);
             label_generalInfoUnitInfo_ammo.Origin = new Vector2(-3, 2);
+            label_generalInfoUnitInfo_ammo.Scale = 0.75f;
 
             PictureBox picbox_terrainType = new PictureBox(CONTENT_MANAGER.background_terrain, new Point(183, 385), Rectangle.Empty, Vector2.Zero, depth: LayerDepth.GuiLower - 0.05f);
             Label label_terrainType = new Label(" ", new Point(186, 370), new Vector2(50, 20), CONTENT_MANAGER.arcadefont);
@@ -285,7 +287,6 @@ namespace Wartorn.Screens.MainGameScreen
             canvas_generalInfo.AddElement("picbox_generalInfoLoadedUnit", picbox_generalInfoLoadedUnit);
             canvas_generalInfo.AddElement("picbox_generalInfoHPbar", picbox_generalInfoHPbar);
             canvas_generalInfo.AddElement("label_generalInfoHP", label_generalInfoHP);
-            canvas_generalInfo.AddElement("picbox_generalInfoHPbarBackground", picbox_generalInfoHPbarBackground);
             canvas_generalInfo.AddElement("label_generalInfoUnitInfo_fuel", label_generalInfoUnitInfo_fuel);
             canvas_generalInfo.AddElement("label_generalInfoUnitInfo_ammo", label_generalInfoUnitInfo_ammo);
 
@@ -505,7 +506,7 @@ namespace Wartorn.Screens.MainGameScreen
                             selectedUnit = selectedMapCell;
                             origin = selectedMapCell;
                             MapCell temp = session.map[selectedUnit];
-                            canvas_generalInfo.GetElementAs<Label>("label_unittype").Text = temp.unit.UnitType.ToString() + Environment.NewLine + temp.unit.Owner.ToString();
+                            canvas_generalInfo.GetElementAs<Label>("label_unitType").Text = temp.unit.UnitType.ToString() + Environment.NewLine + temp.unit.Owner.ToString();
                             CalculateMovementRange(temp.unit, selectedUnit);
                             movementPath = null;
 
@@ -811,7 +812,7 @@ namespace Wartorn.Screens.MainGameScreen
             //có capture nếu là lính và đang đứng trên building khác màu nè
             if ((session.map[selectedUnit].unit.UnitType == UnitType.Soldier
              || session.map[selectedUnit].unit.UnitType == UnitType.Mech)
-             && isBuilidng(session.map[selectedUnit].terrain)
+             && isBuilding(session.map[selectedUnit].terrain)
              && session.map[selectedUnit].owner!= playerInfos[localPlayer].owner)
             {
                 temp += (int)Command.Capture;
@@ -854,13 +855,13 @@ namespace Wartorn.Screens.MainGameScreen
 
             if (cmds.Count>1)
             {
-                secondslot.Position = new Point(selectedUnit.X * Constants.MapCellWidth + 50 + 6, selectedUnit.Y * Constants.MapCellHeight + 16 + 8 + 8);
+                secondslot.Position = new Point(selectedUnit.X * Constants.MapCellWidth + 50 + 6, selectedUnit.Y * Constants.MapCellHeight + 16 + 8);
                 secondslot.spriteSourceRectangle = CommandSpriteSourceRectangle.GetSprite(cmds[1]);
                 secondslot.rect = new Rectangle(secondslot.Position, secondslot.spriteSourceRectangle.Size);
             }
             if (cmds.Count > 2)
             {
-                thirdslot.Position = new Point(selectedUnit.X * Constants.MapCellWidth + 50 + 6, selectedUnit.Y * Constants.MapCellHeight + 32 + 8 + 8);
+                thirdslot.Position = new Point(selectedUnit.X * Constants.MapCellWidth + 50 + 6, selectedUnit.Y * Constants.MapCellHeight + 32 + 8);
                 thirdslot.spriteSourceRectangle = CommandSpriteSourceRectangle.GetSprite(cmds[2]);
                 thirdslot.rect = new Rectangle(thirdslot.Position, thirdslot.spriteSourceRectangle.Size);
             }
@@ -1089,7 +1090,7 @@ namespace Wartorn.Screens.MainGameScreen
             return false;
         }
 
-        private bool isBuilidng(TerrainType t)
+        private bool isBuilding(TerrainType t)
         {
             switch (t)
             {
@@ -1136,14 +1137,46 @@ namespace Wartorn.Screens.MainGameScreen
                 //update the generalinfo border
                 canvas_generalInfo.GetElementAs<PictureBox>("picbox_generalInfoBorder").SourceRectangle = GeneralInfoBorderSpriteSourceRectangle.GetSpriteRectangle(tempmapcell.owner);
 
-                //if (isBuilidng(tempmapcell.terrain) && tempmapcell.terrain != TerrainType.MissileSiloLaunched && tempmapcell.terrain != TerrainType.MissileSilo)
+                //if (isBuilding(tempmapcell.terrain) && tempmapcell.terrain != TerrainType.MissileSiloLaunched && tempmapcell.terrain != TerrainType.MissileSilo)
                 //{
-                //    canvas_generalInfo.GetElementAs<PictureBox>("picbox_generalInfoCapturePoint").SourceRectangle = 
+                    //canvas_generalInfo.GetElementAs<PictureBox>("picbox_generalInfoCapturePoint").SourceRectangle = GeneralInfoCapturePointSpriteSourceRectangle.GetSpriteRectangle(tempmapcell.owner);
+                    //canvas_generalInfo.GetElementAs<Label>("label_generalInfoCapturePoint").Text = "20";
                 //}
 
-                canvas_generalInfo.GetElementAs<PictureBox>("picbox_generalInfoDefenseStar").SourceRectangle = 
-                    canvas_generalInfo.GetElementAs<PictureBox>("picbox_generalInfoCapturePoint").SourceRectangle =
-                    canvas_generalInfo.GetElementAs<PictureBox>("picbox_generalInfoCapturePoint").SourceRectangle =
+                canvas_generalInfo.GetElementAs<PictureBox>("picbox_generalInfoDefenseStar").SourceRectangle = GeneralInfoDefenseStarSpriteSourceRectangle.GetSpriteRectangle(Unit._DefenseStar[tempmapcell.terrain]);
+
+                if (tempmapcell.unit!=null)
+                {
+                    canvas_generalInfo.GetElementAs<PictureBox>("picbox_generalInfoUnitInfo").SourceRectangle = GeneralInfoUnitInfoSpriteSourceRectangle.GetSpriteRectangle(tempmapcell.unit.Owner);
+                    //if (tempmapcell.unit.UnitType == UnitType.APC
+                    // || tempmapcell.unit.UnitType == UnitType.TransportCopter
+                    // || tempmapcell.unit.UnitType == UnitType.Lander
+                    // || tempmapcell.unit.UnitType == UnitType.Cruiser)
+                    //{
+                    //    canvas_generalInfo.GetElementAs<PictureBox>("picbox_generalInfoLoadedUnit").SourceRectangle = GeneralInfoLoadedUnitSpriteSourceRectangle.GetSpriteRectangle(tempmapcell.unit.Owner);
+                    //    //update loaded unit here
+                    //}
+
+                    int hp = tempmapcell.unit.HitPoint;
+                    //canvas_generalInfo.GetElementAs<PictureBox>("picbox_generalInfoHPbar").SourceRectangle = new Rectangle(0, 0, 99, 2);
+                    canvas_generalInfo.GetElementAs<PictureBox>("picbox_generalInfoHPbar").IsVisible = true;
+                    //CONTENT_MANAGER.ShowMessageBox(canvas_generalInfo.GetElementAs<PictureBox>("picbox_generalInfoHPbar").SourceRectangle);
+                    canvas_generalInfo.GetElementAs<Label>("label_generalInfoHP").Text = (Math.Ceiling(hp / 10f)).ToString();
+
+                    canvas_generalInfo.GetElementAs<Label>("label_generalInfoUnitInfo_fuel").Text = tempmapcell.unit.Fuel.ToString();
+                    canvas_generalInfo.GetElementAs<Label>("label_generalInfoUnitInfo_ammo").Text = tempmapcell.unit.Ammo.ToString();
+                }
+                else
+                {
+                    canvas_generalInfo.GetElementAs<PictureBox>("picbox_generalInfoUnitInfo").SourceRectangle = Rectangle.Empty;
+                    canvas_generalInfo.GetElementAs<PictureBox>("picbox_generalInfoLoadedUnit").SourceRectangle = Rectangle.Empty;
+                    
+                    //canvas_generalInfo.GetElementAs<PictureBox>("picbox_generalInfoHPbar").SourceRectangle = Rectangle.Empty;
+                    canvas_generalInfo.GetElementAs<Label>("label_generalInfoHP").Text = " ";
+
+                    canvas_generalInfo.GetElementAs<Label>("label_generalInfoUnitInfo_fuel").Text = " ";
+                    canvas_generalInfo.GetElementAs<Label>("label_generalInfoUnitInfo_ammo").Text = " ";
+                }
 
                 //update the terrantype of the mapcell which is hovered on
                 canvas_generalInfo.GetElementAs<PictureBox>("picbox_terrainType").SourceRectangle = BackgroundTerrainSpriteSourceRectangle.GetSpriteRectangle(tempmapcell.terrain, session.map.weather, session.map.theme, tempmapcell.unit != null ? tempmapcell.unit.UnitType : UnitType.None, tempmapcell.owner);
@@ -1192,7 +1225,7 @@ namespace Wartorn.Screens.MainGameScreen
             DrawMap(CONTENT_MANAGER.spriteBatch, gameTime);
             
             //draw the guibackground
-            CONTENT_MANAGER.spriteBatch.Draw(guibackground, new Vector2(0, 0), null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.GuiBackground);
+            //CONTENT_MANAGER.spriteBatch.Draw(guibackground, new Vector2(0, 0), null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.GuiBackground);
             canvas.Draw(CONTENT_MANAGER.spriteBatch);
 
             CONTENT_MANAGER.spriteBatch.DrawString(CONTENT_MANAGER.defaultfont, currentGameState.ToString(), new Vector2(100, 100), Color.Red);
@@ -1206,7 +1239,7 @@ namespace Wartorn.Screens.MainGameScreen
 
 
             //draw the minimap
-            CONTENT_MANAGER.spriteBatch.Draw(minimap, minimapbound, null, Color.White, 0f, Vector2.Zero, SpriteEffects.None, LayerDepth.GuiBackground);
+            //CONTENT_MANAGER.spriteBatch.Draw(minimap, minimapbound, null, Color.White, 0f, Vector2.Zero, SpriteEffects.None, LayerDepth.GuiBackground);
         }
 
         private void DrawCanvas_generalInfo()
@@ -1249,7 +1282,7 @@ namespace Wartorn.Screens.MainGameScreen
             }
 
             //draw the cursor
-            spriteBatch.Draw(CONTENT_MANAGER.UIspriteSheet, new Vector2(selectedMapCell.X * Constants.MapCellWidth, selectedMapCell.Y * Constants.MapCellHeight), new Rectangle(0, 0, 48, 48), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.GuiUpper);
+            spriteBatch.Draw(CONTENT_MANAGER.selectCursor, new Vector2(selectedMapCell.X * Constants.MapCellWidth, selectedMapCell.Y * Constants.MapCellHeight), null, Color.White, 0f, new Vector2(6, 6), 1f, SpriteEffects.None, LayerDepth.GuiUpper);
 
             spriteBatch.End();
 
