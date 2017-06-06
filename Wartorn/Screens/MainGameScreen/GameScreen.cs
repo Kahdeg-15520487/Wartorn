@@ -708,7 +708,7 @@ namespace Wartorn.Screens.MainGameScreen
                                 session.map[selectedUnit].unit.CapturePoint = 20;
                             }
 
-                            tempunit.CapturePoint -= tempunit.GetHitpointRoundTo10();
+                            tempunit.CapturePoint -= tempunit.HitPoint;
                             tempunit.UpdateActionPoint(Command.Capture);
 
                             if (tempunit.CapturePoint<=0)
@@ -1282,8 +1282,8 @@ namespace Wartorn.Screens.MainGameScreen
                 }
 
                 int hp = tempmapcell.unit.HitPoint;
-                canvas_generalInfo.GetElementAs<PictureBox>("picbox_generalInfoHPbar").SourceRectangle = new Rectangle(0, 0, hp, 3);
-                canvas_generalInfo.GetElementAs<Label>("label_generalInfoHP").Text = (Math.Ceiling(hp / 10f)).ToString();
+                canvas_generalInfo.GetElementAs<PictureBox>("picbox_generalInfoHPbar").SourceRectangle = new Rectangle(0, 0, hp*10, 3);
+                canvas_generalInfo.GetElementAs<Label>("label_generalInfoHP").Text = hp.ToString();
 
                 canvas_generalInfo.GetElementAs<Label>("label_generalInfoUnitInfo_fuel").Text = tempmapcell.unit.Fuel.ToString();
                 canvas_generalInfo.GetElementAs<Label>("label_generalInfoUnitInfo_ammo").Text = tempmapcell.unit.Ammo.ToString();

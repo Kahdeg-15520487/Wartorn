@@ -48,7 +48,7 @@ namespace Wartorn.Drawing
                     {
                         map[i, j].unit.Animation.Position = curpos;
                         map[i, j].unit.Animation.Draw(gameTime, spriteBatch);
-                        spriteBatch.DrawString(CONTENT_MANAGER.arcadefont, (tempmapcell.unit.GetHitpointRoundTo10()).ToString(), curpos, tempmapcell.unit.Owner == Owner.Red ? Color.Blue : Color.Red, 0f, Vector2.Zero, 0.75f, SpriteEffects.None, LayerDepth.GuiUpper);
+                        spriteBatch.DrawString(CONTENT_MANAGER.arcadefont, tempmapcell.unit.HitPoint.ToString(), curpos, tempmapcell.unit.Owner == Owner.Red ? Color.Blue : Color.Red, 0f, Vector2.Zero, 0.75f, SpriteEffects.None, LayerDepth.GuiUpper);
                     }
                 }
             }

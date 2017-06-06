@@ -253,21 +253,19 @@ namespace Wartorn.GameData
         public static CalculatedDamage GetCalculatedDamage(MapCell attacker,MapCell defender)
         {
             //damage = base damage * (HP/100)*(- Terrain Bonus)
+            //Damage = Current HP * Base Damage * (1 - Terrain star / 10)
             //hitpoint = hitpoint - Math.Floor(damage/10)
 
             int atkHP = attacker.unit.HitPoint;
             int defHP = defender.unit.HitPoint;
 
-            float damage = GetBaseDamage(attacker.unit.UnitType,defender.unit.UnitType);
-            float counterDamage = GetBaseDamage(defender.unit.UnitType, attacker.unit.UnitType);
-
-            float terrainbonus;
+            float damage;
+            float counterDamage;
 
             //calculate going damage
-            terrainbonus = (_DefenseStar[attacker.terrain] * atkHP) / 100f;
-            damage *= (atkHP / 100f) * (-terrainbonus);
+            damage = atkHP * GetBaseDamage(attacker.unit.UnitType, defender.unit.UnitType) / 100f * (1 - _DefenseStar[defender.terrain] / 10f);
             damage = (float)Math.Round(damage, MidpointRounding.AwayFromZero);
-            defHP = (int)(defHP + (Math.Floor(damage / 10f)) * 10);
+            defHP -= (int)damage;
 
             //check if the defender is already dead
             if (defHP<=0)
@@ -276,10 +274,9 @@ namespace Wartorn.GameData
             }
 
             //calculate counter damage
-            terrainbonus = (_DefenseStar[defender.terrain] * defHP) / 100f;
-            counterDamage *= (defHP / 100f) * (-terrainbonus);
+            counterDamage = defHP * GetBaseDamage(defender.unit.UnitType, attacker.unit.UnitType) / 100f * (1 - _DefenseStar[attacker.terrain] / 10f);
             counterDamage = (float)Math.Round(counterDamage, MidpointRounding.AwayFromZero);
-            atkHP = (int)(atkHP + (Math.Floor(counterDamage / 10f)) * 10);
+            atkHP -= (int)counterDamage;
 
             return new CalculatedDamage(atkHP, defHP, damage, counterDamage);
         }
@@ -306,7 +303,7 @@ namespace Wartorn.GameData
         public readonly Guid guid;
 
         #endregion
-        public Unit(UnitType unittype, AnimatedEntity anim,Owner owner,int hp = 100)
+        public Unit(UnitType unittype, AnimatedEntity anim,Owner owner,int hp = 10)
         {
             unitType = unittype;
             animation = anim;
@@ -321,11 +318,6 @@ namespace Wartorn.GameData
         public Range GetAttackkRange()
         {
             return _AttackRange[unitType];
-        }
-
-        public int GetHitpointRoundTo10()
-        {
-            return (int)(Math.Ceiling(HitPoint / 10f));
         }
 
         public void UpdateActionPoint(Command cmd)
@@ -413,7 +405,7 @@ namespace Wartorn.GameData
 
     public static class UnitCreationHelper
     {
-        public static Unit Create(UnitType unittype,Owner owner,int hp = 100,AnimationName animation = AnimationName.idle)
+        public static Unit Create(UnitType unittype,Owner owner,int hp = 10,AnimationName animation = AnimationName.idle)
         {
             var result = new Unit(unittype, (AnimatedEntity)CONTENT_MANAGER.animationEntities[unittype.GetSpriteSheetUnit(owner)].Clone(), owner, hp);
             result.Animation.PlayAnimation(animation.ToString());
