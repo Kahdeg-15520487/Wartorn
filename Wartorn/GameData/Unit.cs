@@ -210,6 +210,79 @@ namespace Wartorn.GameData
             MovementType movementType = unitType.GetMovementType();
             return _TravelCost[movementType][terrainType];
         }
+
+        /// <summary>
+        /// get the base damage that the defender will receive in ideal condition
+        /// </summary>
+        /// <param name="attacker">the attacking unit</param>
+        /// <param name="defender">the defending unit</param>
+        /// <returns></returns>
+        public static int GetBaseDamage(UnitType attacker, UnitType defender)
+        {
+            return _DammageTable[attacker][defender];
+        }
+
+        public struct CalculatedDamage
+        {
+            public int attackerHP;
+            public int defenderHP;
+            public float damage;
+            public float counterDamage;
+            public CalculatedDamage(int atkhp,int defhp,float dmg,float counterdmg)
+            {
+                attackerHP = atkhp;
+                defenderHP = defhp;
+                damage = dmg;
+                counterDamage = counterdmg;
+            }
+
+            public override string ToString()
+            {
+                return string.Format("{4} damage {0}{4} counterdamage: {1}{4} attackerHP: {2}{4} defenderHP: {3}", damage, counterDamage, attackerHP, defenderHP,Environment.NewLine);
+            }
+        }
+
+        //todo: fix this shit
+        /// <summary>
+        /// calculate the going damage and counter damage between 2 unit on 2 mapcell
+        /// and return resulting hitpoint after the damage exchange
+        /// </summary>
+        /// <param name="attacker"></param>
+        /// <param name="defender"></param>
+        /// <returns></returns>
+        public static CalculatedDamage GetCalculatedDamage(MapCell attacker,MapCell defender)
+        {
+            //damage = base damage * (HP/100)*(- Terrain Bonus)
+            //hitpoint = hitpoint - Math.Floor(damage/10)
+
+            int atkHP = attacker.unit.HitPoint;
+            int defHP = defender.unit.HitPoint;
+
+            float damage = GetBaseDamage(attacker.unit.UnitType,defender.unit.UnitType);
+            float counterDamage = GetBaseDamage(defender.unit.UnitType, attacker.unit.UnitType);
+
+            float terrainbonus;
+
+            //calculate going damage
+            terrainbonus = (_DefenseStar[attacker.terrain] * atkHP) / 100f;
+            damage *= (atkHP / 100f) * (-terrainbonus);
+            damage = (float)Math.Round(damage, MidpointRounding.AwayFromZero);
+            defHP = (int)(defHP + (Math.Floor(damage / 10f)) * 10);
+
+            //check if the defender is already dead
+            if (defHP<=0)
+            {
+                return new CalculatedDamage(atkHP, 0, damage, 0);
+            }
+
+            //calculate counter damage
+            terrainbonus = (_DefenseStar[defender.terrain] * defHP) / 100f;
+            counterDamage *= (defHP / 100f) * (-terrainbonus);
+            counterDamage = (float)Math.Round(counterDamage, MidpointRounding.AwayFromZero);
+            atkHP = (int)(atkHP + (Math.Floor(counterDamage / 10f)) * 10);
+
+            return new CalculatedDamage(atkHP, defHP, damage, counterDamage);
+        }
         #endregion
 
         #region private field
@@ -224,10 +297,11 @@ namespace Wartorn.GameData
         #region property
         public AnimatedEntity Animation { get { return animation; } }
         public UnitType UnitType { get { return unitType; } }
-        public int HitPoint { get { return hitPoint; } }
+        public int HitPoint { get { return hitPoint; } set { hitPoint = value; } }
         public int ActionPoint { get { return actionpoint; } }
         public int Fuel { get { return fuel; } set { fuel = value; } }
         public int Ammo { get { return ammo; } set { ammo = value; } }
+        public int CapturePoint { get; set; }
         public Owner Owner { get; set; }
         public readonly Guid guid;
 
@@ -244,25 +318,35 @@ namespace Wartorn.GameData
             guid = Guid.NewGuid();
         }
 
-        public int GetBaseDammage(UnitType other)
-        {
-            return  _DammageTable[other][unitType];
-        }
-
         public Range GetAttackkRange()
         {
             return _AttackRange[unitType];
+        }
+
+        public int GetHitpointRoundTo10()
+        {
+            return (int)(Math.Ceiling(HitPoint / 10f));
         }
 
         public void UpdateActionPoint(Command cmd)
         {
             switch (cmd)
             {
+                case Command.None:
+                    actionpoint = _ActionPoint[unitType];
+                    break;
+
+                case Command.Wait:
+                    actionpoint = 0;
+                    break;
                 case Command.Move:
                     actionpoint -= 1;
                     break;
                 case Command.Attack:
-                    actionpoint -= 2;
+                    actionpoint = 0;
+                    break;
+                case Command.Capture:
+                    actionpoint = 0;
                     break;
                 default:
                     break;

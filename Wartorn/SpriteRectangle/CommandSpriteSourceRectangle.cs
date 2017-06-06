@@ -76,8 +76,34 @@ namespace Wartorn.SpriteRectangle
 
         public static Rectangle GetSprite(Command t)
         {
-            SpriteSheetCommand temp = (SpriteSheetCommand)((int)t - 1);
-            return CommandSprite[temp];
+            SpriteSheetCommand result = SpriteSheetCommand.Wait;
+            switch (t)
+            {
+                case Command.Attack:
+                    result = SpriteSheetCommand.Fire;
+                    break;
+                case Command.Capture:
+                    result = SpriteSheetCommand.Capt;
+                    break;
+                case Command.Load:
+                    result = SpriteSheetCommand.Load;
+                    break;
+                case Command.Drop:
+                    result = SpriteSheetCommand.Drop;
+                    break;
+                case Command.Rise:
+                    result = SpriteSheetCommand.Rise;
+                    break;
+                case Command.Dive:
+                    result = SpriteSheetCommand.Dive;
+                    break;
+                case Command.Supply:
+                    result = SpriteSheetCommand.Supply;
+                    break;
+                default:
+                    break;
+            }
+            return CommandSprite[result];
         }
 
         public static Rectangle GetSprite(SpriteSheetCommandSlot t)
@@ -128,7 +154,39 @@ namespace Wartorn.SpriteRectangle
 
         public static Command GetCommand(Rectangle r)
         {
-            return (Command)(r.Y / 16 + 1);
+            Command result = Command.Wait;
+
+            switch (GetSpriteSheetCommand(r))
+            {
+                case SpriteSheetCommand.Wait:
+                    result = Command.Wait;
+                    break;
+                case SpriteSheetCommand.Fire:
+                    result = Command.Attack;
+                    break;
+                case SpriteSheetCommand.Capt:
+                    result = Command.Capture;
+                    break;
+                case SpriteSheetCommand.Load:
+                    result = Command.Load;
+                    break;
+                case SpriteSheetCommand.Drop:
+                    result = Command.Drop;
+                    break;
+                case SpriteSheetCommand.Rise:
+                    result = Command.Rise;
+                    break;
+                case SpriteSheetCommand.Dive:
+                    result = Command.Dive;
+                    break;
+                case SpriteSheetCommand.Supply:
+                    result = Command.Supply;
+                    break;
+                default:
+                    break;
+            }
+
+            return result;
         }
 
         public static SpriteSheetCommand GetSpriteSheetCommand(Rectangle r)

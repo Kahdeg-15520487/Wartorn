@@ -58,7 +58,7 @@ namespace StatsBlancer
             {
                 foreach (var kvp2 in kvp.Value)
                 {
-                    dataGridView_unitdmg[(int)kvp.Key - 1, (int)kvp2.Key - 1].Value = kvp2.Value;
+                    dataGridView_unitdmg[(int)kvp2.Key - 1, (int)kvp.Key - 1].Value = kvp2.Value;
                 }
             }
 
@@ -208,7 +208,7 @@ namespace StatsBlancer
                 return;
             }
 
-            if (!int.TryParse(dataGridView_unitdmg[e.ColumnIndex,e.RowIndex].Value.ToString(),out dmg))
+            if (!int.TryParse(dataGridView_unitdmg[e.RowIndex,e.ColumnIndex].Value.ToString(),out dmg))
             {
                 return;
             }

@@ -16,8 +16,41 @@ namespace Wartorn.GameData
 {
     public class Map : IEnumerable
     {
-        #region guid stuff
-        List<Point> mapcellthathaveunit;
+        #region list of mapcell that have unit
+        public List<Point> mapcellthathaveunit { get; private set; }
+
+        /// <summary>
+        /// add the unit to the map and register it.
+        /// </summary>
+        /// <param name="p">the position of the unit</param>
+        /// <param name="unit">the unit to add</param>
+        public void RegisterUnit(Point p,Unit unit)
+        {
+            if (this[p].unit == null && !mapcellthathaveunit.Contains(p))
+            {
+                this[p].unit = unit;
+                mapcellthathaveunit.Add(p);
+            }
+        }
+
+        /// <summary>
+        /// remove the unit from the map.
+        /// </summary>
+        /// <param name="p">the position of the unit</param>
+        public void RemoveUnit(Point p)
+        {
+            if (this[p].unit != null && mapcellthathaveunit.Contains(p))
+            {
+                this[p].unit = null;
+                mapcellthathaveunit.Remove(p);
+            }
+        }
+
+        /// <summary>
+        /// find a unit's position in the map with it id
+        /// </summary>
+        /// <param name="guid"></param>
+        /// <returns></returns>
         public Point FindUnit(Guid guid)
         {
             Point result = Point.Zero;
@@ -29,6 +62,21 @@ namespace Wartorn.GameData
                 }
             }
             return result;
+        }
+
+        /// <summary>
+        /// move an unit from origin to destination
+        /// </summary>
+        /// <param name="origin"></param>
+        /// <param name="destination"></param>
+        public void TeleportUnit(Point origin,Point destination)
+        {
+            if (this[origin].unit!=null && this[destination].unit==null)
+            {
+                var temp = this[origin].unit;
+                RegisterUnit(destination, temp);
+                RemoveUnit(origin);
+            }
         }
         #endregion
 
@@ -70,6 +118,7 @@ namespace Wartorn.GameData
             set
             {
                 map[x, y] = value;
+                isProcessed = false;
             }
         }
         public MapCell this[Point p]
@@ -88,6 +137,7 @@ namespace Wartorn.GameData
             set
             {
                 map[p.X, p.Y] = value;
+                isProcessed = false;
             }
         }
 
