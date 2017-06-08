@@ -11,12 +11,12 @@ namespace Utility_Project
     {
         public static void Log(Exception e)
         {
-            File.WriteAllText("crashlog.txt", DateTime.Now.ToString(@"dd\/MM\/yyyy HH:mm") + Environment.NewLine + e.Message + Environment.NewLine + e.StackTrace + Environment.NewLine + e.TargetSite);
+            File.AppendAllText("log.txt", "==========" + Environment.NewLine + DateTime.Now.ToString(@"dd\/MM\/yyyy HH:mm") + Environment.NewLine + e.Message + Environment.NewLine + e.StackTrace + Environment.NewLine + e.TargetSite + Environment.NewLine);
         }
 
         public static void Log(string msg)
         {
-            File.WriteAllText("crashlog.txt", DateTime.Now.ToString(@"dd\/MM\/yyyy HH:mm") + Environment.NewLine + msg);
+            File.AppendAllText("log.txt", "==========" + Environment.NewLine + DateTime.Now.ToString(@"dd\/MM\/yyyy HH:mm") + Environment.NewLine + msg + Environment.NewLine);
         }
     }
 }

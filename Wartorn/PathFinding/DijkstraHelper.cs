@@ -60,9 +60,13 @@ namespace Wartorn.PathFinding
                     //}
                     #endregion
 
-                    if (map[point].unit != null
+                    if (//check if there is a unit
+                        map[point].unit != null
+                        //check if that unit is an airborne unit
                         && map[point].unit.UnitType.GetMovementType() != MovementType.Air
-                        && map[point].unit.Owner != unit.Owner)
+                        //check if that unit is enemy
+                        && map[point].unit.Owner != unit.Owner
+                        )
                     {
                         cost = int.MaxValue;
                     }

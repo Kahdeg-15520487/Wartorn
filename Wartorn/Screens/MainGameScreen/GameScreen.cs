@@ -47,6 +47,7 @@ namespace Wartorn.Screens.MainGameScreen
         #region private field
         //information of this game session
         Session session;
+        Map map;
 
         #region ui canvas
         Canvas canvas;
@@ -139,15 +140,16 @@ namespace Wartorn.Screens.MainGameScreen
         public void InitSession(SessionData sessiondata)
         {
             session = new Session(sessiondata);
-            minimap = minimapgen.GenerateMapTexture(session.map);
+            map = session.map;
+            minimap = minimapgen.GenerateMapTexture(map);
             playerInfos = sessiondata.playerInfos;
             ownedUnit = new List<Guid>();
-            mapcellVisibility = new bool[session.map.Width, session.map.Height];
+            mapcellVisibility = new bool[map.Width, map.Height];
 
             //init visibility table
-            for (int x = 0; x < session.map.Width; x++)
+            for (int x = 0; x < map.Width; x++)
             {
-                for (int y = 0; y < session.map.Height; y++)
+                for (int y = 0; y < map.Height; y++)
                 {
                     mapcellVisibility[x, y] = false;
                 }
@@ -171,7 +173,7 @@ namespace Wartorn.Screens.MainGameScreen
 
             InitUI();
 
-            foreach (MapCell mapcell in session.map)
+            foreach (MapCell mapcell in map)
             {
                 if (mapcell.unit!=null && mapcell.unit.Owner == playerInfos[localPlayer].owner)
                 {
@@ -462,7 +464,7 @@ namespace Wartorn.Screens.MainGameScreen
 
         public override void Shutdown()
         {
-            session.map = null;
+            map = null;
             minimap?.Dispose();
             minimap = null;
         }
@@ -495,12 +497,12 @@ namespace Wartorn.Screens.MainGameScreen
             {
                 MoveCamera(keyboardInputState, mouseInputState);
             }
-            selectedMapCell = Utility.HelperFunction.TranslateMousePosToMapCellPos(mouseInputState.Position, camera, session.map.Width, session.map.Height);
+            selectedMapCell = Utility.HelperFunction.TranslateMousePosToMapCellPos(mouseInputState.Position, camera, map.Width, map.Height);
 
             //update minimap
-            if (!session.map.IsProcessed)
+            if (!map.IsProcessed)
             {
-                minimap = minimapgen.GenerateMapTexture(session.map);
+                minimap = minimapgen.GenerateMapTexture(map);
             }
 
             //update game logic
@@ -517,7 +519,7 @@ namespace Wartorn.Screens.MainGameScreen
                             CONTENT_MANAGER.yes1.Play();
                             selectedUnit = selectedMapCell;
                             origin = selectedMapCell;
-                            MapCell temp = session.map[selectedUnit];
+                            MapCell temp = map[selectedUnit];
                             CalculateMovementRange(temp.unit, selectedUnit);
                             movementPath = null;
 
@@ -559,7 +561,7 @@ namespace Wartorn.Screens.MainGameScreen
                     if (!isMovePathCalculated)
                     {
                         //calculate move path
-                        if (movementRange.Contains(selectedMapCell) && selectedMapCell != lastSelectedMapCell)
+                        if (movementRange.Contains(selectedMapCell) && selectedMapCell != lastSelectedMapCell && map[selectedMapCell].unit == null)
                         {
                             //update movement path
                             movementPath = DijkstraHelper.FindPath(dijkstraGraph, selectedMapCell);
@@ -568,7 +570,7 @@ namespace Wartorn.Screens.MainGameScreen
                     }
 
                     //check if a tile is selected is in the movementRange
-                    if (HelperFunction.IsLeftMousePressed() && movementRange.Contains(selectedMapCell))
+                    if (HelperFunction.IsLeftMousePressed() && movementRange.Contains(selectedMapCell) && map[selectedMapCell].unit == null)
                     {
                         StartMovingUnitAnimation();
                         currentGameState = GameState.UnitMove;
@@ -603,10 +605,10 @@ namespace Wartorn.Screens.MainGameScreen
                     }
 
                     //check if unit has arrived and not already teleported
-                    if (movingAnim.IsArrived && session.map[origin].unit!=null)
+                    if (movingAnim.IsArrived && map[origin].unit!=null)
                     {
                         //teleport stuff
-                        session.map.TeleportUnit(origin, destination);
+                        map.TeleportUnit(origin, destination);
 
                         //save selectedUnit
                         lastSelectedUnit = selectedUnit;
@@ -615,9 +617,9 @@ namespace Wartorn.Screens.MainGameScreen
 
                         //check if the unit's action point is above zero
                         //TODO make sure that the unit can only move once
-                        if (session.map[selectedUnit].unit.ActionPoint > 0)
+                        if (map[selectedUnit].unit.ActionPoint > 0)
                         {
-                            session.map[selectedUnit].unit.Animation.ContinueAnimation();
+                            map[selectedUnit].unit.Animation.ContinueAnimation();
                             //show command menu
                             ShowCommandMenu();
                             //goto unitcommand
@@ -626,8 +628,8 @@ namespace Wartorn.Screens.MainGameScreen
                         else
                         {
                             //all done for this unit, no more select, no more command, just lay there till next turn
-                            session.map[selectedUnit].unit.Animation.PlayAnimation(AnimationName.done.ToString());
-                            session.map[selectedUnit].unit.Animation.ContinueAnimation();
+                            map[selectedUnit].unit.Animation.PlayAnimation(AnimationName.done.ToString());
+                            map[selectedUnit].unit.Animation.ContinueAnimation();
 
                             //clear selectedUnit's information
 
@@ -663,7 +665,7 @@ namespace Wartorn.Screens.MainGameScreen
                         break;
                     }
 
-                    Unit tempunit = session.map[selectedUnit].unit;
+                    Unit tempunit = map[selectedUnit].unit;
                     switch (selectedCmd)
                     {
                         case Command.Wait:
@@ -677,21 +679,21 @@ namespace Wartorn.Screens.MainGameScreen
 
                             if (HelperFunction.IsLeftMousePressed() 
                              && attackRange.Contains(selectedMapCell) 
-                             && session.map[selectedMapCell].unit!=null
-                             && session.map[selectedMapCell].unit.Owner!=playerInfos[localPlayer].owner)
+                             && map[selectedMapCell].unit!=null
+                             && map[selectedMapCell].unit.Owner!=playerInfos[localPlayer].owner)
                             {
                                 tempunit.UpdateActionPoint(Command.Attack);
 
                                 //do attack stuff
-                                Unit otherunit = session.map[selectedMapCell].unit;
-                                var result = Unit.GetCalculatedDamage(session.map[selectedUnit], session.map[selectedMapCell]);
+                                Unit otherunit = map[selectedMapCell].unit;
+                                var result = Unit.GetCalculatedDamage(map[selectedUnit], map[selectedMapCell]);
                                 CONTENT_MANAGER.ShowMessageBox(string.Format("{0} attack {1}: {2}", tempunit.UnitType, otherunit.UnitType, result));
                                 tempunit.HitPoint = result.attackerHP;
                                 otherunit.HitPoint = result.defenderHP;
 
                                 if (tempunit.HitPoint==0)
                                 {
-                                    session.map.RemoveUnit(selectedUnit);
+                                    map.RemoveUnit(selectedUnit);
                                 }
                                 //end command
                                 goto finalise_command_execution;
@@ -701,11 +703,11 @@ namespace Wartorn.Screens.MainGameScreen
 
                         case Command.Capture:
 
-                            if (isBuilding(session.map[selectedUnit].terrain)
-                             && session.map[selectedUnit].owner != playerInfos[localPlayer].owner
+                            if (isBuilding(map[selectedUnit].terrain)
+                             && map[selectedUnit].owner != playerInfos[localPlayer].owner
                              && tempunit.CapturePoint == 0)
                             {
-                                session.map[selectedUnit].unit.CapturePoint = 20;
+                                map[selectedUnit].unit.CapturePoint = 20;
                             }
 
                             tempunit.CapturePoint -= tempunit.HitPoint;
@@ -713,8 +715,8 @@ namespace Wartorn.Screens.MainGameScreen
 
                             if (tempunit.CapturePoint<=0)
                             {
-                                session.map[selectedUnit].owner = playerInfos[localPlayer].owner;
-                                session.map.IsProcessed = false;
+                                map[selectedUnit].owner = playerInfos[localPlayer].owner;
+                                map.IsProcessed = false;
                                 tempunit.CapturePoint = 0;
                             }
 
@@ -737,10 +739,10 @@ namespace Wartorn.Screens.MainGameScreen
 
                         case Command.Move:
                             //substract actionpoint
-                            session.map[selectedUnit].unit.UpdateActionPoint(Command.Move);
+                            map[selectedUnit].unit.UpdateActionPoint(Command.Move);
 
                             //substract fuel
-                            session.map[selectedUnit].unit.Fuel -= movementPath != null ? movementPath.Count : 0;
+                            map[selectedUnit].unit.Fuel -= movementPath != null ? movementPath.Count : 0;
                             break;
 
                         default:
@@ -830,7 +832,7 @@ namespace Wartorn.Screens.MainGameScreen
         private void ExecuteCommand(Command cmd)
         {
             //CONTENT_MANAGER.ShowMessageBox(cmd.ToString());
-            Unit tempunit = session.map[selectedUnit].unit;
+            Unit tempunit = map[selectedUnit].unit;
 
             //substract action point
             
@@ -885,11 +887,11 @@ namespace Wartorn.Screens.MainGameScreen
             //todo làm tầm nhìn
             foreach (Point p in attackRange)
             {
-                if (session.map[p].unit!=null 
+                if (map[p].unit!=null 
                     //the below check is only for debug
-                 && session.map[p].unit.Owner != session.map[selectedUnit].unit.Owner) 
+                 && map[p].unit.Owner != map[selectedUnit].unit.Owner) 
                     //the below check is used in final game
-               //&& !ownedUnit.Contains(session.map[p].unit.guid))
+               //&& !ownedUnit.Contains(map[p].unit.guid))
                 {
                     temp += (int)Command.Attack;
                     break;
@@ -898,14 +900,18 @@ namespace Wartorn.Screens.MainGameScreen
 
             //có load nếu đi vô transport unit nè
             //todo instead of teleport do something else to move unit
+            //or maybe change it to target select
+            //like goto the mapcell that is next to the transporter
+            //then select command load and then select said transporter
+            //then you are loaded in said transporter
 
             //có drop nếu unit đang chở unit khác nè
 
             //có capture nếu là lính và đang đứng trên building khác màu nè
-            if ((session.map[selectedUnit].unit.UnitType == UnitType.Soldier
-             || session.map[selectedUnit].unit.UnitType == UnitType.Mech)
-             && isBuilding(session.map[selectedUnit].terrain)
-             && session.map[selectedUnit].owner!= playerInfos[localPlayer].owner)
+            if ((map[selectedUnit].unit.UnitType == UnitType.Soldier
+             || map[selectedUnit].unit.UnitType == UnitType.Mech)
+             && isBuilding(map[selectedUnit].terrain)
+             && map[selectedUnit].owner!= playerInfos[localPlayer].owner)
             {
                 temp += (int)Command.Capture;
             }
@@ -920,7 +926,7 @@ namespace Wartorn.Screens.MainGameScreen
         {
             canvas_action_Unit.IsVisible = true;
 
-            CalculateAttackRange(session.map[selectedUnit].unit, selectedUnit);
+            CalculateAttackRange(map[selectedUnit].unit, selectedUnit);
             int comds = GetCommands();
 
             var cmds = comds.GetContainCommand();
@@ -976,7 +982,7 @@ namespace Wartorn.Screens.MainGameScreen
 
         private bool SelectUnit()
         {
-            MapCell temp = session.map[selectedMapCell];
+            MapCell temp = map[selectedMapCell];
             return
              (
                 //check if there is a unit to select
@@ -993,7 +999,7 @@ namespace Wartorn.Screens.MainGameScreen
         private void StartMovingUnitAnimation()
         {
             //destination confirmed, moving to destination
-            Unit tempunit = session.map[selectedUnit].unit;
+            Unit tempunit = map[selectedUnit].unit;
 
             //play sfx
             CONTENT_MANAGER.moving_out.Play();
@@ -1002,7 +1008,7 @@ namespace Wartorn.Screens.MainGameScreen
             destination = selectedMapCell;
 
             //create a new animation object
-            movingAnim = new MovingUnitAnimation(session.map[selectedUnit].unit, movementPath, new Point(selectedUnit.X * Constants.MapCellWidth, selectedUnit.Y * Constants.MapCellHeight));
+            movingAnim = new MovingUnitAnimation(map[selectedUnit].unit, movementPath, new Point(selectedUnit.X * Constants.MapCellWidth, selectedUnit.Y * Constants.MapCellHeight));
 
             //ngung vẽ path
             isMovePathCalculated = false;
@@ -1013,9 +1019,9 @@ namespace Wartorn.Screens.MainGameScreen
 
         private void RevertMovingUnitAnimation()
         {
-            if (session.map[origin].unit == null)
+            if (map[origin].unit == null)
             {
-                session.map.TeleportUnit(selectedUnit, origin);
+                map.TeleportUnit(selectedUnit, origin);
                 selectedUnit = origin;
             }
         }
@@ -1038,7 +1044,7 @@ namespace Wartorn.Screens.MainGameScreen
         
         private void CalculateMovementRange(Unit unit,Point position)
         {
-            dijkstraGraph = DijkstraHelper.CalculateGraph(session.map, unit, position);
+            dijkstraGraph = DijkstraHelper.CalculateGraph(map, unit, position);
             movementRange = DijkstraHelper.FindRange(dijkstraGraph);
         }
 
@@ -1047,10 +1053,11 @@ namespace Wartorn.Screens.MainGameScreen
             Range atkrange = unit.GetAttackkRange();
             attackRange = new List<Point>();
 
-            int minx = (position.X - atkrange.Max);//.Clamp(position.X, 0);
-            int maxx = (position.X + atkrange.Max);//.Clamp(session.map.Width, position.X);
-            int miny = (position.Y - atkrange.Max);//.Clamp(position.Y, 0);
-            int maxy = (position.Y + atkrange.Max);//.Clamp(session.map.Height, position.Y);
+            //use to clamp the attack range inside the map
+            int minx = (position.X - atkrange.Max).Clamp(position.X, 0);
+            int maxx = (position.X + atkrange.Max).Clamp(map.Width, position.X);
+            int miny = (position.Y - atkrange.Max).Clamp(position.Y, 0);
+            int maxy = (position.Y + atkrange.Max).Clamp(map.Height, position.Y);
 
             for (int x = minx; x <= maxx; x++)
             {
@@ -1077,10 +1084,10 @@ namespace Wartorn.Screens.MainGameScreen
 
         private void ChangeTurn()
         {
-            foreach (Point p in session.map.mapcellthathaveunit)
+            foreach (Point p in map.mapcellthathaveunit)
             {
-                session.map[p].unit.UpdateActionPoint(Command.None);
-                session.map[p].unit.Animation.PlayAnimation(AnimationName.idle.ToString());
+                map[p].unit.UpdateActionPoint(Command.None);
+                map[p].unit.Animation.PlayAnimation(AnimationName.idle.ToString());
             }
 
             if (currentPlayer == 1)
@@ -1130,7 +1137,7 @@ namespace Wartorn.Screens.MainGameScreen
 
         private bool SelectBuilding()
         {
-            MapCell temp = session.map[selectedMapCell];
+            MapCell temp = map[selectedMapCell];
             return (
                 //check if the currently selected have 
                 //a building that can produce unit
@@ -1144,7 +1151,7 @@ namespace Wartorn.Screens.MainGameScreen
 
         private void ShowBuildingMenu()
         {
-            MapCell temp = session.map[selectedBuilding];
+            MapCell temp = map[selectedBuilding];
 
             switch (temp.terrain)
             {
@@ -1182,13 +1189,13 @@ namespace Wartorn.Screens.MainGameScreen
 
         private bool SpawnUnit(UnitType unittype,PlayerInfo owner,Point location)
         {
-            MapCell spawnlocation = session.map[location];
+            MapCell spawnlocation = map[location];
             if (spawnlocation != null
               &&spawnlocation.unit == null)
             {
                 Unit temp = UnitCreationHelper.Create(unittype, owner.owner);
                 ownedUnit.Add(temp.guid);
-                session.map.RegisterUnit(location, temp);
+                map.RegisterUnit(location, temp);
                 return true;
             }
             return false;
@@ -1241,13 +1248,13 @@ namespace Wartorn.Screens.MainGameScreen
                 case GameState.None:
                 case GameState.BuildingSelected:
                 case GameState.BuildingBuildUnit:
-                     tempmapcell = session.map[selectedMapCell];
+                     tempmapcell = map[selectedMapCell];
                     break;
 
                 case GameState.UnitSelected:
                 case GameState.UnitMove:
                 case GameState.UnitCommand:
-                    tempmapcell = session.map[selectedUnit];
+                    tempmapcell = map[selectedUnit];
                     break;
 
                 default:
@@ -1305,15 +1312,15 @@ namespace Wartorn.Screens.MainGameScreen
             }
 
             //update the terrantype of the mapcell which is hovered on
-            canvas_generalInfo.GetElementAs<PictureBox>("picbox_terrainType").SourceRectangle = BackgroundTerrainSpriteSourceRectangle.GetSpriteRectangle(tempmapcell.terrain, session.map.weather, session.map.theme, tempmapcell.unit != null ? tempmapcell.unit.UnitType : UnitType.None, tempmapcell.owner);
+            canvas_generalInfo.GetElementAs<PictureBox>("picbox_terrainType").SourceRectangle = BackgroundTerrainSpriteSourceRectangle.GetSpriteRectangle(tempmapcell.terrain, map.weather, map.theme, tempmapcell.unit != null ? tempmapcell.unit.UnitType : UnitType.None, tempmapcell.owner);
             canvas_generalInfo.GetElementAs<Label>("label_terrainType").Text = tempmapcell.terrain.ToString();
         }
 
         private void UpdateAnimation(GameTime gameTime)
         {
-            foreach (Point p in session.map.mapcellthathaveunit)
+            foreach (Point p in map.mapcellthathaveunit)
             {
-                session.map[p].unit.Animation.Update(gameTime);
+                map[p].unit.Animation.Update(gameTime);
             }
         }
 
@@ -1372,7 +1379,7 @@ namespace Wartorn.Screens.MainGameScreen
             spriteBatch.Begin(SpriteSortMode.FrontToBack, transformMatrix: camera.TransformMatrix);
 
             //render the map
-            MapRenderer.Render(session.map, spriteBatch, gameTime);
+            MapRenderer.Render(map, spriteBatch, gameTime);
 
             //draw moving animation
             if (currentGameState == GameState.UnitMove)

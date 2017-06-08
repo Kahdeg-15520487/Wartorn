@@ -54,6 +54,7 @@
       <DependentUpon>InputDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="CustomJsonConverter.cs" />
+    <Compile Include="GameData\GameStatePacket.cs" />
     <Compile Include="InputState.cs" />
     <Compile Include="PathFinding\Dijkstra.cs" />
     <Compile Include="PathFinding\DijkstraHelper.cs" />
@@ -192,6 +193,12 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Utility_Project\Utility_Project.csproj">
+      <Project>{DB74E4D4-2EB9-4A34-9FCB-D12501AB5122}</Project>
+      <Name>Utility_Project</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />
