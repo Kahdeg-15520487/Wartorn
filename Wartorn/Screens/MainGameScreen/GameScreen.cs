@@ -256,11 +256,11 @@ namespace Wartorn.Screens.MainGameScreen
             PictureBox picbox_generalInfoBorder = new PictureBox(CONTENT_MANAGER.generalInfo_border, new Point(175, 364), Rectangle.Empty, Vector2.Zero,depth: LayerDepth.GuiBackground);
 
             PictureBox picbox_terrainType = new PictureBox(CONTENT_MANAGER.background_terrain, new Point(183, 385), Rectangle.Empty, Vector2.Zero, depth: LayerDepth.GuiLower - 0.05f);
-            Label label_terrainType = new Label(" ", new Point(186, 370), new Vector2(50, 20), CONTENT_MANAGER.arcadefont);
+            Label label_terrainType = new Label(" ", new Point(186, 370), new Vector2(50, 20), CONTENT_MANAGER.hackfont);
             label_terrainType.Origin = new Vector2(-3, 2);
             label_terrainType.Scale = 0.75f;
             PictureBox picbox_unitType = new PictureBox(CONTENT_MANAGER.background_unit, new Point(183, 385), Rectangle.Empty, Vector2.Zero, depth: LayerDepth.GuiLower);
-            Label label_unitType = new Label(" ", new Point(183, 464), new Vector2(80, 20), CONTENT_MANAGER.arcadefont);
+            Label label_unitType = new Label(" ", new Point(183, 464), new Vector2(80, 20), CONTENT_MANAGER.hackfont);
             label_unitType.Origin = new Vector2(-3, 2);
             label_unitType.Scale = 0.75f;
 
@@ -269,8 +269,8 @@ namespace Wartorn.Screens.MainGameScreen
             label_generalInfoCapturePoint.Origin = new Vector2(-3, 2);
 
             PictureBox picbox_generalInfoDefenseStar = new PictureBox(CONTENT_MANAGER.generalInfo_defenseStar, new Point(265, 371), Rectangle.Empty, Vector2.Zero, depth: LayerDepth.GuiLower);
-            
-            PictureBox picbox_generalInfoUnitInfo = new PictureBox(CONTENT_MANAGER.generalInfo_unitInfo, new Point(181, 453), Rectangle.Empty, Vector2.Zero, depth: LayerDepth.GuiLower);
+
+            PictureBox picbox_generalInfoUnitInfo = new PictureBox(CONTENT_MANAGER.generalInfo_unitInfo, new Point(181, 453), Rectangle.Empty, Vector2.Zero, depth: LayerDepth.GuiLower + 0.05f);
             PictureBox picbox_generalInfoLoadedUnit = new PictureBox(CONTENT_MANAGER.generalInfo_loadedUnit, new Point(181, 435), Rectangle.Empty, Vector2.Zero, depth: LayerDepth.GuiLower);
 
             PictureBox picbox_generalInfoHPbar = new PictureBox(CONTENT_MANAGER.generalInfo_HPbar, new Point(198, 458), null, Vector2.Zero, depth: LayerDepth.GuiUpper);
@@ -497,7 +497,7 @@ namespace Wartorn.Screens.MainGameScreen
             {
                 MoveCamera(keyboardInputState, mouseInputState);
             }
-            selectedMapCell = Utility.HelperFunction.TranslateMousePosToMapCellPos(mouseInputState.Position, camera, map.Width, map.Height);
+            selectedMapCell = HelperFunction.TranslateMousePosToMapCellPos(mouseInputState.Position, camera, map.Width, map.Height);
 
             //update minimap
             if (!map.IsProcessed)
@@ -617,7 +617,7 @@ namespace Wartorn.Screens.MainGameScreen
 
                         //check if the unit's action point is above zero
                         //TODO make sure that the unit can only move once
-                        if (map[selectedUnit].unit.ActionPoint > 0)
+                        if (map[selectedUnit].unit.PeakUpdateActionPoint(Command.Move) > 0)
                         {
                             map[selectedUnit].unit.Animation.ContinueAnimation();
                             //show command menu
@@ -627,15 +627,11 @@ namespace Wartorn.Screens.MainGameScreen
                         }
                         else
                         {
-                            //all done for this unit, no more select, no more command, just lay there till next turn
-                            map[selectedUnit].unit.Animation.PlayAnimation(AnimationName.done.ToString());
-                            map[selectedUnit].unit.Animation.ContinueAnimation();
+                            //Execute Command.Wait for this unit
+                            selectedCmd = Command.Wait;
 
-                            //clear selectedUnit's information
-
-
-                            //goto None
-                            currentGameState = GameState.None;
+                            //goto Command
+                            currentGameState = GameState.UnitCommand;
                         }
                         break;
                     }
@@ -674,6 +670,7 @@ namespace Wartorn.Screens.MainGameScreen
 
                         #region Command.Attack
                         case Command.Attack:
+                            //change cursor to attack cursor
                             cursor = CONTENT_MANAGER.attackCursor;
                             cursorOffset = attackCursorOffset;
 
@@ -682,6 +679,10 @@ namespace Wartorn.Screens.MainGameScreen
                              && map[selectedMapCell].unit!=null
                              && map[selectedMapCell].unit.Owner!=playerInfos[localPlayer].owner)
                             {
+                                //change cursor back
+                                cursor = CONTENT_MANAGER.selectCursor;
+                                cursorOffset = selectCursorOffset;
+
                                 tempunit.UpdateActionPoint(Command.Attack);
 
                                 //do attack stuff
@@ -758,10 +759,16 @@ namespace Wartorn.Screens.MainGameScreen
                         }
                         selectedCmd = Command.None;
 
+                        //update fuel
+                        int fuel = movementPath.Count;
+
+                        tempunit.Fuel = (tempunit.Fuel - fuel).Clamp(Unit._Gas[tempunit.UnitType], 0);
+
                         cursor = CONTENT_MANAGER.selectCursor;
                         cursorOffset = selectCursorOffset;
 
                         //hide command menu
+                        HideCommandMenu();
                         canvas_action_Unit.IsVisible = false;
 
                         //goto none
@@ -889,23 +896,22 @@ namespace Wartorn.Screens.MainGameScreen
             {
                 if (map[p].unit!=null 
                     //the below check is only for debug
-                 && map[p].unit.Owner != map[selectedUnit].unit.Owner) 
+                 //&& map[p].unit.Owner != map[selectedUnit].unit.Owner) 
                     //the below check is used in final game
-               //&& !ownedUnit.Contains(map[p].unit.guid))
+               && !ownedUnit.Contains(map[p].unit.guid))
                 {
                     temp += (int)Command.Attack;
                     break;
                 }
             }
 
-            //có load nếu đi vô transport unit nè
-            //todo instead of teleport do something else to move unit
-            //or maybe change it to target select
+            //có load nếu bên cạnh transport unit nè
+            //target select the transport unit
             //like goto the mapcell that is next to the transporter
             //then select command load and then select said transporter
             //then you are loaded in said transporter
 
-            //có drop nếu unit đang chở unit khác nè
+            //có drop unit đang chở unit khác và bên cạnh là ô đi được cho unit đó.
 
             //có capture nếu là lính và đang đứng trên building khác màu nè
             if ((map[selectedUnit].unit.UnitType == UnitType.Soldier
@@ -938,28 +944,36 @@ namespace Wartorn.Screens.MainGameScreen
             }
             //CONTENT_MANAGER.ShowMessageBox(ttemp);
 
-            Rectangle temp = CommandSpriteSourceRectangle.GetSprite(cmds.Count, playerInfos[localPlayer].owner);
+            Rectangle cmdslot = CommandSpriteSourceRectangle.GetSprite(cmds.Count, playerInfos[localPlayer].owner);
 
-            canvas_action_Unit.GetElementAs<PictureBox>("commandslot").SourceRectangle = temp;
-            canvas_action_Unit.GetElementAs<PictureBox>("commandslot").Position = new Point(selectedUnit.X * Constants.MapCellWidth + 50, selectedUnit.Y * Constants.MapCellHeight);
+            canvas_action_Unit.GetElementAs<PictureBox>("commandslot").SourceRectangle = cmdslot;
+            Point cmdslotPosition = new Point(selectedUnit.X * Constants.MapCellWidth + 50, selectedUnit.Y * Constants.MapCellHeight);
+            canvas_action_Unit.GetElementAs<PictureBox>("commandslot").Position = camera.TranslateFromWorldToScreen(cmdslotPosition.ToVector2()).ToPoint();
 
             Button firstslot = canvas_action_Unit.GetElementAs<Button>("firstslot");
             Button secondslot = canvas_action_Unit.GetElementAs<Button>("secondslot");
             Button thirdslot = canvas_action_Unit.GetElementAs<Button>("thirdslot");
 
-            firstslot.Position = new Point(selectedUnit.X * Constants.MapCellWidth + 50 + 6, selectedUnit.Y * Constants.MapCellHeight + 8);
+            Point slotPosition = new Point(selectedUnit.X * Constants.MapCellWidth + 50 + 6, selectedUnit.Y * Constants.MapCellHeight + 8);
+            slotPosition = camera.TranslateFromWorldToScreen(slotPosition.ToVector2()).ToPoint();
+
+            firstslot.Position = slotPosition;
             firstslot.spriteSourceRectangle = CommandSpriteSourceRectangle.GetSprite(cmds[0]);
             firstslot.rect = new Rectangle(firstslot.Position, firstslot.spriteSourceRectangle.Size);
 
             if (cmds.Count>1)
             {
-                secondslot.Position = new Point(selectedUnit.X * Constants.MapCellWidth + 50 + 6, selectedUnit.Y * Constants.MapCellHeight + 16 + 8);
+                slotPosition = new Point(selectedUnit.X * Constants.MapCellWidth + 50 + 6, selectedUnit.Y * Constants.MapCellHeight + 16 + 8);
+                slotPosition = camera.TranslateFromWorldToScreen(slotPosition.ToVector2()).ToPoint();
+                secondslot.Position = slotPosition;
                 secondslot.spriteSourceRectangle = CommandSpriteSourceRectangle.GetSprite(cmds[1]);
                 secondslot.rect = new Rectangle(secondslot.Position, secondslot.spriteSourceRectangle.Size);
             }
             if (cmds.Count > 2)
             {
-                thirdslot.Position = new Point(selectedUnit.X * Constants.MapCellWidth + 50 + 6, selectedUnit.Y * Constants.MapCellHeight + 32 + 8);
+                slotPosition = new Point(selectedUnit.X * Constants.MapCellWidth + 50 + 6, selectedUnit.Y * Constants.MapCellHeight + 32 + 8);
+                slotPosition = camera.TranslateFromWorldToScreen(slotPosition.ToVector2()).ToPoint();
+                thirdslot.Position = slotPosition;
                 thirdslot.spriteSourceRectangle = CommandSpriteSourceRectangle.GetSprite(cmds[2]);
                 thirdslot.rect = new Rectangle(thirdslot.Position, thirdslot.spriteSourceRectangle.Size);
             }
@@ -1055,9 +1069,9 @@ namespace Wartorn.Screens.MainGameScreen
 
             //use to clamp the attack range inside the map
             int minx = (position.X - atkrange.Max).Clamp(position.X, 0);
-            int maxx = (position.X + atkrange.Max).Clamp(map.Width, position.X);
+            int maxx = (position.X + atkrange.Max).Clamp(map.Width-1, position.X);
             int miny = (position.Y - atkrange.Max).Clamp(position.Y, 0);
-            int maxy = (position.Y + atkrange.Max).Clamp(map.Height, position.Y);
+            int maxy = (position.Y + atkrange.Max).Clamp(map.Height-1, position.Y);
 
             for (int x = minx; x <= maxx; x++)
             {
@@ -1071,6 +1085,25 @@ namespace Wartorn.Screens.MainGameScreen
                     }
                 }
             }
+
+            StringBuilder attackrange = new StringBuilder();
+            for (int y = 0; y < map.Height; y++)
+            {
+                for (int x = 0; x < map.Width; x++)
+                {
+                    Point temp = new Point(x, y);
+                    if (attackRange.Contains(temp))
+                    {
+                        attackrange.Append("*");
+                    }
+                    else
+                    {
+                        attackrange.Append(" ");
+                    }
+                }
+                attackrange.AppendLine();
+            }
+            File.WriteAllText("attackrange.txt",attackrange.ToString());
         }
         #endregion
 
@@ -1264,11 +1297,11 @@ namespace Wartorn.Screens.MainGameScreen
             //update the generalinfo border
             canvas_generalInfo.GetElementAs<PictureBox>("picbox_generalInfoBorder").SourceRectangle = GeneralInfoBorderSpriteSourceRectangle.GetSpriteRectangle(tempmapcell.owner);
 
-            //if (isBuilding(tempmapcell.terrain) && tempmapcell.terrain != TerrainType.MissileSiloLaunched && tempmapcell.terrain != TerrainType.MissileSilo)
-            //{
-            //canvas_generalInfo.GetElementAs<PictureBox>("picbox_generalInfoCapturePoint").SourceRectangle = GeneralInfoCapturePointSpriteSourceRectangle.GetSpriteRectangle(tempmapcell.owner);
-            //canvas_generalInfo.GetElementAs<Label>("label_generalInfoCapturePoint").Text = "20";
-            //}
+            if (isBuilding(tempmapcell.terrain) && tempmapcell.terrain != TerrainType.MissileSiloLaunched && tempmapcell.terrain != TerrainType.MissileSilo && tempmapcell.unit!=null)
+            {
+                canvas_generalInfo.GetElementAs<PictureBox>("picbox_generalInfoCapturePoint").SourceRectangle = GeneralInfoCapturePointSpriteSourceRectangle.GetSpriteRectangle(tempmapcell.owner);
+                canvas_generalInfo.GetElementAs<Label>("label_generalInfoCapturePoint").Text = tempmapcell.unit.CapturePoint.ToString();
+            }
 
             canvas_generalInfo.GetElementAs<PictureBox>("picbox_generalInfoDefenseStar").SourceRectangle = GeneralInfoDefenseStarSpriteSourceRectangle.GetSpriteRectangle(Unit._DefenseStar[tempmapcell.terrain]);
 
@@ -1277,7 +1310,7 @@ namespace Wartorn.Screens.MainGameScreen
                 canvas_generalInfo.GetElementAs<PictureBox>("picbox_generalInfoUnitInfo").SourceRectangle = GeneralInfoUnitInfoSpriteSourceRectangle.GetSpriteRectangle(tempmapcell.unit.Owner);
 
                 canvas_generalInfo.GetElementAs<PictureBox>("picbox_unitType").SourceRectangle = BackgroundUnitSpriteSourceRectangle.GetSpriteRectangle(tempmapcell.unit.UnitType, tempmapcell.unit.Owner, tempmapcell.terrain);
-                canvas_generalInfo.GetElementAs<Label>("label_unitType").Text = tempmapcell.unit.UnitType.ToString();
+                canvas_generalInfo.GetElementAs<Label>("label_unitType").Text = tempmapcell.unit.GetUnitName();
 
                 if (tempmapcell.unit.UnitType == UnitType.APC
                  || tempmapcell.unit.UnitType == UnitType.TransportCopter
@@ -1326,24 +1359,42 @@ namespace Wartorn.Screens.MainGameScreen
 
         private void MoveCamera(KeyboardState keyboardInputState, MouseState mouseInputState)
         {
+            int speed = 10;
+
+            if (CONTENT_MANAGER.lastInputState.keyboardState.IsKeyDown(Keys.LeftShift) || CONTENT_MANAGER.lastInputState.keyboardState.IsKeyDown(Keys.RightShift))
+            {
+                speed = 50;
+            }
+
             //simulate scrolling
-            if (keyboardInputState.IsKeyDown(Keys.Left) || keyboardInputState.IsKeyDown(Keys.A) || mouseInputState.Position.X.Between(20, 0))
+            if (keyboardInputState.IsKeyDown(Keys.Left)
+             || keyboardInputState.IsKeyDown(Keys.A)
+             || mouseInputState.Position.X.Between(50, 10))
             {
-                camera.Location += new Vector2(-1, 0) * 10;
+                camera.Location += new Vector2(-1, 0) * speed;
             }
-            if (keyboardInputState.IsKeyDown(Keys.Right) || keyboardInputState.IsKeyDown(Keys.D) || mouseInputState.Position.X.Between(720, 700))
+            if (keyboardInputState.IsKeyDown(Keys.Right)
+                || keyboardInputState.IsKeyDown(Keys.D)
+                || mouseInputState.Position.X.Between(710, 670))
             {
-                camera.Location += new Vector2(1, 0) * 10;
+                camera.Location += new Vector2(1, 0) * speed;
             }
-            if (keyboardInputState.IsKeyDown(Keys.Up) || keyboardInputState.IsKeyDown(Keys.W) || mouseInputState.Position.Y.Between(20, 0))
+            if (keyboardInputState.IsKeyDown(Keys.Up)
+                || keyboardInputState.IsKeyDown(Keys.W)
+                || mouseInputState.Position.Y.Between(50, 10))
             {
-                camera.Location += new Vector2(0, -1) * 10;
+                camera.Location += new Vector2(0, -1) * speed;
             }
-            if (keyboardInputState.IsKeyDown(Keys.Down) || keyboardInputState.IsKeyDown(Keys.S) || mouseInputState.Position.Y.Between(480, 460))
+            if (keyboardInputState.IsKeyDown(Keys.Down)
+                || keyboardInputState.IsKeyDown(Keys.S)
+                || mouseInputState.Position.Y.Between(470, 430))
             {
-                camera.Location += new Vector2(0, +1) * 10;
+                camera.Location += new Vector2(0, 1) * speed;
             }
-            camera.Location = new Vector2(camera.Location.X.Clamp(1680, 0), camera.Location.Y.Clamp(960, 0));
+
+            Point clampMax = new Point(map.Width * Constants.MapCellWidth - 720, map.Height * Constants.MapCellHeight - 480);
+
+            camera.Location = new Vector2(camera.Location.X.Clamp(clampMax.X, 0), camera.Location.Y.Clamp(clampMax.Y, 0));
         }
 
         #endregion

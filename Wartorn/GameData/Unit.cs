@@ -315,11 +315,59 @@ namespace Wartorn.GameData
             guid = Guid.NewGuid();
         }
 
+        public string GetUnitName()
+        {
+            switch (unitType)
+            {
+                case UnitType.HeavyTank:
+                    return "H-Tank";
+
+                case UnitType.Artillery:
+                    return "Arty";
+
+                case UnitType.TransportCopter:
+                    return "T-Copter";
+
+                case UnitType.BattleCopter:
+                    return "B-Copter";
+
+                case UnitType.Submarine:
+                    return "Sub";
+
+                case UnitType.Battleship:
+                    return "B-Ship";
+
+                default:
+                    return unitType.ToString();
+            }
+        }
+
+
         public Range GetAttackkRange()
         {
             return _AttackRange[unitType];
         }
 
+        
+        /// <summary>
+        /// peak what the actionpoint will be after taking an action but not update the actionpoint
+        /// </summary>
+        /// <param name="cmd"></param>
+        /// <returns></returns>
+        public int PeakUpdateActionPoint(Command cmd)
+        {
+            int result;
+            int temp = actionpoint;
+            UpdateActionPoint(cmd);
+            result = actionpoint;
+            actionpoint = temp;
+            return result;
+        }
+
+        /// <summary>
+        /// update the actionpoint after taking an action
+        /// </summary>
+        /// <param name="cmd"></param>
         public void UpdateActionPoint(Command cmd)
         {
             switch (cmd)
@@ -332,6 +380,14 @@ namespace Wartorn.GameData
                     actionpoint = 0;
                     break;
                 case Command.Move:
+                    if (unitType == UnitType.Artillery
+                     || unitType == UnitType.Rocket
+                     || unitType == UnitType.Missile
+                     || unitType == UnitType.Battleship)
+                    {
+                        actionpoint = 0;
+                        break;
+                    }
                     actionpoint -= 1;
                     break;
                 case Command.Attack:
