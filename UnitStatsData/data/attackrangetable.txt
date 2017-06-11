@@ -59,7 +59,7 @@
     },
     "Value": {
       "Max": 2,
-      "Min": 3
+      "Min": 2
     }
   },
   {
@@ -67,8 +67,8 @@
       "value": "Rocket"
     },
     "Value": {
-      "Max": 3,
-      "Min": 5
+      "Max": 5,
+      "Min": 3
     }
   },
   {
@@ -85,8 +85,8 @@
       "value": "Missile"
     },
     "Value": {
-      "Max": 3,
-      "Min": 5
+      "Max": 5,
+      "Min": 3
     }
   },
   {
@@ -136,7 +136,7 @@
   },
   {
     "Key": {
-      "value": "Cruise"
+      "value": "Cruiser"
     },
     "Value": {
       "Max": 1,
@@ -157,8 +157,8 @@
       "value": "Battleship"
     },
     "Value": {
-      "Max": 2,
-      "Min": 6
+      "Max": 5,
+      "Min": 2
     }
   }
 ]

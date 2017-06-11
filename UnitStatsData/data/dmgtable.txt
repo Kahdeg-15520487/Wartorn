@@ -69,13 +69,13 @@
           "Key": {
             "value": "TransportCopter"
           },
-          "Value": 30
+          "Value": 25
         },
         {
           "Key": {
             "value": "BattleCopter"
           },
-          "Value": 15
+          "Value": 10
         },
         {
           "Key": {
@@ -93,25 +93,25 @@
           "Key": {
             "value": "Lander"
           },
-          "Value": 5
+          "Value": 0
         },
         {
           "Key": {
-            "value": "Cruise"
+            "value": "Cruiser"
           },
-          "Value": 5
+          "Value": 0
         },
         {
           "Key": {
             "value": "Submarine"
           },
-          "Value": 5
+          "Value": 0
         },
         {
           "Key": {
             "value": "Battleship"
           },
-          "Value": 1
+          "Value": 0
         }
       ]
     },
@@ -184,13 +184,13 @@
           "Key": {
             "value": "TransportCopter"
           },
-          "Value": 35
+          "Value": 30
         },
         {
           "Key": {
             "value": "BattleCopter"
           },
-          "Value": 10
+          "Value": 15
         },
         {
           "Key": {
@@ -208,25 +208,25 @@
           "Key": {
             "value": "Lander"
           },
-          "Value": 25
+          "Value": 0
         },
         {
           "Key": {
-            "value": "Cruise"
+            "value": "Cruiser"
           },
-          "Value": 15
+          "Value": 0
         },
         {
           "Key": {
             "value": "Submarine"
           },
-          "Value": 15
+          "Value": 0
         },
         {
           "Key": {
             "value": "Battleship"
           },
-          "Value": 15
+          "Value": 0
         }
       ]
     },
@@ -305,7 +305,7 @@
           "Key": {
             "value": "BattleCopter"
           },
-          "Value": 15
+          "Value": 20
         },
         {
           "Key": {
@@ -323,25 +323,25 @@
           "Key": {
             "value": "Lander"
           },
-          "Value": 15
+          "Value": 0
         },
         {
           "Key": {
-            "value": "Cruise"
+            "value": "Cruiser"
           },
-          "Value": 5
+          "Value": 0
         },
         {
           "Key": {
             "value": "Submarine"
           },
-          "Value": 5
+          "Value": 0
         },
         {
           "Key": {
             "value": "Battleship"
           },
-          "Value": 5
+          "Value": 0
         }
       ]
     },
@@ -442,7 +442,7 @@
         },
         {
           "Key": {
-            "value": "Cruise"
+            "value": "Cruiser"
           },
           "Value": 0
         },
@@ -535,7 +535,7 @@
           "Key": {
             "value": "BattleCopter"
           },
-          "Value": 20
+          "Value": 25
         },
         {
           "Key": {
@@ -553,25 +553,25 @@
           "Key": {
             "value": "Lander"
           },
-          "Value": 25
+          "Value": 15
         },
         {
           "Key": {
-            "value": "Cruise"
+            "value": "Cruiser"
           },
-          "Value": 15
+          "Value": 25
         },
         {
           "Key": {
             "value": "Submarine"
           },
-          "Value": 15
+          "Value": 10
         },
         {
           "Key": {
             "value": "Battleship"
           },
-          "Value": 15
+          "Value": 10
         }
       ]
     },
@@ -650,7 +650,7 @@
           "Key": {
             "value": "BattleCopter"
           },
-          "Value": 25
+          "Value": 30
         },
         {
           "Key": {
@@ -668,25 +668,25 @@
           "Key": {
             "value": "Lander"
           },
-          "Value": 35
+          "Value": 20
         },
         {
           "Key": {
-            "value": "Cruise"
+            "value": "Cruiser"
           },
-          "Value": 25
+          "Value": 30
         },
         {
           "Key": {
             "value": "Submarine"
           },
-          "Value": 25
+          "Value": 15
         },
         {
           "Key": {
             "value": "Battleship"
           },
-          "Value": 25
+          "Value": 15
         }
       ]
     },
@@ -783,25 +783,25 @@
           "Key": {
             "value": "Lander"
           },
-          "Value": 55
+          "Value": 25
         },
         {
           "Key": {
-            "value": "Cruise"
+            "value": "Cruiser"
           },
-          "Value": 65
+          "Value": 40
         },
         {
           "Key": {
             "value": "Submarine"
           },
-          "Value": 60
+          "Value": 30
         },
         {
           "Key": {
             "value": "Battleship"
           },
-          "Value": 45
+          "Value": 20
         }
       ]
     },
@@ -902,7 +902,7 @@
         },
         {
           "Key": {
-            "value": "Cruise"
+            "value": "Cruiser"
           },
           "Value": 80
         },
@@ -1013,25 +1013,25 @@
           "Key": {
             "value": "Lander"
           },
-          "Value": 15
+          "Value": 0
         },
         {
           "Key": {
-            "value": "Cruise"
+            "value": "Cruiser"
           },
-          "Value": 10
+          "Value": 0
         },
         {
           "Key": {
             "value": "Submarine"
           },
-          "Value": 10
+          "Value": 0
         },
         {
           "Key": {
             "value": "Battleship"
           },
-          "Value": 10
+          "Value": 0
         }
       ]
     },
@@ -1132,7 +1132,7 @@
         },
         {
           "Key": {
-            "value": "Cruise"
+            "value": "Cruiser"
           },
           "Value": 0
         },
@@ -1247,7 +1247,7 @@
         },
         {
           "Key": {
-            "value": "Cruise"
+            "value": "Cruiser"
           },
           "Value": 0
         },
@@ -1358,25 +1358,25 @@
           "Key": {
             "value": "Lander"
           },
-          "Value": 25
+          "Value": 35
         },
         {
           "Key": {
-            "value": "Cruise"
+            "value": "Cruiser"
           },
-          "Value": 15
+          "Value": 50
         },
         {
           "Key": {
             "value": "Submarine"
           },
-          "Value": 15
+          "Value": 25
         },
         {
           "Key": {
             "value": "Battleship"
           },
-          "Value": 15
+          "Value": 25
         }
       ]
     },
@@ -1477,7 +1477,7 @@
         },
         {
           "Key": {
-            "value": "Cruise"
+            "value": "Cruiser"
           },
           "Value": 0
         },
@@ -1588,13 +1588,13 @@
           "Key": {
             "value": "Lander"
           },
-          "Value": 90
+          "Value": 85
         },
         {
           "Key": {
-            "value": "Cruise"
+            "value": "Cruiser"
           },
-          "Value": 85
+          "Value": 90
         },
         {
           "Key": {
@@ -1707,7 +1707,7 @@
         },
         {
           "Key": {
-            "value": "Cruise"
+            "value": "Cruiser"
           },
           "Value": 0
         },
@@ -1727,7 +1727,7 @@
     },
     {
       "Key": {
-        "value": "Cruise"
+        "value": "Cruiser"
       },
       "Value": [
         {
@@ -1806,7 +1806,7 @@
           "Key": {
             "value": "Fighter"
           },
-          "Value": 65
+          "Value": 60
         },
         {
           "Key": {
@@ -1822,7 +1822,7 @@
         },
         {
           "Key": {
-            "value": "Cruise"
+            "value": "Cruiser"
           },
           "Value": 0
         },
@@ -1937,7 +1937,7 @@
         },
         {
           "Key": {
-            "value": "Cruise"
+            "value": "Cruiser"
           },
           "Value": 35
         },
@@ -2052,7 +2052,7 @@
         },
         {
           "Key": {
-            "value": "Cruise"
+            "value": "Cruiser"
           },
           "Value": 95
         },

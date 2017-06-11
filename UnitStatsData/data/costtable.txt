@@ -91,7 +91,7 @@
   },
   {
     "Key": {
-      "value": "Cruise"
+      "value": "Cruiser"
     },
     "Value": 18000
   },
