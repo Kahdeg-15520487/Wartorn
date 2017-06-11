@@ -50,6 +50,7 @@
             this.button_terrain.TabIndex = 1;
             this.button_terrain.Text = "Terrain";
             this.button_terrain.UseVisualStyleBackColor = true;
+            this.button_terrain.Click += new System.EventHandler(this.button_terrain_Click);
             // 
             // MainForm
             // 

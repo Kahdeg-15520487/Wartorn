@@ -21,7 +21,7 @@ namespace Wartorn.Drawing
         /// 
         /// mountain is yellow-orange
         /// plain is light-green
-        /// tree is dark-green
+        /// Forest is dark-green
         /// water is light-blue
         /// road is gray
         /// free building is white
@@ -84,7 +84,7 @@ namespace Wartorn.Drawing
                             color = Color.LightGreen;
                             break;
 
-                        case TerrainType.Tree:
+                        case TerrainType.Forest:
                             color = Color.DarkGreen;
                             break;
 

@@ -36,12 +36,12 @@ namespace Wartorn
 
             public static bool IsLeftMousePressed()
             {
-                return CONTENT_MANAGER.inputState.mouseState.LeftButton == ButtonState.Pressed;
+                return CONTENT_MANAGER.inputState.mouseState.LeftButton == ButtonState.Released && CONTENT_MANAGER.lastInputState.mouseState.LeftButton == ButtonState.Pressed;
             }
 
             public static bool IsRightMousePressed()
             {
-                return CONTENT_MANAGER.inputState.mouseState.RightButton == ButtonState.Pressed;
+                return CONTENT_MANAGER.inputState.mouseState.RightButton == ButtonState.Released && CONTENT_MANAGER.lastInputState.mouseState.RightButton == ButtonState.Pressed;
             }
 
             public static void Log(Exception e)
@@ -161,6 +161,37 @@ namespace Wartorn
 
         public static class ExtensionMethod
         {
+            public static bool IsContainCommand(this int flags, Command flag)
+            {
+                int flagValue = (int)flag;
+                return (flags & flagValue) != 0;
+            }
+
+            public static List<Command> GetContainCommand(this int flags)
+            {
+                List<Command> cmds = new List<Command>();
+
+                foreach (Command cmd in Enum.GetValues(typeof(Command)).Cast<Command>())
+                {
+                    if ((flags & (int)cmd) != 0)
+                    {
+                        cmds.Add(cmd);
+                    }
+                }
+
+                return cmds;
+            }
+
+            public static int Concatenateflags(params Command[] cmds)
+            {
+                int result = 0;
+                for (int i = 0; i < cmds.GetLength(0); i++)
+                {
+                    result += (int)cmds[i];
+                }
+                return result;
+            }
+
             public static T ToEnum<T>(this string value)
             {
                 return (T)Enum.Parse(typeof(T), value, true);
@@ -182,6 +213,11 @@ namespace Wartorn
                 return value < max && value > min;
             }
 
+            public static bool Betweene(this int value, int max, int min)
+            {
+                return value <= max && value >= min;
+            }
+
             public static int CompareWith(this SpriteSheetTerrain t, SpriteSheetTerrain other)
             {
                 return ((int)t).CompareTo((int)other);
@@ -198,7 +234,7 @@ namespace Wartorn
                     case TerrainType.Cliff:
                     case TerrainType.Road:
                     case TerrainType.Plain:
-                    case TerrainType.Tree:
+                    case TerrainType.Forest:
                     case TerrainType.MissileSiloLaunched:
                     case TerrainType.Factory:
                         return false;
@@ -248,7 +284,7 @@ namespace Wartorn
                     case UnitType.Lander:
                         return MovementType.Lander;
 
-                    case UnitType.Cruise:
+                    case UnitType.Cruiser:
                     case UnitType.Submarine:
                     case UnitType.Battleship:
                         return MovementType.Ship;
@@ -258,7 +294,7 @@ namespace Wartorn
                 return MovementType.None;
             }
 
-            public static SpriteSheetUnit GetSpriteSheetUnit(this UnitType ut,Owner owner)
+            public static SpriteSheetUnit GetSpriteSheetUnit(this UnitType ut, GameData.Owner owner)
             {
                 StringBuilder result = new StringBuilder();
                 result.Append(owner.ToString());
@@ -641,68 +677,68 @@ namespace Wartorn
                         break;
 
 
-                    case SpriteSheetTerrain.Tree:
-                    case SpriteSheetTerrain.Tree_top_left:
-                    case SpriteSheetTerrain.Tree_top_right:
-                    case SpriteSheetTerrain.Tree_bottom_left:
-                    case SpriteSheetTerrain.Tree_bottom_right:
-                    case SpriteSheetTerrain.Tree_up_left:
-                    case SpriteSheetTerrain.Tree_up_middle:
-                    case SpriteSheetTerrain.Tree_up_right:
-                    case SpriteSheetTerrain.Tree_middle_left:
-                    case SpriteSheetTerrain.Tree_middle_middle:
-                    case SpriteSheetTerrain.Tree_middle_right:
-                    case SpriteSheetTerrain.Tree_down_left:
-                    case SpriteSheetTerrain.Tree_down_middle:
-                    case SpriteSheetTerrain.Tree_down_right:
+                    case SpriteSheetTerrain.Forest:
+                    case SpriteSheetTerrain.Forest_top_left:
+                    case SpriteSheetTerrain.Forest_top_right:
+                    case SpriteSheetTerrain.Forest_bottom_left:
+                    case SpriteSheetTerrain.Forest_bottom_right:
+                    case SpriteSheetTerrain.Forest_up_left:
+                    case SpriteSheetTerrain.Forest_up_middle:
+                    case SpriteSheetTerrain.Forest_up_right:
+                    case SpriteSheetTerrain.Forest_middle_left:
+                    case SpriteSheetTerrain.Forest_middle_middle:
+                    case SpriteSheetTerrain.Forest_middle_right:
+                    case SpriteSheetTerrain.Forest_down_left:
+                    case SpriteSheetTerrain.Forest_down_middle:
+                    case SpriteSheetTerrain.Forest_down_right:
 
-                    case SpriteSheetTerrain.Tropical_Tree:
-                    case SpriteSheetTerrain.Tropical_Tree_top_left:
-                    case SpriteSheetTerrain.Tropical_Tree_top_right:
-                    case SpriteSheetTerrain.Tropical_Tree_bottom_left:
-                    case SpriteSheetTerrain.Tropical_Tree_bottom_right:
-                    case SpriteSheetTerrain.Tropical_Tree_up_left:
-                    case SpriteSheetTerrain.Tropical_Tree_up_middle:
-                    case SpriteSheetTerrain.Tropical_Tree_up_right:
-                    case SpriteSheetTerrain.Tropical_Tree_middle_left:
-                    case SpriteSheetTerrain.Tropical_Tree_middle_middle:
-                    case SpriteSheetTerrain.Tropical_Tree_middle_right:
-                    case SpriteSheetTerrain.Tropical_Tree_down_left:
-                    case SpriteSheetTerrain.Tropical_Tree_down_middle:
-                    case SpriteSheetTerrain.Tropical_Tree_down_right:
+                    case SpriteSheetTerrain.Tropical_Forest:
+                    case SpriteSheetTerrain.Tropical_Forest_top_left:
+                    case SpriteSheetTerrain.Tropical_Forest_top_right:
+                    case SpriteSheetTerrain.Tropical_Forest_bottom_left:
+                    case SpriteSheetTerrain.Tropical_Forest_bottom_right:
+                    case SpriteSheetTerrain.Tropical_Forest_up_left:
+                    case SpriteSheetTerrain.Tropical_Forest_up_middle:
+                    case SpriteSheetTerrain.Tropical_Forest_up_right:
+                    case SpriteSheetTerrain.Tropical_Forest_middle_left:
+                    case SpriteSheetTerrain.Tropical_Forest_middle_middle:
+                    case SpriteSheetTerrain.Tropical_Forest_middle_right:
+                    case SpriteSheetTerrain.Tropical_Forest_down_left:
+                    case SpriteSheetTerrain.Tropical_Forest_down_middle:
+                    case SpriteSheetTerrain.Tropical_Forest_down_right:
 
-                    case SpriteSheetTerrain.Rain_Tree:
-                    case SpriteSheetTerrain.Rain_Tree_top_left:
-                    case SpriteSheetTerrain.Rain_Tree_top_right:
-                    case SpriteSheetTerrain.Rain_Tree_bottom_left:
-                    case SpriteSheetTerrain.Rain_Tree_bottom_right:
-                    case SpriteSheetTerrain.Rain_Tree_up_left:
-                    case SpriteSheetTerrain.Rain_Tree_up_middle:
-                    case SpriteSheetTerrain.Rain_Tree_up_right:
-                    case SpriteSheetTerrain.Rain_Tree_middle_left:
-                    case SpriteSheetTerrain.Rain_Tree_middle_middle:
-                    case SpriteSheetTerrain.Rain_Tree_middle_right:
-                    case SpriteSheetTerrain.Rain_Tree_down_left:
-                    case SpriteSheetTerrain.Rain_Tree_down_middle:
-                    case SpriteSheetTerrain.Rain_Tree_down_right:
+                    case SpriteSheetTerrain.Rain_Forest:
+                    case SpriteSheetTerrain.Rain_Forest_top_left:
+                    case SpriteSheetTerrain.Rain_Forest_top_right:
+                    case SpriteSheetTerrain.Rain_Forest_bottom_left:
+                    case SpriteSheetTerrain.Rain_Forest_bottom_right:
+                    case SpriteSheetTerrain.Rain_Forest_up_left:
+                    case SpriteSheetTerrain.Rain_Forest_up_middle:
+                    case SpriteSheetTerrain.Rain_Forest_up_right:
+                    case SpriteSheetTerrain.Rain_Forest_middle_left:
+                    case SpriteSheetTerrain.Rain_Forest_middle_middle:
+                    case SpriteSheetTerrain.Rain_Forest_middle_right:
+                    case SpriteSheetTerrain.Rain_Forest_down_left:
+                    case SpriteSheetTerrain.Rain_Forest_down_middle:
+                    case SpriteSheetTerrain.Rain_Forest_down_right:
 
-                    case SpriteSheetTerrain.Snow_Tree:
-                    case SpriteSheetTerrain.Snow_Tree_top_left:
-                    case SpriteSheetTerrain.Snow_Tree_top_right:
-                    case SpriteSheetTerrain.Snow_Tree_bottom_left:
-                    case SpriteSheetTerrain.Snow_Tree_bottom_right:
-                    case SpriteSheetTerrain.Snow_Tree_up_left:
-                    case SpriteSheetTerrain.Snow_Tree_up_middle:
-                    case SpriteSheetTerrain.Snow_Tree_up_right:
-                    case SpriteSheetTerrain.Snow_Tree_middle_left:
-                    case SpriteSheetTerrain.Snow_Tree_middle_middle:
-                    case SpriteSheetTerrain.Snow_Tree_middle_right:
-                    case SpriteSheetTerrain.Snow_Tree_down_left:
-                    case SpriteSheetTerrain.Snow_Tree_down_middle:
-                    case SpriteSheetTerrain.Snow_Tree_down_right:
+                    case SpriteSheetTerrain.Snow_Forest:
+                    case SpriteSheetTerrain.Snow_Forest_top_left:
+                    case SpriteSheetTerrain.Snow_Forest_top_right:
+                    case SpriteSheetTerrain.Snow_Forest_bottom_left:
+                    case SpriteSheetTerrain.Snow_Forest_bottom_right:
+                    case SpriteSheetTerrain.Snow_Forest_up_left:
+                    case SpriteSheetTerrain.Snow_Forest_up_middle:
+                    case SpriteSheetTerrain.Snow_Forest_up_right:
+                    case SpriteSheetTerrain.Snow_Forest_middle_left:
+                    case SpriteSheetTerrain.Snow_Forest_middle_middle:
+                    case SpriteSheetTerrain.Snow_Forest_middle_right:
+                    case SpriteSheetTerrain.Snow_Forest_down_left:
+                    case SpriteSheetTerrain.Snow_Forest_down_middle:
+                    case SpriteSheetTerrain.Snow_Forest_down_right:
 
-                    case SpriteSheetTerrain.Desert_Tree:
-                        result = TerrainType.Tree;
+                    case SpriteSheetTerrain.Desert_Forest:
+                        result = TerrainType.Forest;
                         break;
 
                     case SpriteSheetTerrain.Mountain_High_Upper:
@@ -793,59 +829,68 @@ namespace Wartorn
                 return result;
             }
 
-            public static T Next<T>(this T t, int count = 1)
+            public static T Next<T>(this T src,int count = 1) where T : struct
             {
-                var type = typeof(T);
-                int result;
-                T box = default(T);
-                count.Clamp(int.MaxValue, 0);
-                switch (type.Name)
-                {
-                    case "SpriteSheetTerrain":
-                        SpriteSheetTerrain unboxSpriteSheetTerrain = (SpriteSheetTerrain)((object)t);
-                        result = (int)unboxSpriteSheetTerrain + count;
-                        box = (T)((object)result);
-                        return box;
-                    case "UnitType":
-                        UnitType unboxUnit = (UnitType)((object)t);
-                        result = (int)unboxUnit + count;
-                        box = (T)((object)result);
-                        break;
-                    case "TerrainType":
-                        TerrainType unboxTerrain = (TerrainType)((object)t);
-                        result = (int)unboxTerrain + count;
-                        box = (T)((object)result);
-                        break;
-                    case "SpriteSheetUnit":
-                        SpriteSheetUnit unboxSpriteSheetUnit = (SpriteSheetUnit)((object)t);
-                        result = (int)unboxSpriteSheetUnit + count;
-                        box = (T)((object)result);
-                        break;
-                    case "AnimationName":
-                        AnimationName unboxAnimationName = (AnimationName)((object)t);
-                        result = (int)unboxAnimationName + count;
-                        box = (T)((object)result);
-                        break;
-                    case "Owner":
-                        Owner unboxOwner = (Owner)((object)t);
-                        result = (int)unboxOwner + count;
-                        box = (T)((object)result);
-                        break;
-                    case "SpriteSheetBuilding":
-                        SpriteSheetBuilding unboxSpriteSheetBuilding = (SpriteSheetBuilding)((object)t);
-                        result = (int)unboxSpriteSheetBuilding + count;
-                        box = (T)((object)result);
-                        break;
-                    case "SpriteSheetCommand":
-                        SpriteSheetCommand unboxSpriteSheetCommand = (SpriteSheetCommand)((object)t);
-                        result = (int)unboxSpriteSheetCommand + count;
-                        box = (T)((object)result);
-                        break;
-                    default:
-                        break;
-                }
-                return box;
+                if (!typeof(T).IsEnum) throw new ArgumentException(String.Format("Argumnent {0} is not an Enum", typeof(T).FullName));
+
+                T[] Arr = (T[])Enum.GetValues(src.GetType());
+                int j = Array.IndexOf<T>(Arr, src) + count;
+                return (Arr.Length == j) ? Arr[0] : Arr[j];
             }
+
+            //public static T Next<T>(this T t, int count = 1)
+            //{
+            //    var type = typeof(T);
+            //    int result;
+            //    T box = default(T);
+            //    count.Clamp(int.MaxValue, 0);
+            //    switch (type.Name)
+            //    {
+            //        case "SpriteSheetTerrain":
+            //            SpriteSheetTerrain unboxSpriteSheetTerrain = (SpriteSheetTerrain)((object)t);
+            //            result = (int)unboxSpriteSheetTerrain + count;
+            //            box = (T)((object)result);
+            //            return box;
+            //        case "UnitType":
+            //            UnitType unboxUnit = (UnitType)((object)t);
+            //            result = (int)unboxUnit + count;
+            //            box = (T)((object)result);
+            //            break;
+            //        case "TerrainType":
+            //            TerrainType unboxTerrain = (TerrainType)((object)t);
+            //            result = (int)unboxTerrain + count;
+            //            box = (T)((object)result);
+            //            break;
+            //        case "SpriteSheetUnit":
+            //            SpriteSheetUnit unboxSpriteSheetUnit = (SpriteSheetUnit)((object)t);
+            //            result = (int)unboxSpriteSheetUnit + count;
+            //            box = (T)((object)result);
+            //            break;
+            //        case "AnimationName":
+            //            AnimationName unboxAnimationName = (AnimationName)((object)t);
+            //            result = (int)unboxAnimationName + count;
+            //            box = (T)((object)result);
+            //            break;
+            //        case "Owner":
+            //            Owner unboxOwner = (Owner)((object)t);
+            //            result = (int)unboxOwner + count;
+            //            box = (T)((object)result);
+            //            break;
+            //        case "SpriteSheetBuilding":
+            //            SpriteSheetBuilding unboxSpriteSheetBuilding = (SpriteSheetBuilding)((object)t);
+            //            result = (int)unboxSpriteSheetBuilding + count;
+            //            box = (T)((object)result);
+            //            break;
+            //        case "SpriteSheetCommand":
+            //            SpriteSheetCommand unboxSpriteSheetCommand = (SpriteSheetCommand)((object)t);
+            //            result = (int)unboxSpriteSheetCommand + count;
+            //            box = (T)((object)result);
+            //            break;
+            //        default:
+            //            break;
+            //    }
+            //    return box;
+            //}
 
             public static T Previous<T>(this T t, int count = 1)
             {
@@ -881,7 +926,7 @@ namespace Wartorn
                         box = (T)((object)result);
                         break;
                     case "Owner":
-                        Owner unboxOwner = (Owner)((object)t);
+                        GameData.Owner unboxOwner = (GameData.Owner)((object)t);
                         result = (int)unboxOwner - count;
                         box = (T)((object)result);
                         break;
@@ -1049,6 +1094,11 @@ namespace Wartorn
             public static bool DistanceToOtherLessThan(this Point p,Point other,float MaxDistance)
             {
                 return ((p.X - other.X) * (p.X - other.X) + (p.Y - other.Y) * (p.Y - other.Y)) < MaxDistance * MaxDistance;
+            }
+
+            public static double DistanceToOther(this Point p,Point other,bool isManhattan = false)
+            {
+                return isManhattan ? Math.Abs(p.X - other.X) + Math.Abs(p.Y - other.Y) : Math.Sqrt((p.X - other.X) * (p.X - other.X) + (p.Y - other.Y) * (p.Y - other.Y));
             }
         }
     }

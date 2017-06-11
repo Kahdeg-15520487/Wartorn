@@ -10,16 +10,18 @@ using Wartorn.Utility.Drawing;
 
 namespace Wartorn.GameData
 {
-    struct PlayerInfo
+    public class PlayerInfo
     {
         public int playerId;
         public Owner owner;
         public int money;
+        public List<Guid> ownedUnit;
         public PlayerInfo(int playerid,Owner owner,int startingmoney = 0)
         {
             playerId = playerid;
             this.owner = owner;
             money = startingmoney;
+            ownedUnit = new List<Guid>();
         }
     }
 

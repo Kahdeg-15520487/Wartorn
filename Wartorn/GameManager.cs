@@ -77,6 +77,15 @@ namespace Wartorn
             BuildingSpriteSourceRectangle.LoadSprite();
             DirectionArrowSpriteSourceRectangle.LoadSprite();
             CommandSpriteSourceRectangle.LoadSprite();
+            BackgroundTerrainSpriteSourceRectangle.LoadSprite();
+            BackgroundUnitSpriteSourceRectangle.LoadSprite();
+            GeneralInfoBorderSpriteSourceRectangle.LoadSprite();
+            GeneralInfoCapturePointSpriteSourceRectangle.LoadSprite();
+            GeneralInfoDefenseStarSpriteSourceRectangle.LoadSprite();
+            GeneralInfoLoadedUnitSpriteSourceRectangle.LoadSprite();
+            GeneralInfoUnitInfoSpriteSourceRectangle.LoadSprite();
+            BuyMenuFactorySpriteSourceRectangle.LoadSprite();
+            BuyMenuAirportHarborSpriteSourceRectangle.LoadSprite();
 
             graphics.PreferredBackBufferWidth = Constants.Width;    // set this value to the desired width of your window
             graphics.PreferredBackBufferHeight = Constants.Height;  // set this value to the desired height of your window
@@ -84,6 +93,7 @@ namespace Wartorn
 
             DrawingHelper.Initialize(GraphicsDevice);
 
+            Unit.Init();
             Unit.Load();
 
             CONTENT_MANAGER.gameinstance = this;

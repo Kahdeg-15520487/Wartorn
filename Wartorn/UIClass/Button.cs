@@ -16,9 +16,14 @@ namespace Wartorn
         }
         public class Button : Label
         {
-            bool isPressed = false;
-            Rectangle internalRect;
-            ButtonContentType contentType;
+            //usedonly for debug purpose, will draw the internal rect 
+            //that is used to determine event on screen
+            public bool isDrawRect = false;
+
+
+            private bool isPressed = false;
+            private Rectangle internalRect;
+            private ButtonContentType contentType;
             private Rectangle? _spriteSourceRectangle = null;
 
             //Add region to draw text
@@ -241,6 +246,11 @@ namespace Wartorn
 
             public override void Draw(SpriteBatch spriteBatch)
             {
+                if (isDrawRect)
+                {
+                    DrawingHelper.DrawRectangle(rect, Color.Red, false);
+                }
+
                 switch (contentType)
                 {
                     case ButtonContentType.Text:

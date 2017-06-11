@@ -30,14 +30,47 @@ namespace Wartorn.PathFinding
                 foreach (string neighbor in map.navigationGraph.Vertices[vertex].Keys.ToList())
                 {
                     Point point = neighbor.Parse();
+                    MapCell mapcell = map[point];
                     int cost = Unit.GetTravelCost(unit.UnitType, map[point].terrain);
-                    //check if point is blocked by enemy unit
-                    if (map[point].unit != null
+
+                    #region todo allow pathing into transport unit
+                    ////check if point is blocked by an unit
+                    //if (mapcell.unit != null)
+                    //{
+                    //    //check if airborne unit
+                    //    if (mapcell.unit.UnitType.GetMovementType() != MovementType.Air)
+                    //    {
+                    //        //check if enemy unit
+                    //        if (mapcell.unit.Owner != unit.Owner)
+                    //        {
+                    //            cost = int.MaxValue;
+                    //        }
+                    //        else
+                    //        {
+                    //            //check if transport unit
+                    //            if (mapcell.unit.UnitType != UnitType.APC
+                    //             && mapcell.unit.UnitType != UnitType.TransportCopter
+                    //             && mapcell.unit.UnitType != UnitType.Lander
+                    //             && mapcell.unit.UnitType != UnitType.Cruiser)
+                    //            {
+                    //                cost = int.MaxValue;
+                    //            }
+                    //        }
+                    //    }
+                    //}
+                    #endregion
+
+                    if (//check if there is a unit
+                        map[point].unit != null
+                        //check if that unit is an airborne unit
                         && map[point].unit.UnitType.GetMovementType() != MovementType.Air
-                        && map[point].unit.Owner != unit.Owner)
+                        //check if that unit is enemy
+                        && map[point].unit.Owner != unit.Owner
+                        )
                     {
                         cost = int.MaxValue;
                     }
+
                     if (cost < int.MaxValue)
                     {
                         graph.Vertices[vertex].Add(neighbor, cost);

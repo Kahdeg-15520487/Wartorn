@@ -174,14 +174,14 @@ namespace Wartorn.PathFinding
                 TravelCost.Add(MovementType.Soldier, new Dictionary<TerrainType, int>());
                 TravelCost[MovementType.Soldier].Add(TerrainType.Plain, 1);
                 TravelCost[MovementType.Soldier].Add(TerrainType.Road, 1);
-                TravelCost[MovementType.Soldier].Add(TerrainType.Tree, 1);
+                TravelCost[MovementType.Soldier].Add(TerrainType.Forest, 1);
                 TravelCost[MovementType.Soldier].Add(TerrainType.Mountain, 2);
                 TravelCost[MovementType.Soldier].Add(TerrainType.Sea, int.MaxValue);
 
                 TravelCost.Add(MovementType.Track, new Dictionary<TerrainType, int>());
                 TravelCost[MovementType.Track].Add(TerrainType.Plain, 1);
                 TravelCost[MovementType.Track].Add(TerrainType.Road, 1);
-                TravelCost[MovementType.Track].Add(TerrainType.Tree, 2);
+                TravelCost[MovementType.Track].Add(TerrainType.Forest, 2);
                 TravelCost[MovementType.Track].Add(TerrainType.Mountain, int.MaxValue);
                 TravelCost[MovementType.Track].Add(TerrainType.Sea, int.MaxValue);
 
@@ -203,8 +203,8 @@ namespace Wartorn.PathFinding
                 map[1, 0].terrain = TerrainType.Mountain;
                 map[2, 0].terrain = TerrainType.Mountain;
 
-                map[3, 1].terrain = TerrainType.Tree;
-                map[3, 2].terrain = TerrainType.Tree;
+                map[3, 1].terrain = TerrainType.Forest;
+                map[3, 2].terrain = TerrainType.Forest;
 
                 map[1, 2].unit = new Unit(UnitType.Soldier, null, Owner.Blue);
 

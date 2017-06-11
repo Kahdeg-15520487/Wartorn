@@ -28,11 +28,14 @@ namespace Wartorn.GameData
         public static Dictionary<UnitType, Dictionary<UnitType, int>> _DammageTable { get; private set; }
         public static Dictionary<UnitType, int> _Cost{ get; private set; }
         public static Dictionary<UnitType, int> _Gas{ get; private set; }
+        public static Dictionary<UnitType, int> _Ammo { get; private set; }
         public static Dictionary<UnitType, int> _ActionPoint { get; private set; }
         public static Dictionary<UnitType, int> _MovementRange{ get; private set; }
         public static Dictionary<UnitType, int> _VisionRange{ get; private set; }
         public static Dictionary<UnitType, Range> _AttackRange{ get; private set; }
         public static Dictionary<MovementType, Dictionary<TerrainType, int>> _TravelCost{ get; private set; }
+
+        public static Dictionary<TerrainType,int> _DefenseStar { get; private set; }
 
         public static void Init()
         {
@@ -64,6 +67,12 @@ namespace Wartorn.GameData
             foreach (UnitType unittype in unittypes)
             {
                 _Gas.Add(unittype, 99);
+            }
+
+            _Ammo = new Dictionary<UnitType, int>();
+            foreach (UnitType unittype in unittypes)
+            {
+                _Ammo.Add(unittype, 99);
             }
 
             _ActionPoint = new Dictionary<UnitType, int>();
@@ -101,15 +110,23 @@ namespace Wartorn.GameData
                 }
             }
 
+            _DefenseStar = new Dictionary<TerrainType, int>();
+            foreach (TerrainType terraintype in terraintypes)
+            {
+                _DefenseStar.Add(terraintype, 0);
+            }
+
             Directory.CreateDirectory(@"data\");
             //File.WriteAllText(@"data\dmgtable.txt", JsonConvert.SerializeObject(_DammageTable, Formatting.Indented));
             //File.WriteAllText(@"data\costtable.txt", JsonConvert.SerializeObject(_Cost.ToArray(), Formatting.Indented));
             //File.WriteAllText(@"data\gastable.txt", JsonConvert.SerializeObject(_Gas.ToArray(), Formatting.Indented));
+            //File.WriteAllText(@"data\ammotable.txt", JsonConvert.SerializeObject(_Ammo.ToArray(), Formatting.Indented));
             //File.WriteAllText(@"data\aptable.txt", JsonConvert.SerializeObject(_ActionPoint.ToArray(), Formatting.Indented));
             //File.WriteAllText(@"data\movementrangetable.txt", JsonConvert.SerializeObject(_MovementRange.ToArray(), Formatting.Indented));
             //File.WriteAllText(@"data\visionrangetable.txt", JsonConvert.SerializeObject(_VisionRange.ToArray(), Formatting.Indented));
             //File.WriteAllText(@"data\attackrangetable.txt", JsonConvert.SerializeObject(_AttackRange.ToArray(), Formatting.Indented));
             //File.WriteAllText(@"data\traversecosttable.txt", JsonConvert.SerializeObject(_TravelCost, Formatting.Indented));
+            //File.WriteAllText(@"data\defensestartable.txt", JsonConvert.SerializeObject(_DefenseStar.ToArray(), Formatting.Indented));
         }
 
         public static void Load()
@@ -117,11 +134,13 @@ namespace Wartorn.GameData
             _DammageTable = new Dictionary<UnitType, Dictionary<UnitType, int>>();
             _Cost = new Dictionary<UnitType, int>();
             _Gas = new Dictionary<UnitType, int>();
+            _Ammo = new Dictionary<UnitType, int>();
             _ActionPoint = new Dictionary<UnitType, int>();
             _MovementRange = new Dictionary<UnitType, int>();
             _VisionRange = new Dictionary<UnitType, int>();
             _AttackRange = new Dictionary<UnitType, Range>();
             _TravelCost = new Dictionary<MovementType, Dictionary<TerrainType, int>>();
+            _DefenseStar = new Dictionary<TerrainType, int>();
             
             string dmgtable = File.ReadAllText(@"data\dmgtable.txt");
             _DammageTable = JsonConvert.DeserializeObject<Dictionary<UnitType, Dictionary<UnitType, int>>>(dmgtable);
@@ -136,6 +155,12 @@ namespace Wartorn.GameData
             JsonConvert.DeserializeObject<KeyValuePair<UnitType, int>[]>(gastable).ToList().ForEach(kvp =>
             {
                 _Gas.Add(kvp.Key, kvp.Value);
+            });
+
+            string ammotable = File.ReadAllText(@"data\ammotable.txt");
+            JsonConvert.DeserializeObject<KeyValuePair<UnitType, int>[]>(ammotable).ToList().ForEach(kvp =>
+            {
+                _Ammo.Add(kvp.Key, kvp.Value);
             });
 
             string aptable = File.ReadAllText(@"data\aptable.txt");
@@ -164,6 +189,12 @@ namespace Wartorn.GameData
 
             string traversecosttable = File.ReadAllText(@"data\traversecosttable.txt");
             _TravelCost = JsonConvert.DeserializeObject<Dictionary<MovementType, Dictionary<TerrainType, int>>>(traversecosttable);
+
+            string defensestartable = File.ReadAllText(@"data\defensestartable.txt");
+            JsonConvert.DeserializeObject<KeyValuePair<TerrainType, int>[]>(defensestartable).ToList().ForEach(kvp =>
+            {
+                _DefenseStar.Add(kvp.Key, kvp.Value);
+            });
         }
 
         /// <summary>
@@ -179,6 +210,76 @@ namespace Wartorn.GameData
             MovementType movementType = unitType.GetMovementType();
             return _TravelCost[movementType][terrainType];
         }
+
+        /// <summary>
+        /// get the base damage that the defender will receive in ideal condition
+        /// </summary>
+        /// <param name="attacker">the attacking unit</param>
+        /// <param name="defender">the defending unit</param>
+        /// <returns></returns>
+        public static int GetBaseDamage(UnitType attacker, UnitType defender)
+        {
+            return _DammageTable[attacker][defender];
+        }
+
+        public struct CalculatedDamage
+        {
+            public int attackerHP;
+            public int defenderHP;
+            public float damage;
+            public float counterDamage;
+            public CalculatedDamage(int atkhp,int defhp,float dmg,float counterdmg)
+            {
+                attackerHP = atkhp;
+                defenderHP = defhp;
+                damage = dmg;
+                counterDamage = counterdmg;
+            }
+
+            public override string ToString()
+            {
+                return string.Format("{4} damage {0}{4} counterdamage: {1}{4} attackerHP: {2}{4} defenderHP: {3}", damage, counterDamage, attackerHP, defenderHP,Environment.NewLine);
+            }
+        }
+
+        //todo: fix this shit
+        /// <summary>
+        /// calculate the going damage and counter damage between 2 unit on 2 mapcell
+        /// and return resulting hitpoint after the damage exchange
+        /// </summary>
+        /// <param name="attacker"></param>
+        /// <param name="defender"></param>
+        /// <returns></returns>
+        public static CalculatedDamage GetCalculatedDamage(MapCell attacker,MapCell defender)
+        {
+            //damage = base damage * (HP/100)*(- Terrain Bonus)
+            //Damage = Current HP * Base Damage * (1 - Terrain star / 10)
+            //hitpoint = hitpoint - Math.Floor(damage/10)
+
+            int atkHP = attacker.unit.HitPoint;
+            int defHP = defender.unit.HitPoint;
+
+            float damage;
+            float counterDamage;
+
+            //calculate going damage
+            damage = atkHP * GetBaseDamage(attacker.unit.UnitType, defender.unit.UnitType) / 100f * (1 - _DefenseStar[defender.terrain] / 10f);
+            damage = (float)Math.Round(damage, MidpointRounding.AwayFromZero);
+            defHP -= (int)damage;
+
+            //check if the defender is already dead
+            if (defHP<=0)
+            {
+                return new CalculatedDamage(atkHP, 0, damage, 0);
+            }
+
+            //calculate counter damage
+            counterDamage = defHP * GetBaseDamage(defender.unit.UnitType, attacker.unit.UnitType) / 100f * (1 - _DefenseStar[attacker.terrain] / 10f);
+            counterDamage = (float)Math.Round(counterDamage, MidpointRounding.AwayFromZero);
+            atkHP -= (int)counterDamage;
+
+            return new CalculatedDamage(atkHP, defHP, damage, counterDamage);
+        }
         #endregion
 
         #region private field
@@ -187,44 +288,57 @@ namespace Wartorn.GameData
         int hitPoint;
         int actionpoint;
         int fuel;
+        int ammo;
         #endregion
 
         #region property
         public AnimatedEntity Animation { get { return animation; } }
         public UnitType UnitType { get { return unitType; } }
-        public int HitPoint { get { return hitPoint; } }
+        public int HitPoint { get { return hitPoint; } set { hitPoint = value; } }
         public int ActionPoint { get { return actionpoint; } }
         public int Fuel { get { return fuel; } set { fuel = value; } }
+        public int Ammo { get { return ammo; } set { ammo = value; } }
+        public int CapturePoint { get; set; }
         public Owner Owner { get; set; }
-        public int UnitID { get; set; }
         public readonly Guid guid;
 
         #endregion
-        public Unit(UnitType unittype, AnimatedEntity anim,Owner owner,int hp = 100)
+        public Unit(UnitType unittype, AnimatedEntity anim,Owner owner,int hp = 10)
         {
             unitType = unittype;
             animation = anim;
             Owner = owner;
             hitPoint = hp;
             fuel = _Gas[unitType];
+            ammo = _Ammo[unitType];
             actionpoint = _ActionPoint[unitType];
             guid = Guid.NewGuid();
         }
 
-        public int GetBaseDammage(UnitType other)
+        public Range GetAttackkRange()
         {
-            return  _DammageTable[other][unitType];
+            return _AttackRange[unitType];
         }
 
         public void UpdateActionPoint(Command cmd)
         {
             switch (cmd)
             {
+                case Command.None:
+                    actionpoint = _ActionPoint[unitType];
+                    break;
+
+                case Command.Wait:
+                    actionpoint = 0;
+                    break;
                 case Command.Move:
                     actionpoint -= 1;
                     break;
                 case Command.Attack:
-                    actionpoint -= 2;
+                    actionpoint = 0;
+                    break;
+                case Command.Capture:
+                    actionpoint = 0;
                     break;
                 default:
                     break;
@@ -258,6 +372,16 @@ namespace Wartorn.GameData
             Max = max;
             Min = max;
         }
+
+        public bool IsInRange(int value)
+        {
+            return value <= Max && value >= Min;
+        }
+
+        public override string ToString()
+        {
+            return string.Format("{0}->{1}", Min, Max);
+        }
     }
 
     public struct UnitInformation
@@ -281,7 +405,7 @@ namespace Wartorn.GameData
 
     public static class UnitCreationHelper
     {
-        public static Unit Create(UnitType unittype,Owner owner,int hp = 100,AnimationName animation = AnimationName.idle)
+        public static Unit Create(UnitType unittype,Owner owner,int hp = 10,AnimationName animation = AnimationName.idle)
         {
             var result = new Unit(unittype, (AnimatedEntity)CONTENT_MANAGER.animationEntities[unittype.GetSpriteSheetUnit(owner)].Clone(), owner, hp);
             result.Animation.PlayAnimation(animation.ToString());

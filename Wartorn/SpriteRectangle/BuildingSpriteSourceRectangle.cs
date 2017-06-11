@@ -64,17 +64,17 @@ namespace Wartorn.SpriteRectangle
             return BuildingSprite[t];
         }
 
-        public static Rectangle GetSpriteRectangle(BuildingType bt,Owner owner = Owner.None)
+        public static Rectangle GetSpriteRectangle(BuildingType bt, GameData.Owner owner = GameData.Owner.None)
         {
             StringBuilder result = new StringBuilder();
             switch (owner)
             {
-                case Owner.None:
+                case GameData.Owner.None:
                     break;
-                case Owner.Red:
-                case Owner.Blue:
-                case Owner.Green:
-                case Owner.Yellow:
+                case GameData.Owner.Red:
+                case GameData.Owner.Blue:
+                case GameData.Owner.Green:
+                case GameData.Owner.Yellow:
                     result.Append(owner.ToString());
                     result.Append("_");
                     break;
@@ -93,7 +93,7 @@ namespace Wartorn.SpriteRectangle
 
         public static Owner GetOwner(Rectangle r)
         {
-            return (Owner)(r.Y / 96);
+            return (GameData.Owner)(r.Y / 96);
         }
     }
 }

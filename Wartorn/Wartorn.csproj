@@ -41,23 +41,26 @@
   <ItemGroup>
     <Compile Include="Drawing\DirectionArrowRenderer.cs" />
     <Compile Include="Drawing\MovingUnitAnimation.cs" />
-    <Compile Include="DropdownDialog.cs">
+    <Compile Include="Dialog\DropdownDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="DropdownDialog.Designer.cs">
+    <Compile Include="Dialog\DropdownDialog.Designer.cs">
       <DependentUpon>DropdownDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="InputDialog.cs">
+    <Compile Include="Dialog\InputDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="InputDialog.Designer.cs">
+    <Compile Include="Dialog\InputDialog.Designer.cs">
       <DependentUpon>InputDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="CustomJsonConverter.cs" />
+    <Compile Include="GameData\GameStatePacket.cs" />
+    <Compile Include="InputState.cs" />
     <Compile Include="PathFinding\Dijkstra.cs" />
     <Compile Include="PathFinding\DijkstraHelper.cs" />
     <Compile Include="Screens\MainGameScreen\GameScreen - Backup.cs" />
     <Compile Include="Screens\TestConsole.cs" />
+    <Compile Include="SpriteRectangle\BackgroundUnitSpriteSourceRectangle.cs" />
     <Compile Include="SpriteRectangle\BuildingSpriteSourceRectangle.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="CONTENT_MANAGER.cs" />
@@ -92,8 +95,11 @@
     <Compile Include="Screens\RedScreen.cs" />
     <Compile Include="Screens\TestAnimationScreen.cs" />
     <Compile Include="Screens\UnitMoveProtypeScreen.cs" />
+    <Compile Include="SpriteRectangle\BackgroundTerrainSpriteSourceRectangle.cs" />
+    <Compile Include="SpriteRectangle\BuyMenuSpriteSourceRectangle.cs" />
     <Compile Include="SpriteRectangle\CommandSpriteSourceRectangle.cs" />
     <Compile Include="SpriteRectangle\DirectionArrowSpriteSourceRectangle.cs" />
+    <Compile Include="SpriteRectangle\GeneralInfoSpriteSourceRectangle.cs" />
     <Compile Include="SpriteRectangle\UISpriteSheetSourceRectangle.cs" />
     <Compile Include="SpriteRectangle\TerrainSpriteSourceRectangle.cs" />
     <Compile Include="Storage\CompressHelper.cs" />
@@ -165,7 +171,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="DropdownDialog.resx">
+    <EmbeddedResource Include="Dialog\DropdownDialog.resx">
       <DependentUpon>DropdownDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Handler.resx">
@@ -175,7 +181,7 @@
     <Content Include="OpenTK.dll.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <EmbeddedResource Include="InputDialog.resx">
+    <EmbeddedResource Include="Dialog\InputDialog.resx">
       <DependentUpon>InputDialog.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
@@ -187,6 +193,12 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Utility_Project\Utility_Project.csproj">
+      <Project>{DB74E4D4-2EB9-4A34-9FCB-D12501AB5122}</Project>
+      <Name>Utility_Project</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />

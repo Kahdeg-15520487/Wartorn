@@ -23,11 +23,11 @@ namespace StatsBlancer
         private Dictionary<UnitType, Dictionary<UnitType, int>> _DammageTable;
         private Dictionary<UnitType, int> _Cost;
         private Dictionary<UnitType, int> _Gas;
+        private Dictionary<UnitType, int> _Ammo;
         private Dictionary<UnitType, int> _ActionPoint;
         private Dictionary<UnitType, int> _MovementRange;
         private Dictionary<UnitType, int> _VisionRange;
         private Dictionary<UnitType, Range> _AttackRange;
-        private Dictionary<MovementType, Dictionary<TerrainType, int>> _TravelCost;
 
         private List<UnitType> unittypes;
         private List<MovementType> movementtypes;
@@ -38,19 +38,6 @@ namespace StatsBlancer
 
         public UnitEditor()
         {
-            JsonConvert.DefaultSettings = () =>
-            {
-                var settings = new JsonSerializerSettings();
-                settings.Converters.Add(new UnitPairJsonConverter());
-                settings.Converters.Add(new UnitTypeJsonConverter());
-                settings.Converters.Add(new MovementTypeJsonConverter());
-                settings.Converters.Add(new TerrainTypeJsonConverter());
-                settings.Converters.Add(new RangeJsonConverter());
-                settings.Converters.Add(new Dictionary_MovementType_Dictionary_TerrainType_int_JsonConverter());
-                settings.Converters.Add(new Dictionary_UnitType_Dictionary_UnitType_int_JsonConverter());
-                return settings;
-            };
-
             InitializeComponent();
 
             LoadData();
@@ -71,7 +58,7 @@ namespace StatsBlancer
             {
                 foreach (var kvp2 in kvp.Value)
                 {
-                    dataGridView_unitdmg[(int)kvp.Key - 1, (int)kvp2.Key - 1].Value = kvp2.Value;
+                    dataGridView_unitdmg[(int)kvp2.Key - 1, (int)kvp.Key - 1].Value = kvp2.Value;
                 }
             }
 
@@ -85,10 +72,8 @@ namespace StatsBlancer
             textboxs.Add(textBox_rangemin.Name, textBox_rangemin);
             textboxs.Add(textBox_gas.Name, textBox_gas);
             textboxs.Add(textBox_fuelperturn.Name, textBox_fuelperturn);
-            textboxs.Add(textBox_movecostPlain.Name, textBox_movecostPlain);
-            textboxs.Add(textBox_movecostRiver.Name, textBox_movecostRiver);
-            textboxs.Add(textBox_movecostMountain.Name, textBox_movecostMountain);
-            textboxs.Add(textBox_movecostForest.Name, textBox_movecostForest);
+            textboxs.Add(textBox_ammo.Name, textBox_ammo);
+            textboxs.Add(textBox_actionpoint.Name, textBox_actionpoint);
         }
 
         #region load data
@@ -105,10 +90,11 @@ namespace StatsBlancer
             _DammageTable = new Dictionary<UnitType, Dictionary<UnitType, int>>();
             _Cost = new Dictionary<UnitType, int>();
             _Gas = new Dictionary<UnitType, int>();
+            _Ammo = new Dictionary<UnitType, int>();
+            _ActionPoint = new Dictionary<UnitType, int>();
             _MovementRange = new Dictionary<UnitType, int>();
             _VisionRange = new Dictionary<UnitType, int>();
             _AttackRange = new Dictionary<UnitType, Range>();
-            _TravelCost = new Dictionary<MovementType, Dictionary<TerrainType, int>>();
 
             string dmgtable = File.ReadAllText(Path.GetFullPath(@"data\dmgtable.txt"));
             _DammageTable = JsonConvert.DeserializeObject<Dictionary<UnitType, Dictionary<UnitType, int>>>(dmgtable);
@@ -123,6 +109,18 @@ namespace StatsBlancer
             JsonConvert.DeserializeObject<KeyValuePair<UnitType, int>[]>(gastable).ToList().ForEach(kvp =>
             {
                 _Gas.Add(kvp.Key, kvp.Value);
+            });
+
+            string ammotable = File.ReadAllText(@"data\ammotable.txt");
+            JsonConvert.DeserializeObject<KeyValuePair<UnitType, int>[]>(ammotable).ToList().ForEach(kvp =>
+            {
+                _Ammo.Add(kvp.Key, kvp.Value);
+            });
+
+            string aptable = File.ReadAllText(@"data\aptable.txt");
+            JsonConvert.DeserializeObject<KeyValuePair<UnitType, int>[]>(aptable).ToList().ForEach(kvp =>
+            {
+                _ActionPoint.Add(kvp.Key, kvp.Value);
             });
 
             string movrangetable = File.ReadAllText(@"data\movementrangetable.txt");
@@ -142,9 +140,6 @@ namespace StatsBlancer
             {
                 _AttackRange.Add(kvp.Key, kvp.Value);
             });
-
-            string traversecosttable = File.ReadAllText(@"data\traversecosttable.txt");
-            _TravelCost = JsonConvert.DeserializeObject<Dictionary<MovementType, Dictionary<TerrainType, int>>>(traversecosttable);
         }
         #endregion
 
@@ -153,7 +148,6 @@ namespace StatsBlancer
             TextBox textbox = (TextBox)sender;
             if (!Regex.IsMatch(textbox.Text, "^[0-9]+$"))
             {
-                //this.Controls[textbox.Name].Text = "";
                 textboxs[textbox.Name].Text = "0";
             }
         }
@@ -170,10 +164,8 @@ namespace StatsBlancer
             textBox_rangemin.Text = _AttackRange[selectedUnit].Min.ToString();
             textBox_gas.Text = _Gas[selectedUnit].ToString();
             textBox_fuelperturn.Text = "0";
-            textBox_movecostPlain.Text = _TravelCost[selectedUnit.GetMovementType()][TerrainType.Plain].ToString();
-            textBox_movecostRiver.Text = _TravelCost[selectedUnit.GetMovementType()][TerrainType.River].ToString();
-            textBox_movecostMountain.Text = _TravelCost[selectedUnit.GetMovementType()][TerrainType.Mountain].ToString();
-            textBox_movecostForest.Text = _TravelCost[selectedUnit.GetMovementType()][TerrainType.Tree].ToString();
+            textBox_ammo.Text = _Ammo[selectedUnit].ToString();
+            textBox_actionpoint.Text = _ActionPoint[selectedUnit].ToString();
         }
 
         private void button_save_Click(object sender, EventArgs e)
@@ -188,11 +180,8 @@ namespace StatsBlancer
             _VisionRange[selectedUnit] = int.Parse(textBox_vision.Text);
             _AttackRange[selectedUnit] = new Range(int.Parse(textBox_rangemax.Text), int.Parse(textBox_rangemin.Text));
             _Gas[selectedUnit] = int.Parse(textBox_gas.Text);
-
-            _TravelCost[selectedUnit.GetMovementType()][TerrainType.Plain] = int.Parse(textBox_movecostPlain.Text);
-            _TravelCost[selectedUnit.GetMovementType()][TerrainType.River] = int.Parse(textBox_movecostRiver.Text);
-            _TravelCost[selectedUnit.GetMovementType()][TerrainType.Mountain] = int.Parse(textBox_movecostMountain.Text);
-            _TravelCost[selectedUnit.GetMovementType()][TerrainType.Tree] = int.Parse(textBox_movecostForest.Text);
+            _Ammo[selectedUnit] = int.Parse(textBox_ammo.Text);
+            _ActionPoint[selectedUnit] = int.Parse(textBox_actionpoint.Text);
         }
 
         private void button_done_Click(object sender, EventArgs e)
@@ -201,10 +190,11 @@ namespace StatsBlancer
             File.WriteAllText(@"data\dmgtable.txt", JsonConvert.SerializeObject(_DammageTable, Formatting.Indented));
             File.WriteAllText(@"data\costtable.txt", JsonConvert.SerializeObject(_Cost.ToArray(), Formatting.Indented));
             File.WriteAllText(@"data\gastable.txt", JsonConvert.SerializeObject(_Gas.ToArray(), Formatting.Indented));
+            File.WriteAllText(@"data\ammotable.txt", JsonConvert.SerializeObject(_Ammo.ToArray(), Formatting.Indented));
+            File.WriteAllText(@"data\aptable.txt", JsonConvert.SerializeObject(_ActionPoint.ToArray(), Formatting.Indented));
             File.WriteAllText(@"data\movementrangetable.txt", JsonConvert.SerializeObject(_MovementRange.ToArray(), Formatting.Indented));
             File.WriteAllText(@"data\visionrangetable.txt", JsonConvert.SerializeObject(_VisionRange.ToArray(), Formatting.Indented));
             File.WriteAllText(@"data\attackrangetable.txt", JsonConvert.SerializeObject(_AttackRange.ToArray(), Formatting.Indented));
-            File.WriteAllText(@"data\traversecosttable.txt", JsonConvert.SerializeObject(_TravelCost, Formatting.Indented));
         }
 
         private void dataGridView_unitdmg_CellValueChanged(object sender, DataGridViewCellEventArgs e)
@@ -218,7 +208,7 @@ namespace StatsBlancer
                 return;
             }
 
-            if (!int.TryParse(dataGridView_unitdmg[e.ColumnIndex,e.RowIndex].Value.ToString(),out dmg))
+            if (!int.TryParse(dataGridView_unitdmg[e.RowIndex,e.ColumnIndex].Value.ToString(),out dmg))
             {
                 return;
             }

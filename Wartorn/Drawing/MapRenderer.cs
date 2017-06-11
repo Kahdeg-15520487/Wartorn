@@ -48,6 +48,7 @@ namespace Wartorn.Drawing
                     {
                         map[i, j].unit.Animation.Position = curpos;
                         map[i, j].unit.Animation.Draw(gameTime, spriteBatch);
+                        spriteBatch.DrawString(CONTENT_MANAGER.arcadefont, tempmapcell.unit.HitPoint.ToString(), curpos, tempmapcell.unit.Owner == Owner.Red ? Color.Blue : Color.Red, 0f, Vector2.Zero, 0.75f, SpriteEffects.None, LayerDepth.GuiUpper);
                     }
                 }
             }
@@ -119,7 +120,7 @@ namespace Wartorn.Drawing
                 SpriteSheetTerrain result = SpriteSheetTerrain.Road_hor;
                 int nextowner = 0;
                 int nextwater = 0;
-                int nextroadtreemnt = 0;
+                int nextroadForestmnt = 0;
 
                 switch (map.weather)
                 {
@@ -128,15 +129,15 @@ namespace Wartorn.Drawing
                         {
                             case Theme.Normal:
                                 nextwater = 0;
-                                nextroadtreemnt = 0;
+                                nextroadForestmnt = 0;
                                 break;
                             case Theme.Tropical:
                                 nextwater = SpriteSheetTerrain.Desert_Reef - SpriteSheetTerrain.Reef;
-                                nextroadtreemnt = SpriteSheetTerrain.Tropical_Road_hor - SpriteSheetTerrain.Road_hor;
+                                nextroadForestmnt = SpriteSheetTerrain.Tropical_Road_hor - SpriteSheetTerrain.Road_hor;
                                 break;
                             case Theme.Desert:
                                 nextwater = SpriteSheetTerrain.Desert_Reef - SpriteSheetTerrain.Reef;
-                                nextroadtreemnt = SpriteSheetTerrain.Desert_Road_hor - SpriteSheetTerrain.Road_hor;
+                                nextroadForestmnt = SpriteSheetTerrain.Desert_Road_hor - SpriteSheetTerrain.Road_hor;
                                 break;
                             default:
                                 break;
@@ -144,11 +145,11 @@ namespace Wartorn.Drawing
                         break;
                     case Weather.Rain:
                         nextwater = SpriteSheetTerrain.Rain_Reef - SpriteSheetTerrain.Reef;
-                        nextroadtreemnt = SpriteSheetTerrain.Rain_Road_hor - SpriteSheetTerrain.Road_hor;
+                        nextroadForestmnt = SpriteSheetTerrain.Rain_Road_hor - SpriteSheetTerrain.Road_hor;
                         break;
                     case Weather.Snow:
                         nextwater = SpriteSheetTerrain.Snow_Reef - SpriteSheetTerrain.Reef;
-                        nextroadtreemnt = SpriteSheetTerrain.Snow_Road_hor - SpriteSheetTerrain.Road_hor;
+                        nextroadForestmnt = SpriteSheetTerrain.Snow_Road_hor - SpriteSheetTerrain.Road_hor;
                         break;
                     default:
                         break;
@@ -163,19 +164,19 @@ namespace Wartorn.Drawing
 
                         switch (map[pos].owner)
                         {
-                            case Owner.None:
+                            case GameData.Owner.None:
                                 nextowner = 0;
                                 break;
-                            case Owner.Red:
+                            case GameData.Owner.Red:
                                 nextowner = SpriteSheetTerrain.Red_City_Lower - SpriteSheetTerrain.City_Lower;
                                 break;
-                            case Owner.Blue:
+                            case GameData.Owner.Blue:
                                 nextowner = SpriteSheetTerrain.Blue_City_Lower - SpriteSheetTerrain.City_Lower;
                                 break;
-                            case Owner.Green:
+                            case GameData.Owner.Green:
                                 nextowner = SpriteSheetTerrain.Green_City_Lower - SpriteSheetTerrain.City_Lower;
                                 break;
-                            case Owner.Yellow:
+                            case GameData.Owner.Yellow:
                                 nextowner = SpriteSheetTerrain.Yellow_City_Lower - SpriteSheetTerrain.City_Lower;
                                 break;
                             default:
@@ -270,7 +271,7 @@ namespace Wartorn.Drawing
 
 
 
-                                map[pos].terrainLower = result.Next(nextroadtreemnt);
+                                map[pos].terrainLower = result.Next(nextroadForestmnt);
                                 map[pos].terrainbase = SpriteSheetTerrain.Plain;
                                 result = SpriteSheetTerrain.River_hor;
                                 break;
@@ -359,7 +360,7 @@ namespace Wartorn.Drawing
 
 
 
-                                map[pos].terrainLower = result.Next(nextroadtreemnt);
+                                map[pos].terrainLower = result.Next(nextroadForestmnt);
                                 map[pos].terrainbase = SpriteSheetTerrain.Plain;
                                 result = SpriteSheetTerrain.Road_hor;
                                 break;
@@ -368,7 +369,7 @@ namespace Wartorn.Drawing
                                 var tempterrainbase = map[pos].terrainbase;
                                 map[pos].ClearRenderData();
                                 map[pos].terrainbase = tempterrainbase;
-                                map[pos].terrainLower = SpriteSheetTerrain.Bridge_hor.Next(nextroadtreemnt);
+                                map[pos].terrainLower = SpriteSheetTerrain.Bridge_hor.Next(nextroadForestmnt);
 
                                 up = pos.GetNearbyPoint(Direction.North);
                                 down = pos.GetNearbyPoint(Direction.South);
@@ -378,23 +379,23 @@ namespace Wartorn.Drawing
 
                                 if (isUp && isDown)
                                 {
-                                    map[pos].terrainLower = SpriteSheetTerrain.Bridge_ver.Next(nextroadtreemnt);
+                                    map[pos].terrainLower = SpriteSheetTerrain.Bridge_ver.Next(nextroadForestmnt);
                                 }
                                 break;
 
                             case TerrainType.Plain:
                                 map[pos].ClearRenderData();
-                                map[pos].terrainbase = SpriteSheetTerrain.Plain.Next(nextroadtreemnt);
+                                map[pos].terrainbase = SpriteSheetTerrain.Plain.Next(nextroadForestmnt);
                                 break;
 
                             //todo: fix this shit
-                            case TerrainType.Tree:
+                            case TerrainType.Forest:
                                 //desert ko co forest
                                 if (map.theme == Theme.Desert)
                                 {
                                     map[pos].ClearRenderData();
                                     map[pos].terrainbase = SpriteSheetTerrain.Desert_Plain;
-                                    map[pos].terrainLower = SpriteSheetTerrain.Desert_Tree;
+                                    map[pos].terrainLower = SpriteSheetTerrain.Desert_Forest;
                                     break;
                                 }
 
@@ -403,17 +404,17 @@ namespace Wartorn.Drawing
                                  * T4 T5 T6
                                  * T7 T8 T9
                                  * 
-                                 * kiem tra xem o t5 co phai la tree khong va co phai da xu li hay k
-                                 * da xu li nghia la terrainLower cua no khong phai la tree.
-                                 * sau do ktra t2 va t4. neu la tree thi 
+                                 * kiem tra xem o t5 co phai la Forest khong va co phai da xu li hay k
+                                 * da xu li nghia la terrainLower cua no khong phai la Forest.
+                                 * sau do ktra t2 va t4. neu la Forest thi 
                                  * 
                                  */
 
-                                //kiem tra xem co phai la tree 1x1 hoac none hay khong
+                                //kiem tra xem co phai la Forest 1x1 hoac none hay khong
                                 //neu co thi xu li tu dau
                                 //neu khong thi thoat vi da xu li roi
-                                if (map[pos].terrainLower != SpriteSheetTerrain.Tree_top_left.Next(nextroadtreemnt)
-                                 && map[pos].terrainLower != SpriteSheetTerrain.Tree.Next(nextroadtreemnt)
+                                if (map[pos].terrainLower != SpriteSheetTerrain.Forest_top_left.Next(nextroadForestmnt)
+                                 && map[pos].terrainLower != SpriteSheetTerrain.Forest.Next(nextroadForestmnt)
                                  && map[pos].terrainLower != SpriteSheetTerrain.None)
                                 {
                                     break;
@@ -434,10 +435,10 @@ namespace Wartorn.Drawing
                                 Point right2 = right.GetNearbyPoint(Direction.East);
                                 Point down2 = down.GetNearbyPoint(Direction.South);
 
-                                bool isDownright = (map[downright]?.terrain == TerrainType.Tree);// && (map[downright]?.terrainLower == SpriteSheetTerrain.Tree.Next(nextroadtreemnt));
-                                bool isDownright2 = (map[downright2]?.terrain == TerrainType.Tree);// && (map[downright2]?.terrainLower == SpriteSheetTerrain.Tree.Next(nextroadtreemnt));
-                                isRight = (map[right]?.terrain == TerrainType.Tree);// && (map[right]?.terrainLower == SpriteSheetTerrain.Tree.Next(nextroadtreemnt));
-                                isDown = (map[down]?.terrain == TerrainType.Tree);// && (map[down]?.terrainLower == SpriteSheetTerrain.Tree.Next(nextroadtreemnt));
+                                bool isDownright = (map[downright]?.terrain == TerrainType.Forest);// && (map[downright]?.terrainLower == SpriteSheetTerrain.Forest.Next(nextroadForestmnt));
+                                bool isDownright2 = (map[downright2]?.terrain == TerrainType.Forest);// && (map[downright2]?.terrainLower == SpriteSheetTerrain.Forest.Next(nextroadForestmnt));
+                                isRight = (map[right]?.terrain == TerrainType.Forest);// && (map[right]?.terrainLower == SpriteSheetTerrain.Forest.Next(nextroadForestmnt));
+                                isDown = (map[down]?.terrain == TerrainType.Forest);// && (map[down]?.terrainLower == SpriteSheetTerrain.Forest.Next(nextroadForestmnt));
 
                                 bool is2x2 = false;
                                 bool is3x3 = false;
@@ -454,10 +455,10 @@ namespace Wartorn.Drawing
                                 //check if 3x3:
                                 if (is2x2 && isDownright2)
                                 {
-                                    if (map[right2]?.terrain == TerrainType.Tree
-                                     && map[down2]?.terrain == TerrainType.Tree
-                                     && map[downright2.GetNearbyPoint(Direction.North)]?.terrain == TerrainType.Tree
-                                     && map[downright2.GetNearbyPoint(Direction.West)]?.terrain == TerrainType.Tree)
+                                    if (map[right2]?.terrain == TerrainType.Forest
+                                     && map[down2]?.terrain == TerrainType.Forest
+                                     && map[downright2.GetNearbyPoint(Direction.North)]?.terrain == TerrainType.Forest
+                                     && map[downright2.GetNearbyPoint(Direction.West)]?.terrain == TerrainType.Forest)
                                     {
                                         is3x3 = true;
                                     }
@@ -465,11 +466,11 @@ namespace Wartorn.Drawing
 
                                 //it's render time!
 
-                                //single tree
+                                //single Forest
                                 if (map[pos].terrainbase == SpriteSheetTerrain.None)
                                 {
-                                    map[pos].terrainbase = SpriteSheetTerrain.Plain.Next(nextroadtreemnt);
-                                    map[pos].terrainLower = SpriteSheetTerrain.Tree.Next(nextroadtreemnt);
+                                    map[pos].terrainbase = SpriteSheetTerrain.Plain.Next(nextroadForestmnt);
+                                    map[pos].terrainLower = SpriteSheetTerrain.Forest.Next(nextroadForestmnt);
                                 }
 
                                 if (is3x3)
@@ -477,40 +478,40 @@ namespace Wartorn.Drawing
                                     center = downright;
 
                                     //laydown the base
-                                    map[center.GetNearbyPoint(Direction.NorthWest)].terrainbase = SpriteSheetTerrain.Plain.Next(nextroadtreemnt);
-                                    map[center.GetNearbyPoint(Direction.North)].terrainbase = SpriteSheetTerrain.Plain.Next(nextroadtreemnt);
-                                    map[center.GetNearbyPoint(Direction.NorthEast)].terrainbase = SpriteSheetTerrain.Plain.Next(nextroadtreemnt);
-                                    map[center.GetNearbyPoint(Direction.West)].terrainbase = SpriteSheetTerrain.Plain.Next(nextroadtreemnt);
-                                    map[center].terrainbase = SpriteSheetTerrain.Plain.Next(nextroadtreemnt);
-                                    map[center.GetNearbyPoint(Direction.East)].terrainbase = SpriteSheetTerrain.Plain.Next(nextroadtreemnt);
-                                    map[center.GetNearbyPoint(Direction.SouthWest)].terrainbase = SpriteSheetTerrain.Plain.Next(nextroadtreemnt);
-                                    map[center.GetNearbyPoint(Direction.South)].terrainbase = SpriteSheetTerrain.Plain.Next(nextroadtreemnt);
-                                    map[center.GetNearbyPoint(Direction.SouthEast)].terrainbase = SpriteSheetTerrain.Plain.Next(nextroadtreemnt);
+                                    map[center.GetNearbyPoint(Direction.NorthWest)].terrainbase = SpriteSheetTerrain.Plain.Next(nextroadForestmnt);
+                                    map[center.GetNearbyPoint(Direction.North)].terrainbase = SpriteSheetTerrain.Plain.Next(nextroadForestmnt);
+                                    map[center.GetNearbyPoint(Direction.NorthEast)].terrainbase = SpriteSheetTerrain.Plain.Next(nextroadForestmnt);
+                                    map[center.GetNearbyPoint(Direction.West)].terrainbase = SpriteSheetTerrain.Plain.Next(nextroadForestmnt);
+                                    map[center].terrainbase = SpriteSheetTerrain.Plain.Next(nextroadForestmnt);
+                                    map[center.GetNearbyPoint(Direction.East)].terrainbase = SpriteSheetTerrain.Plain.Next(nextroadForestmnt);
+                                    map[center.GetNearbyPoint(Direction.SouthWest)].terrainbase = SpriteSheetTerrain.Plain.Next(nextroadForestmnt);
+                                    map[center.GetNearbyPoint(Direction.South)].terrainbase = SpriteSheetTerrain.Plain.Next(nextroadForestmnt);
+                                    map[center.GetNearbyPoint(Direction.SouthEast)].terrainbase = SpriteSheetTerrain.Plain.Next(nextroadForestmnt);
 
                                     //place the tile
-                                    map[center.GetNearbyPoint(Direction.NorthWest)].terrainLower = SpriteSheetTerrain.Tree_up_left.Next(nextroadtreemnt);
-                                    map[center.GetNearbyPoint(Direction.North)].terrainLower = SpriteSheetTerrain.Tree_up_middle.Next(nextroadtreemnt);
-                                    map[center.GetNearbyPoint(Direction.NorthEast)].terrainLower = SpriteSheetTerrain.Tree_up_right.Next(nextroadtreemnt);
-                                    map[center.GetNearbyPoint(Direction.West)].terrainLower = SpriteSheetTerrain.Tree_middle_left.Next(nextroadtreemnt);
-                                    map[center].terrainLower = SpriteSheetTerrain.Tree_middle_middle.Next(nextroadtreemnt);
-                                    map[center.GetNearbyPoint(Direction.East)].terrainLower = SpriteSheetTerrain.Tree_middle_right.Next(nextroadtreemnt);
-                                    map[center.GetNearbyPoint(Direction.SouthWest)].terrainLower = SpriteSheetTerrain.Tree_down_left.Next(nextroadtreemnt);
-                                    map[center.GetNearbyPoint(Direction.South)].terrainLower = SpriteSheetTerrain.Tree_down_middle.Next(nextroadtreemnt);
-                                    map[center.GetNearbyPoint(Direction.SouthEast)].terrainLower = SpriteSheetTerrain.Tree_down_right.Next(nextroadtreemnt);
+                                    map[center.GetNearbyPoint(Direction.NorthWest)].terrainLower = SpriteSheetTerrain.Forest_up_left.Next(nextroadForestmnt);
+                                    map[center.GetNearbyPoint(Direction.North)].terrainLower = SpriteSheetTerrain.Forest_up_middle.Next(nextroadForestmnt);
+                                    map[center.GetNearbyPoint(Direction.NorthEast)].terrainLower = SpriteSheetTerrain.Forest_up_right.Next(nextroadForestmnt);
+                                    map[center.GetNearbyPoint(Direction.West)].terrainLower = SpriteSheetTerrain.Forest_middle_left.Next(nextroadForestmnt);
+                                    map[center].terrainLower = SpriteSheetTerrain.Forest_middle_middle.Next(nextroadForestmnt);
+                                    map[center.GetNearbyPoint(Direction.East)].terrainLower = SpriteSheetTerrain.Forest_middle_right.Next(nextroadForestmnt);
+                                    map[center.GetNearbyPoint(Direction.SouthWest)].terrainLower = SpriteSheetTerrain.Forest_down_left.Next(nextroadForestmnt);
+                                    map[center.GetNearbyPoint(Direction.South)].terrainLower = SpriteSheetTerrain.Forest_down_middle.Next(nextroadForestmnt);
+                                    map[center.GetNearbyPoint(Direction.SouthEast)].terrainLower = SpriteSheetTerrain.Forest_down_right.Next(nextroadForestmnt);
                                     break;
                                 }
 
                                 if (is2x2)
                                 {
-                                    map[pos].terrainbase = SpriteSheetTerrain.Plain.Next(nextroadtreemnt);
-                                    map[right].terrainbase = SpriteSheetTerrain.Plain.Next(nextroadtreemnt);
-                                    map[down].terrainbase = SpriteSheetTerrain.Plain.Next(nextroadtreemnt);
-                                    map[downright].terrainbase = SpriteSheetTerrain.Plain.Next(nextroadtreemnt);
+                                    map[pos].terrainbase = SpriteSheetTerrain.Plain.Next(nextroadForestmnt);
+                                    map[right].terrainbase = SpriteSheetTerrain.Plain.Next(nextroadForestmnt);
+                                    map[down].terrainbase = SpriteSheetTerrain.Plain.Next(nextroadForestmnt);
+                                    map[downright].terrainbase = SpriteSheetTerrain.Plain.Next(nextroadForestmnt);
 
-                                    map[pos].terrainLower = SpriteSheetTerrain.Tree_top_left.Next(nextroadtreemnt);
-                                    map[right].terrainLower = SpriteSheetTerrain.Tree_top_right.Next(nextroadtreemnt);
-                                    map[down].terrainLower = SpriteSheetTerrain.Tree_bottom_left.Next(nextroadtreemnt);
-                                    map[downright].terrainLower = SpriteSheetTerrain.Tree_bottom_right.Next(nextroadtreemnt);
+                                    map[pos].terrainLower = SpriteSheetTerrain.Forest_top_left.Next(nextroadForestmnt);
+                                    map[right].terrainLower = SpriteSheetTerrain.Forest_top_right.Next(nextroadForestmnt);
+                                    map[down].terrainLower = SpriteSheetTerrain.Forest_bottom_left.Next(nextroadForestmnt);
+                                    map[downright].terrainLower = SpriteSheetTerrain.Forest_bottom_right.Next(nextroadForestmnt);
                                     break;
                                 }
                                 break;
@@ -557,7 +558,7 @@ namespace Wartorn.Drawing
                                 break;
 
                             case TerrainType.MissileSilo:
-                                map[pos].terrainbase = SpriteSheetTerrain.Plain.Next(nextroadtreemnt);
+                                map[pos].terrainbase = SpriteSheetTerrain.Plain.Next(nextroadForestmnt);
                                 map[pos].terrainLower = SpriteSheetTerrain.Missile_Silo_Lower;
                                 try
                                 {
@@ -567,7 +568,7 @@ namespace Wartorn.Drawing
                                 break;
 
                             case TerrainType.MissileSiloLaunched:
-                                map[pos].terrainbase = SpriteSheetTerrain.Plain.Next(nextroadtreemnt);
+                                map[pos].terrainbase = SpriteSheetTerrain.Plain.Next(nextroadForestmnt);
                                 map[pos].terrainLower = SpriteSheetTerrain.Missile_Silo_Launched;
                                 try {
                                     map[pos.GetNearbyPoint(Direction.North)].terrainUpper = SpriteSheetTerrain.None;
@@ -576,7 +577,7 @@ namespace Wartorn.Drawing
                                 break;
 
                             case TerrainType.City:
-                                map[pos].terrainbase = SpriteSheetTerrain.Plain.Next(nextroadtreemnt);
+                                map[pos].terrainbase = SpriteSheetTerrain.Plain.Next(nextroadForestmnt);
                                 map[pos].terrainLower = SpriteSheetTerrain.City_Lower.Next(nextowner);
                                 try
                                 {
@@ -585,7 +586,7 @@ namespace Wartorn.Drawing
                                 catch { }
                                 break;
                             case TerrainType.Factory:
-                                map[pos].terrainbase = SpriteSheetTerrain.Plain.Next(nextroadtreemnt);
+                                map[pos].terrainbase = SpriteSheetTerrain.Plain.Next(nextroadForestmnt);
                                 map[pos].terrainLower = SpriteSheetTerrain.Factory.Next(nextowner);
                                 try
                                 {
@@ -594,7 +595,7 @@ namespace Wartorn.Drawing
                                 catch { }
                                 break;
                             case TerrainType.AirPort:
-                                map[pos].terrainbase = SpriteSheetTerrain.Plain.Next(nextroadtreemnt);
+                                map[pos].terrainbase = SpriteSheetTerrain.Plain.Next(nextroadForestmnt);
                                 map[pos].terrainLower = SpriteSheetTerrain.AirPort_Lower.Next(nextowner);
                                 try
                                 {
@@ -603,7 +604,7 @@ namespace Wartorn.Drawing
                                 catch { }
                                 break;
                             case TerrainType.Harbor:
-                                map[pos].terrainbase = SpriteSheetTerrain.Plain.Next(nextroadtreemnt);
+                                map[pos].terrainbase = SpriteSheetTerrain.Plain.Next(nextroadForestmnt);
                                 map[pos].terrainLower = SpriteSheetTerrain.Harbor_Lower.Next(nextowner);
                                 try
                                 {
@@ -612,7 +613,7 @@ namespace Wartorn.Drawing
                                 catch { }
                                 break;
                             case TerrainType.Radar:
-                                map[pos].terrainbase = SpriteSheetTerrain.Plain.Next(nextroadtreemnt);
+                                map[pos].terrainbase = SpriteSheetTerrain.Plain.Next(nextroadForestmnt);
                                 map[pos].terrainLower = SpriteSheetTerrain.Radar_Lower.Next(nextowner);
                                 try
                                 {
@@ -621,7 +622,7 @@ namespace Wartorn.Drawing
                                 catch { }
                                 break;
                             case TerrainType.SupplyBase:
-                                map[pos].terrainbase = SpriteSheetTerrain.Plain.Next(nextroadtreemnt);
+                                map[pos].terrainbase = SpriteSheetTerrain.Plain.Next(nextroadForestmnt);
                                 map[pos].terrainLower = SpriteSheetTerrain.SupplyBase_Lower.Next(nextowner);
                                 try
                                 {
@@ -632,22 +633,22 @@ namespace Wartorn.Drawing
                             case TerrainType.HQ:
                                 switch (map[pos].owner)
                                 {
-                                    case Owner.Red:
+                                    case GameData.Owner.Red:
                                         nextowner = 0;
                                         break;
-                                    case Owner.Blue:
+                                    case GameData.Owner.Blue:
                                         nextowner = SpriteSheetTerrain.Blue_Headquarter_Lower - SpriteSheetTerrain.Red_Headquarter_Lower;
                                         break;
-                                    case Owner.Green:
+                                    case GameData.Owner.Green:
                                         nextowner = SpriteSheetTerrain.Green_Headquarter_Lower - SpriteSheetTerrain.Red_Headquarter_Lower;
                                         break;
-                                    case Owner.Yellow:
+                                    case GameData.Owner.Yellow:
                                         nextowner = SpriteSheetTerrain.Yellow_Headquarter_Lower - SpriteSheetTerrain.Red_Headquarter_Lower;
                                         break;
                                     default:
                                         break;
                                 }
-                                map[pos].terrainbase = SpriteSheetTerrain.Plain.Next(nextroadtreemnt);
+                                map[pos].terrainbase = SpriteSheetTerrain.Plain.Next(nextroadForestmnt);
                                 map[pos].terrainLower = SpriteSheetTerrain.Red_Headquarter_Lower.Next(nextowner);
                                 try
                                 {

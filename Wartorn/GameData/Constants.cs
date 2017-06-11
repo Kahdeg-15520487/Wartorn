@@ -17,7 +17,7 @@ namespace Wartorn.GameData
         Road,
         Bridge,
         Plain,
-        Tree,
+        Forest,
         Mountain,
 
         //neutral
@@ -58,7 +58,7 @@ namespace Wartorn.GameData
 
         //sea
         Lander,
-        Cruise,
+        Cruiser,
         Submarine,
         Battleship
     }
@@ -103,16 +103,18 @@ namespace Wartorn.GameData
         campaign
     }
 
+    [Flags]
     public enum Command
     {
-        Wait,
-        Attack,
-        Capture,
-        Load,
-        Drop,
-        Rise,
-        Dive,
-        Supply,
-        Move
+        None = 0,
+        Wait = 1,
+        Attack = 2,
+        Capture = 4,
+        Load = 8,
+        Drop = 16,
+        Rise = 32,
+        Dive = 64,
+        Supply = 128,
+        Move = 256
     }
 }

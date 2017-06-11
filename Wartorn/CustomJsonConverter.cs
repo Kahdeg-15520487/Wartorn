@@ -214,9 +214,8 @@ namespace Wartorn
                 SpriteSheetTerrain terrainbase = SpriteSheetTerrain.None;
                 SpriteSheetTerrain terrainLower = SpriteSheetTerrain.None;
                 SpriteSheetTerrain terrainUpper = SpriteSheetTerrain.None;
-                Owner owner = Owner.None;
+                GameData.Owner owner = GameData.Owner.None;
                 Unit unit = null;
-                int unitid = 0;
 
                 while (reader.Read())
                 {
@@ -237,7 +236,7 @@ namespace Wartorn
                             terrain = (serializer.Deserialize<string>(reader)).ToEnum<TerrainType>();
                             break;
                         case "owner":
-                            owner = (serializer.Deserialize<string>(reader)).ToEnum<Owner>();
+                            owner = (serializer.Deserialize<string>(reader)).ToEnum<GameData.Owner>();
                             break;
                         case "unit":
                             unit = serializer.Deserialize<Unit>(reader);
@@ -292,7 +291,7 @@ namespace Wartorn
             public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
             {
                 UnitType unittype = UnitType.None;
-                Owner owner = Owner.None;
+                GameData.Owner owner = GameData.Owner.None;
                 int hp = 0;
 
                 bool gotUnittype = false;
@@ -318,7 +317,7 @@ namespace Wartorn
                             gotUnittype = true;
                             break;
                         case "Owner":
-                            owner = (serializer.Deserialize<string>(reader)).ToEnum<Owner>();
+                            owner = (serializer.Deserialize<string>(reader)).ToEnum<GameData.Owner>();
                             gotOwner = true;
                             break;
                         case "HP":

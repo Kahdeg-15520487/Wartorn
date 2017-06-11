@@ -26,20 +26,20 @@ namespace Wartorn.SpriteRectangle
         //Desert Water
         Desert_Reef, Desert_Sea, Desert_River_ver, Desert_River_hor, Desert_River_Inter3_right, Desert_River_Inter3_left, Desert_River_Inter3_up, Desert_River_Inter3_down, Desert_River_Cross, Desert_River_turn_up_right, Desert_River_turn_up_left, Desert_River_turn_down_right, Desert_River_turn_down_left, Desert_River_Flow_left, Desert_River_Flow_up, Desert_River_Flow_down, Desert_River_Flow_right, Desert_Coast_up_left, Desert_Coast_up, Desert_Coast_up_right, Desert_Coast_left, Desert_Coast_right, Desert_Coast_down_left, Desert_Coast_down, Desert_Coast_down_right, Desert_Cliff_up_left, Desert_Cliff_up, Desert_Cliff_up_right, Desert_Cliff_down_left, Desert_Cliff_down, Desert_Cliff_down_right, Desert_Isle_Coast_up_left, Desert_Isle_Coast_up_right, Desert_Isle_Coast_side_right_up, Desert_Isle_Coast_side_right_down, Desert_Isle_Coast_side_left_up, Desert_Isle_Coast_side_left_down, Desert_Isle_Coast_down_left, Desert_Isle_Coast_down_right, Desert_Isle_Cliff_down_left, Desert_Isle_Cliff_down_right, Desert_Isle_Cliff_up_left, Desert_Isle_Cliff_up_right, Desert_Cliff_left, Desert_Cliff_right, Desert_Lone_Coast_up_left, Desert_Lone_Coast_up_right, Desert_Lone_Coast_down_left, Desert_Lone_Coast_down_right, Desert_Lone_Coast_up, Desert_Lone_Coast_down, Desert_Lone_Coast_right, Desert_Lone_Coast_left, Desert_Invert_Coast_down_left, Desert_Invert_Coast_down_right, Desert_Invert_Coast_up_left, Desert_Invert_Coast_up_right, Desert_Invert_Coast_left_down, Desert_Invert_Coast_left_up, Desert_Invert_Coast_right_up, Desert_Invert_Coast_right_down,
 
-        //Normal Road, Tree and Mountain
-        Road_turn_down_right, Road_turn_down_left, Road_Inter3_right, Road_Inter3_down, Road_hor, Road_Cross, Bridge_hor, Road_turn_up_right, Road_turn_up_left, Road_Inter3_up, Road_Inter3_left, Road_ver, Plain, Bridge_ver, Tree, Tree_top_left, Tree_top_right, Tree_bottom_left, Tree_bottom_right, Tree_up_left, Tree_up_middle, Tree_up_right, Tree_middle_left, Tree_middle_middle, Tree_middle_right, Tree_down_left, Tree_down_middle, Tree_down_right, Mountain_High_Upper, Mountain_High_Lower, Mountain_Low,
+        //Normal Road, Forest and Mountain
+        Road_turn_down_right, Road_turn_down_left, Road_Inter3_right, Road_Inter3_down, Road_hor, Road_Cross, Bridge_hor, Road_turn_up_right, Road_turn_up_left, Road_Inter3_up, Road_Inter3_left, Road_ver, Plain, Bridge_ver, Forest, Forest_top_left, Forest_top_right, Forest_bottom_left, Forest_bottom_right, Forest_up_left, Forest_up_middle, Forest_up_right, Forest_middle_left, Forest_middle_middle, Forest_middle_right, Forest_down_left, Forest_down_middle, Forest_down_right, Mountain_High_Upper, Mountain_High_Lower, Mountain_Low,
 
-        //Tropical Road, Tree and Mountain
-        Tropical_Road_turn_down_right, Tropical_Road_turn_down_left, Tropical_Road_Inter3_right, Tropical_Road_Inter3_down, Tropical_Road_hor, Tropical_Road_Cross, Tropical_Bridge_hor, Tropical_Road_turn_up_right, Tropical_Road_turn_up_left, Tropical_Road_Inter3_up, Tropical_Road_Inter3_left, Tropical_Road_ver, Tropical_Plain, Tropical_Bridge_ver, Tropical_Tree, Tropical_Tree_top_left, Tropical_Tree_top_right, Tropical_Tree_bottom_left, Tropical_Tree_bottom_right, Tropical_Tree_up_left, Tropical_Tree_up_middle, Tropical_Tree_up_right, Tropical_Tree_middle_left, Tropical_Tree_middle_middle, Tropical_Tree_middle_right, Tropical_Tree_down_left, Tropical_Tree_down_middle, Tropical_Tree_down_right, Tropical_Mountain_High_Upper, Tropical_Mountain_High_Lower, Tropical_Mountain_Low,
+        //Tropical Road, Forest and Mountain
+        Tropical_Road_turn_down_right, Tropical_Road_turn_down_left, Tropical_Road_Inter3_right, Tropical_Road_Inter3_down, Tropical_Road_hor, Tropical_Road_Cross, Tropical_Bridge_hor, Tropical_Road_turn_up_right, Tropical_Road_turn_up_left, Tropical_Road_Inter3_up, Tropical_Road_Inter3_left, Tropical_Road_ver, Tropical_Plain, Tropical_Bridge_ver, Tropical_Forest, Tropical_Forest_top_left, Tropical_Forest_top_right, Tropical_Forest_bottom_left, Tropical_Forest_bottom_right, Tropical_Forest_up_left, Tropical_Forest_up_middle, Tropical_Forest_up_right, Tropical_Forest_middle_left, Tropical_Forest_middle_middle, Tropical_Forest_middle_right, Tropical_Forest_down_left, Tropical_Forest_down_middle, Tropical_Forest_down_right, Tropical_Mountain_High_Upper, Tropical_Mountain_High_Lower, Tropical_Mountain_Low,
 
-        //Rain Road, Tree and Mountain
-        Rain_Road_turn_down_right, Rain_Road_turn_down_left, Rain_Road_Inter3_right, Rain_Road_Inter3_down, Rain_Road_hor, Rain_Road_Cross, Rain_Bridge_hor, Rain_Road_turn_up_right, Rain_Road_turn_up_left, Rain_Road_Inter3_up, Rain_Road_Inter3_left, Rain_Road_ver, Rain_Plain, Rain_Bridge_ver, Rain_Tree, Rain_Tree_top_left, Rain_Tree_top_right, Rain_Tree_bottom_left, Rain_Tree_bottom_right, Rain_Tree_up_left, Rain_Tree_up_middle, Rain_Tree_up_right, Rain_Tree_middle_left, Rain_Tree_middle_middle, Rain_Tree_middle_right, Rain_Tree_down_left, Rain_Tree_down_middle, Rain_Tree_down_right, Rain_Mountain_High_Upper, Rain_Mountain_High_Lower, Rain_Mountain_Low,
+        //Rain Road, Forest and Mountain
+        Rain_Road_turn_down_right, Rain_Road_turn_down_left, Rain_Road_Inter3_right, Rain_Road_Inter3_down, Rain_Road_hor, Rain_Road_Cross, Rain_Bridge_hor, Rain_Road_turn_up_right, Rain_Road_turn_up_left, Rain_Road_Inter3_up, Rain_Road_Inter3_left, Rain_Road_ver, Rain_Plain, Rain_Bridge_ver, Rain_Forest, Rain_Forest_top_left, Rain_Forest_top_right, Rain_Forest_bottom_left, Rain_Forest_bottom_right, Rain_Forest_up_left, Rain_Forest_up_middle, Rain_Forest_up_right, Rain_Forest_middle_left, Rain_Forest_middle_middle, Rain_Forest_middle_right, Rain_Forest_down_left, Rain_Forest_down_middle, Rain_Forest_down_right, Rain_Mountain_High_Upper, Rain_Mountain_High_Lower, Rain_Mountain_Low,
 
-        //Snow Road, Tree and Mountain
-        Snow_Road_turn_down_right, Snow_Road_turn_down_left, Snow_Road_Inter3_right, Snow_Road_Inter3_down, Snow_Road_hor, Snow_Road_Cross, Snow_Bridge_hor, Snow_Road_turn_up_right, Snow_Road_turn_up_left, Snow_Road_Inter3_up, Snow_Road_Inter3_left, Snow_Road_ver, Snow_Plain, Snow_Bridge_ver, Snow_Tree, Snow_Tree_top_left, Snow_Tree_top_right, Snow_Tree_bottom_left, Snow_Tree_bottom_right, Snow_Tree_up_left, Snow_Tree_up_middle, Snow_Tree_up_right, Snow_Tree_middle_left, Snow_Tree_middle_middle, Snow_Tree_middle_right, Snow_Tree_down_left, Snow_Tree_down_middle, Snow_Tree_down_right, Snow_Mountain_High_Upper, Snow_Mountain_High_Lower, Snow_Mountain_Low,
+        //Snow Road, Forest and Mountain
+        Snow_Road_turn_down_right, Snow_Road_turn_down_left, Snow_Road_Inter3_right, Snow_Road_Inter3_down, Snow_Road_hor, Snow_Road_Cross, Snow_Bridge_hor, Snow_Road_turn_up_right, Snow_Road_turn_up_left, Snow_Road_Inter3_up, Snow_Road_Inter3_left, Snow_Road_ver, Snow_Plain, Snow_Bridge_ver, Snow_Forest, Snow_Forest_top_left, Snow_Forest_top_right, Snow_Forest_bottom_left, Snow_Forest_bottom_right, Snow_Forest_up_left, Snow_Forest_up_middle, Snow_Forest_up_right, Snow_Forest_middle_left, Snow_Forest_middle_middle, Snow_Forest_middle_right, Snow_Forest_down_left, Snow_Forest_down_middle, Snow_Forest_down_right, Snow_Mountain_High_Upper, Snow_Mountain_High_Lower, Snow_Mountain_Low,
 
-        //Desert Road, Tree and Mountain
-        Desert_Road_turn_down_right, Desert_Road_turn_down_left, Desert_Road_Inter3_right, Desert_Road_Inter3_down, Desert_Road_hor, Desert_Road_Cross, Desert_Bridge_hor, Desert_Road_turn_up_right, Desert_Road_turn_up_left, Desert_Road_Inter3_up, Desert_Road_Inter3_left, Desert_Road_ver, Desert_Plain, Desert_Bridge_ver, Desert_Tree, Desert_Mountain_High_Upper, Desert_Mountain_High_Lower,
+        //Desert Road, Forest and Mountain
+        Desert_Road_turn_down_right, Desert_Road_turn_down_left, Desert_Road_Inter3_right, Desert_Road_Inter3_down, Desert_Road_hor, Desert_Road_Cross, Desert_Bridge_hor, Desert_Road_turn_up_right, Desert_Road_turn_up_left, Desert_Road_Inter3_up, Desert_Road_Inter3_left, Desert_Road_ver, Desert_Plain, Desert_Bridge_ver, Desert_Forest, Desert_Mountain_High_Upper, Desert_Mountain_High_Lower,
 
         //Neutral Building
         City_Upper, City_Lower, Factory, AirPort_Upper, AirPort_Lower, Harbor_Upper, Harbor_Lower, Radar_Upper, Radar_Lower, SupplyBase_Upper, SupplyBase_Lower, Missile_Silo_Upper, Missile_Silo_Lower, Missile_Silo_Launched,
@@ -84,7 +84,7 @@ namespace Wartorn.SpriteRectangle
                 row++;
             }
 
-            //road,tree,mountain
+            //road,Forest,mountain
             for (int i = 0; i < 4; i++)
             {
                 for (int j = 0; j < 31; j++)
@@ -96,7 +96,7 @@ namespace Wartorn.SpriteRectangle
                 row++;
             }
 
-            //desert road,tree,mountain
+            //desert road,Forest,mountain
             for (int i = 0; i < 17; i++)
             {
                 TerrainSprite.Add((SpriteSheetTerrain)count, new Rectangle(i * 48, row * 48, 48, 48));
@@ -175,8 +175,8 @@ namespace Wartorn.SpriteRectangle
                 case TerrainType.Road:
                     temp = TerrainSprite[SpriteSheetTerrain.Road_hor];
                     break;
-                case TerrainType.Tree:
-                    temp = TerrainSprite[SpriteSheetTerrain.Tree];
+                case TerrainType.Forest:
+                    temp = TerrainSprite[SpriteSheetTerrain.Forest];
                     break;
                 case TerrainType.Mountain:
                     temp = TerrainSprite[SpriteSheetTerrain.Mountain_High_Lower];
