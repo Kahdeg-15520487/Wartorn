@@ -93,6 +93,8 @@ namespace Wartorn.Screens
                 else
                 {
                     SCREEN_MANAGER.goto_screen("SetupScreen");
+
+                    //SCREEN_MANAGER.goto_screen("Client_Screen");
                 }
             };
 

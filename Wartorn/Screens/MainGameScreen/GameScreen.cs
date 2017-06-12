@@ -137,11 +137,13 @@ namespace Wartorn.Screens.MainGameScreen
         }
 
         #region Init
-        public void InitSession(SessionData sessiondata)
+        public void InitSession(SessionData sessiondata,int _localPlayer)
         {
+            localPlayer = _localPlayer;
             session = new Session(sessiondata);
             map = session.map;
             minimap = minimapgen.GenerateMapTexture(map);
+
             playerInfos = sessiondata.playerInfos;
             ownedUnit = new List<Guid>();
             mapcellVisibility = new bool[map.Width, map.Height];

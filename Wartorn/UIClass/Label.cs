@@ -82,7 +82,8 @@ namespace Wartorn
                 else
                 {
                     Size = font.MeasureString(text);
-                    origin = position.ToVector2();
+                    //origin = position.ToVector2();
+                    origin = new Vector2(0, 0);
                 }
                 this.font = font;
                 Scale = _scale;
