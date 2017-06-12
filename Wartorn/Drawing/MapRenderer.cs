@@ -277,13 +277,19 @@ namespace Wartorn.Drawing
                                 break;
 
                             case TerrainType.Coast:
-                                map[pos].ClearRenderData();
-                                map[pos].terrainbase = SpriteSheetTerrain.Coast_down.Next(nextwater);
+                                if (map[pos].terrainbase.ToTerrainType() != TerrainType.Coast)
+                                {
+                                    map[pos].ClearRenderData();
+                                    map[pos].terrainbase = SpriteSheetTerrain.Coast_up.Next(nextwater);
+                                }
                                 break;
 
                             case TerrainType.Cliff:
-                                map[pos].ClearRenderData();
-                                map[pos].terrainbase = SpriteSheetTerrain.Cliff_down.Next(nextwater);
+                                if (map[pos].terrainbase.ToTerrainType() != TerrainType.Cliff)
+                                {
+                                    map[pos].ClearRenderData();
+                                    map[pos].terrainbase = SpriteSheetTerrain.Cliff_up.Next(nextwater);
+                                }
                                 break;
 
 
@@ -665,7 +671,7 @@ namespace Wartorn.Drawing
             }
             catch (Exception er)
             {
-                Utility.HelperFunction.Log(er);
+                HelperFunction.Log(er);
             }
         }
 

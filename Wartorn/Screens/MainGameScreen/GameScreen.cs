@@ -617,22 +617,22 @@ namespace Wartorn.Screens.MainGameScreen
 
                         //check if the unit's action point is above zero
                         //TODO make sure that the unit can only move once
-                        if (map[selectedUnit].unit.PeakUpdateActionPoint(Command.Move) > 0)
-                        {
+                        //if (map[selectedUnit].unit.PeakUpdateActionPoint(Command.Move) > 0)
+                        //{
                             map[selectedUnit].unit.Animation.ContinueAnimation();
                             //show command menu
                             ShowCommandMenu();
                             //goto unitcommand
                             currentGameState = GameState.UnitCommand;
-                        }
-                        else
-                        {
-                            //Execute Command.Wait for this unit
-                            selectedCmd = Command.Wait;
+                        //}
+                        //else
+                        //{
+                        //    //Execute Command.Wait for this unit
+                        //    selectedCmd = Command.Wait;
 
-                            //goto Command
-                            currentGameState = GameState.UnitCommand;
-                        }
+                        //    //goto Command
+                        //    currentGameState = GameState.UnitCommand;
+                        //}
                         break;
                     }
                     else
@@ -652,6 +652,10 @@ namespace Wartorn.Screens.MainGameScreen
                     //check if <cancel> is pressed
                     if (HelperFunction.IsRightMousePressed())
                     {
+                        //change cursor back
+                        cursor = CONTENT_MANAGER.selectCursor;
+                        cursorOffset = selectCursorOffset;
+
                         RevertMovingUnitAnimation();
 
                         canvas_action_Unit.IsVisible = false;
@@ -679,10 +683,6 @@ namespace Wartorn.Screens.MainGameScreen
                              && map[selectedMapCell].unit!=null
                              && map[selectedMapCell].unit.Owner!=playerInfos[localPlayer].owner)
                             {
-                                //change cursor back
-                                cursor = CONTENT_MANAGER.selectCursor;
-                                cursorOffset = selectCursorOffset;
-
                                 tempunit.UpdateActionPoint(Command.Attack);
 
                                 //do attack stuff
@@ -752,6 +752,10 @@ namespace Wartorn.Screens.MainGameScreen
 
                     finalise_command_execution:
                     {
+                        //change cursor back
+                        cursor = CONTENT_MANAGER.selectCursor;
+                        cursorOffset = selectCursorOffset;
+
                         if (tempunit.ActionPoint == 0)
                         {
                             tempunit.Animation.PlayAnimation(AnimationName.done.ToString());
@@ -765,6 +769,10 @@ namespace Wartorn.Screens.MainGameScreen
 
                         cursor = CONTENT_MANAGER.selectCursor;
                         cursorOffset = selectCursorOffset;
+
+                        attackRange = null;
+                        movementPath = null;
+                        movingAnim = null;
 
                         //hide command menu
                         HideCommandMenu();
@@ -893,17 +901,21 @@ namespace Wartorn.Screens.MainGameScreen
             int temp = (int)Command.Wait;
 
             //có attack nếu có Unit địch trong tầm tấn công và tầm nhìn nè
-            //todo làm tầm nhìn
-            foreach (Point p in attackRange)
+            //check xem unit có di chuyển chưa?
+            if (movingAnim == null)
             {
-                if (map[p].unit!=null 
-                    //the below check is only for debug
-                 //&& map[p].unit.Owner != map[selectedUnit].unit.Owner) 
-                    //the below check is used in final game
-               && !ownedUnit.Contains(map[p].unit.guid))
+                //todo làm tầm nhìn
+                foreach (Point p in attackRange)
                 {
-                    temp += (int)Command.Attack;
-                    break;
+                    if (map[p].unit != null
+                   //the below check is only for debug
+                   //&& map[p].unit.Owner != map[selectedUnit].unit.Owner) 
+                   //the below check is used in final game
+                   && !ownedUnit.Contains(map[p].unit.guid))
+                    {
+                        temp += (int)Command.Attack;
+                        break;
+                    }
                 }
             }
 
@@ -935,6 +947,8 @@ namespace Wartorn.Screens.MainGameScreen
 
         private void ShowCommandMenu()
         {
+            HideBuildingMenu();
+
             canvas_action_Unit.IsVisible = true;
 
             CalculateAttackRange(map[selectedUnit].unit, selectedUnit);
@@ -1040,6 +1054,7 @@ namespace Wartorn.Screens.MainGameScreen
         {
             if (map[origin].unit == null)
             {
+                movingAnim = null;
                 map.TeleportUnit(selectedUnit, origin);
                 selectedUnit = origin;
             }
@@ -1090,25 +1105,6 @@ namespace Wartorn.Screens.MainGameScreen
                     }
                 }
             }
-
-            StringBuilder attackrange = new StringBuilder();
-            for (int y = 0; y < map.Height; y++)
-            {
-                for (int x = 0; x < map.Width; x++)
-                {
-                    Point temp = new Point(x, y);
-                    if (attackRange.Contains(temp))
-                    {
-                        attackrange.Append("*");
-                    }
-                    else
-                    {
-                        attackrange.Append(" ");
-                    }
-                }
-                attackrange.AppendLine();
-            }
-            File.WriteAllText("attackrange.txt",attackrange.ToString());
         }
         #endregion
 
@@ -1338,7 +1334,13 @@ namespace Wartorn.Screens.MainGameScreen
                  || tempmapcell.unit.UnitType == UnitType.Cruiser)
                 {
                     canvas_generalInfo.GetElementAs<PictureBox>("picbox_generalInfoLoadedUnit").SourceRectangle = GeneralInfoLoadedUnitSpriteSourceRectangle.GetSpriteRectangle(tempmapcell.unit.Owner);
+                    canvas_generalInfo.GetElementAs<PictureBox>("picbox_generalInfoLoadedUnit").IsVisible = true;
                     //update loaded unit here
+                }
+                else
+                {
+                    canvas_generalInfo.GetElementAs<PictureBox>("picbox_generalInfoLoadedUnit").SourceRectangle = Rectangle.Empty;
+                    canvas_generalInfo.GetElementAs<PictureBox>("picbox_generalInfoLoadedUnit").IsVisible = false;
                 }
 
                 int hp = tempmapcell.unit.HitPoint;
@@ -1365,7 +1367,13 @@ namespace Wartorn.Screens.MainGameScreen
             }
 
             //update the terrantype of the mapcell which is hovered on
-            canvas_generalInfo.GetElementAs<PictureBox>("picbox_terrainType").SourceRectangle = BackgroundTerrainSpriteSourceRectangle.GetSpriteRectangle(tempmapcell.terrain, map.weather, map.theme, tempmapcell.unit != null ? tempmapcell.unit.UnitType : UnitType.None, tempmapcell.owner);
+            TerrainType tempterraintype = tempmapcell.terrain;
+            if (tempterraintype == TerrainType.Coast || 
+                tempterraintype == TerrainType.Cliff)
+            {
+                tempterraintype = TerrainType.Sea;
+            }
+            canvas_generalInfo.GetElementAs<PictureBox>("picbox_terrainType").SourceRectangle = BackgroundTerrainSpriteSourceRectangle.GetSpriteRectangle(tempterraintype, map.weather, map.theme, tempmapcell.unit != null ? tempmapcell.unit.UnitType : UnitType.None, tempmapcell.owner);
             canvas_generalInfo.GetElementAs<Label>("label_terrainType").Text = tempmapcell.terrain.ToString();
         }
 
@@ -1472,7 +1480,7 @@ namespace Wartorn.Screens.MainGameScreen
             }
 
             //draw attackrange
-            if (currentGameState == GameState.UnitCommand)
+            if (currentGameState == GameState.UnitCommand && selectedCmd == Command.Attack)
             {
                 DrawAttackRange(spriteBatch);
             }
