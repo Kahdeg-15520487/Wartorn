@@ -15,22 +15,6 @@
     <MonoGamePlatform>DesktopGL</MonoGamePlatform>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <TargetFrameworkProfile />
-    <IsWebBootstrapper>false</IsWebBootstrapper>
-    <PublishUrl>publish\</PublishUrl>
-    <Install>true</Install>
-    <InstallFrom>Disk</InstallFrom>
-    <UpdateEnabled>false</UpdateEnabled>
-    <UpdateMode>Foreground</UpdateMode>
-    <UpdateInterval>7</UpdateInterval>
-    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
-    <UpdatePeriodically>false</UpdatePeriodically>
-    <UpdateRequired>false</UpdateRequired>
-    <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>1</ApplicationRevision>
-    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <UseApplicationTrust>false</UseApplicationTrust>
-    <PublishWizardCompleted>true</PublishWizardCompleted>
-    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -88,7 +72,10 @@
     <Compile Include="InputState.cs" />
     <Compile Include="PathFinding\Dijkstra.cs" />
     <Compile Include="PathFinding\DijkstraHelper.cs" />
+    <Compile Include="Screens\MainGameScreen\Client_Screen.cs" />
     <Compile Include="Screens\MainGameScreen\GameScreen - Backup.cs" />
+    <Compile Include="Screens\MainGameScreen\Room_Screen.cs" />
+    <Compile Include="Screens\MainGameScreen\SetupScreen.cs" />
     <Compile Include="Screens\TestConsole.cs" />
     <Compile Include="SpriteRectangle\BackgroundUnitSpriteSourceRectangle.cs" />
     <Compile Include="SpriteRectangle\BuildingSpriteSourceRectangle.cs" />
@@ -120,7 +107,6 @@
     <Compile Include="Screens\Campaign.cs" />
     <Compile Include="Screens\EditorScreen.cs" />
     <Compile Include="Screens\MainGameScreen\GameScreen.cs" />
-    <Compile Include="Screens\MainGameScreen\SetupScreen.cs" />
     <Compile Include="Screens\MainMenuScreen.cs" />
     <Compile Include="Screens\RedScreen.cs" />
     <Compile Include="Screens\TestAnimationScreen.cs" />
@@ -199,9 +185,8 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="WartornNetworking, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
-      <HintPath>..\packages\WartornNetworking.1.0.0\lib\net452\WartornNetworking.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="WartornNetworking, Version=1.0.17.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\WartornNetworking.1.0.17\lib\net452\WartornNetworking.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -231,6 +216,10 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Client\Client.csproj">
+      <Project>{7adffba4-afd8-4cb4-a58b-097cf4d982aa}</Project>
+      <Name>Client</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Utility_Project\Utility_Project.csproj">
       <Project>{DB74E4D4-2EB9-4A34-9FCB-D12501AB5122}</Project>
       <Name>Utility_Project</Name>
