@@ -656,10 +656,13 @@ namespace Wartorn.Screens
             //side menu
             Label label1 = new Label("Hor" + Environment.NewLine + "Ver", new Point(0, 0), new Vector2(30, 20), CONTENT_MANAGER.defaultfont);
             label1.Scale = 1.2f;
+            label1.Origin = new Vector2(1, 1);
             Label label_Horizontal = new Label("1", new Point(40, 0), new Vector2(20, 20), CONTENT_MANAGER.defaultfont);
             label_Horizontal.Scale = 1.2f;
+            label_Horizontal.Origin = new Vector2(1, 1);
             Label label_Vertical = new Label("1", new Point(40, 20), new Vector2(20, 20), CONTENT_MANAGER.defaultfont);
             label_Vertical.Scale = 1.2f;
+            label_Vertical.Origin = new Vector2(1, 1);
 
 
 

@@ -528,6 +528,7 @@ namespace Wartorn.Drawing
                                 break;
 
                             case TerrainType.Mountain:
+                                map[pos].ClearRenderData();
                                 SpriteSheetTerrain north = SpriteSheetTerrain.None;
                                 switch (map.weather)
                                 {
@@ -535,11 +536,11 @@ namespace Wartorn.Drawing
                                         switch (map.theme)
                                         {
                                             case Theme.Normal:
-                                                map[pos].terrainbase = SpriteSheetTerrain.Mountain_High_Lower;
+                                                map[pos].terrainbase = SpriteSheetTerrain.Desert_Mountain_High_Lower;//.Mountain_High_Lower;
                                                 north = SpriteSheetTerrain.Mountain_High_Upper;
                                                 break;
                                             case Theme.Tropical:
-                                                map[pos].terrainbase = SpriteSheetTerrain.Tropical_Mountain_High_Lower;
+                                                map[pos].terrainbase = SpriteSheetTerrain.Desert_Mountain_High_Lower;//.Tropical_Mountain_High_Lower;
                                                 north = SpriteSheetTerrain.Tropical_Mountain_High_Upper;
                                                 break;
                                             case Theme.Desert:
