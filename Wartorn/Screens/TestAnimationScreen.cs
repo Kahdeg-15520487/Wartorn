@@ -251,7 +251,7 @@ namespace Wartorn.Screens
             if (temp.unit != null && !isMovingUnitAnimPlaying && selectedUnit != selectedMapCell)
             {
                 //play sfx
-                CONTENT_MANAGER.yes1.Play();
+                //CONTENT_MANAGER.yes1.Play();
 
                 selectedUnit = selectedMapCell;
                 DisplayMovementRange(temp.unit, selectedUnit);
@@ -265,7 +265,7 @@ namespace Wartorn.Screens
                     {
 
                         //play sfx
-                        CONTENT_MANAGER.moving_out.Play();
+                        //CONTENT_MANAGER.moving_out.Play();
 
                         //we gonna move unit by moving a clone of it then teleport it to the destination
                         destination = selectedMapCell;

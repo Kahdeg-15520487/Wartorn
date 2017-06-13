@@ -677,7 +677,6 @@ namespace Wartorn.Screens.MainGameScreen
 
         public override void Update(GameTime gameTime)
         {
-            //
             if (isMyTurn)
             {
                 currentPlayer = localPlayer;
@@ -777,7 +776,7 @@ namespace Wartorn.Screens.MainGameScreen
                         if (SelectUnit())
                         {
                             //get information of currently selected unit...
-                            CONTENT_MANAGER.yes1.Play();
+                            //CONTENT_MANAGER.yes1.Play();
                             selectedUnit = selectedMapCell;
                             origin = selectedMapCell;
                             MapCell temp = map[selectedUnit];
@@ -872,7 +871,7 @@ namespace Wartorn.Screens.MainGameScreen
                         map.TeleportUnit(origin, destination);
 
                        
-                       Player.Instance.Update(string.Format(@"update@{0}@{1}", JsonConvert.SerializeObject(origin), JsonConvert.SerializeObject(destination)));
+                        Player.Instance.Update(string.Format(@"update@{0}@{1}", JsonConvert.SerializeObject(origin), JsonConvert.SerializeObject(destination)));
                         
                         //save selectedUnit
                         lastSelectedUnit = selectedUnit;
@@ -1362,7 +1361,7 @@ namespace Wartorn.Screens.MainGameScreen
             Unit tempunit = map[selectedUnit].unit;
 
             //play sfx
-            CONTENT_MANAGER.moving_out.Play();
+            //CONTENT_MANAGER.moving_out.Play();
 
             //we gonna move unit by moving a clone of it then teleport it to the destination
             destination = selectedMapCell;
@@ -1808,17 +1807,6 @@ namespace Wartorn.Screens.MainGameScreen
                 init = false;
             }
 
-            if (updateGUI)
-            {
-                map.TeleportUnit(temp_origin, temp_destination);
-                updateGUI = false;
-            }
-            if (init)
-            {
-                map.RegisterUnit(temp_destination, temp_Unit);
-                init = false;
-            }
-
             //draw canvas_generalInfo
             //DrawCanvas_generalInfo();
 
@@ -1868,8 +1856,6 @@ namespace Wartorn.Screens.MainGameScreen
             spriteBatch.End();
 
             spriteBatch.Begin(SpriteSortMode.FrontToBack);
-
-
         }
 
         private void DrawMovementRange(SpriteBatch spriteBatch)

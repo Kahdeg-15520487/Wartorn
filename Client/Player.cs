@@ -144,7 +144,7 @@ namespace Client
 
             try
             {
-                SimpleClient = new SimpleTcpClient().Connect(IP, 9000);
+                SimpleClient = new SimpleTcpClient().Connect(IP, 9090);
                 SimpleClient.DataReceived += SimpleClient_DataReceived;
             }
             catch (Exception er)

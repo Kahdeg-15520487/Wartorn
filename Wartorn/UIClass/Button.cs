@@ -219,7 +219,7 @@ namespace Wartorn
             {
                 MouseClick += (sender, e) =>
                 {
-                    CONTENT_MANAGER.menu_select.Play();
+                    //CONTENT_MANAGER.menu_select.Play();
                 };
                 MouseDown += (sender, e) =>
                 {
