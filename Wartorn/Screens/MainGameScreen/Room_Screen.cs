@@ -128,15 +128,17 @@ namespace Wartorn.Screens.MainGameScreen
 
             Button button_selectmap = new Button(UISpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetUI.Open), new Point(650, 20), 0.5f);
 
-            Label label_this_ready = new Label("", new Point(50, 50), new Vector2(100, 25), CONTENT_MANAGER.arcadefont);
+            Label label_this_ready = new Label("", new Point(50, 50), null, CONTENT_MANAGER.arcadefont,1);
 
-            Label label_another_ready = new Label("", new Point(490, 227), new Vector2(100, 25), CONTENT_MANAGER.arcadefont);
+            Label label_another_ready = new Label("", new Point(490, 227), null, CONTENT_MANAGER.arcadefont,1);
 
-            Button separate = new Button("", new Point(355, 0), new Vector2(10, 480), CONTENT_MANAGER.arcadefont);
+            Button separate = new Button("", new Point(355, 20), new Vector2(10, 480), CONTENT_MANAGER.arcadefont);
 
-            Label player_name = new Label(Player.Instance.Name, new Point(130, 0), new Vector2(100, 25), CONTENT_MANAGER.arcadefont);
+            Label player_name = new Label(Player.Instance.Name, new Point(130, 0), null, CONTENT_MANAGER.arcadefont,1);
 
-            Label another_player_name = new Label("", new Point(490, 0), new Vector2(100, 25), CONTENT_MANAGER.arcadefont);
+            Label another_player_name = new Label("", new Point(490, 0), null, CONTENT_MANAGER.arcadefont,1);
+
+            Label room_ID = new  Label(Player.Instance.RoomNumber.ToString(), new Point(360, 0), null, CONTENT_MANAGER.arcadefont, 1);
 
             // Bind event
 
@@ -156,13 +158,14 @@ namespace Wartorn.Screens.MainGameScreen
                      if (Player.Instance.isHost)
                      {
 
-                         string path = CONTENT_MANAGER.ShowFileOpenDialog(CONTENT_MANAGER.LocalRootPath);
+                         string path = CONTENT_MANAGER.ShowFileOpenDialog(CONTENT_MANAGER.LocalRootPath+@"\map");
 
                          LoadMap(path);
 
 
                          //Send map to another phayer
                          string send = Path.GetFileName(path);
+                         
                          Player.Instance.Update(send);
                      }
                  }
@@ -181,8 +184,8 @@ namespace Wartorn.Screens.MainGameScreen
             Player.Instance.update += (sender, e) =>
             {
 
-                string path = e;
-                if (File.Exists(e))
+                string path = string.Format("{0}{1}{2}",CONTENT_MANAGER.LocalRootPath,@"\map\",e);
+                if (File.Exists(path))
                 {
 
                     loadPath = path;
@@ -246,10 +249,13 @@ namespace Wartorn.Screens.MainGameScreen
             canvas.AddElement("button_ready", button_ready);
             canvas.AddElement("label_this_ready", label_this_ready);
             canvas.AddElement("separate", separate);
+            canvas.AddElement("label_another_ready", label_another_ready);
+            canvas.AddElement("another_player_name", another_player_name);
+            canvas.AddElement("room_ID", room_ID);
         }
 
         //Contructor
-        public Room_Screen(GraphicsDevice device, string name) : base(device, name)
+        public Room_Screen(GraphicsDevice device) : base(device,"Room_Screen")
         {
 
         }

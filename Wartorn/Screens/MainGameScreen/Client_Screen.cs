@@ -24,7 +24,7 @@ namespace Wartorn.Screens.MainGameScreen
 
 
 
-        public Client_Screen(GraphicsDevice device, string name) : base(device, name)
+        public Client_Screen(GraphicsDevice device) : base(device, "Client_Screen")
         {
 
         }
@@ -44,7 +44,7 @@ namespace Wartorn.Screens.MainGameScreen
 
             Button btn_goto_room = new Button("Go To Room", new Point(285, 200), new Vector2(150, 25), CONTENT_MANAGER.arcadefont);
 
-            Label label_player_name = new Label(Player.Instance.Name, new Point(620, 0), new Vector2(100, 25), CONTENT_MANAGER.arcadefont);
+            Label label_player_name = new Label(Player.Instance.Name, new Point(620, 0), null, CONTENT_MANAGER.arcadefont,1);
             //bind event
 
             //Click to button go to room
@@ -94,7 +94,7 @@ namespace Wartorn.Screens.MainGameScreen
             };
 
             canvas.AddElement("btn_create_room", btn_create_room);
-            canvas.AddElement("btn_gpto_room", btn_goto_room);
+            canvas.AddElement("btn_goto_room", btn_goto_room);
             canvas.AddElement("label_player_name", label_player_name);
         }
 

@@ -71,7 +71,8 @@ namespace Wartorn.Screens.MainGameScreen
 
             Player.Instance.connect_succeed += (sender, e) =>
             {
-                ((Client_Screen)SCREEN_MANAGER.get_screen("Client_Screen")).InitName(player_name.Text);
+                Player.Instance.Name = player_name.Text;
+                
                 SCREEN_MANAGER.goto_screen("Client_Screen");
             };
 

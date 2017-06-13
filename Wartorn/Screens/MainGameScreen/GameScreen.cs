@@ -27,6 +27,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Wartorn.PathFinding.Dijkstras;
 using Wartorn.PathFinding;
+using Client;
 
 namespace Wartorn.Screens.MainGameScreen
 {
@@ -44,6 +45,19 @@ namespace Wartorn.Screens.MainGameScreen
 
     class GameScreen : Screen
     {
+
+        //temp
+        GameState temp;
+        // check when need update
+        //true if unit is init 
+        bool init = false;
+        // true if unit move or destroy
+        bool update = false;
+        bool isEnd = false;
+        Point temp_origin;
+        Point temp_destination;
+        Unit temp_Unit;
+
         #region private field
         //information of this game session
         Session session;
@@ -139,8 +153,11 @@ namespace Wartorn.Screens.MainGameScreen
         #region Init
         public void InitSession(SessionData sessiondata,int _localPlayer)
         {
+            
             localPlayer = _localPlayer;
+            
             session = new Session(sessiondata);
+
             map = session.map;
             minimap = minimapgen.GenerateMapTexture(map);
 
@@ -185,6 +202,7 @@ namespace Wartorn.Screens.MainGameScreen
             return base.Init();
         }
 
+
         #region init ui
         private void InitUI()
         {
@@ -200,6 +218,50 @@ namespace Wartorn.Screens.MainGameScreen
             InitCanvas_Unit();
 
             Label label_mousepos = new Label(" ", new Point(0, 0), new Vector2(80, 20), CONTENT_MANAGER.defaultfont);
+            Button end_turn = new Button("End",new Point(650,0),null,CONTENT_MANAGER.hackfont);
+
+
+           
+            //bind event
+            end_turn.MouseClick += (sender, e) =>
+            {
+                isEnd = true;
+                string package = JsonConvert.SerializeObject(map);
+                Player.Instance.Update(package);
+                ChangeTurn();
+            };
+
+            Player.Instance.update += (sender, e) =>
+            {
+                try
+                {
+                 
+                    
+                    var temp = e.Split('@');
+                    if (temp[0] == "init")
+                    {
+                       
+                        temp_Unit = JsonConvert.DeserializeObject<Unit>(temp[1]);
+                        temp_destination = JsonConvert.DeserializeObject<Point>(temp[2]);
+                        init = true;
+                    }
+
+                    if (temp[0] == "update")
+                    {
+                        
+                        temp_origin = JsonConvert.DeserializeObject<Point>(temp[1]);
+                        temp_destination = JsonConvert.DeserializeObject<Point>(temp[2]);
+                        update = true;
+                    }
+
+
+                }
+                catch (Exception)
+                {
+
+                    
+                }
+            };
 
             console = new UIClass.Console(new Point(0, 0), new Vector2(720, 200), CONTENT_MANAGER.hackfont);
             console.IsVisible = false;
@@ -215,6 +277,7 @@ namespace Wartorn.Screens.MainGameScreen
             canvas.AddElement("unit", canvas_action_Unit);
             //canvas.AddElement("label_mousepos", label_mousepos);
             canvas.AddElement("console", console);
+            canvas.AddElement("end_turn", end_turn);
         }
 
 
@@ -511,6 +574,8 @@ namespace Wartorn.Screens.MainGameScreen
             switch (currentGameState)
             {
                 #region GameState.None
+                case GameState.WaitForTurn:
+                    return;
                 //the normal state of the game where nothing is selected
                 case GameState.None:
                     if (HelperFunction.IsLeftMousePressed())
@@ -612,6 +677,9 @@ namespace Wartorn.Screens.MainGameScreen
                         //teleport stuff
                         map.TeleportUnit(origin, destination);
 
+                       
+                       Player.Instance.Update(string.Format(@"update@{0}@{1}", JsonConvert.SerializeObject(origin), JsonConvert.SerializeObject(destination)));
+                        
                         //save selectedUnit
                         lastSelectedUnit = selectedUnit;
                         //move selectedUnit to destination;
@@ -773,6 +841,10 @@ namespace Wartorn.Screens.MainGameScreen
                         HideCommandMenu();
                         canvas_action_Unit.IsVisible = false;
 
+                      
+                        
+                       // tempunit.ActionPoint
+
                         //goto none
                         currentGameState = GameState.None;
                     }
@@ -821,9 +893,10 @@ namespace Wartorn.Screens.MainGameScreen
                     canvas_action_Factory.IsVisible = false;
                     canvas_action_Airport.IsVisible = false;
                     canvas_action_Harbor.IsVisible = false;
-
+                    
                     //goto none
                     currentGameState = GameState.None;
+
                     break;
                 #endregion
 
@@ -832,6 +905,12 @@ namespace Wartorn.Screens.MainGameScreen
             }
 
             UpdateAnimation(gameTime);
+
+            if (isEnd == true)
+            {
+                currentGameState = GameState.WaitForTurn;
+                isEnd = false;
+            }
         }
 
 
@@ -1119,15 +1198,16 @@ namespace Wartorn.Screens.MainGameScreen
 
         private void ChangeTurn()
         {
-            foreach (Point p in map.mapcellthathaveunit)
-            {
-                map[p].unit.UpdateActionPoint(Command.None);
-                map[p].unit.Animation.PlayAnimation(AnimationName.idle.ToString());
-            }
+            //foreach (Point p in map.mapcellthathaveunit)
+            //{
+            //    map[p].unit.UpdateActionPoint(Command.None);
+            //    map[p].unit.Animation.PlayAnimation(AnimationName.idle.ToString());
+            //}
 
             if (currentPlayer == 1)
             {
                 currentPlayer = 0;
+
             }
             else
             {
@@ -1143,7 +1223,7 @@ namespace Wartorn.Screens.MainGameScreen
                 localPlayer = 1;
             }
 
-            ChangeUnitCanvasColor(playerInfos[currentPlayer].owner);
+            //ChangeUnitCanvasColor(playerInfos[currentPlayer].owner);
         }
 
         private void ChangeUnitCanvasColor(GameData.Owner owner)
@@ -1231,6 +1311,12 @@ namespace Wartorn.Screens.MainGameScreen
                 Unit temp = UnitCreationHelper.Create(unittype, owner.owner);
                 ownedUnit.Add(temp.guid);
                 map.RegisterUnit(location, temp);
+
+                
+                string package = string.Format(@"init@{0}@{1}",JsonConvert.SerializeObject(temp), JsonConvert.SerializeObject(location));
+
+
+                Player.Instance.Update(package);
                 return true;
             }
             return false;
@@ -1291,7 +1377,8 @@ namespace Wartorn.Screens.MainGameScreen
                 case GameState.UnitCommand:
                     tempmapcell = map[selectedUnit];
                     break;
-
+                case GameState.WaitForTurn:
+                    return;
                 default:
                     break;
             }
@@ -1349,6 +1436,9 @@ namespace Wartorn.Screens.MainGameScreen
             //update the terrantype of the mapcell which is hovered on
             canvas_generalInfo.GetElementAs<PictureBox>("picbox_terrainType").SourceRectangle = BackgroundTerrainSpriteSourceRectangle.GetSpriteRectangle(tempmapcell.terrain, map.weather, map.theme, tempmapcell.unit != null ? tempmapcell.unit.UnitType : UnitType.None, tempmapcell.owner);
             canvas_generalInfo.GetElementAs<Label>("label_terrainType").Text = tempmapcell.terrain.ToString();
+
+
+
         }
 
         private void UpdateAnimation(GameTime gameTime)
@@ -1416,6 +1506,17 @@ namespace Wartorn.Screens.MainGameScreen
                 CONTENT_MANAGER.spriteBatch.DrawString(CONTENT_MANAGER.defaultfont,movingAnim.IsArrived.ToString(), new Vector2(100, 140), Color.Red);
             }
 
+            if (update)
+            {
+                map.TeleportUnit(temp_origin, temp_destination);
+                update = false;
+            }
+            if (init)
+            {
+                map.RegisterUnit(temp_destination, temp_Unit);
+                init = false;
+            }
+
             //draw canvas_generalInfo
             //DrawCanvas_generalInfo();
 
@@ -1465,6 +1566,8 @@ namespace Wartorn.Screens.MainGameScreen
             spriteBatch.End();
 
             spriteBatch.Begin(SpriteSortMode.FrontToBack);
+
+
         }
 
         private void DrawMovementRange(SpriteBatch spriteBatch)
