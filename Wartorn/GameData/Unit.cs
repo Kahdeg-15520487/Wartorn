@@ -317,29 +317,7 @@ namespace Wartorn.GameData
 
         public string GetUnitName()
         {
-            switch (unitType)
-            {
-                case UnitType.HeavyTank:
-                    return "H-Tank";
-
-                case UnitType.Artillery:
-                    return "Arty";
-
-                case UnitType.TransportCopter:
-                    return "T-Copter";
-
-                case UnitType.BattleCopter:
-                    return "B-Copter";
-
-                case UnitType.Submarine:
-                    return "Sub";
-
-                case UnitType.Battleship:
-                    return "B-Ship";
-
-                default:
-                    return unitType.ToString();
-            }
+            return unitType.GetName();
         }
 
 

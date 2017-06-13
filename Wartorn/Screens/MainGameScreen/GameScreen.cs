@@ -34,6 +34,7 @@ namespace Wartorn.Screens.MainGameScreen
     {
         None,
         TurnEnd,
+        TurnStart,
         WaitForTurn,
         UnitSelected,
         UnitMove,
@@ -97,7 +98,7 @@ namespace Wartorn.Screens.MainGameScreen
         PlayerInfo[] playerInfos;
         int currentPlayer = 0;
         int localPlayer = 0;
-        List<Guid> ownedUnit;
+        //List<Guid> ownedUnit;
         #endregion
 
         //build unit information
@@ -143,7 +144,7 @@ namespace Wartorn.Screens.MainGameScreen
             map = session.map;
             minimap = minimapgen.GenerateMapTexture(map);
             playerInfos = sessiondata.playerInfos;
-            ownedUnit = new List<Guid>();
+
             mapcellVisibility = new bool[map.Width, map.Height];
 
             //init visibility table
@@ -177,7 +178,7 @@ namespace Wartorn.Screens.MainGameScreen
             {
                 if (mapcell.unit!=null && mapcell.unit.Owner == playerInfos[localPlayer].owner)
                 {
-                    ownedUnit.Add(mapcell.unit.guid);
+                    playerInfos[localPlayer].ownedUnit.Add(mapcell.unit.guid);
                 }
             }
             return base.Init();
@@ -233,14 +234,17 @@ namespace Wartorn.Screens.MainGameScreen
             firstslot.MouseClick += (sender, e) =>
             {
                 selectedCmd = CommandSpriteSourceRectangle.GetCommand(firstslot.spriteSourceRectangle);
+                CONTENT_MANAGER.ShowMessageBox(selectedCmd);
             };
             secondslot.MouseClick += (sender, e) =>
             {
                 selectedCmd = CommandSpriteSourceRectangle.GetCommand(secondslot.spriteSourceRectangle);
+                CONTENT_MANAGER.ShowMessageBox(selectedCmd);
             };
             thirdslot.MouseClick += (sender, e) =>
             {
                 selectedCmd = CommandSpriteSourceRectangle.GetCommand(thirdslot.spriteSourceRectangle);
+                CONTENT_MANAGER.ShowMessageBox(selectedCmd);
             };
 
             //add to canvas
@@ -312,14 +316,17 @@ namespace Wartorn.Screens.MainGameScreen
             canvas_generalInfo.AddElement("label_unitType", label_unitType);
         }
 
-        #region legacy
-        /* action button layout
-         * 
-         *      540  570  600  630  660  690
-         * 346
-         * 380
-         * 414
-         * 448
+        #region buy menu
+        /*  action button layout
+         *  574,300
+         *  583,309
+         *  583,343
+         *  
+         *      584 618 652 686
+         *  378
+         *  412
+         *  446
+         *  
          */
         private void InitCanvas_action()
         {
@@ -341,19 +348,30 @@ namespace Wartorn.Screens.MainGameScreen
             canvas_action_Factory = new Canvas();
             canvas_action_Factory.IsVisible = false;
 
+            PictureBox picturebox_buymenu = new PictureBox(CONTENT_MANAGER.buymenu_factory, new Point(574, 300), BuyMenuFactorySpriteSourceRectangle.GetSpriteRectangle(playerInfos[localPlayer].owner), Vector2.Zero, depth: LayerDepth.GuiBackground);
+
+            Label label_unitname = new Label(" ", new Point(583, 309), new Vector2(100, 30), CONTENT_MANAGER.hackfont);
+            label_unitname.Scale = 0.75f;
+            label_unitname.Origin = new Vector2(1, 1);
+            Label label_unitcost = new Label(" ", new Point(583, 343), new Vector2(100, 30), CONTENT_MANAGER.hackfont);
+            label_unitcost.Scale = 0.75f;
+            label_unitcost.Origin = new Vector2(1, 1);
+
             //hàng 1
-            Button button_Soldier = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Soldier,playerInfos[localPlayer].owner), new Point(540, 346), 0.5f);
-            Button button_Mech = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Mech, playerInfos[localPlayer].owner), new Point(570, 346), 0.5f);
-            Button button_Recon = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Recon, playerInfos[localPlayer].owner), new Point(600, 346), 0.5f);
-            Button button_APC = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.APC, playerInfos[localPlayer].owner), new Point(630, 346), 0.5f);
-            Button button_Tank = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Tank, playerInfos[localPlayer].owner), new Point(660, 346), 0.5f);
-            Button button_H_Tank = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.HeavyTank, playerInfos[localPlayer].owner), new Point(690, 346), 0.5f);
+            Button button_Soldier = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Soldier,playerInfos[localPlayer].owner), new Point(584, 378), 0.5f);
+            Button button_Mech = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Mech, playerInfos[localPlayer].owner), new Point(618, 378), 0.5f);
+            Button button_Recon = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Recon, playerInfos[localPlayer].owner), new Point(652, 378), 0.5f);
+            Button button_APC = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.APC, playerInfos[localPlayer].owner), new Point(686, 378), 0.5f);
 
             //hàng 2
-            Button button_Artillery = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Artillery, playerInfos[localPlayer].owner), new Point(540, 380), 0.5f);
-            Button button_Rocket = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Rocket, playerInfos[localPlayer].owner), new Point(570, 380), 0.5f);
-            Button button_AntiAir = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.AntiAir, playerInfos[localPlayer].owner), new Point(600, 380), 0.5f);
-            Button button_Missile = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Missile, playerInfos[localPlayer].owner), new Point(630, 380), 0.5f);
+            Button button_Tank = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Tank, playerInfos[localPlayer].owner), new Point(584, 412), 0.5f);
+            Button button_H_Tank = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.HeavyTank, playerInfos[localPlayer].owner), new Point(618, 412), 0.5f);
+            Button button_Artillery = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Artillery, playerInfos[localPlayer].owner), new Point(652, 412), 0.5f);
+            Button button_Rocket = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Rocket, playerInfos[localPlayer].owner), new Point(686, 412), 0.5f);
+
+            //hàng 3
+            Button button_AntiAir = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.AntiAir, playerInfos[localPlayer].owner), new Point(584, 446), 0.5f);
+            Button button_Missile = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Missile, playerInfos[localPlayer].owner), new Point(618, 446), 0.5f);
 
             List<Button> tempbuttonlist = new List<Button>();
             tempbuttonlist.Add(button_Soldier);
@@ -374,9 +392,23 @@ namespace Wartorn.Screens.MainGameScreen
                 {
                     selectedUnitTypeToBuild = UnitSpriteSheetRectangle.GetUnitType(button.spriteSourceRectangle);
                 };
+                button.MouseEnter += (sender, e) =>
+                {
+                    var temp = UnitSpriteSheetRectangle.GetUnitType(button.spriteSourceRectangle);
+                    label_unitname.Text = temp.GetName();
+                    label_unitcost.Text = Unit._Cost[temp].ToString();
+                };
+                button.MouseLeave += (sender, e) =>
+                {
+                    label_unitname.Text = " ";
+                    label_unitcost.Text = " ";
+                };
             }
             #endregion
 
+            canvas_action_Factory.AddElement("picturebox_buymenu", picturebox_buymenu);
+            canvas_action_Factory.AddElement("label_unitname", label_unitname);
+            canvas_action_Factory.AddElement("label_unitcost", label_unitcost);
             canvas_action_Factory.AddElement("button_Soldier", button_Soldier);
             canvas_action_Factory.AddElement("button_Mech", button_Mech);
             canvas_action_Factory.AddElement("button_Recon", button_Recon);
@@ -394,11 +426,20 @@ namespace Wartorn.Screens.MainGameScreen
             canvas_action_Airport = new Canvas();
             canvas_action_Airport.IsVisible = false;
 
+            PictureBox picturebox_buymenu = new PictureBox(CONTENT_MANAGER.buymenu_airport_harbor, new Point(574, 300), BuyMenuAirportHarborSpriteSourceRectangle.GetSpriteRectangle(playerInfos[localPlayer].owner), Vector2.Zero, depth: LayerDepth.GuiBackground);
+
+            Label label_unitname = new Label(" ", new Point(583, 309), new Vector2(100, 30), CONTENT_MANAGER.hackfont);
+            label_unitname.Scale = 0.75f;
+            label_unitname.Origin = new Vector2(1, 1);
+            Label label_unitcost = new Label(" ", new Point(583, 343), new Vector2(100, 30), CONTENT_MANAGER.hackfont);
+            label_unitcost.Scale = 0.75f;
+            label_unitcost.Origin = new Vector2(1, 1);
+
             //hàng 1
-            Button button_transportcopter = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.TransportCopter, playerInfos[localPlayer].owner), new Point(540, 346), 0.5f);
-            Button button_battlecopter = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.BattleCopter, playerInfos[localPlayer].owner), new Point(570, 346), 0.5f);
-            Button button_fighter = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Fighter, playerInfos[localPlayer].owner), new Point(600, 346), 0.5f);
-            Button button_bomber = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Bomber, playerInfos[localPlayer].owner), new Point(630, 346), 0.5f);
+            Button button_transportcopter = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.TransportCopter, playerInfos[localPlayer].owner), new Point(584,378), 0.5f);
+            Button button_battlecopter = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.BattleCopter, playerInfos[localPlayer].owner), new Point(618, 378), 0.5f);
+            Button button_fighter = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Fighter, playerInfos[localPlayer].owner), new Point(652, 378), 0.5f);
+            Button button_bomber = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Bomber, playerInfos[localPlayer].owner), new Point(686, 378), 0.5f);
             
             List<Button> tempbuttonlist = new List<Button>();
             tempbuttonlist.Add(button_transportcopter);
@@ -414,9 +455,23 @@ namespace Wartorn.Screens.MainGameScreen
                 {
                     selectedUnitTypeToBuild = UnitSpriteSheetRectangle.GetUnitType(button.spriteSourceRectangle);
                 };
+                button.MouseEnter += (sender, e) =>
+                {
+                    var temp = UnitSpriteSheetRectangle.GetUnitType(button.spriteSourceRectangle);
+                    label_unitname.Text = temp.GetName();
+                    label_unitcost.Text = Unit._Cost[temp].ToString();
+                };
+                button.MouseLeave += (sender, e) =>
+                {
+                    label_unitname.Text = " ";
+                    label_unitcost.Text = " ";
+                };
             }
             #endregion
 
+            canvas_action_Airport.AddElement("picturebox_buymenu", picturebox_buymenu);
+            canvas_action_Airport.AddElement("label_unitname", label_unitname);
+            canvas_action_Airport.AddElement("label_unitcost", label_unitcost);
             canvas_action_Airport.AddElement("button_transportcopter", button_transportcopter);
             canvas_action_Airport.AddElement("button_battlecopter", button_battlecopter);
             canvas_action_Airport.AddElement("button_fighter", button_fighter);
@@ -428,11 +483,20 @@ namespace Wartorn.Screens.MainGameScreen
             canvas_action_Harbor = new Canvas();
             canvas_action_Harbor.IsVisible = false;
 
+            PictureBox picturebox_buymenu = new PictureBox(CONTENT_MANAGER.buymenu_airport_harbor, new Point(574, 300), BuyMenuAirportHarborSpriteSourceRectangle.GetSpriteRectangle(playerInfos[localPlayer].owner), Vector2.Zero, depth: LayerDepth.GuiBackground);
+
+            Label label_unitname = new Label(" ", new Point(583, 309), new Vector2(100, 30), CONTENT_MANAGER.hackfont);
+            label_unitname.Scale = 0.75f;
+            label_unitname.Origin = new Vector2(1, 1);
+            Label label_unitcost = new Label(" ", new Point(583, 343), new Vector2(100, 30), CONTENT_MANAGER.hackfont);
+            label_unitcost.Scale = 0.75f;
+            label_unitcost.Origin = new Vector2(1, 1);
+
             //hàng 1
-            Button button_lander = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Lander, playerInfos[localPlayer].owner), new Point(540, 346), 0.5f);
-            Button button_cruiser = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Cruiser, playerInfos[localPlayer].owner), new Point(570, 346), 0.5f);
-            Button button_submarine = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Submarine, playerInfos[localPlayer].owner), new Point(600, 346), 0.5f);
-            Button button_battleship = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Battleship,playerInfos[localPlayer].owner), new Point(630, 346), 0.5f);
+            Button button_lander = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Lander, playerInfos[localPlayer].owner), new Point(584,378), 0.5f);
+            Button button_cruiser = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Cruiser, playerInfos[localPlayer].owner), new Point(618, 378), 0.5f);
+            Button button_submarine = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Submarine, playerInfos[localPlayer].owner), new Point(652, 378), 0.5f);
+            Button button_battleship = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Battleship,playerInfos[localPlayer].owner), new Point(686, 378), 0.5f);
 
             List<Button> tempbuttonlist = new List<Button>();
             tempbuttonlist.Add(button_lander);
@@ -448,9 +512,23 @@ namespace Wartorn.Screens.MainGameScreen
                 {
                     selectedUnitTypeToBuild = UnitSpriteSheetRectangle.GetUnitType(button.spriteSourceRectangle);
                 };
+                button.MouseEnter += (sender, e) =>
+                {
+                    var temp = UnitSpriteSheetRectangle.GetUnitType(button.spriteSourceRectangle);
+                    label_unitname.Text = temp.GetName();
+                    label_unitcost.Text = Unit._Cost[temp].ToString();
+                };
+                button.MouseLeave += (sender, e) =>
+                {
+                    label_unitname.Text = " ";
+                    label_unitcost.Text = " ";
+                };
             }
             #endregion
 
+            canvas_action_Harbor.AddElement("picturebox_buymenu", picturebox_buymenu);
+            canvas_action_Harbor.AddElement("label_unitname", label_unitname);
+            canvas_action_Harbor.AddElement("label_unitcost", label_unitcost);
             canvas_action_Harbor.AddElement("button_lander", button_lander);
             canvas_action_Harbor.AddElement("button_cruiser", button_cruiser);
             canvas_action_Harbor.AddElement("button_submarine", button_submarine);
@@ -493,7 +571,7 @@ namespace Wartorn.Screens.MainGameScreen
             UpdateCanvas_generalInfo();
 
             //camera control
-            if (currentGameState == GameState.None || currentGameState == GameState.UnitSelected || currentGameState == GameState.BuildingSelected )
+            if (currentGameState == GameState.None || currentGameState == GameState.UnitSelected)// || currentGameState == GameState.BuildingSelected )
             {
                 MoveCamera(keyboardInputState, mouseInputState);
             }
@@ -508,8 +586,51 @@ namespace Wartorn.Screens.MainGameScreen
             //update game logic
             switch (currentGameState)
             {
+                #region GameState.TurnStart
+                //previous state: WaitForTurn
+                //bắt đầu lượt chơi
+                //next state: None
+                case GameState.TurnStart:
+                    //update tiền, supply cho các unit đang ở trong factory, airport, harbor, supplybase
+                    //reset actionpoint cho tất cả các unit
+                    //todo update super weapon
+
+                    //goto None
+                    currentGameState = GameState.None;
+                    break;
+                #endregion
+
+                #region GameState.TurnEnd
+                //previous state: None
+                //kết thúc lượt
+                //next state: WaitForTurn
+                case GameState.TurnEnd:
+                    //gửi thông tin kết thúc lượt cho server
+                    //broadcast
+
+
+                    //goto WaitForTurn
+                    currentGameState = GameState.WaitForTurn;
+                    break;
+                #endregion
+
+                #region GameState.WaitForTurn
+                //previous state: TurnEnd
+                //xử lí vẽ và update map khi bên đối phương gửi command qua
+                //next state: TurnStart
+                case GameState.WaitForTurn:
+                    //nhận và xử lí command do bên đối phương gửi qua
+
+                    //nếu nhận được thông tin kết thúc lượt thì
+                        //goto TurnStart
+                    break;
+                #endregion
+
                 #region GameState.None
                 //the normal state of the game where nothing is selected
+                //next state: UnitSelected
+                //            BuildingSelected
+                //            TurnEnd
                 case GameState.None:
                     if (HelperFunction.IsLeftMousePressed())
                     {
@@ -659,13 +780,15 @@ namespace Wartorn.Screens.MainGameScreen
                         RevertMovingUnitAnimation();
 
                         canvas_action_Unit.IsVisible = false;
-                        //revert any movement if exist
-                        //RevertMovingUnitAnimation();
+
                         currentGameState = GameState.UnitSelected;
                         break;
                     }
 
+
                     Unit tempunit = map[selectedUnit].unit;
+                    Point selectedTarget;
+
                     switch (selectedCmd)
                     {
                         case Command.Wait:
@@ -686,15 +809,20 @@ namespace Wartorn.Screens.MainGameScreen
                                 tempunit.UpdateActionPoint(Command.Attack);
 
                                 //do attack stuff
-                                Unit otherunit = map[selectedMapCell].unit;
-                                var result = Unit.GetCalculatedDamage(map[selectedUnit], map[selectedMapCell]);
+                                selectedTarget = selectedMapCell;
+                                Unit otherunit = map[selectedTarget].unit;
+                                var result = Unit.GetCalculatedDamage(map[selectedUnit], map[selectedTarget]);
                                 //CONTENT_MANAGER.ShowMessageBox(string.Format("{0} attack {1}: {2}", tempunit.UnitType, otherunit.UnitType, result));
                                 tempunit.HitPoint = result.attackerHP;
                                 otherunit.HitPoint = result.defenderHP;
 
-                                if (tempunit.HitPoint==0)
+                                if (tempunit.HitPoint<=0)
                                 {
                                     map.RemoveUnit(selectedUnit);
+                                }
+                                if (otherunit.HitPoint<=0)
+                                {
+                                    map.RemoveUnit(selectedTarget);
                                 }
                                 //end command
                                 goto finalise_command_execution;
@@ -777,6 +905,8 @@ namespace Wartorn.Screens.MainGameScreen
                         //hide command menu
                         HideCommandMenu();
                         canvas_action_Unit.IsVisible = false;
+
+                        //Send Command to the other player for rendering
 
                         //goto none
                         currentGameState = GameState.None;
@@ -885,13 +1015,14 @@ namespace Wartorn.Screens.MainGameScreen
         #region calculate vision
         private void CalculateVision()
         {
-            foreach (Guid id in ownedUnit)
+            foreach (Guid id in playerInfos[localPlayer].ownedUnit)
             {
                 
             }
         }
         #endregion
 
+        #region Command unit
         private int GetCommands()
         {
             MapCell tempmapcell = map[selectedUnit];
@@ -901,9 +1032,42 @@ namespace Wartorn.Screens.MainGameScreen
             int temp = (int)Command.Wait;
 
             //có attack nếu có Unit địch trong tầm tấn công và tầm nhìn nè
-            //check xem unit có di chuyển chưa?
-            if (movingAnim == null)
+            //check xem có phải là ranged unit? nêu có thì
+            //  check xem unit có di chuyển chưa? nếu có thì
+            //      không thể attack
+            //  nếu không thì
+            //      attack
+            //nếu không thì
+            //  attack
+            if ((tempunit.UnitType == UnitType.Artillery
+              || tempunit.UnitType == UnitType.Rocket
+              || tempunit.UnitType == UnitType.Missile
+              || tempunit.UnitType == UnitType.Battleship))
             {
+                if (movingAnim == null)
+                {
+                    //không attack
+                }
+                else
+                {
+                    //attack
+                    foreach (Point p in attackRange)
+                    {
+                        if (map[p].unit != null
+                       //the below check is only for debug
+                       //&& map[p].unit.Owner != map[selectedUnit].unit.Owner) 
+                       //the below check is used in final game
+                       && !playerInfos[localPlayer].ownedUnit.Contains(map[p].unit.guid))
+                        {
+                            temp += (int)Command.Attack;
+                            break;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                //attack
                 //todo làm tầm nhìn
                 foreach (Point p in attackRange)
                 {
@@ -911,7 +1075,7 @@ namespace Wartorn.Screens.MainGameScreen
                    //the below check is only for debug
                    //&& map[p].unit.Owner != map[selectedUnit].unit.Owner) 
                    //the below check is used in final game
-                   && !ownedUnit.Contains(map[p].unit.guid))
+                   && !playerInfos[localPlayer].ownedUnit.Contains(map[p].unit.guid))
                     {
                         temp += (int)Command.Attack;
                         break;
@@ -947,7 +1111,7 @@ namespace Wartorn.Screens.MainGameScreen
 
         private void ShowCommandMenu()
         {
-            HideBuildingMenu();
+            HideCommandMenu();
 
             canvas_action_Unit.IsVisible = true;
 
@@ -1010,6 +1174,7 @@ namespace Wartorn.Screens.MainGameScreen
             canvas_action_Unit.GetElementAs<Button>("secondslot").spriteSourceRectangle = Rectangle.Empty;
             canvas_action_Unit.GetElementAs<Button>("thirdslot").spriteSourceRectangle = Rectangle.Empty;
         }
+        #endregion
 
         #region Unit handler
 
@@ -1142,28 +1307,49 @@ namespace Wartorn.Screens.MainGameScreen
                 localPlayer = 1;
             }
 
-            ChangeUnitCanvasColor(playerInfos[currentPlayer].owner);
+            ChangeBuyUnitCanvasColor(playerInfos[currentPlayer].owner);
         }
 
-        private void ChangeUnitCanvasColor(GameData.Owner owner)
+        private void ChangeBuyUnitCanvasColor(GameData.Owner owner)
         {
             foreach (string uiname in canvas_action_Factory.UInames)
             {
-                Rectangle temp = canvas_action_Factory.GetElementAs<Button>(uiname).spriteSourceRectangle;
-                UnitType tempunittype = UnitSpriteSheetRectangle.GetUnitType(temp);
-                canvas_action_Factory.GetElementAs<Button>(uiname).spriteSourceRectangle = UnitSpriteSheetRectangle.GetSpriteRectangle(tempunittype, owner);
+                if (uiname.Contains("picturebox"))
+                {
+                    canvas_action_Factory.GetElementAs<PictureBox>(uiname).SourceRectangle = BuyMenuFactorySpriteSourceRectangle.GetSpriteRectangle(owner);
+                }
+                else
+                {
+                    Rectangle temp = canvas_action_Factory.GetElementAs<Button>(uiname).spriteSourceRectangle;
+                    UnitType tempunittype = UnitSpriteSheetRectangle.GetUnitType(temp);
+                    canvas_action_Factory.GetElementAs<Button>(uiname).spriteSourceRectangle = UnitSpriteSheetRectangle.GetSpriteRectangle(tempunittype, owner);
+                }
             }
             foreach (string uiname in canvas_action_Airport.UInames)
             {
-                Rectangle temp = canvas_action_Airport.GetElementAs<Button>(uiname).spriteSourceRectangle;
-                UnitType tempunittype = UnitSpriteSheetRectangle.GetUnitType(temp);
-                canvas_action_Airport.GetElementAs<Button>(uiname).spriteSourceRectangle = UnitSpriteSheetRectangle.GetSpriteRectangle(tempunittype, owner);
+                if (uiname.Contains("picturebox"))
+                {
+                    canvas_action_Factory.GetElementAs<PictureBox>(uiname).SourceRectangle = BuyMenuAirportHarborSpriteSourceRectangle.GetSpriteRectangle(owner);
+                }
+                else
+                {
+                    Rectangle temp = canvas_action_Airport.GetElementAs<Button>(uiname).spriteSourceRectangle;
+                    UnitType tempunittype = UnitSpriteSheetRectangle.GetUnitType(temp);
+                    canvas_action_Airport.GetElementAs<Button>(uiname).spriteSourceRectangle = UnitSpriteSheetRectangle.GetSpriteRectangle(tempunittype, owner);
+                }
             }
             foreach (string uiname in canvas_action_Harbor.UInames)
             {
-                Rectangle temp = canvas_action_Harbor.GetElementAs<Button>(uiname).spriteSourceRectangle;
-                UnitType tempunittype = UnitSpriteSheetRectangle.GetUnitType(temp);
-                canvas_action_Harbor.GetElementAs<Button>(uiname).spriteSourceRectangle = UnitSpriteSheetRectangle.GetSpriteRectangle(tempunittype, owner);
+                if (uiname.Contains("picturebox"))
+                {
+                    canvas_action_Factory.GetElementAs<PictureBox>(uiname).SourceRectangle = BuyMenuAirportHarborSpriteSourceRectangle.GetSpriteRectangle(owner);
+                }
+                else
+                {
+                    Rectangle temp = canvas_action_Harbor.GetElementAs<Button>(uiname).spriteSourceRectangle;
+                    UnitType tempunittype = UnitSpriteSheetRectangle.GetUnitType(temp);
+                    canvas_action_Harbor.GetElementAs<Button>(uiname).spriteSourceRectangle = UnitSpriteSheetRectangle.GetSpriteRectangle(tempunittype, owner);
+                }
             }
         }
 
@@ -1228,7 +1414,7 @@ namespace Wartorn.Screens.MainGameScreen
               &&spawnlocation.unit == null)
             {
                 Unit temp = UnitCreationHelper.Create(unittype, owner.owner);
-                ownedUnit.Add(temp.guid);
+                playerInfos[localPlayer].ownedUnit.Add(temp.guid);
                 map.RegisterUnit(location, temp);
                 return true;
             }
@@ -1280,6 +1466,7 @@ namespace Wartorn.Screens.MainGameScreen
             switch (currentGameState)
             {
                 case GameState.None:
+                case GameState.WaitForTurn:
                 case GameState.BuildingSelected:
                 case GameState.BuildingBuildUnit:
                      tempmapcell = map[selectedMapCell];
@@ -1436,10 +1623,10 @@ namespace Wartorn.Screens.MainGameScreen
             //CONTENT_MANAGER.spriteBatch.Draw(guibackground, new Vector2(0, 0), null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.GuiBackground);
             canvas.Draw(CONTENT_MANAGER.spriteBatch);
 
-            CONTENT_MANAGER.spriteBatch.DrawString(CONTENT_MANAGER.defaultfont, currentGameState.ToString(), new Vector2(100, 100), Color.Red);
-            if (movingAnim != null)
+            //CONTENT_MANAGER.spriteBatch.DrawString(CONTENT_MANAGER.defaultfont, currentGameState.ToString(), new Vector2(100, 100), Color.Red);
+            if (currentGameState == GameState.BuildingSelected)
             {
-                CONTENT_MANAGER.spriteBatch.DrawString(CONTENT_MANAGER.defaultfont,movingAnim.IsArrived.ToString(), new Vector2(100, 140), Color.Red);
+                //CONTENT_MANAGER.spriteBatch.DrawString(CONTENT_MANAGER.defaultfont, canvas_action_Factory.GetElementAs<Label>("label_unitname").Position.toString(), new Vector2(100, 140), Color.Red);
             }
 
             //draw canvas_generalInfo

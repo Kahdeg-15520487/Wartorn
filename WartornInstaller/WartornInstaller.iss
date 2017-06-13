@@ -34,47 +34,27 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "G:\Workspace\c#\Wartorn\Build\Wartorn.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "G:\Workspace\c#\Wartorn\Build\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "G:\Workspace\c#\Wartorn\Build\data\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "G:\Workspace\c#\Wartorn\Build\crashlog.txt"; DestDir: "{app}"; Flags: ignoreversion
-Source: "G:\Workspace\c#\Wartorn\Build\IronPython.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "G:\Workspace\c#\Wartorn\Build\IronPython.Modules.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "G:\Workspace\c#\Wartorn\Build\IronPython.Modules.xml"; DestDir: "{app}"; Flags: ignoreversion
-Source: "G:\Workspace\c#\Wartorn\Build\IronPython.SQLite.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "G:\Workspace\c#\Wartorn\Build\IronPython.SQLite.xml"; DestDir: "{app}"; Flags: ignoreversion
-Source: "G:\Workspace\c#\Wartorn\Build\IronPython.Wpf.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "G:\Workspace\c#\Wartorn\Build\IronPython.Wpf.xml"; DestDir: "{app}"; Flags: ignoreversion
-Source: "G:\Workspace\c#\Wartorn\Build\IronPython.xml"; DestDir: "{app}"; Flags: ignoreversion
-Source: "G:\Workspace\c#\Wartorn\Build\Microsoft.Dynamic.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "G:\Workspace\c#\Wartorn\Build\Microsoft.Dynamic.xml"; DestDir: "{app}"; Flags: ignoreversion
-Source: "G:\Workspace\c#\Wartorn\Build\Microsoft.Scripting.AspNet.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "G:\Workspace\c#\Wartorn\Build\Microsoft.Scripting.AspNet.xml"; DestDir: "{app}"; Flags: ignoreversion
-Source: "G:\Workspace\c#\Wartorn\Build\Microsoft.Scripting.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "G:\Workspace\c#\Wartorn\Build\Microsoft.Scripting.Metadata.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "G:\Workspace\c#\Wartorn\Build\Microsoft.Scripting.Metadata.xml"; DestDir: "{app}"; Flags: ignoreversion
-Source: "G:\Workspace\c#\Wartorn\Build\Microsoft.Scripting.xml"; DestDir: "{app}"; Flags: ignoreversion
-Source: "G:\Workspace\c#\Wartorn\Build\MonoGame.Framework.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "G:\Workspace\c#\Wartorn\Build\MonoGame.Framework.xml"; DestDir: "{app}"; Flags: ignoreversion
-Source: "G:\Workspace\c#\Wartorn\Build\Newtonsoft.Json.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "G:\Workspace\c#\Wartorn\Build\Newtonsoft.Json.xml"; DestDir: "{app}"; Flags: ignoreversion
-Source: "G:\Workspace\c#\Wartorn\Build\NVorbis.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "G:\Workspace\c#\Wartorn\Build\OpenTK.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "G:\Workspace\c#\Wartorn\Build\OpenTK.dll.config"; DestDir: "{app}"; Flags: ignoreversion
-Source: "G:\Workspace\c#\Wartorn\Build\SDL2.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "G:\Workspace\c#\Wartorn\Build\SharpDX.Direct2D1.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "G:\Workspace\c#\Wartorn\Build\SharpDX.Direct3D11.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "G:\Workspace\c#\Wartorn\Build\SharpDX.Direct3D9.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "G:\Workspace\c#\Wartorn\Build\SharpDX.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "G:\Workspace\c#\Wartorn\Build\SharpDX.DXGI.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "G:\Workspace\c#\Wartorn\Build\SharpDX.MediaFoundation.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "G:\Workspace\c#\Wartorn\Build\SharpDX.XAudio2.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "G:\Workspace\c#\Wartorn\Build\SharpDX.XInput.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "G:\Workspace\c#\Wartorn\Build\soft_oal.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "G:\Workspace\c#\Wartorn\Build\StatsBalancer.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "G:\Workspace\c#\Wartorn\Build\Wartorn.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "G:\Workspace\c#\Wartorn\Build\XNAGameConsole.dll"; DestDir: "{app}"; Flags: ignoreversion
-; NOTE: Don't use "Flags: ignoreversion" on any shared system files
+; Source: "..\Build\Wartorn.exe"; DestDir: "{app}"; Flags: ignoreversion
+; Source: "..\Build\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "..\Build\IronPython.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Build\IronPython.Modules.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Build\IronPython.SQLite.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Build\IronPython.Wpf.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Build\Microsoft.Dynamic.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Build\Microsoft.Scripting.AspNet.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Build\Microsoft.Scripting.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Build\Microsoft.Scripting.Metadata.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Build\MonoGame.Framework.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Build\Newtonsoft.Json.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Build\NVorbis.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Build\OpenTK.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Build\SDL2.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Build\soft_oal.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Build\StatsBalancer.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Build\Wartorn.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Build\Content\*"; DestDir: "{app}\Content\"; Flags: ignoreversion createallsubdirs recursesubdirs
+Source: "..\Build\data\*"; DestDir: "{app}\data\"; Flags: ignoreversion createallsubdirs recursesubdirs
+Source: "..\Build\map\classic.map"; DestDir: "{app}\map\"
 
 [Icons]
 Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
@@ -82,3 +62,6 @@ Name: "{commondesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: 
 
 [Run]
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
+
+[Dirs]
+Name: "{app}\data\"

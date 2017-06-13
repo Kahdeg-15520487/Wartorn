@@ -161,6 +161,33 @@ namespace Wartorn
 
         public static class ExtensionMethod
         {
+            public static string GetName(this UnitType unitType)
+            {
+                switch (unitType)
+                {
+                    case UnitType.HeavyTank:
+                        return "H-Tank";
+
+                    case UnitType.Artillery:
+                        return "Arty";
+
+                    case UnitType.TransportCopter:
+                        return "T-Copter";
+
+                    case UnitType.BattleCopter:
+                        return "B-Copter";
+
+                    case UnitType.Submarine:
+                        return "Sub";
+
+                    case UnitType.Battleship:
+                        return "B-Ship";
+
+                    default:
+                        return unitType.ToString();
+                }
+            }
+
             public static bool IsContainCommand(this int flags, Command flag)
             {
                 int flagValue = (int)flag;

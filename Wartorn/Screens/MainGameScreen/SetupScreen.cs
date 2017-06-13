@@ -67,7 +67,7 @@ namespace Wartorn.Screens.MainGameScreen
             //bind event
             button_selectmap.MouseClick += (sender, e) =>
             {
-                string path = CONTENT_MANAGER.ShowFileOpenDialog(CONTENT_MANAGER.LocalRootPath);
+                string path = CONTENT_MANAGER.ShowFileOpenDialog(CONTENT_MANAGER.LocalRootPath + @"\map\");
                 string content = string.Empty;
                 try
                 {
