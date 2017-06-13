@@ -79,6 +79,10 @@ namespace Wartorn.Drawing.Animation
             get { return depth; }
             set { depth = value; }
         }
+        public bool IsPlaying
+        {
+            get { return isPlaying; }
+        }
 
         #endregion
 

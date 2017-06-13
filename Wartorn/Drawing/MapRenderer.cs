@@ -48,7 +48,12 @@ namespace Wartorn.Drawing
                     {
                         map[i, j].unit.Animation.Position = curpos;
                         map[i, j].unit.Animation.Draw(gameTime, spriteBatch);
-                        spriteBatch.DrawString(CONTENT_MANAGER.arcadefont, tempmapcell.unit.HitPoint.ToString(), curpos, tempmapcell.unit.Owner == Owner.Red ? Color.Blue : Color.Red, 0f, Vector2.Zero, 0.75f, SpriteEffects.None, LayerDepth.GuiUpper);
+                        if (tempmapcell.unit.Animation.IsPlaying)
+                        {
+                            Point hpPos = new Point((int)curpos.X + 36, (int)curpos.Y + 36);
+                            spriteBatch.DrawString(CONTENT_MANAGER.arcadefont, tempmapcell.unit.HitPoint.ToString(), hpPos.ToVector2(), tempmapcell.unit.Owner == Owner.Red ? Color.Blue : Color.Red, 0f, Vector2.Zero, 0.75f, SpriteEffects.None, LayerDepth.GuiUpper);
+                            spriteBatch.Draw(CONTENT_MANAGER.blank8x8, new Rectangle(hpPos, new Point(12, 12)), null, Color.White, 0f, Vector2.Zero, SpriteEffects.None, LayerDepth.GuiUpper - 0.01f);
+                        }
                     }
                 }
             }
@@ -523,6 +528,7 @@ namespace Wartorn.Drawing
                                 break;
 
                             case TerrainType.Mountain:
+                                map[pos].ClearRenderData();
                                 SpriteSheetTerrain north = SpriteSheetTerrain.None;
                                 switch (map.weather)
                                 {
@@ -530,11 +536,11 @@ namespace Wartorn.Drawing
                                         switch (map.theme)
                                         {
                                             case Theme.Normal:
-                                                map[pos].terrainbase = SpriteSheetTerrain.Mountain_High_Lower;
+                                                map[pos].terrainbase = SpriteSheetTerrain.Desert_Mountain_High_Lower;//.Mountain_High_Lower;
                                                 north = SpriteSheetTerrain.Mountain_High_Upper;
                                                 break;
                                             case Theme.Tropical:
-                                                map[pos].terrainbase = SpriteSheetTerrain.Tropical_Mountain_High_Lower;
+                                                map[pos].terrainbase = SpriteSheetTerrain.Desert_Mountain_High_Lower;//.Tropical_Mountain_High_Lower;
                                                 north = SpriteSheetTerrain.Tropical_Mountain_High_Upper;
                                                 break;
                                             case Theme.Desert:
