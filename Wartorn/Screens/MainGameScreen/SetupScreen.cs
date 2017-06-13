@@ -30,20 +30,12 @@ namespace Wartorn.Screens.MainGameScreen
     {
         Canvas canvas;
 
-     
-
-        public SetupScreen(GraphicsDevice device) : base(device, "SetupScreen")
-        {
-
-        }
+        public SetupScreen(GraphicsDevice device) : base(device, "SetupScreen") { }
 
         public override bool Init()
         {
-            canvas = new Canvas();
-            
-
+            canvas = new Canvas(); 
             InitUI();
-
             return base.Init();
         }
 
@@ -51,8 +43,6 @@ namespace Wartorn.Screens.MainGameScreen
         {
             SpriteFont spriteFont = CONTENT_MANAGER.arcadefont;
             //declare ui elements
-         
-
             Label enter_name = new Label("Enter your name", new Point((this._device.Viewport.Width / 2) - (int)spriteFont.MeasureString("Enter your name").X / 2 , this._device.Viewport.Height / 2 - 140), null, CONTENT_MANAGER.arcadefont, 1);
 
             InputBox player_name = new InputBox("", new Point(this._device.Viewport.Width / 2 - 75, this._device.Viewport.Height / 2 - 120), new Vector2(150, 20), CONTENT_MANAGER.hackfont, Color.Black, Color.White);
@@ -68,7 +58,6 @@ namespace Wartorn.Screens.MainGameScreen
             Button button_connect = new Button(text_conect, point_conect, null, CONTENT_MANAGER.arcadefont);
 
             //bind event
-
             Player.Instance.connect_succeed += (sender, e) =>
             {
                 Player.Instance.Name = player_name.Text;
@@ -92,7 +81,6 @@ namespace Wartorn.Screens.MainGameScreen
 
         public override void Shutdown()
         {
-          
             Player.Instance.Dispose();
         }
 
@@ -104,7 +92,6 @@ namespace Wartorn.Screens.MainGameScreen
         public override void Draw(GameTime gameTime)
         {
             canvas.Draw(CONTENT_MANAGER.spriteBatch);
-      
         }
     }
 

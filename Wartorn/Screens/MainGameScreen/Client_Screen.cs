@@ -17,18 +17,10 @@ namespace Wartorn.Screens.MainGameScreen
 {
     class Client_Screen : Screen
     {
-
         InputDialog enterRoom;
-
         Canvas canvas;
 
-
-
-        public Client_Screen(GraphicsDevice device) : base(device, "Client_Screen")
-        {
-
-        }
-
+        public Client_Screen(GraphicsDevice device) : base(device, "Client_Screen") { }
 
         public override bool Init()
         {
@@ -119,7 +111,6 @@ namespace Wartorn.Screens.MainGameScreen
         public override void Shutdown()
         {
             base.Shutdown();
-
         }
     }
 }

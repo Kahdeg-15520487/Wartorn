@@ -228,9 +228,7 @@ namespace Wartorn.Screens.MainGameScreen
 
             Label label_mousepos = new Label(" ", new Point(0, 0), new Vector2(80, 20), CONTENT_MANAGER.defaultfont);
             Button end_turn = new Button("End",new Point(650,0),null,CONTENT_MANAGER.hackfont);
-
-
-           
+                       
             //bind event
             end_turn.MouseClick += (sender, e) =>
             {
@@ -244,7 +242,6 @@ namespace Wartorn.Screens.MainGameScreen
                 if(e=="your turn")
                 {
                     isMyTurn = true;
-                    
                 }
             };
 
@@ -253,12 +250,9 @@ namespace Wartorn.Screens.MainGameScreen
             {
                 try
                 {
-                 
-                    
                     var temp = e.Split('@');
                     if (temp[0] == "init")
                     {
-                       
                         temp_Unit = JsonConvert.DeserializeObject<Unit>(temp[1]);
                         temp_destination = JsonConvert.DeserializeObject<Point>(temp[2]);
                         init = true;
@@ -266,29 +260,22 @@ namespace Wartorn.Screens.MainGameScreen
 
                     if (temp[0] == "update")
                     {
-                        
                         temp_origin = JsonConvert.DeserializeObject<Point>(temp[1]);
                         temp_destination = JsonConvert.DeserializeObject<Point>(temp[2]);
                         updateGUI = true;
                     }
-
-
                 }
                 catch (Exception)
                 {
 
-                    
                 }
             };
 
             console = new UIClass.Console(new Point(0, 0), new Vector2(720, 200), CONTENT_MANAGER.hackfont);
             console.IsVisible = false;
             console.SetVariable("player", localPlayer);
-            console.SetVariable("changeTurn", new Action(this.ChangeTurn));
-            console.SetVariable("round", new Action(this.RoundTurn));
 
             //bind event
-
             //add to canvas
             canvas.AddElement("SelectedMapCell", canvas_SelectedMapCell);
             canvas.AddElement("TargetedMapCell", canvas_TargetedMapCell);
@@ -1447,23 +1434,9 @@ namespace Wartorn.Screens.MainGameScreen
             }
         }
         #endregion
-
-        #region only use to demo gameplay these will not be used in game
-
-        private void RoundTurn()
-        {
-            ChangeTurn();
-            ChangeTurn();
-        }
-
+        
         private void ChangeTurn()
         {
-            //foreach (Point p in map.mapcellthathaveunit)
-            //{
-            //    map[p].unit.UpdateActionPoint(Command.None);
-            //    map[p].unit.Animation.PlayAnimation(AnimationName.idle.ToString());
-            //}
-
             if (currentPlayer == 1)
             {
                 currentPlayer = 0;
@@ -1473,71 +1446,7 @@ namespace Wartorn.Screens.MainGameScreen
             {
                 currentPlayer = 1;
             }
-
-            //if (localPlayer == 1)
-            //{
-            //    localPlayer = 0;
-            //}
-            //else
-            //{
-            //    localPlayer = 1;
-            //}
-
         }
-
-        private void ChangeBuyUnitCanvasColor(GameData.Owner owner)
-        {
-            foreach (string uiname in canvas_action_Factory.UInames)
-            {
-                if (uiname.Contains("picturebox"))
-                {
-                    canvas_action_Factory.GetElementAs<PictureBox>(uiname).SourceRectangle = BuyMenuFactorySpriteSourceRectangle.GetSpriteRectangle(owner);
-                }
-                else
-                {
-                    if (!uiname.Contains("label"))
-                    {
-                        Rectangle temp = canvas_action_Factory.GetElementAs<Button>(uiname).spriteSourceRectangle;
-                        UnitType tempunittype = UnitSpriteSheetRectangle.GetUnitType(temp);
-                        canvas_action_Factory.GetElementAs<Button>(uiname).spriteSourceRectangle = UnitSpriteSheetRectangle.GetSpriteRectangle(tempunittype, owner);
-                    }
-                }
-            }
-            foreach (string uiname in canvas_action_Airport.UInames)
-            {
-                if (uiname.Contains("picturebox"))
-                {
-                    canvas_action_Airport.GetElementAs<PictureBox>(uiname).SourceRectangle = BuyMenuAirportHarborSpriteSourceRectangle.GetSpriteRectangle(owner);
-                }
-                else
-                {
-                    if (!uiname.Contains("label"))
-                    {
-                        Rectangle temp = canvas_action_Airport.GetElementAs<Button>(uiname).spriteSourceRectangle;
-                        UnitType tempunittype = UnitSpriteSheetRectangle.GetUnitType(temp);
-                        canvas_action_Airport.GetElementAs<Button>(uiname).spriteSourceRectangle = UnitSpriteSheetRectangle.GetSpriteRectangle(tempunittype, owner);
-                    }
-                }
-            }
-            foreach (string uiname in canvas_action_Harbor.UInames)
-            {
-                if (uiname.Contains("picturebox"))
-                {
-                    canvas_action_Harbor.GetElementAs<PictureBox>(uiname).SourceRectangle = BuyMenuAirportHarborSpriteSourceRectangle.GetSpriteRectangle(owner);
-                }
-                else
-                {
-                    if (!uiname.Contains("label"))
-                    {
-                        Rectangle temp = canvas_action_Harbor.GetElementAs<Button>(uiname).spriteSourceRectangle;
-                        UnitType tempunittype = UnitSpriteSheetRectangle.GetUnitType(temp);
-                        canvas_action_Harbor.GetElementAs<Button>(uiname).spriteSourceRectangle = UnitSpriteSheetRectangle.GetSpriteRectangle(tempunittype, owner);
-                    }
-                }
-            }
-        }
-
-        #endregion
 
         private bool SelectBuilding()
         {
