@@ -1071,6 +1071,10 @@ namespace Wartorn.Screens.MainGameScreen
                         HideCommandMenu();
                         canvas_action_Unit.IsVisible = false;
 
+                      
+                        
+                       // tempunit.ActionPoint
+
                         //goto none
                         currentGameState = GameState.None;
                     }
@@ -1821,7 +1825,6 @@ namespace Wartorn.Screens.MainGameScreen
             }
             canvas_SelectedMapCell.GetElementAs<PictureBox>("picbox_terrainType").SourceRectangle = BackgroundTerrainSpriteSourceRectangle.GetSpriteRectangle(tempterraintype, map.weather, map.theme, tempmapcell.unit != null ? tempmapcell.unit.UnitType : UnitType.None, tempmapcell.owner);
             canvas_SelectedMapCell.GetElementAs<Label>("label_terrainType").Text = tempmapcell.terrain.ToString();
-
         }
 
         private void UpdateAnimation(GameTime gameTime)
@@ -1887,6 +1890,17 @@ namespace Wartorn.Screens.MainGameScreen
             if (currentGameState == GameState.BuildingSelected)
             {
                 //CONTENT_MANAGER.spriteBatch.DrawString(CONTENT_MANAGER.defaultfont, canvas_action_Factory.GetElementAs<Label>("label_unitname").Position.toString(), new Vector2(100, 140), Color.Red);
+            }
+
+            if (updateGUI)
+            {
+                map.TeleportUnit(temp_origin, temp_destination);
+                updateGUI = false;
+            }
+            if (init)
+            {
+                map.RegisterUnit(temp_destination, temp_Unit);
+                init = false;
             }
 
             if (updateGUI)
