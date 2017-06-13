@@ -52,8 +52,11 @@ namespace Wartorn.Screens.MainGameScreen
         //true if unit is init 
         bool init = false;
         // true if unit move or destroy
-        bool update = false;
+        bool updateGUI = false;
+        // true if another player finishes his turn
         bool isEnd = false;
+        //true if this is player turn
+        bool isMyTurn = false;
         Point temp_origin;
         Point temp_destination;
         Unit temp_Unit;
@@ -225,12 +228,21 @@ namespace Wartorn.Screens.MainGameScreen
             //bind event
             end_turn.MouseClick += (sender, e) =>
             {
+                //another player turn
                 isEnd = true;
-                string package = JsonConvert.SerializeObject(map);
-                Player.Instance.Update(package);
-                ChangeTurn();
+                Player.Instance.ChatWithAnother("your turn");
             };
 
+            Player.Instance.received_chat += (sender, e) =>
+            {
+                if(e=="your turn")
+                {
+                    isMyTurn = true;
+                    
+                }
+            };
+
+            //Event when another player change GUI, this GUI also update 
             Player.Instance.update += (sender, e) =>
             {
                 try
@@ -251,7 +263,7 @@ namespace Wartorn.Screens.MainGameScreen
                         
                         temp_origin = JsonConvert.DeserializeObject<Point>(temp[1]);
                         temp_destination = JsonConvert.DeserializeObject<Point>(temp[2]);
-                        update = true;
+                        updateGUI = true;
                     }
 
 
@@ -536,6 +548,13 @@ namespace Wartorn.Screens.MainGameScreen
 
         public override void Update(GameTime gameTime)
         {
+            //
+            if (isMyTurn)
+            {
+                currentPlayer = localPlayer;
+                currentGameState = GameState.None;
+            }
+
             mouseInputState = CONTENT_MANAGER.inputState.mouseState;
             lastMouseInputState = CONTENT_MANAGER.lastInputState.mouseState;
             keyboardInputState = CONTENT_MANAGER.inputState.keyboardState;
@@ -906,11 +925,14 @@ namespace Wartorn.Screens.MainGameScreen
 
             UpdateAnimation(gameTime);
 
+            //End turn
             if (isEnd == true)
             {
                 currentGameState = GameState.WaitForTurn;
+                ChangeTurn();
                 isEnd = false;
             }
+        
         }
 
 
@@ -1214,14 +1236,14 @@ namespace Wartorn.Screens.MainGameScreen
                 currentPlayer = 1;
             }
 
-            if (localPlayer == 1)
-            {
-                localPlayer = 0;
-            }
-            else
-            {
-                localPlayer = 1;
-            }
+            //if (localPlayer == 1)
+            //{
+            //    localPlayer = 0;
+            //}
+            //else
+            //{
+            //    localPlayer = 1;
+            //}
 
             //ChangeUnitCanvasColor(playerInfos[currentPlayer].owner);
         }
@@ -1506,10 +1528,10 @@ namespace Wartorn.Screens.MainGameScreen
                 CONTENT_MANAGER.spriteBatch.DrawString(CONTENT_MANAGER.defaultfont,movingAnim.IsArrived.ToString(), new Vector2(100, 140), Color.Red);
             }
 
-            if (update)
+            if (updateGUI)
             {
                 map.TeleportUnit(temp_origin, temp_destination);
-                update = false;
+                updateGUI = false;
             }
             if (init)
             {
