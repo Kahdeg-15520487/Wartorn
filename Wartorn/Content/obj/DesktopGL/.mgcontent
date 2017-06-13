@@ -253,5 +253,13 @@
     <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/Animation/Red/Cruiser.png</File>
     <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/Animation/Yellow/Cruiser.png</File>
     <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/Cursor/Buy_Cursor.png</File>
+    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/GUI/endgame/Background2.png</File>
+    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/GUI/endgame/Background3.png</File>
+    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/GUI/endgame/Background4.png</File>
+    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/GUI/endgame/Background5.png</File>
+    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/GUI/endgame/Background6.png</File>
+    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/GUI/endgame/Background7.png</File>
+    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/GUI/endgame/Background8.png</File>
+    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/GUI/endgame/Background1.png</File>
   </SourceFiles>
 </SourceFileCollection>

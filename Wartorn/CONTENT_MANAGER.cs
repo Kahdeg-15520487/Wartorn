@@ -72,6 +72,8 @@ namespace Wartorn
         public static Texture2D attackCursor;
         public static Texture2D buyCursor;
 
+        public static List<Texture2D> endgameBG;
+
         #region animation sprite sheet
         public static Dictionary<SpriteSheetUnit, AnimatedEntity> animationEntities;
         public static Dictionary<SpriteSheetUnit, Texture2D> animationSheets;
@@ -110,6 +112,16 @@ namespace Wartorn
             selectCursor = Content.Load<Texture2D>(@"sprite\Cursor\Select_Cursor");
             attackCursor = Content.Load<Texture2D>(@"sprite\Cursor\Attack_Cursor");
             buyCursor = Content.Load<Texture2D>(@"sprite\Cursor\Buy_Cursor");
+
+            endgameBG = new List<Texture2D>();
+            endgameBG.Add(Content.Load<Texture2D>(@"sprite\GUI\endgame\Background1"));
+            endgameBG.Add(Content.Load<Texture2D>(@"sprite\GUI\endgame\Background2"));
+            endgameBG.Add(Content.Load<Texture2D>(@"sprite\GUI\endgame\Background3"));
+            endgameBG.Add(Content.Load<Texture2D>(@"sprite\GUI\endgame\Background4"));
+            endgameBG.Add(Content.Load<Texture2D>(@"sprite\GUI\endgame\Background5"));
+            endgameBG.Add(Content.Load<Texture2D>(@"sprite\GUI\endgame\Background6"));
+            endgameBG.Add(Content.Load<Texture2D>(@"sprite\GUI\endgame\Background7"));
+            endgameBG.Add(Content.Load<Texture2D>(@"sprite\GUI\endgame\Background8"));
 
             LoadAnimationContent();
 

@@ -15,7 +15,9 @@ namespace Wartorn.GameData
         public int playerId;
         public Owner owner;
         public int money;
+        public Vector2 lastCameraLocation;
         public List<Guid> ownedUnit;
+        public Point HQlocation;
         public PlayerInfo(int playerid,Owner owner,int startingmoney = 0)
         {
             playerId = playerid;
@@ -25,7 +27,7 @@ namespace Wartorn.GameData
         }
     }
 
-    struct SessionData
+    public struct SessionData
     {
         public GameMode gameMode;
         public PlayerInfo[] playerInfos;

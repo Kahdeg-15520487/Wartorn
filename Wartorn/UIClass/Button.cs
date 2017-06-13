@@ -248,7 +248,7 @@ namespace Wartorn
             {
                 if (isDrawRect)
                 {
-                    DrawingHelper.DrawRectangle(rect, Color.Red, false);
+                    DrawingHelper.DrawRectangle(rect, Color.Gold, false);
                 }
 
                 switch (contentType)

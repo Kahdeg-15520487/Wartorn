@@ -303,6 +303,18 @@ namespace Wartorn.GameData
         public readonly Guid guid;
 
         #endregion
+
+        #region submarine dive
+        private bool isdiving;
+        public bool isDiving
+        {
+            get
+            {
+                return unitType == UnitType.Submarine && isdiving;
+            }
+        }
+        #endregion
+
         public Unit(UnitType unittype, AnimatedEntity anim,Owner owner,int hp = 10)
         {
             unitType = unittype;
@@ -326,6 +338,16 @@ namespace Wartorn.GameData
             return _AttackRange[unitType];
         }
 
+        public void Resupply()
+        {
+            fuel = _Gas[unitType];
+            ammo = _Ammo[unitType];
+        }
+
+        public void Repair()
+        {
+            hitPoint = (hitPoint + 2).Clamp(10, 0);
+        }
         
         /// <summary>
         /// peak what the actionpoint will be after taking an action but not update the actionpoint
@@ -373,6 +395,18 @@ namespace Wartorn.GameData
                     break;
                 case Command.Capture:
                     actionpoint = 0;
+                    break;
+                case Command.Dive:
+                    actionpoint = 0;
+                    isdiving = true;
+                    break;
+                case Command.Rise:
+                    actionpoint = 0;
+                    isdiving = false;
+                    break;
+                case Command.Load:
+                    break;
+                case Command.Drop:
                     break;
                 default:
                     break;

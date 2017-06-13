@@ -80,6 +80,28 @@ namespace Wartorn.GameData
         }
         #endregion
 
+        #region building list
+
+        private List<Point> mapcellthatbuilding;
+
+        public IEnumerable<Point> GetOwnedBuilding(Owner owner)
+        {
+            foreach (var p in mapcellthatbuilding)
+            {
+                if (this[p].owner == owner)
+                {
+                    yield return p;
+                }
+            }
+        }
+
+        public void ChangeBuildingOwner(Point buildingposition,Owner owner)
+        {
+            this[mapcellthatbuilding.Find(p => { return p == buildingposition; })].owner = owner;
+        }
+
+        #endregion
+
         public MapCell[,] map { get; private set; }
         public Graph navigationGraph;
 
@@ -174,13 +196,19 @@ namespace Wartorn.GameData
             isProcessed = false;
 
             mapcellthathaveunit = new List<Point>();
+            mapcellthatbuilding = new List<Point>();
             for (int x = 0; x < Width; x++)
             {
                 for (int y = 0; y < Height; y++)
                 {
-                    if (map[x,y].unit!=null)
+                    Point p = new Point(x, y);
+                    if (this[p].unit!=null)
                     {
-                        mapcellthathaveunit.Add(new Point(x, y));
+                        mapcellthathaveunit.Add(p);
+                    }
+                    if (this[p].terrain.isBuilding())
+                    {
+                        mapcellthatbuilding.Add(p);
                     }
                 }
             }

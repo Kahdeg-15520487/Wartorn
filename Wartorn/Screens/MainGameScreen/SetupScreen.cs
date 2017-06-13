@@ -105,8 +105,27 @@ namespace Wartorn.Screens.MainGameScreen
                 sessiondata.map.Clone(Storage.MapData.LoadMap(mapdata));
                 sessiondata.gameMode = GameMode.campaign;
                 sessiondata.playerInfos = new PlayerInfo[2];
-                sessiondata.playerInfos[0] = new PlayerInfo(0, GameData.Owner.Red);
-                sessiondata.playerInfos[1] = new PlayerInfo(1, GameData.Owner.Blue);
+                sessiondata.playerInfos[0] = new PlayerInfo(0, Owner.Red);
+                sessiondata.playerInfos[1] = new PlayerInfo(1, Owner.Blue);
+
+                foreach (var p in map.GetOwnedBuilding(Owner.Red))
+                {
+                    if (map[p].terrain == TerrainType.HQ && map[p].owner == Owner.Red)
+                    {
+                        sessiondata.playerInfos[0].HQlocation = p;
+                        break;
+                    }
+                }
+
+                foreach (var p in map.GetOwnedBuilding(Owner.Blue))
+                {
+                    if (map[p].terrain == TerrainType.HQ && map[p].owner == Owner.Blue)
+                    {
+                        sessiondata.playerInfos[1].HQlocation = p;
+                        break;
+                    }
+                }
+
                 ((GameScreen)SCREEN_MANAGER.get_screen("GameScreen")).InitSession(sessiondata);
                 SCREEN_MANAGER.goto_screen("GameScreen");
             };

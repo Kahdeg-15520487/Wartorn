@@ -115,6 +115,7 @@ namespace Wartorn.GameData
         Rise = 32,
         Dive = 64,
         Supply = 128,
-        Move = 256
+        Move = 256,
+        Operate = 512
     }
 }

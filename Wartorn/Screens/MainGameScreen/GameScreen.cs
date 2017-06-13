@@ -28,6 +28,7 @@ using Newtonsoft.Json.Linq;
 using Wartorn.PathFinding.Dijkstras;
 using Wartorn.PathFinding;
 
+
 namespace Wartorn.Screens.MainGameScreen
 {
     enum GameState
@@ -98,8 +99,9 @@ namespace Wartorn.Screens.MainGameScreen
         #region player information
         PlayerInfo[] playerInfos;
         int currentPlayer = 0;
-        int localPlayer = 0;
-        //List<Guid> ownedUnit;
+        int otherPlayer = 1;
+        int incomeThisTurn = 0;
+        bool isGoingToEndTurn = false;
         #endregion
 
         //build unit information
@@ -129,7 +131,7 @@ namespace Wartorn.Screens.MainGameScreen
         Command selectedCmd = Command.None;
 
         //game state
-        GameState currentGameState = GameState.None;
+        GameState currentGameState = GameState.TurnStart;
         #endregion
 
         public GameScreen(GraphicsDevice device) : base(device, "GameScreen")
@@ -177,9 +179,13 @@ namespace Wartorn.Screens.MainGameScreen
 
             foreach (MapCell mapcell in map)
             {
-                if (mapcell.unit!=null && mapcell.unit.Owner == playerInfos[localPlayer].owner)
+                if (mapcell.unit!=null)
                 {
-                    playerInfos[localPlayer].ownedUnit.Add(mapcell.unit.guid);
+                    for (int i=0;i<playerInfos.GetLength(0);i++)
+                    {
+                        if (mapcell.unit.Owner == playerInfos[i].owner)
+                            playerInfos[i].ownedUnit.Add(mapcell.unit.guid);
+                    }
                 }
             }
             return base.Init();
@@ -205,11 +211,27 @@ namespace Wartorn.Screens.MainGameScreen
 
             Label label_mousepos = new Label(" ", new Point(0, 0), new Vector2(80, 20), CONTENT_MANAGER.defaultfont);
 
+            Button button_endTurn = new Button("End Turn", new Point(630,10), new Vector2(100, 30), CONTENT_MANAGER.hackfont);
+            button_endTurn.Origin = new Vector2(20, 0);
+
+            button_endTurn.MouseClick += (sender, e) =>
+             {
+                 isGoingToEndTurn = true;
+                 
+             };
+
+            Label label_money = new Label(" ", new Point(550, 15), new Vector2(80, 40), CONTENT_MANAGER.hackfont);
+            label_money.Origin = new Vector2(1, 1);
+            label_money.backgroundColor = Color.White;
+
+            Label label_whoseturn = new Label(" ", new Point(470, 15), new Vector2(50, 30), CONTENT_MANAGER.hackfont);
+            label_whoseturn.Origin = new Vector2(1, 1);
+            label_whoseturn.backgroundColor = Color.White;
+
             console = new UIClass.Console(new Point(0, 0), new Vector2(720, 200), CONTENT_MANAGER.hackfont);
             console.IsVisible = false;
-            console.SetVariable("player", localPlayer);
+            console.SetVariable("player", currentPlayer);
             console.SetVariable("changeTurn", new Action(this.ChangeTurn));
-            console.SetVariable("round", new Action(this.RoundTurn));
 
             //bind event
 
@@ -220,12 +242,15 @@ namespace Wartorn.Screens.MainGameScreen
             canvas.AddElement("unit", canvas_action_Unit);
             //canvas.AddElement("label_mousepos", label_mousepos);
             canvas.AddElement("console", console);
+            canvas.AddElement("button_endTurn", button_endTurn);
+            canvas.AddElement("label_money", label_money);
+            canvas.AddElement("label_whoseturn", label_whoseturn);
         }
 
         private void InitCanvas_Unit()
         {
             //declare ui elements
-            PictureBox commandslot = new PictureBox(CONTENT_MANAGER.commandspritesheet, Point.Zero, CommandSpriteSourceRectangle.GetSprite(playerInfos[localPlayer].owner == GameData.Owner.Red ? SpriteSheetCommandSlot.oneslotred : SpriteSheetCommandSlot.oneslotblue), null, depth: LayerDepth.GuiBackground);
+            PictureBox commandslot = new PictureBox(CONTENT_MANAGER.commandspritesheet, Point.Zero, CommandSpriteSourceRectangle.GetSprite(playerInfos[currentPlayer].owner == GameData.Owner.Red ? SpriteSheetCommandSlot.oneslotred : SpriteSheetCommandSlot.oneslotblue), null, depth: LayerDepth.GuiBackground);
 
             Button firstslot = new Button(CONTENT_MANAGER.commandspritesheet, Rectangle.Empty, Point.Zero);
             Button secondslot = new Button(CONTENT_MANAGER.commandspritesheet, Rectangle.Empty, Point.Zero);
@@ -334,47 +359,25 @@ namespace Wartorn.Screens.MainGameScreen
             Label label_unitType = new Label(" ", new Point(330, 464), new Vector2(80, 20), CONTENT_MANAGER.hackfont);
             label_unitType.Origin = new Vector2(-3, 2);
             label_unitType.Scale = 0.75f;
-
-            //PictureBox picbox_TargetedMapCellCapturePoint = new PictureBox(CONTENT_MANAGER.SelectedMapCell_capturePoint, new Point(262, 385), Rectangle.Empty, Vector2.Zero, depth: LayerDepth.GuiLower);
-            //Label label_TargetedMapCellCapturePoint = new Label(" ", new Point(262, 385), new Vector2(50, 20), CONTENT_MANAGER.hackfont);
-            //label_TargetedMapCellCapturePoint.Origin = new Vector2(-20, 0);
-
+            
             PictureBox picbox_TargetedMapCellDefenseStar = new PictureBox(CONTENT_MANAGER.SelectedMapCell_defenseStar, new Point(409, 371), Rectangle.Empty, Vector2.Zero, depth: LayerDepth.GuiLower);
 
             PictureBox picbox_TargetedMapCellUnitInfo = new PictureBox(CONTENT_MANAGER.SelectedMapCell_unitInfo, new Point(325, 453), Rectangle.Empty, Vector2.Zero, depth: LayerDepth.GuiLower + 0.01f);
-            //PictureBox picbox_TargetedMapCellLoadedUnit = new PictureBox(CONTENT_MANAGER.SelectedMapCell_loadedUnit, new Point(181, 435), Rectangle.Empty, Vector2.Zero, depth: LayerDepth.GuiLower);
 
             PictureBox picbox_TargetedMapCellHPbar = new PictureBox(CONTENT_MANAGER.SelectedMapCell_HPbar, new Point(342, 458), null, Vector2.Zero, depth: LayerDepth.GuiUpper);
 
             Label label_TargetedMapCellHP = new Label(" ", new Point(445, 455), new Vector2(20, 20), CONTENT_MANAGER.hackfont);
             label_TargetedMapCellHP.Origin = new Vector2(1, 2);
             label_TargetedMapCellHP.Scale = 0.6f;
-            //Label label_TargetedMapCellUnitInfo_fuel = new Label(" ", new Point(263, 465), new Vector2(20, 20), CONTENT_MANAGER.hackfont);
-            //label_TargetedMapCellUnitInfo_fuel.Origin = new Vector2(-3, 2);
-            //label_TargetedMapCellUnitInfo_fuel.Scale = 0.75f;
-            //Label label_TargetedMapCellUnitInfo_ammo = new Label(" ", new Point(294, 465), new Vector2(20, 20), CONTENT_MANAGER.hackfont);
-            //label_TargetedMapCellUnitInfo_ammo.Origin = new Vector2(-3, 2);
-            //label_TargetedMapCellUnitInfo_ammo.Scale = 0.75f;
 
             //bind event
 
             //add to canvas
             canvas_TargetedMapCell.AddElement("picbox_TargetedMapCellBorder", picbox_TargetedMapCellBorder);
-
-            //canvas_TargetedMapCell.AddElement("picbox_TargetedMapCellCapturePoint", picbox_TargetedMapCellCapturePoint);
-            //canvas_TargetedMapCell.AddElement("label_TargetedMapCellCapturePoint", label_TargetedMapCellCapturePoint);
-
             canvas_TargetedMapCell.AddElement("picbox_TargetedMapCellDefenseStar", picbox_TargetedMapCellDefenseStar);
-
             canvas_TargetedMapCell.AddElement("picbox_TargetedMapCellUnitInfo", picbox_TargetedMapCellUnitInfo);
-            //canvas_TargetedMapCell.AddElement("picbox_TargetedMapCellLoadedUnit", picbox_TargetedMapCellLoadedUnit);
-
             canvas_TargetedMapCell.AddElement("picbox_TargetedMapCellHPbar", picbox_TargetedMapCellHPbar);
-
             canvas_TargetedMapCell.AddElement("label_TargetedMapCellHP", label_TargetedMapCellHP);
-            //canvas_TargetedMapCell.AddElement("label_TargetedMapCellUnitInfo_fuel", label_TargetedMapCellUnitInfo_fuel);
-            //canvas_TargetedMapCell.AddElement("label_TargetedMapCellUnitInfo_ammo", label_TargetedMapCellUnitInfo_ammo);
-
 
             canvas_TargetedMapCell.AddElement("picbox_terrainType", picbox_terrainType);
             canvas_TargetedMapCell.AddElement("label_terrainType", label_terrainType);
@@ -415,7 +418,7 @@ namespace Wartorn.Screens.MainGameScreen
             canvas_action_Factory = new Canvas();
             canvas_action_Factory.IsVisible = false;
 
-            PictureBox picturebox_buymenu = new PictureBox(CONTENT_MANAGER.buymenu_factory, new Point(574, 300), BuyMenuFactorySpriteSourceRectangle.GetSpriteRectangle(playerInfos[localPlayer].owner), Vector2.Zero, depth: LayerDepth.GuiBackground);
+            PictureBox picturebox_buymenu = new PictureBox(CONTENT_MANAGER.buymenu_factory, new Point(574, 300), BuyMenuFactorySpriteSourceRectangle.GetSpriteRectangle(playerInfos[currentPlayer].owner), Vector2.Zero, depth: LayerDepth.GuiBackground);
 
             Label label_unitname = new Label(" ", new Point(583, 309), new Vector2(100, 30), CONTENT_MANAGER.hackfont);
             label_unitname.Origin = new Vector2(1, 1);
@@ -423,20 +426,20 @@ namespace Wartorn.Screens.MainGameScreen
             label_unitcost.Origin = new Vector2(1, 1);
 
             //hàng 1
-            Button button_Soldier = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Soldier,playerInfos[localPlayer].owner), new Point(584, 378), 0.5f);
-            Button button_Mech = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Mech, playerInfos[localPlayer].owner), new Point(618, 378), 0.5f);
-            Button button_Recon = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Recon, playerInfos[localPlayer].owner), new Point(652, 378), 0.5f);
-            Button button_APC = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.APC, playerInfos[localPlayer].owner), new Point(686, 378), 0.5f);
+            Button button_Soldier = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Soldier,playerInfos[currentPlayer].owner), new Point(584, 378), 0.5f);
+            Button button_Mech = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Mech, playerInfos[currentPlayer].owner), new Point(618, 378), 0.5f);
+            Button button_Recon = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Recon, playerInfos[currentPlayer].owner), new Point(652, 378), 0.5f);
+            Button button_APC = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.APC, playerInfos[currentPlayer].owner), new Point(686, 378), 0.5f);
 
             //hàng 2
-            Button button_Tank = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Tank, playerInfos[localPlayer].owner), new Point(584, 412), 0.5f);
-            Button button_H_Tank = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.HeavyTank, playerInfos[localPlayer].owner), new Point(618, 412), 0.5f);
-            Button button_Artillery = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Artillery, playerInfos[localPlayer].owner), new Point(652, 412), 0.5f);
-            Button button_Rocket = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Rocket, playerInfos[localPlayer].owner), new Point(686, 412), 0.5f);
+            Button button_Tank = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Tank, playerInfos[currentPlayer].owner), new Point(584, 412), 0.5f);
+            Button button_H_Tank = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.HeavyTank, playerInfos[currentPlayer].owner), new Point(618, 412), 0.5f);
+            Button button_Artillery = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Artillery, playerInfos[currentPlayer].owner), new Point(652, 412), 0.5f);
+            Button button_Rocket = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Rocket, playerInfos[currentPlayer].owner), new Point(686, 412), 0.5f);
 
             //hàng 3
-            Button button_AntiAir = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.AntiAir, playerInfos[localPlayer].owner), new Point(584, 446), 0.5f);
-            Button button_Missile = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Missile, playerInfos[localPlayer].owner), new Point(618, 446), 0.5f);
+            Button button_AntiAir = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.AntiAir, playerInfos[currentPlayer].owner), new Point(584, 446), 0.5f);
+            Button button_Missile = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Missile, playerInfos[currentPlayer].owner), new Point(618, 446), 0.5f);
 
             List<Button> tempbuttonlist = new List<Button>();
             tempbuttonlist.Add(button_Soldier);
@@ -453,6 +456,7 @@ namespace Wartorn.Screens.MainGameScreen
             #region bind event
             foreach (Button button in tempbuttonlist)
             {
+                button.isDrawRect = true;
                 button.ButtonColorPressed = Color.White;
                 button.MouseClick += (sender, e) =>
                 {
@@ -492,7 +496,7 @@ namespace Wartorn.Screens.MainGameScreen
             canvas_action_Airport = new Canvas();
             canvas_action_Airport.IsVisible = false;
 
-            PictureBox picturebox_buymenu = new PictureBox(CONTENT_MANAGER.buymenu_airport_harbor, new Point(574, 300), BuyMenuAirportHarborSpriteSourceRectangle.GetSpriteRectangle(playerInfos[localPlayer].owner), Vector2.Zero, depth: LayerDepth.GuiBackground);
+            PictureBox picturebox_buymenu = new PictureBox(CONTENT_MANAGER.buymenu_airport_harbor, new Point(574, 300), BuyMenuAirportHarborSpriteSourceRectangle.GetSpriteRectangle(playerInfos[currentPlayer].owner), Vector2.Zero, depth: LayerDepth.GuiBackground);
 
             Label label_unitname = new Label(" ", new Point(583, 309), new Vector2(100, 30), CONTENT_MANAGER.hackfont);
             label_unitname.Origin = new Vector2(1, 1);
@@ -500,10 +504,10 @@ namespace Wartorn.Screens.MainGameScreen
             label_unitcost.Origin = new Vector2(1, 1);
 
             //hàng 1
-            Button button_transportcopter = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.TransportCopter, playerInfos[localPlayer].owner), new Point(584,378), 0.5f);
-            Button button_battlecopter = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.BattleCopter, playerInfos[localPlayer].owner), new Point(618, 378), 0.5f);
-            Button button_fighter = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Fighter, playerInfos[localPlayer].owner), new Point(652, 378), 0.5f);
-            Button button_bomber = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Bomber, playerInfos[localPlayer].owner), new Point(686, 378), 0.5f);
+            Button button_transportcopter = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.TransportCopter, playerInfos[currentPlayer].owner), new Point(584,378), 0.5f);
+            Button button_battlecopter = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.BattleCopter, playerInfos[currentPlayer].owner), new Point(618, 378), 0.5f);
+            Button button_fighter = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Fighter, playerInfos[currentPlayer].owner), new Point(652, 378), 0.5f);
+            Button button_bomber = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Bomber, playerInfos[currentPlayer].owner), new Point(686, 378), 0.5f);
             
             List<Button> tempbuttonlist = new List<Button>();
             tempbuttonlist.Add(button_transportcopter);
@@ -548,7 +552,7 @@ namespace Wartorn.Screens.MainGameScreen
             canvas_action_Harbor = new Canvas();
             canvas_action_Harbor.IsVisible = false;
 
-            PictureBox picturebox_buymenu = new PictureBox(CONTENT_MANAGER.buymenu_airport_harbor, new Point(574, 300), BuyMenuAirportHarborSpriteSourceRectangle.GetSpriteRectangle(playerInfos[localPlayer].owner), Vector2.Zero, depth: LayerDepth.GuiBackground);
+            PictureBox picturebox_buymenu = new PictureBox(CONTENT_MANAGER.buymenu_airport_harbor, new Point(574, 300), BuyMenuAirportHarborSpriteSourceRectangle.GetSpriteRectangle(playerInfos[currentPlayer].owner), Vector2.Zero, depth: LayerDepth.GuiBackground);
 
             Label label_unitname = new Label(" ", new Point(583, 309), new Vector2(100, 30), CONTENT_MANAGER.hackfont);
             label_unitname.Origin = new Vector2(1, 1);
@@ -556,10 +560,10 @@ namespace Wartorn.Screens.MainGameScreen
             label_unitcost.Origin = new Vector2(1, 1);
 
             //hàng 1
-            Button button_lander = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Lander, playerInfos[localPlayer].owner), new Point(584,378), 0.5f);
-            Button button_cruiser = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Cruiser, playerInfos[localPlayer].owner), new Point(618, 378), 0.5f);
-            Button button_submarine = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Submarine, playerInfos[localPlayer].owner), new Point(652, 378), 0.5f);
-            Button button_battleship = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Battleship,playerInfos[localPlayer].owner), new Point(686, 378), 0.5f);
+            Button button_lander = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Lander, playerInfos[currentPlayer].owner), new Point(584,378), 0.5f);
+            Button button_cruiser = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Cruiser, playerInfos[currentPlayer].owner), new Point(618, 378), 0.5f);
+            Button button_submarine = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Submarine, playerInfos[currentPlayer].owner), new Point(652, 378), 0.5f);
+            Button button_battleship = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Battleship,playerInfos[currentPlayer].owner), new Point(686, 378), 0.5f);
 
             List<Button> tempbuttonlist = new List<Button>();
             tempbuttonlist.Add(button_lander);
@@ -632,6 +636,7 @@ namespace Wartorn.Screens.MainGameScreen
             //update canvas
             canvas.Update(CONTENT_MANAGER.inputState, CONTENT_MANAGER.lastInputState);
             //((Label)canvas["label_mousepos"]).Text = mouseInputState.Position.ToString();
+            canvas.GetElementAs<Label>("label_money").Text = " " + playerInfos[currentPlayer].money + Environment.NewLine + "+" + incomeThisTurn;
             UpdateCanvas_SelectedMapCell();
 
             if (canvas_TargetedMapCell.IsVisible)
@@ -660,8 +665,156 @@ namespace Wartorn.Screens.MainGameScreen
                 //bắt đầu lượt chơi
                 //next state: None
                 case GameState.TurnStart:
-                    //update tiền, supply cho các unit đang ở trong factory, airport, harbor, supplybase
-                    //reset actionpoint cho tất cả các unit
+                    canvas.GetElementAs<Label>("label_whoseturn").Text = playerInfos[currentPlayer].owner.ToString();
+
+                    #region trừ fuel cho các unit air và naval
+                    foreach (var guid in playerInfos[currentPlayer].ownedUnit)
+                    {
+                        int lostfuel = 0;
+                        var tempoint = map.FindUnit(guid);
+                        var tempu = map[tempoint].unit;
+                        if (tempu.UnitType.isAirUnit())
+                        {                            
+                            switch (tempu.UnitType)
+                            {
+                                case UnitType.BattleCopter:
+                                    lostfuel = 2;
+                                    break;
+                                case UnitType.TransportCopter:
+                                    lostfuel = 2;
+                                    break;
+                                case UnitType.Fighter:
+                                    lostfuel = 4;
+                                    break;
+                                case UnitType.Bomber:
+                                    lostfuel = 5;
+                                    break;
+                                default:
+                                    break;
+                            }
+                            tempu.Fuel -= lostfuel;
+                        }
+                        else
+                        {
+                            if (tempu.UnitType.isNavalUnit())
+                            {
+                                switch (tempu.UnitType)
+                                {
+                                    case UnitType.Lander:
+                                        lostfuel = 1;
+                                        break;
+                                    case UnitType.Cruiser:
+                                        lostfuel = 1;
+                                        break;
+                                    case UnitType.Submarine:
+                                        if (tempu.isDiving)
+                                            lostfuel = 5;
+                                        else
+                                            lostfuel = 1;
+                                        break;
+                                    case UnitType.Battleship:
+                                        lostfuel = 1;
+                                        break;
+                                    default:
+                                        break;
+                                }
+                                tempu.Fuel -= lostfuel;
+                            }
+                        }
+                        if (tempu.Fuel <= 0)
+                        {
+                            playerInfos[currentPlayer].ownedUnit.Remove(tempu.guid);
+                            map.RemoveUnit(tempoint);
+                        }
+                    }
+                    #endregion
+
+                    //get bulding thuộc về current player
+                    var buildings = map.GetOwnedBuilding(playerInfos[currentPlayer].owner).ToList();
+
+                    //update tiền
+                    incomeThisTurn = (buildings.Count - 1) * 1000 + 3000;
+                    playerInfos[currentPlayer].money += incomeThisTurn;
+
+                    #region supply và repair cho các unit đang ở trong factory, airport, harbor, supplybase
+                    int supplyandrepaircost = 0;
+                    foreach (var p in buildings)
+                    {
+                        MapCell tempmapcell = map[p];
+                        if (tempmapcell.unit != null)
+                        {
+                            var tempu = tempmapcell.unit;
+                            switch (tempmapcell.terrain)
+                            {
+                                case TerrainType.Factory:
+                                    if (tempu.UnitType.isLandUnit()) {
+                                        if (tempu.Fuel < Unit._Gas[tempu.UnitType]
+                                        || tempu.Ammo < Unit._Ammo[tempu.UnitType])
+                                        {
+                                            tempu.Resupply();
+                                            supplyandrepaircost += 300;
+                                        }
+                                        if (tempu.HitPoint<10)
+                                        {
+                                            tempu.Repair();
+                                            supplyandrepaircost += Unit._Cost[tempu.UnitType] / 10;
+                                        }
+                                    }
+                                    break;
+                                case TerrainType.AirPort:
+                                    if (tempu.UnitType.isAirUnit())
+                                    {
+                                        if (tempu.Fuel < Unit._Gas[tempu.UnitType]
+                                        || tempu.Ammo < Unit._Ammo[tempu.UnitType])
+                                        {
+                                            tempu.Resupply();
+                                            supplyandrepaircost += 300;
+                                        }
+                                        if (tempu.HitPoint < 10)
+                                        {
+                                            tempu.Repair();
+                                            supplyandrepaircost += Unit._Cost[tempu.UnitType] / 10;
+                                        }
+                                    }
+                                    break;
+                                case TerrainType.Harbor:
+                                    if (tempu.UnitType.isNavalUnit())
+                                    {
+                                        if (tempu.Fuel < Unit._Gas[tempu.UnitType]
+                                        || tempu.Ammo < Unit._Ammo[tempu.UnitType])
+                                        {
+                                            tempu.Resupply();
+                                            supplyandrepaircost += 300;
+                                        }
+                                        if (tempu.HitPoint < 10)
+                                        {
+                                            tempu.Repair();
+                                            supplyandrepaircost += Unit._Cost[tempu.UnitType] / 10;
+                                        }
+                                    }
+                                    break;
+                                case TerrainType.SupplyBase:
+                                    tempu.Resupply();
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+                    }
+                    playerInfos[currentPlayer].money -= supplyandrepaircost;
+                    #endregion
+
+                    //reset actionpoint cho tất cả các unit phe mình
+                    foreach (var guid in playerInfos[currentPlayer].ownedUnit)
+                    {
+                        map[map.FindUnit(guid)].unit.UpdateActionPoint(Command.None);
+                    }
+                    //set animation cho tất cả các unit thành idle
+                    foreach (var p in map.mapcellthathaveunit)
+                    {
+                        map[p].unit.Animation.PlayAnimation(AnimationName.idle.ToString());
+                    }
+
                     //todo update super weapon
 
                     //goto None
@@ -674,24 +827,24 @@ namespace Wartorn.Screens.MainGameScreen
                 //kết thúc lượt
                 //next state: WaitForTurn
                 case GameState.TurnEnd:
-                    //gửi thông tin kết thúc lượt cho server
-                    //broadcast
+                    //kiểm tra thắng thua
+                    if (map[playerInfos[currentPlayer].HQlocation].owner != playerInfos[currentPlayer].owner
+                     || map[playerInfos[otherPlayer].HQlocation].owner != playerInfos[otherPlayer].owner)
+                    {
+                        //thua cmnr
+                        //nhảy qua scene end game
+                        var sessiondata = new SessionData();
+                        sessiondata.map = map;
+                        sessiondata.playerInfos = playerInfos;
+                        ((EndGameScreen)SCREEN_MANAGER.get_screen("EndGameScreen")).InitEndGameScreen(sessiondata);
+                        SCREEN_MANAGER.goto_screen("EndGameScreen");
+                    }
 
+                    //kết thúc lượt và đổi lượt
+                    ChangeTurn();
 
-                    //goto WaitForTurn
-                    currentGameState = GameState.WaitForTurn;
-                    break;
-                #endregion
-
-                #region GameState.WaitForTurn
-                //previous state: TurnEnd
-                //xử lí vẽ và update map khi bên đối phương gửi command qua
-                //next state: TurnStart
-                case GameState.WaitForTurn:
-                    //nhận và xử lí command do bên đối phương gửi qua
-
-                    //nếu nhận được thông tin kết thúc lượt thì
-                        //goto TurnStart
+                    //goto TurnStart
+                    currentGameState = GameState.TurnStart;
                     break;
                 #endregion
 
@@ -701,6 +854,13 @@ namespace Wartorn.Screens.MainGameScreen
                 //            BuildingSelected
                 //            TurnEnd
                 case GameState.None:
+                    if (isGoingToEndTurn)
+                    {
+                        isGoingToEndTurn = false;
+                        currentGameState = GameState.TurnEnd;
+                        break;
+                    }
+
                     if (HelperFunction.IsLeftMousePressed())
                     {
                         if (SelectUnit())
@@ -876,7 +1036,7 @@ namespace Wartorn.Screens.MainGameScreen
                             if (HelperFunction.IsLeftMousePressed() 
                              && attackRange.Contains(selectedMapCell) 
                              && map[selectedMapCell].unit!=null
-                             && map[selectedMapCell].unit.Owner!=playerInfos[localPlayer].owner)
+                             && map[selectedMapCell].unit.Owner!=playerInfos[currentPlayer].owner)
                             {
                                 tempunit.UpdateActionPoint(Command.Attack);
 
@@ -890,10 +1050,12 @@ namespace Wartorn.Screens.MainGameScreen
 
                                 if (tempunit.HitPoint<=0)
                                 {
+                                    playerInfos[currentPlayer].ownedUnit.Remove(map[selectedUnit].unit.guid);
                                     map.RemoveUnit(selectedUnit);
                                 }
                                 if (otherunit.HitPoint<=0)
                                 {
+                                    playerInfos[otherPlayer].ownedUnit.Remove(map[selectedTarget].unit.guid);
                                     map.RemoveUnit(selectedTarget);
                                 }
 
@@ -908,8 +1070,8 @@ namespace Wartorn.Screens.MainGameScreen
 
                         case Command.Capture:
 
-                            if (isBuilding(map[selectedUnit].terrain)
-                             && map[selectedUnit].owner != playerInfos[localPlayer].owner
+                            if (map[selectedUnit].terrain.isBuildingThatIsCapturable()
+                             && map[selectedUnit].owner != playerInfos[currentPlayer].owner
                              && tempunit.CapturePoint == 0)
                             {
                                 map[selectedUnit].unit.CapturePoint = 20;
@@ -920,7 +1082,7 @@ namespace Wartorn.Screens.MainGameScreen
 
                             if (tempunit.CapturePoint<=0)
                             {
-                                map[selectedUnit].owner = playerInfos[localPlayer].owner;
+                                map[selectedUnit].owner = playerInfos[currentPlayer].owner;
                                 map.IsProcessed = false;
                                 tempunit.CapturePoint = 0;
                             }
@@ -939,6 +1101,15 @@ namespace Wartorn.Screens.MainGameScreen
                             break;
 
                         case Command.Supply:
+                            map[selectedUnit].unit.UpdateActionPoint(Command.Supply);
+                            Point north = selectedUnit.GetNearbyPoint(Direction.North);
+                            Point south = selectedUnit.GetNearbyPoint(Direction.South);
+                            Point east = selectedUnit.GetNearbyPoint(Direction.East);
+                            Point west = selectedUnit.GetNearbyPoint(Direction.West);
+                            try { map[north].unit.Resupply(); } catch (Exception) { }
+                            try { map[south].unit.Resupply(); } catch (Exception) { }
+                            try { map[east].unit.Resupply(); } catch (Exception) { }
+                            try { map[west].unit.Resupply(); } catch (Exception) { }
                             break;
 
                         case Command.Move:
@@ -1012,7 +1183,12 @@ namespace Wartorn.Screens.MainGameScreen
                     //check if there is a unit selected to build
                     if (selectedUnitTypeToBuild != UnitType.None)
                     {
-                        currentGameState = GameState.BuildingBuildUnit;
+                        //check if current player have enough fund
+                        if (playerInfos[currentPlayer].money >= Unit._Cost[selectedUnitTypeToBuild])
+                        {
+                            playerInfos[currentPlayer].money -= Unit._Cost[selectedUnitTypeToBuild];
+                            currentGameState = GameState.BuildingBuildUnit;
+                        }
                         break;
                     }
 
@@ -1026,7 +1202,7 @@ namespace Wartorn.Screens.MainGameScreen
                 case GameState.BuildingBuildUnit:
 
                     //spawn the selected unit
-                    SpawnUnit(selectedUnitTypeToBuild, playerInfos[localPlayer], selectedBuilding);
+                    SpawnUnit(selectedUnitTypeToBuild, playerInfos[currentPlayer], selectedBuilding);
 
                     //hide all the building menu
                     canvas_action_Factory.IsVisible = false;
@@ -1091,7 +1267,7 @@ namespace Wartorn.Screens.MainGameScreen
         #region calculate vision
         private void CalculateVision()
         {
-            foreach (Guid id in playerInfos[localPlayer].ownedUnit)
+            foreach (Guid id in playerInfos[currentPlayer].ownedUnit)
             {
                 
             }
@@ -1133,7 +1309,7 @@ namespace Wartorn.Screens.MainGameScreen
                        //the below check is only for debug
                        //&& map[p].unit.Owner != map[selectedUnit].unit.Owner) 
                        //the below check is used in final game
-                       && !playerInfos[localPlayer].ownedUnit.Contains(map[p].unit.guid))
+                       && !playerInfos[currentPlayer].ownedUnit.Contains(map[p].unit.guid))
                         {
                             temp += (int)Command.Attack;
                             break;
@@ -1151,7 +1327,7 @@ namespace Wartorn.Screens.MainGameScreen
                    //the below check is only for debug
                    //&& map[p].unit.Owner != map[selectedUnit].unit.Owner) 
                    //the below check is used in final game
-                   && !playerInfos[localPlayer].ownedUnit.Contains(map[p].unit.guid))
+                   && !playerInfos[currentPlayer].ownedUnit.Contains(map[p].unit.guid))
                     {
                         temp += (int)Command.Attack;
                         break;
@@ -1170,8 +1346,8 @@ namespace Wartorn.Screens.MainGameScreen
             //có capture nếu là lính và đang đứng trên building khác màu nè
             if ((tempunit.UnitType == UnitType.Soldier
              || tempunit.UnitType == UnitType.Mech)
-             && isBuilding(map[selectedUnit].terrain)
-             && tempmapcell.owner!= playerInfos[localPlayer].owner)
+             && map[selectedUnit].terrain.isBuildingThatIsCapturable()
+             && tempmapcell.owner!= playerInfos[currentPlayer].owner)
             {
                 temp += (int)Command.Capture;
             }
@@ -1203,7 +1379,7 @@ namespace Wartorn.Screens.MainGameScreen
             }
             //CONTENT_MANAGER.ShowMessageBox(ttemp);
 
-            Rectangle cmdslot = CommandSpriteSourceRectangle.GetSprite(cmds.Count, playerInfos[localPlayer].owner);
+            Rectangle cmdslot = CommandSpriteSourceRectangle.GetSprite(cmds.Count, playerInfos[currentPlayer].owner);
 
             canvas_action_Unit.GetElementAs<PictureBox>("commandslot").SourceRectangle = cmdslot;
             Point cmdslotPosition = new Point(selectedUnit.X * Constants.MapCellWidth + 50, selectedUnit.Y * Constants.MapCellHeight);
@@ -1263,10 +1439,8 @@ namespace Wartorn.Screens.MainGameScreen
                 temp.unit != null
                 //check if 
                 && temp.unit.ActionPoint > 0
-                //check if this is the local player's turn
-                && currentPlayer == localPlayer
-                //check if this unit is the local player's unit
-                && temp.unit.Owner == playerInfos[localPlayer].owner
+                //check if this unit is the current player's unit
+                && temp.unit.Owner == playerInfos[currentPlayer].owner
              );
         }
 
@@ -1350,39 +1524,27 @@ namespace Wartorn.Screens.MainGameScreen
         #endregion
 
         #region only use to demo gameplay these will not be used in game
-
-        private void RoundTurn()
-        {
-            ChangeTurn();
-            ChangeTurn();
-        }
-
+        
         private void ChangeTurn()
         {
-            foreach (Point p in map.mapcellthathaveunit)
-            {
-                map[p].unit.UpdateActionPoint(Command.None);
-                map[p].unit.Animation.PlayAnimation(AnimationName.idle.ToString());
-            }
+            //save the camera location to player
+            playerInfos[currentPlayer].lastCameraLocation = camera.Location;
 
             if (currentPlayer == 1)
             {
                 currentPlayer = 0;
+                otherPlayer = 1;
             }
             else
             {
                 currentPlayer = 1;
+                otherPlayer = 0;
             }
 
-            if (localPlayer == 1)
-            {
-                localPlayer = 0;
-            }
-            else
-            {
-                localPlayer = 1;
-            }
+            //set camera location to the current player
+            camera.Location = playerInfos[currentPlayer].lastCameraLocation;
 
+            //change buymenu color to current player color
             ChangeBuyUnitCanvasColor(playerInfos[currentPlayer].owner);
         }
 
@@ -1446,16 +1608,17 @@ namespace Wartorn.Screens.MainGameScreen
             return (
                 //check if the currently selected have 
                 //a building that can produce unit
-                isBuildingThatProduceUnit(temp.terrain)
+                temp.terrain.isBuildingThatProduceUnit()
                 //check if there is no unit currently standing on said building
              && temp.unit == null
-                //check if 
-             && currentPlayer == localPlayer
-             && temp.owner == playerInfos[localPlayer].owner);
+                //check if this building is belong tu the current player
+             && temp.owner == playerInfos[currentPlayer].owner);
         }
 
         private void ShowBuildingMenu()
         {
+            HideBuildingMenu();
+
             MapCell temp = map[selectedBuilding];
 
             switch (temp.terrain)
@@ -1475,14 +1638,6 @@ namespace Wartorn.Screens.MainGameScreen
                 default:
                     break;
             }
-
-            //legacy example to spawn an unit
-            //if (selectedUnitToBuild != UnitType.None)
-            //{
-            //    SpawnUnit(selectedUnitToBuild, playerInfos[localPlayer], selectedBuilding);
-            //    selectedUnitToBuild = UnitType.None;
-            //    DeselectBuilding();
-            //}
         }
 
         private void HideBuildingMenu()
@@ -1499,42 +1654,9 @@ namespace Wartorn.Screens.MainGameScreen
               &&spawnlocation.unit == null)
             {
                 Unit temp = UnitCreationHelper.Create(unittype, owner.owner);
-                playerInfos[localPlayer].ownedUnit.Add(temp.guid);
+                playerInfos[currentPlayer].ownedUnit.Add(temp.guid);
                 map.RegisterUnit(location, temp);
                 return true;
-            }
-            return false;
-        }
-
-        private bool isBuilding(TerrainType t)
-        {
-            switch (t)
-            {
-                case TerrainType.MissileSilo:
-                case TerrainType.MissileSiloLaunched:
-                case TerrainType.City:
-                case TerrainType.Factory:
-                case TerrainType.AirPort:
-                case TerrainType.Harbor:
-                case TerrainType.Radar:
-                case TerrainType.SupplyBase:
-                case TerrainType.HQ:
-                    return true;
-                default:
-                    return false;
-            }
-        }
-
-        private bool isBuildingThatProduceUnit(TerrainType t)
-        {
-            switch (t)
-            {
-                case TerrainType.Factory:
-                case TerrainType.AirPort:
-                case TerrainType.Harbor:
-                    return true;
-                default:
-                    break;
             }
             return false;
         }
@@ -1598,7 +1720,8 @@ namespace Wartorn.Screens.MainGameScreen
             switch (currentGameState)
             {
                 case GameState.None:
-                case GameState.WaitForTurn:
+                case GameState.TurnEnd:
+                case GameState.TurnStart:
                 case GameState.BuildingSelected:
                 case GameState.BuildingBuildUnit:
                      tempmapcell = map[selectedMapCell];
@@ -1617,10 +1740,8 @@ namespace Wartorn.Screens.MainGameScreen
             //update the SelectedMapCell border
             canvas_SelectedMapCell.GetElementAs<PictureBox>("picbox_SelectedMapCellBorder").SourceRectangle = SelectedMapCellBorderSpriteSourceRectangle.GetSpriteRectangle(tempmapcell.owner);
 
-            if (isBuilding(tempmapcell.terrain)
-             && tempmapcell.terrain != TerrainType.MissileSiloLaunched
-             && tempmapcell.terrain != TerrainType.MissileSilo
-             && tempmapcell.owner != playerInfos[localPlayer].owner
+            if (tempmapcell.terrain.isBuildingThatIsCapturable()
+             && tempmapcell.owner != playerInfos[currentPlayer].owner
              && tempmapcell.unit!=null 
              &&     (tempmapcell.unit.UnitType == UnitType.Soldier 
                   || tempmapcell.unit.UnitType == UnitType.Mech
@@ -1630,12 +1751,7 @@ namespace Wartorn.Screens.MainGameScreen
                 canvas_SelectedMapCell.GetElementAs<PictureBox>("picbox_SelectedMapCellCapturePoint").SourceRectangle = SelectedMapCellCapturePointSpriteSourceRectangle.GetSpriteRectangle(tempmapcell.unit.Owner);
                 
                 canvas_SelectedMapCell.GetElementAs<Label>("label_SelectedMapCellCapturePoint").Text = tempmapcell.unit.CapturePoint.ToString();
-
-                if (tempmapcell.owner != tempmapcell.unit.Owner)
-                {
-                    //CONTENT_MANAGER.ShowMessageBox(tempmapcell.unit.CapturePoint);
-                }
-
+                
                 canvas_SelectedMapCell.GetElementAs<PictureBox>("picbox_SelectedMapCellCapturePoint").IsVisible = true;
                 canvas_SelectedMapCell.GetElementAs<Label>("label_SelectedMapCellCapturePoint").IsVisible = true;
             }
@@ -1721,6 +1837,11 @@ namespace Wartorn.Screens.MainGameScreen
 
         private void UpdateAnimation(GameTime gameTime)
         {
+            if (map == null)
+            {
+                return;
+            }
+
             foreach (Point p in map.mapcellthathaveunit)
             {
                 map[p].unit.Animation.Update(gameTime);
