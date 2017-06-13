@@ -10,7 +10,7 @@ namespace Wartorn
     {
         public class Label : UIObject
         {
-
+            
             public virtual bool AutoSize
             {
                 get;
@@ -71,6 +71,7 @@ namespace Wartorn
                 origin = new Vector2(rect.X, rect.Y) + Size / 4;
             }
 
+           
             public Label(string text, Point position, Vector2? size, SpriteFont font,float _scale)
             {
                 Text = text;
@@ -81,9 +82,9 @@ namespace Wartorn
                 }
                 else
                 {
+                    AutoSize = true;
                     Size = font.MeasureString(text);
-                    //origin = position.ToVector2();
-                    origin = new Vector2(0, 0);
+                    
                 }
                 this.font = font;
                 Scale = _scale;
@@ -91,7 +92,7 @@ namespace Wartorn
 
             public override void Draw(SpriteBatch spriteBatch)
             {
-                spriteBatch.DrawString(font != null ? font : CONTENT_MANAGER.defaultfont, (string.IsNullOrEmpty(text)) ? "" : text, Position.ToVector2() - origin, foregroundColor, Rotation, Vector2.Zero, scale, SpriteEffects.None, LayerDepth.GuiUpper);
+                spriteBatch.DrawString(font != null ? font : CONTENT_MANAGER.defaultfont, (string.IsNullOrEmpty(text)) ? "" : text,AutoSize?Position.ToVector2() :Position.ToVector2() - origin, foregroundColor, Rotation, Vector2.Zero, scale, SpriteEffects.None, LayerDepth.GuiUpper);
                 DrawingHelper.DrawRectangle(rect, backgroundColor, true);
                 DrawingHelper.DrawRectangle(rect, borderColor, false);
             }
