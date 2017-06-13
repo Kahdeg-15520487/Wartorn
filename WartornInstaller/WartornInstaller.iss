@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Wartorn"
-#define MyAppVersion "1.2"
+#define MyAppVersion "1.3"
 #define MyAppPublisher "Nhóm 3 lớp IT008.H22"
 #define MyAppURL "https://github.com/Kahdeg-15520487/Wartorn"
 #define MyAppExeName "Wartorn.exe"
@@ -42,12 +42,14 @@ Source: "..\Build\Microsoft.Dynamic.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Build\Microsoft.Scripting.AspNet.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Build\Microsoft.Scripting.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Build\Microsoft.Scripting.Metadata.dll"; DestDir: "{app}"; Flags: ignoreversion
+
 Source: "..\Build\MonoGame.Framework.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Build\Newtonsoft.Json.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Build\NVorbis.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Build\OpenTK.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Build\SDL2.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Build\soft_oal.dll"; DestDir: "{app}"; Flags: ignoreversion
+
 Source: "..\Build\StatsBalancer.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Build\Wartorn.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Build\Content\*"; DestDir: "{app}\Content\"; Flags: ignoreversion createallsubdirs recursesubdirs
