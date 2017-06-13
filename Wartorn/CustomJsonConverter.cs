@@ -285,6 +285,8 @@ namespace Wartorn
                 serializer.Serialize(writer, temp.Owner.ToString());
                 writer.WritePropertyName("HP");
                 serializer.Serialize(writer, temp.HitPoint);
+                writer.WritePropertyName("guid");
+                serializer.Serialize(writer, temp.guid);
                 writer.WriteEndObject();
             }
 

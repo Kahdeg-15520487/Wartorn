@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Wartorn"
-#define MyAppVersion "1.0"
+#define MyAppVersion "11"
 #define MyAppPublisher "Nhóm 3 lớp IT008.H22"
 #define MyAppURL "https://github.com/Kahdeg-15520487/Wartorn"
 #define MyAppExeName "Wartorn.exe"
@@ -14,7 +14,7 @@
 AppId={{D021FB05-CB59-44E7-A6FC-E4E26092E5B2}
 AppName={#MyAppName}
 AppVersion={#MyAppVersion}
-;AppVerName={#MyAppName} {#MyAppVersion}
+AppVerName={#MyAppName} {#MyAppVersion}
 AppPublisher={#MyAppPublisher}
 AppPublisherURL={#MyAppURL}
 AppSupportURL={#MyAppURL}
@@ -65,3 +65,28 @@ Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChang
 
 [Dirs]
 Name: "{app}\data\"
+
+[Registry]
+Root: "HKCR"; Subkey: "Software\kahdeg\Wartorn\"; ValueType: dword; ValueName: "Version"; ValueData: "{#MyAppVersion}"; Flags: createvalueifdoesntexist uninsdeletekey
+
+[Code]
+function InitializeSetup: Boolean;
+var
+V: Integer;
+sUnInstallString: String;
+Version: String;
+begin
+  if RegValueExists(HKEY_CLASSES_ROOT,'Software\kahdeg\Wartorn\', 'Version') then 
+  begin
+    RegQueryStringValue(HKEY_CLASSES_ROOT,'Software\kahdeg\Wartorn\', 'DisplayVersion', Version);
+    if Version <> ExpandConstant('{#MyAppVersion}') then 
+    begin 
+      MsgBox(ExpandConstant('Current version: '+'{#MyAppVersion}' +',' + 'New version: '+Version) , mbInformation, MB_OK);
+      Result := True;
+    end;
+  end
+  else
+    begin
+         Result:= False;
+    end;
+end;

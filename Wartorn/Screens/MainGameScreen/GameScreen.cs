@@ -52,7 +52,8 @@ namespace Wartorn.Screens.MainGameScreen
 
         #region ui canvas
         Canvas canvas;
-        Canvas canvas_generalInfo;
+        Canvas canvas_SelectedMapCell;
+        Canvas canvas_TargetedMapCell;
         Canvas canvas_action;
         Canvas canvas_action_Factory;
         Canvas canvas_action_Airport;
@@ -188,8 +189,12 @@ namespace Wartorn.Screens.MainGameScreen
         private void InitUI()
         {
             //declare ui elements
-            canvas_generalInfo = new Canvas();
-            InitCanvas_generalInfo();
+            canvas_SelectedMapCell = new Canvas();
+            InitCanvas_SelectedMapCellInfo();
+
+            canvas_TargetedMapCell = new Canvas();
+            canvas_TargetedMapCell.IsVisible = false;
+            InitCanvas_TargetedMapCellInfo();
 
             canvas_action = new Canvas();
             InitCanvas_action();
@@ -209,13 +214,13 @@ namespace Wartorn.Screens.MainGameScreen
             //bind event
 
             //add to canvas
-            canvas.AddElement("generalInfo", canvas_generalInfo);
+            canvas.AddElement("SelectedMapCell", canvas_SelectedMapCell);
+            canvas.AddElement("TargetedMapCell", canvas_TargetedMapCell);
             canvas.AddElement("action", canvas_action);
             canvas.AddElement("unit", canvas_action_Unit);
             //canvas.AddElement("label_mousepos", label_mousepos);
             canvas.AddElement("console", console);
         }
-
 
         private void InitCanvas_Unit()
         {
@@ -226,25 +231,25 @@ namespace Wartorn.Screens.MainGameScreen
             Button secondslot = new Button(CONTENT_MANAGER.commandspritesheet, Rectangle.Empty, Point.Zero);
             Button thirdslot = new Button(CONTENT_MANAGER.commandspritesheet, Rectangle.Empty, Point.Zero);
 
-            //firstslot.isDrawRect = true;
-            //thirdslot.isDrawRect = true;
-            //secondslot.isDrawRect = true;
+            firstslot.ButtonColorPressed = Color.White;
+            secondslot.ButtonColorPressed = Color.White;
+            thirdslot.ButtonColorPressed = Color.White;
 
             //bind event
             firstslot.MouseClick += (sender, e) =>
             {
                 selectedCmd = CommandSpriteSourceRectangle.GetCommand(firstslot.spriteSourceRectangle);
-                CONTENT_MANAGER.ShowMessageBox(selectedCmd);
+                //CONTENT_MANAGER.ShowMessageBox(selectedCmd);
             };
             secondslot.MouseClick += (sender, e) =>
             {
                 selectedCmd = CommandSpriteSourceRectangle.GetCommand(secondslot.spriteSourceRectangle);
-                CONTENT_MANAGER.ShowMessageBox(selectedCmd);
+                //CONTENT_MANAGER.ShowMessageBox(selectedCmd);
             };
             thirdslot.MouseClick += (sender, e) =>
             {
                 selectedCmd = CommandSpriteSourceRectangle.GetCommand(thirdslot.spriteSourceRectangle);
-                CONTENT_MANAGER.ShowMessageBox(selectedCmd);
+                //CONTENT_MANAGER.ShowMessageBox(selectedCmd);
             };
 
             //add to canvas
@@ -254,10 +259,10 @@ namespace Wartorn.Screens.MainGameScreen
             canvas_action_Unit.AddElement("thirdslot", thirdslot);
         }
 
-        private void InitCanvas_generalInfo()
+        private void InitCanvas_SelectedMapCellInfo()
         {
             //declare ui elements
-            PictureBox picbox_generalInfoBorder = new PictureBox(CONTENT_MANAGER.generalInfo_border, new Point(175, 364), Rectangle.Empty, Vector2.Zero,depth: LayerDepth.GuiBackground);
+            PictureBox picbox_SelectedMapCellBorder = new PictureBox(CONTENT_MANAGER.SelectedMapCell_border, new Point(175, 364), Rectangle.Empty, Vector2.Zero,depth: LayerDepth.GuiBackground);
 
             PictureBox picbox_terrainType = new PictureBox(CONTENT_MANAGER.background_terrain, new Point(183, 385), Rectangle.Empty, Vector2.Zero, depth: LayerDepth.GuiBackground + 0.01f);
             Label label_terrainType = new Label(" ", new Point(186, 370), new Vector2(50, 20), CONTENT_MANAGER.hackfont);
@@ -268,52 +273,114 @@ namespace Wartorn.Screens.MainGameScreen
             label_unitType.Origin = new Vector2(-3, 2);
             label_unitType.Scale = 0.75f;
 
-            PictureBox picbox_generalInfoCapturePoint = new PictureBox(CONTENT_MANAGER.generalInfo_capturePoint, new Point(262, 385), Rectangle.Empty, Vector2.Zero, depth: LayerDepth.GuiLower);
-            Label label_generalInfoCapturePoint = new Label(" ", new Point(262,385), new Vector2(50, 20), CONTENT_MANAGER.hackfont);
-            label_generalInfoCapturePoint.Origin = new Vector2(-20, 0);
+            PictureBox picbox_SelectedMapCellCapturePoint = new PictureBox(CONTENT_MANAGER.SelectedMapCell_capturePoint, new Point(262, 385), Rectangle.Empty, Vector2.Zero, depth: LayerDepth.GuiLower);
+            Label label_SelectedMapCellCapturePoint = new Label(" ", new Point(262,385), new Vector2(50, 20), CONTENT_MANAGER.hackfont);
+            label_SelectedMapCellCapturePoint.Origin = new Vector2(-20, 0);
 
-            PictureBox picbox_generalInfoDefenseStar = new PictureBox(CONTENT_MANAGER.generalInfo_defenseStar, new Point(265, 371), Rectangle.Empty, Vector2.Zero, depth: LayerDepth.GuiLower);
+            PictureBox picbox_SelectedMapCellDefenseStar = new PictureBox(CONTENT_MANAGER.SelectedMapCell_defenseStar, new Point(265, 371), Rectangle.Empty, Vector2.Zero, depth: LayerDepth.GuiLower);
 
-            PictureBox picbox_generalInfoUnitInfo = new PictureBox(CONTENT_MANAGER.generalInfo_unitInfo, new Point(181, 453), Rectangle.Empty, Vector2.Zero, depth: LayerDepth.GuiLower + 0.01f);
-            PictureBox picbox_generalInfoLoadedUnit = new PictureBox(CONTENT_MANAGER.generalInfo_loadedUnit, new Point(181, 435), Rectangle.Empty, Vector2.Zero, depth: LayerDepth.GuiLower);
+            PictureBox picbox_SelectedMapCellUnitInfo = new PictureBox(CONTENT_MANAGER.SelectedMapCell_unitInfo, new Point(181, 453), Rectangle.Empty, Vector2.Zero, depth: LayerDepth.GuiLower + 0.01f);
+            PictureBox picbox_SelectedMapCellLoadedUnit = new PictureBox(CONTENT_MANAGER.SelectedMapCell_loadedUnit, new Point(181, 435), Rectangle.Empty, Vector2.Zero, depth: LayerDepth.GuiLower);
 
-            PictureBox picbox_generalInfoHPbar = new PictureBox(CONTENT_MANAGER.generalInfo_HPbar, new Point(198, 458), null, Vector2.Zero, depth: LayerDepth.GuiUpper);
+            PictureBox picbox_SelectedMapCellHPbar = new PictureBox(CONTENT_MANAGER.SelectedMapCell_HPbar, new Point(198, 458), null, Vector2.Zero, depth: LayerDepth.GuiUpper);
 
-            Label label_generalInfoHP = new Label(" ", new Point(301, 455), new Vector2(20, 20), CONTENT_MANAGER.hackfont);
-            label_generalInfoHP.Origin = new Vector2(1, 2);
-            label_generalInfoHP.Scale = 0.75f;
-            Label label_generalInfoUnitInfo_fuel = new Label(" ", new Point(263, 465), new Vector2(20, 20), CONTENT_MANAGER.hackfont);
-            label_generalInfoUnitInfo_fuel.Origin = new Vector2(-3, 2);
-            label_generalInfoUnitInfo_fuel.Scale = 0.75f;
-            Label label_generalInfoUnitInfo_ammo = new Label(" ", new Point(294, 465), new Vector2(20, 20), CONTENT_MANAGER.hackfont);
-            label_generalInfoUnitInfo_ammo.Origin = new Vector2(-3, 2);
-            label_generalInfoUnitInfo_ammo.Scale = 0.75f;
+            Label label_SelectedMapCellHP = new Label(" ", new Point(301, 455), new Vector2(20, 20), CONTENT_MANAGER.hackfont);
+            label_SelectedMapCellHP.Origin = new Vector2(1, 2);
+            label_SelectedMapCellHP.Scale = 0.6f;
+            Label label_SelectedMapCellUnitInfo_fuel = new Label(" ", new Point(263, 465), new Vector2(20, 20), CONTENT_MANAGER.hackfont);
+            label_SelectedMapCellUnitInfo_fuel.Origin = new Vector2(-3, 2);
+            label_SelectedMapCellUnitInfo_fuel.Scale = 0.75f;
+            Label label_SelectedMapCellUnitInfo_ammo = new Label(" ", new Point(294, 465), new Vector2(20, 20), CONTENT_MANAGER.hackfont);
+            label_SelectedMapCellUnitInfo_ammo.Origin = new Vector2(-3, 2);
+            label_SelectedMapCellUnitInfo_ammo.Scale = 0.75f;
 
             //bind event
 
             //add to canvas
-            canvas_generalInfo.AddElement("picbox_generalInfoBorder", picbox_generalInfoBorder);
+            canvas_SelectedMapCell.AddElement("picbox_SelectedMapCellBorder", picbox_SelectedMapCellBorder);
 
-            canvas_generalInfo.AddElement("picbox_generalInfoCapturePoint", picbox_generalInfoCapturePoint);
-            canvas_generalInfo.AddElement("label_generalInfoCapturePoint", label_generalInfoCapturePoint);
+            canvas_SelectedMapCell.AddElement("picbox_SelectedMapCellCapturePoint", picbox_SelectedMapCellCapturePoint);
+            canvas_SelectedMapCell.AddElement("label_SelectedMapCellCapturePoint", label_SelectedMapCellCapturePoint);
 
-            canvas_generalInfo.AddElement("picbox_generalInfoDefenseStar", picbox_generalInfoDefenseStar);
+            canvas_SelectedMapCell.AddElement("picbox_SelectedMapCellDefenseStar", picbox_SelectedMapCellDefenseStar);
 
-            canvas_generalInfo.AddElement("picbox_generalInfoUnitInfo", picbox_generalInfoUnitInfo);
-            canvas_generalInfo.AddElement("picbox_generalInfoLoadedUnit", picbox_generalInfoLoadedUnit);
+            canvas_SelectedMapCell.AddElement("picbox_SelectedMapCellUnitInfo", picbox_SelectedMapCellUnitInfo);
+            canvas_SelectedMapCell.AddElement("picbox_SelectedMapCellLoadedUnit", picbox_SelectedMapCellLoadedUnit);
 
-            canvas_generalInfo.AddElement("picbox_generalInfoHPbar", picbox_generalInfoHPbar);
+            canvas_SelectedMapCell.AddElement("picbox_SelectedMapCellHPbar", picbox_SelectedMapCellHPbar);
 
-            canvas_generalInfo.AddElement("label_generalInfoHP", label_generalInfoHP);
-            canvas_generalInfo.AddElement("label_generalInfoUnitInfo_fuel", label_generalInfoUnitInfo_fuel);
-            canvas_generalInfo.AddElement("label_generalInfoUnitInfo_ammo", label_generalInfoUnitInfo_ammo);
+            canvas_SelectedMapCell.AddElement("label_SelectedMapCellHP", label_SelectedMapCellHP);
+            canvas_SelectedMapCell.AddElement("label_SelectedMapCellUnitInfo_fuel", label_SelectedMapCellUnitInfo_fuel);
+            canvas_SelectedMapCell.AddElement("label_SelectedMapCellUnitInfo_ammo", label_SelectedMapCellUnitInfo_ammo);
 
 
-            canvas_generalInfo.AddElement("picbox_terrainType", picbox_terrainType);
-            canvas_generalInfo.AddElement("label_terrainType", label_terrainType);
+            canvas_SelectedMapCell.AddElement("picbox_terrainType", picbox_terrainType);
+            canvas_SelectedMapCell.AddElement("label_terrainType", label_terrainType);
 
-            canvas_generalInfo.AddElement("picbox_unitType", picbox_unitType);
-            canvas_generalInfo.AddElement("label_unitType", label_unitType);
+            canvas_SelectedMapCell.AddElement("picbox_unitType", picbox_unitType);
+            canvas_SelectedMapCell.AddElement("label_unitType", label_unitType);
+        }
+
+        private void InitCanvas_TargetedMapCellInfo()
+        {
+            //declare ui elements
+            PictureBox picbox_TargetedMapCellBorder = new PictureBox(CONTENT_MANAGER.SelectedMapCell_border, new Point(319, 364), Rectangle.Empty, Vector2.Zero, depth: LayerDepth.GuiBackground);
+
+            PictureBox picbox_terrainType = new PictureBox(CONTENT_MANAGER.background_terrain, new Point(327, 385), Rectangle.Empty, Vector2.Zero, depth: LayerDepth.GuiBackground + 0.01f);
+            Label label_terrainType = new Label(" ", new Point(330, 370), new Vector2(50, 20), CONTENT_MANAGER.hackfont);
+            label_terrainType.Origin = new Vector2(-3, 2);
+            label_terrainType.Scale = 0.75f;
+            PictureBox picbox_unitType = new PictureBox(CONTENT_MANAGER.background_unit, new Point(327, 385), Rectangle.Empty, Vector2.Zero, depth: LayerDepth.GuiBackground + 0.02f);
+            Label label_unitType = new Label(" ", new Point(330, 464), new Vector2(80, 20), CONTENT_MANAGER.hackfont);
+            label_unitType.Origin = new Vector2(-3, 2);
+            label_unitType.Scale = 0.75f;
+
+            //PictureBox picbox_TargetedMapCellCapturePoint = new PictureBox(CONTENT_MANAGER.SelectedMapCell_capturePoint, new Point(262, 385), Rectangle.Empty, Vector2.Zero, depth: LayerDepth.GuiLower);
+            //Label label_TargetedMapCellCapturePoint = new Label(" ", new Point(262, 385), new Vector2(50, 20), CONTENT_MANAGER.hackfont);
+            //label_TargetedMapCellCapturePoint.Origin = new Vector2(-20, 0);
+
+            PictureBox picbox_TargetedMapCellDefenseStar = new PictureBox(CONTENT_MANAGER.SelectedMapCell_defenseStar, new Point(409, 371), Rectangle.Empty, Vector2.Zero, depth: LayerDepth.GuiLower);
+
+            PictureBox picbox_TargetedMapCellUnitInfo = new PictureBox(CONTENT_MANAGER.SelectedMapCell_unitInfo, new Point(325, 453), Rectangle.Empty, Vector2.Zero, depth: LayerDepth.GuiLower + 0.01f);
+            //PictureBox picbox_TargetedMapCellLoadedUnit = new PictureBox(CONTENT_MANAGER.SelectedMapCell_loadedUnit, new Point(181, 435), Rectangle.Empty, Vector2.Zero, depth: LayerDepth.GuiLower);
+
+            PictureBox picbox_TargetedMapCellHPbar = new PictureBox(CONTENT_MANAGER.SelectedMapCell_HPbar, new Point(342, 458), null, Vector2.Zero, depth: LayerDepth.GuiUpper);
+
+            Label label_TargetedMapCellHP = new Label(" ", new Point(445, 455), new Vector2(20, 20), CONTENT_MANAGER.hackfont);
+            label_TargetedMapCellHP.Origin = new Vector2(1, 2);
+            label_TargetedMapCellHP.Scale = 0.6f;
+            //Label label_TargetedMapCellUnitInfo_fuel = new Label(" ", new Point(263, 465), new Vector2(20, 20), CONTENT_MANAGER.hackfont);
+            //label_TargetedMapCellUnitInfo_fuel.Origin = new Vector2(-3, 2);
+            //label_TargetedMapCellUnitInfo_fuel.Scale = 0.75f;
+            //Label label_TargetedMapCellUnitInfo_ammo = new Label(" ", new Point(294, 465), new Vector2(20, 20), CONTENT_MANAGER.hackfont);
+            //label_TargetedMapCellUnitInfo_ammo.Origin = new Vector2(-3, 2);
+            //label_TargetedMapCellUnitInfo_ammo.Scale = 0.75f;
+
+            //bind event
+
+            //add to canvas
+            canvas_TargetedMapCell.AddElement("picbox_TargetedMapCellBorder", picbox_TargetedMapCellBorder);
+
+            //canvas_TargetedMapCell.AddElement("picbox_TargetedMapCellCapturePoint", picbox_TargetedMapCellCapturePoint);
+            //canvas_TargetedMapCell.AddElement("label_TargetedMapCellCapturePoint", label_TargetedMapCellCapturePoint);
+
+            canvas_TargetedMapCell.AddElement("picbox_TargetedMapCellDefenseStar", picbox_TargetedMapCellDefenseStar);
+
+            canvas_TargetedMapCell.AddElement("picbox_TargetedMapCellUnitInfo", picbox_TargetedMapCellUnitInfo);
+            //canvas_TargetedMapCell.AddElement("picbox_TargetedMapCellLoadedUnit", picbox_TargetedMapCellLoadedUnit);
+
+            canvas_TargetedMapCell.AddElement("picbox_TargetedMapCellHPbar", picbox_TargetedMapCellHPbar);
+
+            canvas_TargetedMapCell.AddElement("label_TargetedMapCellHP", label_TargetedMapCellHP);
+            //canvas_TargetedMapCell.AddElement("label_TargetedMapCellUnitInfo_fuel", label_TargetedMapCellUnitInfo_fuel);
+            //canvas_TargetedMapCell.AddElement("label_TargetedMapCellUnitInfo_ammo", label_TargetedMapCellUnitInfo_ammo);
+
+
+            canvas_TargetedMapCell.AddElement("picbox_terrainType", picbox_terrainType);
+            canvas_TargetedMapCell.AddElement("label_terrainType", label_terrainType);
+
+            canvas_TargetedMapCell.AddElement("picbox_unitType", picbox_unitType);
+            canvas_TargetedMapCell.AddElement("label_unitType", label_unitType);
         }
 
         #region buy menu
@@ -351,10 +418,8 @@ namespace Wartorn.Screens.MainGameScreen
             PictureBox picturebox_buymenu = new PictureBox(CONTENT_MANAGER.buymenu_factory, new Point(574, 300), BuyMenuFactorySpriteSourceRectangle.GetSpriteRectangle(playerInfos[localPlayer].owner), Vector2.Zero, depth: LayerDepth.GuiBackground);
 
             Label label_unitname = new Label(" ", new Point(583, 309), new Vector2(100, 30), CONTENT_MANAGER.hackfont);
-            label_unitname.Scale = 0.75f;
             label_unitname.Origin = new Vector2(1, 1);
             Label label_unitcost = new Label(" ", new Point(583, 343), new Vector2(100, 30), CONTENT_MANAGER.hackfont);
-            label_unitcost.Scale = 0.75f;
             label_unitcost.Origin = new Vector2(1, 1);
 
             //hàng 1
@@ -388,6 +453,7 @@ namespace Wartorn.Screens.MainGameScreen
             #region bind event
             foreach (Button button in tempbuttonlist)
             {
+                button.ButtonColorPressed = Color.White;
                 button.MouseClick += (sender, e) =>
                 {
                     selectedUnitTypeToBuild = UnitSpriteSheetRectangle.GetUnitType(button.spriteSourceRectangle);
@@ -429,10 +495,8 @@ namespace Wartorn.Screens.MainGameScreen
             PictureBox picturebox_buymenu = new PictureBox(CONTENT_MANAGER.buymenu_airport_harbor, new Point(574, 300), BuyMenuAirportHarborSpriteSourceRectangle.GetSpriteRectangle(playerInfos[localPlayer].owner), Vector2.Zero, depth: LayerDepth.GuiBackground);
 
             Label label_unitname = new Label(" ", new Point(583, 309), new Vector2(100, 30), CONTENT_MANAGER.hackfont);
-            label_unitname.Scale = 0.75f;
             label_unitname.Origin = new Vector2(1, 1);
             Label label_unitcost = new Label(" ", new Point(583, 343), new Vector2(100, 30), CONTENT_MANAGER.hackfont);
-            label_unitcost.Scale = 0.75f;
             label_unitcost.Origin = new Vector2(1, 1);
 
             //hàng 1
@@ -451,6 +515,7 @@ namespace Wartorn.Screens.MainGameScreen
             #region bind event
             foreach (Button button in tempbuttonlist)
             {
+                button.ButtonColorPressed = Color.White;
                 button.MouseClick += (sender, e) =>
                 {
                     selectedUnitTypeToBuild = UnitSpriteSheetRectangle.GetUnitType(button.spriteSourceRectangle);
@@ -486,10 +551,8 @@ namespace Wartorn.Screens.MainGameScreen
             PictureBox picturebox_buymenu = new PictureBox(CONTENT_MANAGER.buymenu_airport_harbor, new Point(574, 300), BuyMenuAirportHarborSpriteSourceRectangle.GetSpriteRectangle(playerInfos[localPlayer].owner), Vector2.Zero, depth: LayerDepth.GuiBackground);
 
             Label label_unitname = new Label(" ", new Point(583, 309), new Vector2(100, 30), CONTENT_MANAGER.hackfont);
-            label_unitname.Scale = 0.75f;
             label_unitname.Origin = new Vector2(1, 1);
             Label label_unitcost = new Label(" ", new Point(583, 343), new Vector2(100, 30), CONTENT_MANAGER.hackfont);
-            label_unitcost.Scale = 0.75f;
             label_unitcost.Origin = new Vector2(1, 1);
 
             //hàng 1
@@ -508,6 +571,7 @@ namespace Wartorn.Screens.MainGameScreen
             #region bind event
             foreach (Button button in tempbuttonlist)
             {
+                button.ButtonColorPressed = Color.White;
                 button.MouseClick += (sender, e) =>
                 {
                     selectedUnitTypeToBuild = UnitSpriteSheetRectangle.GetUnitType(button.spriteSourceRectangle);
@@ -568,7 +632,12 @@ namespace Wartorn.Screens.MainGameScreen
             //update canvas
             canvas.Update(CONTENT_MANAGER.inputState, CONTENT_MANAGER.lastInputState);
             //((Label)canvas["label_mousepos"]).Text = mouseInputState.Position.ToString();
-            UpdateCanvas_generalInfo();
+            UpdateCanvas_SelectedMapCell();
+
+            if (canvas_TargetedMapCell.IsVisible)
+            {
+                UpdateCanvas_TargetedMapCell();
+            }
 
             //camera control
             if (currentGameState == GameState.None || currentGameState == GameState.UnitSelected)// || currentGameState == GameState.BuildingSelected )
@@ -797,6 +866,9 @@ namespace Wartorn.Screens.MainGameScreen
 
                         #region Command.Attack
                         case Command.Attack:
+                            //show target canvas
+                            canvas_TargetedMapCell.IsVisible = true;
+
                             //change cursor to attack cursor
                             cursor = CONTENT_MANAGER.attackCursor;
                             cursorOffset = attackCursorOffset;
@@ -824,6 +896,10 @@ namespace Wartorn.Screens.MainGameScreen
                                 {
                                     map.RemoveUnit(selectedTarget);
                                 }
+
+                                //hide target canvas
+                                canvas_TargetedMapCell.IsVisible = false;
+
                                 //end command
                                 goto finalise_command_execution;
                             }
@@ -1044,7 +1120,7 @@ namespace Wartorn.Screens.MainGameScreen
               || tempunit.UnitType == UnitType.Missile
               || tempunit.UnitType == UnitType.Battleship))
             {
-                if (movingAnim == null)
+                if (movingAnim != null)
                 {
                     //không attack
                 }
@@ -1228,7 +1304,7 @@ namespace Wartorn.Screens.MainGameScreen
         //deperecated do not use
         private void DeselectUnit()
         {
-            canvas_generalInfo.GetElementAs<Label>("label_unittype").Text = " ";
+            canvas_SelectedMapCell.GetElementAs<Label>("label_unittype").Text = " ";
             movementRange = null;
             movementPath = null;
             isMovePathCalculated = false;
@@ -1320,35 +1396,44 @@ namespace Wartorn.Screens.MainGameScreen
                 }
                 else
                 {
-                    Rectangle temp = canvas_action_Factory.GetElementAs<Button>(uiname).spriteSourceRectangle;
-                    UnitType tempunittype = UnitSpriteSheetRectangle.GetUnitType(temp);
-                    canvas_action_Factory.GetElementAs<Button>(uiname).spriteSourceRectangle = UnitSpriteSheetRectangle.GetSpriteRectangle(tempunittype, owner);
+                    if (!uiname.Contains("label"))
+                    {
+                        Rectangle temp = canvas_action_Factory.GetElementAs<Button>(uiname).spriteSourceRectangle;
+                        UnitType tempunittype = UnitSpriteSheetRectangle.GetUnitType(temp);
+                        canvas_action_Factory.GetElementAs<Button>(uiname).spriteSourceRectangle = UnitSpriteSheetRectangle.GetSpriteRectangle(tempunittype, owner);
+                    }
                 }
             }
             foreach (string uiname in canvas_action_Airport.UInames)
             {
                 if (uiname.Contains("picturebox"))
                 {
-                    canvas_action_Factory.GetElementAs<PictureBox>(uiname).SourceRectangle = BuyMenuAirportHarborSpriteSourceRectangle.GetSpriteRectangle(owner);
+                    canvas_action_Airport.GetElementAs<PictureBox>(uiname).SourceRectangle = BuyMenuAirportHarborSpriteSourceRectangle.GetSpriteRectangle(owner);
                 }
                 else
                 {
-                    Rectangle temp = canvas_action_Airport.GetElementAs<Button>(uiname).spriteSourceRectangle;
-                    UnitType tempunittype = UnitSpriteSheetRectangle.GetUnitType(temp);
-                    canvas_action_Airport.GetElementAs<Button>(uiname).spriteSourceRectangle = UnitSpriteSheetRectangle.GetSpriteRectangle(tempunittype, owner);
+                    if (!uiname.Contains("label"))
+                    {
+                        Rectangle temp = canvas_action_Airport.GetElementAs<Button>(uiname).spriteSourceRectangle;
+                        UnitType tempunittype = UnitSpriteSheetRectangle.GetUnitType(temp);
+                        canvas_action_Airport.GetElementAs<Button>(uiname).spriteSourceRectangle = UnitSpriteSheetRectangle.GetSpriteRectangle(tempunittype, owner);
+                    }
                 }
             }
             foreach (string uiname in canvas_action_Harbor.UInames)
             {
                 if (uiname.Contains("picturebox"))
                 {
-                    canvas_action_Factory.GetElementAs<PictureBox>(uiname).SourceRectangle = BuyMenuAirportHarborSpriteSourceRectangle.GetSpriteRectangle(owner);
+                    canvas_action_Harbor.GetElementAs<PictureBox>(uiname).SourceRectangle = BuyMenuAirportHarborSpriteSourceRectangle.GetSpriteRectangle(owner);
                 }
                 else
                 {
-                    Rectangle temp = canvas_action_Harbor.GetElementAs<Button>(uiname).spriteSourceRectangle;
-                    UnitType tempunittype = UnitSpriteSheetRectangle.GetUnitType(temp);
-                    canvas_action_Harbor.GetElementAs<Button>(uiname).spriteSourceRectangle = UnitSpriteSheetRectangle.GetSpriteRectangle(tempunittype, owner);
+                    if (!uiname.Contains("label"))
+                    {
+                        Rectangle temp = canvas_action_Harbor.GetElementAs<Button>(uiname).spriteSourceRectangle;
+                        UnitType tempunittype = UnitSpriteSheetRectangle.GetUnitType(temp);
+                        canvas_action_Harbor.GetElementAs<Button>(uiname).spriteSourceRectangle = UnitSpriteSheetRectangle.GetSpriteRectangle(tempunittype, owner);
+                    }
                 }
             }
         }
@@ -1459,7 +1544,54 @@ namespace Wartorn.Screens.MainGameScreen
 
         #region Update function helper
 
-        private void UpdateCanvas_generalInfo()
+        private void UpdateCanvas_TargetedMapCell()
+        {
+            if (!attackRange.Contains(selectedMapCell))
+            {
+                return;
+            }
+
+            MapCell tempmapcell = map[selectedMapCell];
+
+            //update the SelectedMapCell border
+            canvas_TargetedMapCell.GetElementAs<PictureBox>("picbox_TargetedMapCellBorder").SourceRectangle = SelectedMapCellBorderSpriteSourceRectangle.GetSpriteRectangle(tempmapcell.owner);
+            
+            canvas_TargetedMapCell.GetElementAs<PictureBox>("picbox_TargetedMapCellDefenseStar").SourceRectangle = SelectedMapCellDefenseStarSpriteSourceRectangle.GetSpriteRectangle(Unit._DefenseStar[tempmapcell.terrain]);
+
+            if (tempmapcell.unit != null)
+            {
+                canvas_TargetedMapCell.GetElementAs<PictureBox>("picbox_TargetedMapCellUnitInfo").SourceRectangle = SelectedMapCellUnitInfoSpriteSourceRectangle.GetSpriteRectangle(tempmapcell.unit.Owner);
+
+                canvas_TargetedMapCell.GetElementAs<PictureBox>("picbox_unitType").SourceRectangle = BackgroundUnitSpriteSourceRectangle.GetSpriteRectangle(tempmapcell.unit.UnitType, tempmapcell.unit.Owner, tempmapcell.terrain);
+                canvas_TargetedMapCell.GetElementAs<Label>("label_unitType").Text = tempmapcell.unit.GetUnitName();
+                
+                int hp = tempmapcell.unit.HitPoint;
+                canvas_TargetedMapCell.GetElementAs<PictureBox>("picbox_TargetedMapCellHPbar").SourceRectangle = new Rectangle(0, 0, hp * 10, 3);
+                canvas_TargetedMapCell.GetElementAs<Label>("label_TargetedMapCellHP").Text = hp.ToString();
+            }
+            else
+            {
+                canvas_TargetedMapCell.GetElementAs<PictureBox>("picbox_TargetedMapCellUnitInfo").SourceRectangle = Rectangle.Empty;
+
+                canvas_TargetedMapCell.GetElementAs<PictureBox>("picbox_unitType").SourceRectangle = Rectangle.Empty;
+                canvas_TargetedMapCell.GetElementAs<Label>("label_unitType").Text = " ";
+
+                canvas_TargetedMapCell.GetElementAs<PictureBox>("picbox_TargetedMapCellHPbar").SourceRectangle = Rectangle.Empty;
+                canvas_TargetedMapCell.GetElementAs<Label>("label_TargetedMapCellHP").Text = " ";
+            }
+
+            //update the terrantype of the mapcell which is hovered on
+            TerrainType tempterraintype = tempmapcell.terrain;
+            if (tempterraintype == TerrainType.Coast ||
+                tempterraintype == TerrainType.Cliff)
+            {
+                tempterraintype = TerrainType.Sea;
+            }
+            canvas_TargetedMapCell.GetElementAs<PictureBox>("picbox_terrainType").SourceRectangle = BackgroundTerrainSpriteSourceRectangle.GetSpriteRectangle(tempterraintype, map.weather, map.theme, tempmapcell.unit != null ? tempmapcell.unit.UnitType : UnitType.None, tempmapcell.owner);
+            canvas_TargetedMapCell.GetElementAs<Label>("label_terrainType").Text = tempmapcell.terrain.ToString();
+        }
+
+        private void UpdateCanvas_SelectedMapCell()
         {
             MapCell tempmapcell = null;
 
@@ -1482,75 +1614,98 @@ namespace Wartorn.Screens.MainGameScreen
                     break;
             }
 
-            //update the generalinfo border
-            canvas_generalInfo.GetElementAs<PictureBox>("picbox_generalInfoBorder").SourceRectangle = GeneralInfoBorderSpriteSourceRectangle.GetSpriteRectangle(tempmapcell.owner);
+            //update the SelectedMapCell border
+            canvas_SelectedMapCell.GetElementAs<PictureBox>("picbox_SelectedMapCellBorder").SourceRectangle = SelectedMapCellBorderSpriteSourceRectangle.GetSpriteRectangle(tempmapcell.owner);
 
-            if (isBuilding(tempmapcell.terrain) && tempmapcell.terrain != TerrainType.MissileSiloLaunched && tempmapcell.terrain != TerrainType.MissileSilo && tempmapcell.unit!=null && (tempmapcell.unit.UnitType == UnitType.Soldier || tempmapcell.unit.UnitType == UnitType.Mech))
+            if (isBuilding(tempmapcell.terrain)
+             && tempmapcell.terrain != TerrainType.MissileSiloLaunched
+             && tempmapcell.terrain != TerrainType.MissileSilo
+             && tempmapcell.owner != playerInfos[localPlayer].owner
+             && tempmapcell.unit!=null 
+             &&     (tempmapcell.unit.UnitType == UnitType.Soldier 
+                  || tempmapcell.unit.UnitType == UnitType.Mech
+                    )
+                )
             {
-                canvas_generalInfo.GetElementAs<PictureBox>("picbox_generalInfoCapturePoint").SourceRectangle = GeneralInfoCapturePointSpriteSourceRectangle.GetSpriteRectangle(tempmapcell.unit.Owner);
+                canvas_SelectedMapCell.GetElementAs<PictureBox>("picbox_SelectedMapCellCapturePoint").SourceRectangle = SelectedMapCellCapturePointSpriteSourceRectangle.GetSpriteRectangle(tempmapcell.unit.Owner);
                 
-                canvas_generalInfo.GetElementAs<Label>("label_generalInfoCapturePoint").Text = tempmapcell.unit.CapturePoint.ToString();
+                canvas_SelectedMapCell.GetElementAs<Label>("label_SelectedMapCellCapturePoint").Text = tempmapcell.unit.CapturePoint.ToString();
 
                 if (tempmapcell.owner != tempmapcell.unit.Owner)
                 {
                     //CONTENT_MANAGER.ShowMessageBox(tempmapcell.unit.CapturePoint);
                 }
 
-                canvas_generalInfo.GetElementAs<PictureBox>("picbox_generalInfoCapturePoint").IsVisible = true;
-                canvas_generalInfo.GetElementAs<Label>("label_generalInfoCapturePoint").IsVisible = true;
+                canvas_SelectedMapCell.GetElementAs<PictureBox>("picbox_SelectedMapCellCapturePoint").IsVisible = true;
+                canvas_SelectedMapCell.GetElementAs<Label>("label_SelectedMapCellCapturePoint").IsVisible = true;
             }
             else
             {
-                canvas_generalInfo.GetElementAs<PictureBox>("picbox_generalInfoCapturePoint").SourceRectangle = Rectangle.Empty;
-                canvas_generalInfo.GetElementAs<PictureBox>("picbox_generalInfoCapturePoint").IsVisible = false;
-                canvas_generalInfo.GetElementAs<Label>("label_generalInfoCapturePoint").IsVisible = false;
+                canvas_SelectedMapCell.GetElementAs<PictureBox>("picbox_SelectedMapCellCapturePoint").SourceRectangle = Rectangle.Empty;
+                canvas_SelectedMapCell.GetElementAs<PictureBox>("picbox_SelectedMapCellCapturePoint").IsVisible = false;
+                canvas_SelectedMapCell.GetElementAs<Label>("label_SelectedMapCellCapturePoint").IsVisible = false;
             }
 
-            canvas_generalInfo.GetElementAs<PictureBox>("picbox_generalInfoDefenseStar").SourceRectangle = GeneralInfoDefenseStarSpriteSourceRectangle.GetSpriteRectangle(Unit._DefenseStar[tempmapcell.terrain]);
+            if (tempmapcell.unit == null
+             ||     (tempmapcell.unit != null
+                  &&    (tempmapcell.unit.UnitType != UnitType.TransportCopter
+                      && tempmapcell.unit.UnitType != UnitType.BattleCopter
+                      && tempmapcell.unit.UnitType != UnitType.Bomber
+                      && tempmapcell.unit.UnitType != UnitType.Fighter
+                        )
+                    )
+                )
+            {
+                canvas_SelectedMapCell.GetElementAs<PictureBox>("picbox_SelectedMapCellDefenseStar").SourceRectangle = SelectedMapCellDefenseStarSpriteSourceRectangle.GetSpriteRectangle(Unit._DefenseStar[tempmapcell.terrain]);
+            }
+            else
+            {
+                canvas_SelectedMapCell.GetElementAs<PictureBox>("picbox_SelectedMapCellDefenseStar").SourceRectangle = Rectangle.Empty;
+            }
 
             if (tempmapcell.unit != null)
             {
-                canvas_generalInfo.GetElementAs<PictureBox>("picbox_generalInfoUnitInfo").SourceRectangle = GeneralInfoUnitInfoSpriteSourceRectangle.GetSpriteRectangle(tempmapcell.unit.Owner);
+                canvas_SelectedMapCell.GetElementAs<PictureBox>("picbox_SelectedMapCellUnitInfo").SourceRectangle = SelectedMapCellUnitInfoSpriteSourceRectangle.GetSpriteRectangle(tempmapcell.unit.Owner);
 
-                canvas_generalInfo.GetElementAs<PictureBox>("picbox_unitType").SourceRectangle = BackgroundUnitSpriteSourceRectangle.GetSpriteRectangle(tempmapcell.unit.UnitType, tempmapcell.unit.Owner, tempmapcell.terrain);
-                canvas_generalInfo.GetElementAs<Label>("label_unitType").Text = tempmapcell.unit.GetUnitName();
+                canvas_SelectedMapCell.GetElementAs<PictureBox>("picbox_unitType").SourceRectangle = BackgroundUnitSpriteSourceRectangle.GetSpriteRectangle(tempmapcell.unit.UnitType, tempmapcell.unit.Owner, tempmapcell.terrain);
+                canvas_SelectedMapCell.GetElementAs<Label>("label_unitType").Text = tempmapcell.unit.GetUnitName();
 
                 if (tempmapcell.unit.UnitType == UnitType.APC
                  || tempmapcell.unit.UnitType == UnitType.TransportCopter
                  || tempmapcell.unit.UnitType == UnitType.Lander
                  || tempmapcell.unit.UnitType == UnitType.Cruiser)
                 {
-                    canvas_generalInfo.GetElementAs<PictureBox>("picbox_generalInfoLoadedUnit").SourceRectangle = GeneralInfoLoadedUnitSpriteSourceRectangle.GetSpriteRectangle(tempmapcell.unit.Owner);
-                    canvas_generalInfo.GetElementAs<PictureBox>("picbox_generalInfoLoadedUnit").IsVisible = true;
+                    canvas_SelectedMapCell.GetElementAs<PictureBox>("picbox_SelectedMapCellLoadedUnit").SourceRectangle = SelectedMapCellLoadedUnitSpriteSourceRectangle.GetSpriteRectangle(tempmapcell.unit.Owner);
+                    canvas_SelectedMapCell.GetElementAs<PictureBox>("picbox_SelectedMapCellLoadedUnit").IsVisible = true;
                     //update loaded unit here
                 }
                 else
                 {
-                    canvas_generalInfo.GetElementAs<PictureBox>("picbox_generalInfoLoadedUnit").SourceRectangle = Rectangle.Empty;
-                    canvas_generalInfo.GetElementAs<PictureBox>("picbox_generalInfoLoadedUnit").IsVisible = false;
+                    canvas_SelectedMapCell.GetElementAs<PictureBox>("picbox_SelectedMapCellLoadedUnit").SourceRectangle = Rectangle.Empty;
+                    canvas_SelectedMapCell.GetElementAs<PictureBox>("picbox_SelectedMapCellLoadedUnit").IsVisible = false;
                 }
 
                 int hp = tempmapcell.unit.HitPoint;
-                canvas_generalInfo.GetElementAs<PictureBox>("picbox_generalInfoHPbar").SourceRectangle = new Rectangle(0, 0, hp*10, 3);
-                canvas_generalInfo.GetElementAs<Label>("label_generalInfoHP").Text = hp.ToString();
+                canvas_SelectedMapCell.GetElementAs<PictureBox>("picbox_SelectedMapCellHPbar").SourceRectangle = new Rectangle(0, 0, hp*10, 3);
+                canvas_SelectedMapCell.GetElementAs<Label>("label_SelectedMapCellHP").Text = hp.ToString();
 
-                canvas_generalInfo.GetElementAs<Label>("label_generalInfoUnitInfo_fuel").Text = tempmapcell.unit.Fuel.ToString();
-                canvas_generalInfo.GetElementAs<Label>("label_generalInfoUnitInfo_ammo").Text = tempmapcell.unit.Ammo.ToString();
+                canvas_SelectedMapCell.GetElementAs<Label>("label_SelectedMapCellUnitInfo_fuel").Text = tempmapcell.unit.Fuel.ToString();
+                canvas_SelectedMapCell.GetElementAs<Label>("label_SelectedMapCellUnitInfo_ammo").Text = tempmapcell.unit.Ammo.ToString();
             }
             else
             {
-                canvas_generalInfo.GetElementAs<PictureBox>("picbox_generalInfoUnitInfo").SourceRectangle = Rectangle.Empty;
+                canvas_SelectedMapCell.GetElementAs<PictureBox>("picbox_SelectedMapCellUnitInfo").SourceRectangle = Rectangle.Empty;
 
-                canvas_generalInfo.GetElementAs<PictureBox>("picbox_unitType").SourceRectangle = Rectangle.Empty;
-                canvas_generalInfo.GetElementAs<Label>("label_unitType").Text = " ";
+                canvas_SelectedMapCell.GetElementAs<PictureBox>("picbox_unitType").SourceRectangle = Rectangle.Empty;
+                canvas_SelectedMapCell.GetElementAs<Label>("label_unitType").Text = " ";
 
-                canvas_generalInfo.GetElementAs<PictureBox>("picbox_generalInfoLoadedUnit").SourceRectangle = Rectangle.Empty;
+                canvas_SelectedMapCell.GetElementAs<PictureBox>("picbox_SelectedMapCellLoadedUnit").SourceRectangle = Rectangle.Empty;
 
-                canvas_generalInfo.GetElementAs<PictureBox>("picbox_generalInfoHPbar").SourceRectangle = Rectangle.Empty;
-                canvas_generalInfo.GetElementAs<Label>("label_generalInfoHP").Text = " ";
+                canvas_SelectedMapCell.GetElementAs<PictureBox>("picbox_SelectedMapCellHPbar").SourceRectangle = Rectangle.Empty;
+                canvas_SelectedMapCell.GetElementAs<Label>("label_SelectedMapCellHP").Text = " ";
 
-                canvas_generalInfo.GetElementAs<Label>("label_generalInfoUnitInfo_fuel").Text = " ";
-                canvas_generalInfo.GetElementAs<Label>("label_generalInfoUnitInfo_ammo").Text = " ";
+                canvas_SelectedMapCell.GetElementAs<Label>("label_SelectedMapCellUnitInfo_fuel").Text = " ";
+                canvas_SelectedMapCell.GetElementAs<Label>("label_SelectedMapCellUnitInfo_ammo").Text = " ";
             }
 
             //update the terrantype of the mapcell which is hovered on
@@ -1560,8 +1715,8 @@ namespace Wartorn.Screens.MainGameScreen
             {
                 tempterraintype = TerrainType.Sea;
             }
-            canvas_generalInfo.GetElementAs<PictureBox>("picbox_terrainType").SourceRectangle = BackgroundTerrainSpriteSourceRectangle.GetSpriteRectangle(tempterraintype, map.weather, map.theme, tempmapcell.unit != null ? tempmapcell.unit.UnitType : UnitType.None, tempmapcell.owner);
-            canvas_generalInfo.GetElementAs<Label>("label_terrainType").Text = tempmapcell.terrain.ToString();
+            canvas_SelectedMapCell.GetElementAs<PictureBox>("picbox_terrainType").SourceRectangle = BackgroundTerrainSpriteSourceRectangle.GetSpriteRectangle(tempterraintype, map.weather, map.theme, tempmapcell.unit != null ? tempmapcell.unit.UnitType : UnitType.None, tempmapcell.owner);
+            canvas_SelectedMapCell.GetElementAs<Label>("label_terrainType").Text = tempmapcell.terrain.ToString();
         }
 
         private void UpdateAnimation(GameTime gameTime)
@@ -1629,13 +1784,13 @@ namespace Wartorn.Screens.MainGameScreen
                 //CONTENT_MANAGER.spriteBatch.DrawString(CONTENT_MANAGER.defaultfont, canvas_action_Factory.GetElementAs<Label>("label_unitname").Position.toString(), new Vector2(100, 140), Color.Red);
             }
 
-            //draw canvas_generalInfo
-            //DrawCanvas_generalInfo();
+            //draw canvas_SelectedMapCell
+            //DrawCanvas_SelectedMapCell();
 
 
             //draw the minimap
             //CONTENT_MANAGER.spriteBatch.Draw(minimap, minimapbound, null, Color.White, 0f, Vector2.Zero, SpriteEffects.None, LayerDepth.GuiBackground);
-            //CONTENT_MANAGER.spriteBatch.Draw(CONTENT_MANAGER.generalInfo_HPbar, Vector2.Zero, new Rectangle(0, 0, 100, 3), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.GuiUpper);
+            //CONTENT_MANAGER.spriteBatch.Draw(CONTENT_MANAGER.SelectedMapCell_HPbar, Vector2.Zero, new Rectangle(0, 0, 100, 3), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.GuiUpper);
         }
 
         private void DrawMap(SpriteBatch spriteBatch,GameTime gameTime)

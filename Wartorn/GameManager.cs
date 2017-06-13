@@ -79,11 +79,11 @@ namespace Wartorn
             CommandSpriteSourceRectangle.LoadSprite();
             BackgroundTerrainSpriteSourceRectangle.LoadSprite();
             BackgroundUnitSpriteSourceRectangle.LoadSprite();
-            GeneralInfoBorderSpriteSourceRectangle.LoadSprite();
-            GeneralInfoCapturePointSpriteSourceRectangle.LoadSprite();
-            GeneralInfoDefenseStarSpriteSourceRectangle.LoadSprite();
-            GeneralInfoLoadedUnitSpriteSourceRectangle.LoadSprite();
-            GeneralInfoUnitInfoSpriteSourceRectangle.LoadSprite();
+            SelectedMapCellBorderSpriteSourceRectangle.LoadSprite();
+            SelectedMapCellCapturePointSpriteSourceRectangle.LoadSprite();
+            SelectedMapCellDefenseStarSpriteSourceRectangle.LoadSprite();
+            SelectedMapCellLoadedUnitSpriteSourceRectangle.LoadSprite();
+            SelectedMapCellUnitInfoSpriteSourceRectangle.LoadSprite();
             BuyMenuFactorySpriteSourceRectangle.LoadSprite();
             BuyMenuAirportHarborSpriteSourceRectangle.LoadSprite();
 

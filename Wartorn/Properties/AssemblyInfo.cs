@@ -8,10 +8,10 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Wartorn")]
 [assembly: AssemblyProduct("Wartorn")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyDescription("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyDescription("A turnbased strategy game.")]
+[assembly: AssemblyCompany("IT008-H22-group-3")]
 [assembly: AssemblyCopyright("Copyright ©  2017")]
-[assembly: AssemblyTrademark("")]
+[assembly: AssemblyTrademark("lalalalalalalala")]
 [assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
