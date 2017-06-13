@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utility_Project", "Utility_
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client", "Client\Client.csproj", "{7ADFFBA4-AFD8-4CB4-A58B-097CF4D982AA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleTCP", "SimpleTCP\SimpleTCP.csproj", "{C9C99F87-E188-49D2-A323-09FE79F39F8D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,6 +51,14 @@ Global
 		{7ADFFBA4-AFD8-4CB4-A58B-097CF4D982AA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7ADFFBA4-AFD8-4CB4-A58B-097CF4D982AA}.Release|x86.ActiveCfg = Release|Any CPU
 		{7ADFFBA4-AFD8-4CB4-A58B-097CF4D982AA}.Release|x86.Build.0 = Release|Any CPU
+		{C9C99F87-E188-49D2-A323-09FE79F39F8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9C99F87-E188-49D2-A323-09FE79F39F8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9C99F87-E188-49D2-A323-09FE79F39F8D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C9C99F87-E188-49D2-A323-09FE79F39F8D}.Debug|x86.Build.0 = Debug|Any CPU
+		{C9C99F87-E188-49D2-A323-09FE79F39F8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9C99F87-E188-49D2-A323-09FE79F39F8D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9C99F87-E188-49D2-A323-09FE79F39F8D}.Release|x86.ActiveCfg = Release|Any CPU
+		{C9C99F87-E188-49D2-A323-09FE79F39F8D}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
