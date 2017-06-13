@@ -780,8 +780,6 @@ namespace Wartorn.Screens.MainGameScreen
                 #endregion
 
                 #region GameState.None
-                case GameState.WaitForTurn:
-                    return;
                 //the normal state of the game where nothing is selected
                 //next state: UnitSelected
                 //            BuildingSelected
@@ -1716,8 +1714,6 @@ namespace Wartorn.Screens.MainGameScreen
                 case GameState.UnitCommand:
                     tempmapcell = map[selectedUnit];
                     break;
-                case GameState.WaitForTurn:
-                    return;
                 default:
                     break;
             }
