@@ -121,7 +121,7 @@ namespace Wartorn.Screens.MainGameScreen
         MovingUnitAnimation movingAnim;
         DirectionArrowRenderer dirarrowRenderer = new DirectionArrowRenderer();
         #endregion
-
+        
         //fog of war
         bool[,] mapcellVisibility;
 
