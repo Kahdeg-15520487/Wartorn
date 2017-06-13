@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Wartorn"
-#define MyAppVersion "11"
+#define MyAppVersion "1.2"
 #define MyAppPublisher "Nhóm 3 lớp IT008.H22"
 #define MyAppURL "https://github.com/Kahdeg-15520487/Wartorn"
 #define MyAppExeName "Wartorn.exe"
@@ -21,8 +21,8 @@ AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
 DefaultDirName={pf}\{#MyAppName}
 DefaultGroupName={#MyAppName}
-LicenseFile=G:\Workspace\c#\Wartorn\Build\license.txt
-OutputDir=G:\Workspace\c#\Wartorn\Build\Installer
+LicenseFile=..\Build\license.txt
+OutputDir=..\Build\Installer
 OutputBaseFilename=WartornSetup
 Compression=lzma
 SolidCompression=yes
@@ -34,8 +34,6 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-; Source: "..\Build\Wartorn.exe"; DestDir: "{app}"; Flags: ignoreversion
-; Source: "..\Build\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "..\Build\IronPython.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Build\IronPython.Modules.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Build\IronPython.SQLite.dll"; DestDir: "{app}"; Flags: ignoreversion
@@ -67,26 +65,18 @@ Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChang
 Name: "{app}\data\"
 
 [Registry]
-Root: "HKCR"; Subkey: "Software\kahdeg\Wartorn\"; ValueType: dword; ValueName: "Version"; ValueData: "{#MyAppVersion}"; Flags: createvalueifdoesntexist uninsdeletekey
+Root: "HKCR"; Subkey: "Software\kahdeg\Wartorn\"; ValueType: string; ValueName: "Version"; ValueData: "{#MyAppVersion}"; Flags: uninsdeletekey
 
 [Code]
 function InitializeSetup: Boolean;
 var
 V: Integer;
-sUnInstallString: String;
 Version: String;
 begin
   if RegValueExists(HKEY_CLASSES_ROOT,'Software\kahdeg\Wartorn\', 'Version') then 
   begin
-    RegQueryStringValue(HKEY_CLASSES_ROOT,'Software\kahdeg\Wartorn\', 'DisplayVersion', Version);
-    if Version <> ExpandConstant('{#MyAppVersion}') then 
-    begin 
-      MsgBox(ExpandConstant('Current version: '+'{#MyAppVersion}' +',' + 'New version: '+Version) , mbInformation, MB_OK);
-      Result := True;
-    end;
-  end
-  else
-    begin
-         Result:= False;
-    end;
+    RegQueryStringValue(HKEY_CLASSES_ROOT,'Software\kahdeg\Wartorn\', 'Version', Version);
+    MsgBox(ExpandConstant('Current version: '+Version +',' + '\n' + 'New version: '+'{#MyAppVersion}') , mbInformation, MB_OK);
+  end;
+  Result:= True;
 end;
