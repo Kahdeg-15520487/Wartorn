@@ -317,29 +317,7 @@ namespace Wartorn.GameData
 
         public string GetUnitName()
         {
-            switch (unitType)
-            {
-                case UnitType.HeavyTank:
-                    return "H-Tank";
-
-                case UnitType.Artillery:
-                    return "Arty";
-
-                case UnitType.TransportCopter:
-                    return "T-Copter";
-
-                case UnitType.BattleCopter:
-                    return "B-Copter";
-
-                case UnitType.Submarine:
-                    return "Sub";
-
-                case UnitType.Battleship:
-                    return "B-Ship";
-
-                default:
-                    return unitType.ToString();
-            }
+            return unitType.GetName();
         }
 
 
@@ -461,10 +439,116 @@ namespace Wartorn.GameData
 
     public static class UnitCreationHelper
     {
-        public static Unit Create(UnitType unittype,Owner owner,int hp = 10,AnimationName animation = AnimationName.idle)
+        public static Unit Create(UnitType unittype,Owner owner,int hp = 10,AnimationName startingAnimation = AnimationName.idle)
         {
-            var result = new Unit(unittype, (AnimatedEntity)CONTENT_MANAGER.animationEntities[unittype.GetSpriteSheetUnit(owner)].Clone(), owner, hp);
-            result.Animation.PlayAnimation(animation.ToString());
+            AnimatedEntity animEntity = new AnimatedEntity(Vector2.Zero, Vector2.Zero, Color.White, LayerDepth.Unit);
+            animEntity.LoadContent(CONTENT_MANAGER.animationSheets[unittype.GetSpriteSheetUnit(owner)]);
+
+            #region declare animation frame
+            Animation idle;
+            Animation right;
+            Animation up;
+            Animation down;
+            Animation done;
+            switch (unittype)
+            {
+                case UnitType.TransportCopter:
+                case UnitType.BattleCopter:
+                    animEntity.Origin = new Vector2(8, 16);
+                    idle = new Animation("idle", true, 3, string.Empty);
+                    for (int i = 0; i < 3; i++)
+                    {
+                        idle.AddKeyFrame(i * 64, 0, 64, 64);
+                    }
+
+                    right = new Animation("right", true, 4, string.Empty);
+                    for (int i = 0; i < 4; i++)
+                    {
+                        right.AddKeyFrame(i * 64, 64, 64, 64);
+                    }
+
+                    up = new Animation("up", true, 4, string.Empty);
+                    for (int i = 0; i < 4; i++)
+                    {
+                        up.AddKeyFrame(i * 64, 128, 64, 64);
+                    }
+
+                    down = new Animation("down", true, 4, string.Empty);
+                    for (int i = 0; i < 4; i++)
+                    {
+                        down.AddKeyFrame(i * 64, 192, 64, 64);
+                    }
+
+                    done = new Animation("done", true, 1, string.Empty);
+                    done.AddKeyFrame(0, 256, 64, 64);
+                    break;
+
+                case UnitType.Fighter:
+                case UnitType.Bomber:
+                    animEntity.Origin = new Vector2(8, 16);
+
+                    idle = new Animation("idle", true, 4, string.Empty);
+                    for (int i = 0; i < 4; i++)
+                    {
+                        idle.AddKeyFrame(i * 64, 0, 64, 64);
+                    }
+
+                    right = new Animation("right", true, 4, string.Empty);
+                    for (int i = 0; i < 4; i++)
+                    {
+                        right.AddKeyFrame(i * 64, 64, 64, 64);
+                    }
+
+                    up = new Animation("up", true, 4, string.Empty);
+                    for (int i = 0; i < 4; i++)
+                    {
+                        up.AddKeyFrame(i * 64, 128, 64, 64);
+                    }
+
+                    down = new Animation("down", true, 4, string.Empty);
+                    for (int i = 0; i < 4; i++)
+                    {
+                        down.AddKeyFrame(i * 64, 192, 64, 64);
+                    }
+
+                    done = new Animation("done", true, 1, string.Empty);
+                    done.AddKeyFrame(0, 256, 64, 64);
+                    break;
+                default:
+                    idle = new Animation("idle", true, 4, string.Empty);
+                    for (int i = 0; i < 4; i++)
+                    {
+                        idle.AddKeyFrame(i * 48, 0, 48, 48);
+                    }
+
+                    right = new Animation("right", true, 4, string.Empty);
+                    for (int i = 0; i < 4; i++)
+                    {
+                        right.AddKeyFrame(i * 48, 48, 48, 48);
+                    }
+
+                    up = new Animation("up", true, 4, string.Empty);
+                    for (int i = 0; i < 4; i++)
+                    {
+                        up.AddKeyFrame(i * 48, 96, 48, 48);
+                    }
+
+                    down = new Animation("down", true, 4, string.Empty);
+                    for (int i = 0; i < 4; i++)
+                    {
+                        down.AddKeyFrame(i * 48, 144, 48, 48);
+                    }
+
+                    done = new Animation("done", true, 1, string.Empty);
+                    done.AddKeyFrame(0, 192, 48, 48);
+                    break;
+            }
+#endregion
+
+            animEntity.AddAnimation(idle, right, up, down, done);
+
+            var result = new Unit(unittype, animEntity, owner, hp);
+            result.Animation.PlayAnimation(startingAnimation.ToString());
             return result;
         }
     }

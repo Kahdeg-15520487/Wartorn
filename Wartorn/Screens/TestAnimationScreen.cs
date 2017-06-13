@@ -211,7 +211,7 @@ namespace Wartorn.Screens
 
             if (isChanged)
             {
-                map[position].unit = UnitCreationHelper.Create(currentUnit, currentColor, animation: currentAnimation);
+                map[position].unit = UnitCreationHelper.Create(currentUnit, currentColor, startingAnimation: currentAnimation);
             }
             map[position].unit.Animation.Update(gameTime);
             #endregion

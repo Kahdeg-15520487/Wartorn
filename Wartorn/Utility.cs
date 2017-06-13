@@ -161,6 +161,33 @@ namespace Wartorn
 
         public static class ExtensionMethod
         {
+            public static string GetName(this UnitType unitType)
+            {
+                switch (unitType)
+                {
+                    case UnitType.HeavyTank:
+                        return "H-Tank";
+
+                    case UnitType.Artillery:
+                        return "Arty";
+
+                    case UnitType.TransportCopter:
+                        return "T-Copter";
+
+                    case UnitType.BattleCopter:
+                        return "B-Copter";
+
+                    case UnitType.Submarine:
+                        return "Sub";
+
+                    case UnitType.Battleship:
+                        return "B-Ship";
+
+                    default:
+                        return unitType.ToString();
+                }
+            }
+
             public static bool IsContainCommand(this int flags, Command flag)
             {
                 int flagValue = (int)flag;
@@ -834,7 +861,16 @@ namespace Wartorn
                 if (!typeof(T).IsEnum) throw new ArgumentException(String.Format("Argumnent {0} is not an Enum", typeof(T).FullName));
 
                 T[] Arr = (T[])Enum.GetValues(src.GetType());
-                int j = Array.IndexOf<T>(Arr, src) + count;
+                int j = Array.IndexOf<T>(Arr, src) + (count < 0 ? 0 : count);
+                return (Arr.Length == j) ? Arr[0] : Arr[j];
+            }
+
+            public static T Previous<T>(this T src, int count = 1) where T : struct
+            {
+                if (!typeof(T).IsEnum) throw new ArgumentException(String.Format("Argumnent {0} is not an Enum", typeof(T).FullName));
+
+                T[] Arr = (T[])Enum.GetValues(src.GetType());
+                int j = Array.IndexOf<T>(Arr, src) - (count < 0 ? 0 : count);
                 return (Arr.Length == j) ? Arr[0] : Arr[j];
             }
 
@@ -892,54 +928,54 @@ namespace Wartorn
             //    return box;
             //}
 
-            public static T Previous<T>(this T t, int count = 1)
-            {
-                var type = typeof(T);
-                int result;
-                T box = default(T);
-                count.Clamp(0, int.MinValue);
-                switch (type.Name)
-                {
-                    case "SpriteSheetTerrain":
-                        SpriteSheetTerrain unboxSpriteSheetTerrain = (SpriteSheetTerrain)((object)t);
-                        result = (int)unboxSpriteSheetTerrain - count;
-                        box = (T)((object)result);
-                        return box;
-                    case "UnitType":
-                        UnitType unboxUnit = (UnitType)((object)t);
-                        result = (int)unboxUnit - count;
-                        box = (T)((object)result);
-                        break;
-                    case "TerrainType":
-                        TerrainType unboxTerrain = (TerrainType)((object)t);
-                        result = (int)unboxTerrain - count;
-                        box = (T)((object)result);
-                        break;
-                    case "SpriteSheetUnit":
-                        SpriteSheetUnit unboxSpriteSheetUnit = (SpriteSheetUnit)((object)t);
-                        result = (int)unboxSpriteSheetUnit - count;
-                        box = (T)((object)result);
-                        break;
-                    case "AnimationName":
-                        AnimationName unboxAnimationName = (AnimationName)((object)t);
-                        result = (int)unboxAnimationName - count;
-                        box = (T)((object)result);
-                        break;
-                    case "Owner":
-                        GameData.Owner unboxOwner = (GameData.Owner)((object)t);
-                        result = (int)unboxOwner - count;
-                        box = (T)((object)result);
-                        break;
-                    case "SpriteSheetBuilding":
-                        SpriteSheetBuilding unboxSpriteSheetBuilding = (SpriteSheetBuilding)((object)t);
-                        result = (int)unboxSpriteSheetBuilding - count;
-                        box = (T)((object)result);
-                        break;
-                    default:
-                        return t;
-                }
-                return box;
-            }
+            //public static T Previous<T>(this T t, int count = 1)
+            //{
+            //    var type = typeof(T);
+            //    int result;
+            //    T box = default(T);
+            //    count.Clamp(0, int.MinValue);
+            //    switch (type.Name)
+            //    {
+            //        case "SpriteSheetTerrain":
+            //            SpriteSheetTerrain unboxSpriteSheetTerrain = (SpriteSheetTerrain)((object)t);
+            //            result = (int)unboxSpriteSheetTerrain - count;
+            //            box = (T)((object)result);
+            //            return box;
+            //        case "UnitType":
+            //            UnitType unboxUnit = (UnitType)((object)t);
+            //            result = (int)unboxUnit - count;
+            //            box = (T)((object)result);
+            //            break;
+            //        case "TerrainType":
+            //            TerrainType unboxTerrain = (TerrainType)((object)t);
+            //            result = (int)unboxTerrain - count;
+            //            box = (T)((object)result);
+            //            break;
+            //        case "SpriteSheetUnit":
+            //            SpriteSheetUnit unboxSpriteSheetUnit = (SpriteSheetUnit)((object)t);
+            //            result = (int)unboxSpriteSheetUnit - count;
+            //            box = (T)((object)result);
+            //            break;
+            //        case "AnimationName":
+            //            AnimationName unboxAnimationName = (AnimationName)((object)t);
+            //            result = (int)unboxAnimationName - count;
+            //            box = (T)((object)result);
+            //            break;
+            //        case "Owner":
+            //            GameData.Owner unboxOwner = (GameData.Owner)((object)t);
+            //            result = (int)unboxOwner - count;
+            //            box = (T)((object)result);
+            //            break;
+            //        case "SpriteSheetBuilding":
+            //            SpriteSheetBuilding unboxSpriteSheetBuilding = (SpriteSheetBuilding)((object)t);
+            //            result = (int)unboxSpriteSheetBuilding - count;
+            //            box = (T)((object)result);
+            //            break;
+            //        default:
+            //            return t;
+            //    }
+            //    return box;
+            //}
 
             public static Point GetNearbyPoint(this Point p, Direction d)
             {

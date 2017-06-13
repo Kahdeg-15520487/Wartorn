@@ -40,9 +40,9 @@ namespace Wartorn.Screens
         private Vector2 offset = new Vector2(70, 70);
         private Rectangle mapArea;
 
-        //private SpriteSheetTerrain currentlySelectedTerrain = SpriteSheetTerrain.Forest_up_left;
+        private SpriteSheetTerrain currentlySelectedTerrainSprite = SpriteSheetTerrain.Plain;
         private TerrainType currentlySelectedTerrain = TerrainType.Plain;
-        private GameData.Owner currentlySelectedOwner = GameData.Owner.None;
+        private Owner currentlySelectedOwner = Owner.None;
         private UnitType currentlySelectedUnit = UnitType.None;
 
         private Side GuiSide = Side.Left;
@@ -259,9 +259,11 @@ namespace Wartorn.Screens
             Button button_plain = new Button(TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Plain), new Point(170, 80), 0.75f, false);
 
             Button button_reef = new Button(TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Reef), new Point(210, 80), 0.75f, false);
-            Button button_shoal = new Button(TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Coast_up), new Point(250, 80), 0.75f, false);
-            Button button_river = new Button(TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.River_hor), new Point(290, 80), 0.75f, false);
-            Button button_sea = new Button(TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Sea), new Point(330, 80), 0.75f, false);
+            Button button_coast = new Button(TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Coast_up), new Point(250, 80), 0.75f, false);
+            Button button_clift = new Button(TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Cliff_up), new Point(290, 80), 0.75f, false);
+            Button button_river = new Button(TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.River_hor), new Point(330, 80), 0.75f, false);
+            Button button_sea = new Button(TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Sea), new Point(370, 80), 0.75f, false);
+            
 
             terrainbuttonlist.Add(button_bridge);
             terrainbuttonlist.Add(button_road);
@@ -269,7 +271,8 @@ namespace Wartorn.Screens
             terrainbuttonlist.Add(button_mountain);
             terrainbuttonlist.Add(button_plain);
             terrainbuttonlist.Add(button_reef);
-            terrainbuttonlist.Add(button_shoal);
+            terrainbuttonlist.Add(button_coast);
+            terrainbuttonlist.Add(button_clift);
             terrainbuttonlist.Add(button_river);
             terrainbuttonlist.Add(button_sea);
 
@@ -300,7 +303,7 @@ namespace Wartorn.Screens
                         button_plain.spriteSourceRectangle = TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Desert_Plain);
 
                         button_reef.spriteSourceRectangle = TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Desert_Reef);
-                        button_shoal.spriteSourceRectangle = TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Desert_Coast_up);
+                        button_coast.spriteSourceRectangle = TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Desert_Coast_up);
                         button_river.spriteSourceRectangle = TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Desert_River_hor);
                         button_sea.spriteSourceRectangle = TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Desert_Sea);
                         map.theme = Theme.Desert;
@@ -316,7 +319,7 @@ namespace Wartorn.Screens
                         button_plain.spriteSourceRectangle = TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Plain);
 
                         button_reef.spriteSourceRectangle = TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Reef);
-                        button_shoal.spriteSourceRectangle = TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Coast_up);
+                        button_coast.spriteSourceRectangle = TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Coast_up);
                         button_river.spriteSourceRectangle = TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.River_hor);
                         button_sea.spriteSourceRectangle = TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Sea);
                         map.theme = Theme.Normal;
@@ -343,7 +346,7 @@ namespace Wartorn.Screens
                         button_plain.spriteSourceRectangle = TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Rain_Plain);
 
                         button_reef.spriteSourceRectangle = TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Rain_Reef);
-                        button_shoal.spriteSourceRectangle = TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Rain_Coast_up);
+                        button_coast.spriteSourceRectangle = TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Rain_Coast_up);
                         button_river.spriteSourceRectangle = TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Rain_River_hor);
                         button_sea.spriteSourceRectangle = TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Rain_Sea);
                         map.weather = Weather.Rain;
@@ -358,7 +361,7 @@ namespace Wartorn.Screens
                         button_plain.spriteSourceRectangle = TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Snow_Plain);
 
                         button_reef.spriteSourceRectangle = TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Snow_Reef);
-                        button_shoal.spriteSourceRectangle = TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Snow_Coast_up);
+                        button_coast.spriteSourceRectangle = TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Snow_Coast_up);
                         button_river.spriteSourceRectangle = TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Snow_River_hor);
                         button_sea.spriteSourceRectangle = TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Snow_Sea);
                         map.weather = Weather.Snow;
@@ -373,7 +376,7 @@ namespace Wartorn.Screens
                         button_plain.spriteSourceRectangle = TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Plain);
 
                         button_reef.spriteSourceRectangle = TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Reef);
-                        button_shoal.spriteSourceRectangle = TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Coast_up);
+                        button_coast.spriteSourceRectangle = TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Coast_up);
                         button_river.spriteSourceRectangle = TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.River_hor);
                         button_sea.spriteSourceRectangle = TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Sea);
                         map.weather = Weather.Sunny;
@@ -389,6 +392,19 @@ namespace Wartorn.Screens
                 button.MouseClick += (sender, e) =>
                 {
                     currentlySelectedTerrain = TerrainSpriteSourceRectangle.GetTerrain(button.spriteSourceRectangle).ToTerrainType();
+                    CONTENT_MANAGER.ShowMessageBox(currentlySelectedTerrain.ToString());
+                    switch (currentlySelectedTerrain)
+                    {
+                        case TerrainType.Coast:
+                            currentlySelectedTerrainSprite = SpriteSheetTerrain.Coast_up;
+                            break;
+                        case TerrainType.Cliff:
+                            currentlySelectedTerrainSprite = SpriteSheetTerrain.Cliff_up;
+                            break;
+                        default:
+                            currentlySelectedTerrainSprite = SpriteSheetTerrain.None;
+                            break;
+                    }
                     currentlySelectedUnit = UnitType.None;
                 };
             }
@@ -398,7 +414,8 @@ namespace Wartorn.Screens
             canvas_terrain_selection.AddElement("button_bridge", button_bridge);
             canvas_terrain_selection.AddElement("button_road", button_road);
             canvas_terrain_selection.AddElement("button_reef", button_reef);
-            canvas_terrain_selection.AddElement("button_shoal", button_shoal);
+            canvas_terrain_selection.AddElement("button_coast", button_coast);
+            canvas_terrain_selection.AddElement("button_cliff", button_clift);
             canvas_terrain_selection.AddElement("button_river", button_river);
             canvas_terrain_selection.AddElement("button_wood", button_wood);
             canvas_terrain_selection.AddElement("button_mountain", button_mountain);
@@ -797,6 +814,10 @@ namespace Wartorn.Screens
                                 undostack.Push(new Action(selectedMapCell, map[selectedMapCell]));
                                 map[selectedMapCell].terrain = currentlySelectedTerrain;
                                 map[selectedMapCell].owner = currentlySelectedOwner;
+                                if (currentlySelectedTerrain == TerrainType.Coast || currentlySelectedTerrain == TerrainType.Cliff)
+                                {
+                                    map[selectedMapCell].terrainbase = currentlySelectedTerrainSprite;
+                                }
                                 map.IsProcessed = false;
                             }
                         }
@@ -826,20 +847,84 @@ namespace Wartorn.Screens
         //RotateThroughTerrain
         private void RotateThroughTerrain(KeyboardState keyboardInputState)
         {
+            int nextwater = 0;
+            switch (map.weather)
+            {
+                case Weather.Sunny:
+                    switch (map.theme)
+                    {
+                        case Theme.Normal:
+                            nextwater = 0;
+                            break;
+                        case Theme.Tropical:
+                            nextwater = SpriteSheetTerrain.Desert_Reef - SpriteSheetTerrain.Reef;
+                            break;
+                        case Theme.Desert:
+                            nextwater = SpriteSheetTerrain.Desert_Reef - SpriteSheetTerrain.Reef;
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                case Weather.Rain:
+                    nextwater = SpriteSheetTerrain.Rain_Reef - SpriteSheetTerrain.Reef;
+                    break;
+                case Weather.Snow:
+                    nextwater = SpriteSheetTerrain.Snow_Reef - SpriteSheetTerrain.Reef;
+                    break;
+                default:
+                    break;
+            }
+
             if (HelperFunction.IsKeyPress(Keys.P))
             {
                 isQuickRotate = !isQuickRotate;
             }
-            //rotate through terrain sprite
+
+            //rotate through terrain type
             if ((HelperFunction.IsKeyPress(Keys.E) && !isQuickRotate)
               || (keyboardInputState.IsKeyDown(Keys.E) && isQuickRotate))
             {
                 currentlySelectedTerrain = currentlySelectedTerrain.Next();
+                switch (currentlySelectedTerrain)
+                {
+                    case TerrainType.Coast:
+                        currentlySelectedTerrainSprite = SpriteSheetTerrain.Coast_up.Next(nextwater);
+                        break;
+                    case TerrainType.Cliff:
+                        currentlySelectedTerrainSprite = SpriteSheetTerrain.Cliff_up.Next(nextwater);
+                        break;
+                    default:
+                        currentlySelectedTerrainSprite = SpriteSheetTerrain.None;
+                        break;
+                }
             }
             if ((HelperFunction.IsKeyPress(Keys.Q) && !isQuickRotate)
               || (keyboardInputState.IsKeyDown(Keys.Q) && isQuickRotate))
             {
-                currentlySelectedTerrain = currentlySelectedTerrain.Previous();
+                currentlySelectedTerrain = currentlySelectedTerrain.Next();
+                switch (currentlySelectedTerrain)
+                {
+                    case TerrainType.Coast:
+                        currentlySelectedTerrainSprite = SpriteSheetTerrain.Coast_up.Next(nextwater);
+                        break;
+                    case TerrainType.Cliff:
+                        currentlySelectedTerrainSprite = SpriteSheetTerrain.Cliff_up.Next(nextwater);
+                        break;
+                    default:
+                        currentlySelectedTerrainSprite = SpriteSheetTerrain.None;
+                        break;
+                }
+            }
+
+            //rotate through terrain sprite
+            if (HelperFunction.IsKeyPress(Keys.D1))
+            {
+                currentlySelectedTerrainSprite = currentlySelectedTerrainSprite.Next();
+            }
+            if (HelperFunction.IsKeyPress(Keys.D2))
+            {
+                currentlySelectedTerrainSprite = currentlySelectedTerrainSprite.Previous();
             }
         }
 
@@ -1045,11 +1130,25 @@ namespace Wartorn.Screens
                         break;
 
                     case TerrainType.Coast:
-                        lowertile = TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Coast_down.Next(nextwater));
+                        if (currentlySelectedTerrainSprite != SpriteSheetTerrain.None)
+                        {
+                            lowertile = TerrainSpriteSourceRectangle.GetSpriteRectangle(currentlySelectedTerrainSprite);
+                        }
+                        else
+                        {
+                            lowertile = TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Coast_down.Next(nextwater));
+                        }
                         break;
 
                     case TerrainType.Cliff:
-                        lowertile = TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Cliff_down.Next(nextwater));
+                        if (currentlySelectedTerrainSprite != SpriteSheetTerrain.None)
+                        {
+                            lowertile = TerrainSpriteSourceRectangle.GetSpriteRectangle(currentlySelectedTerrainSprite);
+                        }
+                        else
+                        {
+                            lowertile = TerrainSpriteSourceRectangle.GetSpriteRectangle(SpriteSheetTerrain.Cliff_down.Next(nextwater));
+                        }
                         break;
 
                     case TerrainType.Road:
@@ -1172,6 +1271,7 @@ namespace Wartorn.Screens
                 }
 
                 spriteBatch.Draw(CONTENT_MANAGER.spriteSheet, new Vector2(selectedMapCell.X * Constants.MapCellWidth, selectedMapCell.Y * Constants.MapCellHeight), lowertile, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.GuiBackground);
+
                 if (currentlySelectedTerrain.Is2Tile())
                 {
                     spriteBatch.Draw(CONTENT_MANAGER.spriteSheet, new Vector2(selectedMapCell.X * Constants.MapCellWidth, (selectedMapCell.Y - 1) * Constants.MapCellHeight), uppertile, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.GuiBackground);
@@ -1184,7 +1284,7 @@ namespace Wartorn.Screens
             }
             else
             {
-                if (currentlySelectedOwner != GameData.Owner.None)
+                if (currentlySelectedOwner != Owner.None)
                 {
                     //draw unit on cursor
                     spriteBatch.Draw(CONTENT_MANAGER.UIspriteSheet, new Vector2(selectedMapCell.X * Constants.MapCellWidth, selectedMapCell.Y * Constants.MapCellHeight), UISpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetUI.Select), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.GuiUpper);

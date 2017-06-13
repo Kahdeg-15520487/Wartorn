@@ -59,7 +59,7 @@ namespace Wartorn.Storage
             }
             else
             {
-                Utility.HelperFunction.Log(new Exception(output?.ToString()));
+                HelperFunction.Log(new Exception(output?.ToString()));
                 Environment.Exit(0);
                 throw new NullReferenceException();
             }
@@ -75,9 +75,7 @@ namespace Wartorn.Storage
             output.Append('|');
             map.GenerateNavigationMap();
             output.Append(JsonConvert.SerializeObject(map,Formatting.Indented));
-
             return CompressHelper.Zip(output.ToString());
-            //return output.ToString();
         }
     }
 }

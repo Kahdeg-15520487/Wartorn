@@ -193,18 +193,18 @@ namespace Wartorn
                 MapCell temp = (MapCell)value;
 
                 writer.WriteStartObject();
-                writer.WritePropertyName("terrain");
-                serializer.Serialize(writer, temp.terrain.ToString());
-                writer.WritePropertyName("owner");
-                serializer.Serialize(writer, temp.owner.ToString());
-                writer.WritePropertyName("unit");
-                serializer.Serialize(writer, temp.unit);
                 writer.WritePropertyName("base");
                 serializer.Serialize(writer, temp.terrainbase.ToString());
                 writer.WritePropertyName("lower");
                 serializer.Serialize(writer, temp.terrainLower.ToString());
                 writer.WritePropertyName("upper");
                 serializer.Serialize(writer, temp.terrainUpper.ToString());
+                writer.WritePropertyName("terrain");
+                serializer.Serialize(writer, temp.terrain.ToString());
+                writer.WritePropertyName("owner");
+                serializer.Serialize(writer, temp.owner.ToString());
+                writer.WritePropertyName("unit");
+                serializer.Serialize(writer, temp.unit);
                 writer.WriteEndObject();
             }
 
@@ -214,7 +214,7 @@ namespace Wartorn
                 SpriteSheetTerrain terrainbase = SpriteSheetTerrain.None;
                 SpriteSheetTerrain terrainLower = SpriteSheetTerrain.None;
                 SpriteSheetTerrain terrainUpper = SpriteSheetTerrain.None;
-                GameData.Owner owner = GameData.Owner.None;
+                Owner owner = Owner.None;
                 Unit unit = null;
 
                 while (reader.Read())
@@ -236,7 +236,7 @@ namespace Wartorn
                             terrain = (serializer.Deserialize<string>(reader)).ToEnum<TerrainType>();
                             break;
                         case "owner":
-                            owner = (serializer.Deserialize<string>(reader)).ToEnum<GameData.Owner>();
+                            owner = (serializer.Deserialize<string>(reader)).ToEnum<Owner>();
                             break;
                         case "unit":
                             unit = serializer.Deserialize<Unit>(reader);
