@@ -287,6 +287,7 @@ namespace Wartorn
                 serializer.Serialize(writer, temp.HitPoint);
                 writer.WritePropertyName("guid");
                 serializer.Serialize(writer, temp.guid);
+                //CONTENT_MANAGER.ShowMessageBox(temp.guid.ToString());
                 writer.WriteEndObject();
             }
 
@@ -295,7 +296,7 @@ namespace Wartorn
                 UnitType unittype = UnitType.None;
                 GameData.Owner owner = GameData.Owner.None;
                 int hp = 0;
-                Guid guid=default(Guid);
+                Guid guid = Guid.Empty ;
                 bool gotUnittype = false;
                 bool gotGuid = false;
                 bool gotOwner = false;
@@ -330,6 +331,7 @@ namespace Wartorn
                         case "guid":
                             guid = serializer.Deserialize<Guid>(reader);
                             gotGuid = true;
+                            //CONTENT_MANAGER.ShowMessageBox(guid.ToString());
                             break;
                         default:
                             break;
@@ -342,7 +344,7 @@ namespace Wartorn
                     return null;
                 }
 
-                return UnitCreationHelper.Create(unittype, owner, hp);
+                return UnitCreationHelper.Create(unittype, owner, hp,AnimationName.idle,guid);
             }
         }
         #endregion

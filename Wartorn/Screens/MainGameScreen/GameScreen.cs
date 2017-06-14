@@ -272,6 +272,8 @@ namespace Wartorn.Screens.MainGameScreen
                         case "init":
                             temp_Unit = JsonConvert.DeserializeObject<Unit>(temp[1]);
                             temp_destination = JsonConvert.DeserializeObject<Point>(temp[2]);
+
+                           
                             init = true;
                             break;
                         //another player move unit
@@ -279,6 +281,7 @@ namespace Wartorn.Screens.MainGameScreen
                             temp_origin = JsonConvert.DeserializeObject<Point>(temp[1]);
                             temp_destination = JsonConvert.DeserializeObject<Point>(temp[2]);
                             updateGUI = true;
+                            //CONTENT_MANAGER.ShowMessageBox(temp_Unit.guid.ToString());
                             break;
                         //another player actack
                         case "actack":
@@ -287,6 +290,8 @@ namespace Wartorn.Screens.MainGameScreen
                             //Get t
                             actack_Unit = JsonConvert.DeserializeObject<Unit>(temp[2]);
                             defend_Unit = JsonConvert.DeserializeObject<Unit>(temp[4]);
+
+                          
                             if (temp[1] == "remove")
                             {
                                 isRemove_actack = true;
@@ -1090,6 +1095,9 @@ namespace Wartorn.Screens.MainGameScreen
 
                                 Player.Instance.Update(string.Format("actack@{0}@{1}@{2}@{3}", tempunit.HitPoint <= 0 ? "remove":"decrease",JsonConvert.SerializeObject(tempunit),
                                                         otherunit.HitPoint<=0?"remove":"decrease", JsonConvert.SerializeObject(otherunit)));
+                              
+
+                                
                                 //hide target canvas
                                 canvas_TargetedMapCell.IsVisible = false;
 
@@ -1697,6 +1705,7 @@ namespace Wartorn.Screens.MainGameScreen
                 map.RegisterUnit(location, temp);
 
                 string package = string.Format(@"init@{0}@{1}", JsonConvert.SerializeObject(temp), JsonConvert.SerializeObject(location));
+                
                 Player.Instance.Update(package);
                 return true;
             }
