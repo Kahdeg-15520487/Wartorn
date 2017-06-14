@@ -27,6 +27,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Wartorn.PathFinding.Dijkstras;
 using Wartorn.PathFinding;
+using Client;
 
 namespace Wartorn.Screens.MainGameScreen
 {
@@ -45,6 +46,35 @@ namespace Wartorn.Screens.MainGameScreen
 
     class GameScreen : Screen
     {
+
+        #region Variable update another player srceen
+        // check when need update
+        //true if unit is init 
+        bool init = false;
+        // true if unit move or destroy
+        bool updateGUI = false;
+        // true if another player finishes his turn
+        bool isTurnEnd = false;
+        //true if this is player turn
+        bool isMyTurn = false;
+        //orgin of unit 
+        Point temp_origin;
+        //destination of unit
+        Point temp_destination;
+        //unit that had move or inited
+        Unit temp_Unit;
+        //true if another phayer actack unit
+        bool isActack=false;
+        //unit that actack another player unit
+        Unit actack_Unit;
+        //True if actack_Unit die
+        bool isRemove_actack=false;
+        // unit that defend from actack unit
+        Unit defend_Unit;
+        //True if defend_Unit die
+        bool isRemove_defend=false;
+        #endregion
+
         #region private field
         //information of this game session
         Session session;
@@ -139,8 +169,9 @@ namespace Wartorn.Screens.MainGameScreen
         }
 
         #region Init
-        public void InitSession(SessionData sessiondata)
+        public void InitSession(SessionData sessiondata, int _localPlayer)
         {
+            localPlayer = _localPlayer;
             session = new Session(sessiondata);
             map = session.map;
             minimap = minimapgen.GenerateMapTexture(map);
@@ -199,11 +230,87 @@ namespace Wartorn.Screens.MainGameScreen
             canvas_action = new Canvas();
             InitCanvas_action();
 
+
+
             canvas_action_Unit = new Canvas();
             canvas_action_Unit.IsVisible = false;
             InitCanvas_Unit();
 
             Label label_mousepos = new Label(" ", new Point(0, 0), new Vector2(80, 20), CONTENT_MANAGER.defaultfont);
+            Button end_turn = new Button("End", new Point(650, 0), null, CONTENT_MANAGER.hackfont);
+
+
+            currentGameState = GameState.TurnStart;
+            //bind event
+            end_turn.MouseClick += (sender, e) =>
+            {
+                //another player turn
+                isTurnEnd = true;
+                //Player.Instance.ChatWithAnother("your turn");
+            };
+
+            Player.Instance.received_chat += (sender, e) =>
+            {
+                if (e == "your turn")
+                {
+                    isMyTurn = true;
+
+                }
+            };
+
+            //Event when another player change GUI, this GUI also update 
+            Player.Instance.update += (sender, e) =>
+            {
+                try
+                {
+
+
+                    var temp = e.Split('@');
+                    switch (temp[0])
+                    {
+                        //another player buy unit
+                        case "init":
+                            temp_Unit = JsonConvert.DeserializeObject<Unit>(temp[1]);
+                            temp_destination = JsonConvert.DeserializeObject<Point>(temp[2]);
+                            init = true;
+                            break;
+                        //another player move unit
+                        case "move":
+                            temp_origin = JsonConvert.DeserializeObject<Point>(temp[1]);
+                            temp_destination = JsonConvert.DeserializeObject<Point>(temp[2]);
+                            updateGUI = true;
+                            break;
+                        //another player actack
+                        case "actack":
+
+                           
+                            //Get t
+                            actack_Unit = JsonConvert.DeserializeObject<Unit>(temp[2]);
+                            defend_Unit = JsonConvert.DeserializeObject<Unit>(temp[4]);
+                            if (temp[1] == "remove")
+                            {
+                                isRemove_actack = true;
+                                
+                            }                         
+                            if (temp[3] == "remove")
+                            {
+                                isRemove_defend = true;
+                                
+                            }
+                            isActack = true;
+                            break;
+                        default:
+                            break;
+                    }
+
+
+                }
+                catch (Exception)
+                {
+
+
+                }
+            };
 
             console = new UIClass.Console(new Point(0, 0), new Vector2(720, 200), CONTENT_MANAGER.hackfont);
             console.IsVisible = false;
@@ -220,6 +327,7 @@ namespace Wartorn.Screens.MainGameScreen
             canvas.AddElement("unit", canvas_action_Unit);
             //canvas.AddElement("label_mousepos", label_mousepos);
             canvas.AddElement("console", console);
+            canvas.AddElement("end_turn", end_turn);
         }
 
         private void InitCanvas_Unit()
@@ -657,15 +765,38 @@ namespace Wartorn.Screens.MainGameScreen
             {
                 #region GameState.TurnStart
                 //previous state: WaitForTurn
+               
                 //bắt đầu lượt chơi
                 //next state: None
                 case GameState.TurnStart:
                     //update tiền, supply cho các unit đang ở trong factory, airport, harbor, supplybase
                     //reset actionpoint cho tất cả các unit
                     //todo update super weapon
-
+                    var buildings = map.GetOwnedBuilding(playerInfos[currentPlayer].owner).ToList();
+                    //update tiền
+                    playerInfos[currentPlayer].money = buildings.Count - 1 * 1000 + 3000;
                     //goto None
-                    currentGameState = GameState.None;
+
+                    //reset actionpoint cho tất cả các unit phe mình
+                    foreach (var guid in playerInfos[currentPlayer].ownedUnit)
+                    {
+                        map[map.FindUnit(guid)].unit.UpdateActionPoint(Command.None);
+                    }
+                    //set animation cho tất cả các unit thành idle
+                    foreach (var p in map.mapcellthathaveunit)
+                    {
+                        map[p].unit.Animation.PlayAnimation(AnimationName.idle.ToString());
+                    }
+
+                    if (currentPlayer == localPlayer)
+                    {
+                        currentGameState = GameState.None;
+                    }
+                    else
+                    {
+                        currentGameState = GameState.WaitForTurn;
+                    }
+
                     break;
                 #endregion
 
@@ -676,7 +807,10 @@ namespace Wartorn.Screens.MainGameScreen
                 case GameState.TurnEnd:
                     //gửi thông tin kết thúc lượt cho server
                     //broadcast
-
+                    //End turn
+                    Player.Instance.ChatWithAnother("your turn");
+                    ChangeTurn();
+                      
 
                     //goto WaitForTurn
                     currentGameState = GameState.WaitForTurn;
@@ -690,8 +824,53 @@ namespace Wartorn.Screens.MainGameScreen
                 case GameState.WaitForTurn:
                     //nhận và xử lí command do bên đối phương gửi qua
 
+                    //Update when another player change
+                    if (updateGUI)
+                    {
+                        map.TeleportUnit(temp_origin, temp_destination);
+                        updateGUI = false;
+                    }
+                    //Init new unit when another player create new unit
+                    if (init)
+                    {
+                        map.RegisterUnit(temp_destination, temp_Unit);
+                        init = false;
+                    }
+                    //turn to play
+                    if (isMyTurn)
+                    {
+                        currentGameState = GameState.TurnStart;
+                        currentPlayer = localPlayer;
+                        isMyTurn = false;
+                    }
+                    //update GUI when another player actack
+                    if (isActack)
+                    {
+                        if (isRemove_actack)
+                        {
+
+                            map.RemoveUnit(map.FindUnit(actack_Unit.guid));
+                            isRemove_actack = false;
+                        }
+                        else
+                        {
+                            map[map.FindUnit(actack_Unit.guid)].unit.HitPoint = actack_Unit.HitPoint;
+                            
+                        }
+
+                        if (isRemove_defend)
+                        {
+                            map.RemoveUnit(map.FindUnit(defend_Unit.guid));
+                            isRemove_defend = false;
+                        }
+                        else
+                        {
+                            map[map.FindUnit(defend_Unit.guid)].unit.HitPoint = defend_Unit.HitPoint;
+                        }
+                        isActack = false;
+                    }
                     //nếu nhận được thông tin kết thúc lượt thì
-                        //goto TurnStart
+                    //goto TurnStart
                     break;
                 #endregion
 
@@ -701,6 +880,12 @@ namespace Wartorn.Screens.MainGameScreen
                 //            BuildingSelected
                 //            TurnEnd
                 case GameState.None:
+                    if (isTurnEnd)
+                    {
+                        currentGameState = GameState.TurnEnd;
+                        isTurnEnd = false;
+                        return;
+                    }
                     if (HelperFunction.IsLeftMousePressed())
                     {
                         if (SelectUnit())
@@ -800,6 +985,9 @@ namespace Wartorn.Screens.MainGameScreen
                         //teleport stuff
                         map.TeleportUnit(origin, destination);
 
+                        //Send update to another player
+                        Player.Instance.Update(string.Format(@"move@{0}@{1}", JsonConvert.SerializeObject(origin), JsonConvert.SerializeObject(destination)));
+
                         //save selectedUnit
                         lastSelectedUnit = selectedUnit;
                         //move selectedUnit to destination;
@@ -892,11 +1080,16 @@ namespace Wartorn.Screens.MainGameScreen
                                 {
                                     map.RemoveUnit(selectedUnit);
                                 }
+
+                                
+
                                 if (otherunit.HitPoint<=0)
                                 {
                                     map.RemoveUnit(selectedTarget);
                                 }
 
+                                Player.Instance.Update(string.Format("actack@{0}@{1}@{2}@{3}", tempunit.HitPoint <= 0 ? "remove":"decrease",JsonConvert.SerializeObject(tempunit),
+                                                        otherunit.HitPoint<=0?"remove":"decrease", JsonConvert.SerializeObject(otherunit)));
                                 //hide target canvas
                                 canvas_TargetedMapCell.IsVisible = false;
 
@@ -1027,6 +1220,7 @@ namespace Wartorn.Screens.MainGameScreen
 
                     //spawn the selected unit
                     SpawnUnit(selectedUnitTypeToBuild, playerInfos[localPlayer], selectedBuilding);
+
 
                     //hide all the building menu
                     canvas_action_Factory.IsVisible = false;
@@ -1359,11 +1553,11 @@ namespace Wartorn.Screens.MainGameScreen
 
         private void ChangeTurn()
         {
-            foreach (Point p in map.mapcellthathaveunit)
-            {
-                map[p].unit.UpdateActionPoint(Command.None);
-                map[p].unit.Animation.PlayAnimation(AnimationName.idle.ToString());
-            }
+            //foreach (Point p in map.mapcellthathaveunit)
+            //{
+            //    map[p].unit.UpdateActionPoint(Command.None);
+            //    map[p].unit.Animation.PlayAnimation(AnimationName.idle.ToString());
+            //}
 
             if (currentPlayer == 1)
             {
@@ -1374,16 +1568,16 @@ namespace Wartorn.Screens.MainGameScreen
                 currentPlayer = 1;
             }
 
-            if (localPlayer == 1)
-            {
-                localPlayer = 0;
-            }
-            else
-            {
-                localPlayer = 1;
-            }
+            //if (localPlayer == 1)
+            //{
+            //    localPlayer = 0;
+            //}
+            //else
+            //{
+            //    localPlayer = 1;
+            //}
 
-            ChangeBuyUnitCanvasColor(playerInfos[currentPlayer].owner);
+            //ChangeBuyUnitCanvasColor(playerInfos[currentPlayer].owner);
         }
 
         private void ChangeBuyUnitCanvasColor(GameData.Owner owner)
@@ -1501,6 +1695,9 @@ namespace Wartorn.Screens.MainGameScreen
                 Unit temp = UnitCreationHelper.Create(unittype, owner.owner);
                 playerInfos[localPlayer].ownedUnit.Add(temp.guid);
                 map.RegisterUnit(location, temp);
+
+                string package = string.Format(@"init@{0}@{1}", JsonConvert.SerializeObject(temp), JsonConvert.SerializeObject(location));
+                Player.Instance.Update(package);
                 return true;
             }
             return false;
@@ -1597,8 +1794,11 @@ namespace Wartorn.Screens.MainGameScreen
 
             switch (currentGameState)
             {
-                case GameState.None:
                 case GameState.WaitForTurn:
+                case GameState.TurnStart:
+                case GameState.TurnEnd:
+                    return;
+                case GameState.None:               
                 case GameState.BuildingSelected:
                 case GameState.BuildingBuildUnit:
                      tempmapcell = map[selectedMapCell];

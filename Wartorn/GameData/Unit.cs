@@ -301,7 +301,7 @@ namespace Wartorn.GameData
         public int CapturePoint { get; set; }
         public Owner Owner { get; set; }
         public readonly Guid guid;
-
+        
         #endregion
         public Unit(UnitType unittype, AnimatedEntity anim,Owner owner,int hp = 10)
         {
@@ -314,7 +314,17 @@ namespace Wartorn.GameData
             actionpoint = _ActionPoint[unitType];
             guid = Guid.NewGuid();
         }
-
+        public Unit(UnitType unittype, AnimatedEntity anim, Owner owner, Guid guid,int hp = 10)
+        {
+            unitType = unittype;
+            animation = anim;
+            Owner = owner;
+            hitPoint = hp;
+            fuel = _Gas[unitType];
+            ammo = _Ammo[unitType];
+            actionpoint = _ActionPoint[unitType];
+            this.guid = guid;
+        }
         public string GetUnitName()
         {
             return unitType.GetName();
@@ -439,7 +449,7 @@ namespace Wartorn.GameData
 
     public static class UnitCreationHelper
     {
-        public static Unit Create(UnitType unittype,Owner owner,int hp = 10,AnimationName startingAnimation = AnimationName.idle)
+        public static Unit Create(UnitType unittype,Owner owner,int hp = 10,AnimationName startingAnimation = AnimationName.idle,Guid guid=default(Guid))
         {
             AnimatedEntity animEntity = new AnimatedEntity(Vector2.Zero, Vector2.Zero, Color.White, LayerDepth.Unit);
             animEntity.LoadContent(CONTENT_MANAGER.animationSheets[unittype.GetSpriteSheetUnit(owner)]);
@@ -547,7 +557,16 @@ namespace Wartorn.GameData
 
             animEntity.AddAnimation(idle, right, up, down, done);
 
-            var result = new Unit(unittype, animEntity, owner, hp);
+            Unit result;
+            if (guid == default(Guid))
+            {
+               result = new Unit(unittype, animEntity, owner, hp);
+            }
+            else
+            {
+                result = new Unit(unittype, animEntity, owner, guid, hp);
+            }
+            
             result.Animation.PlayAnimation(startingAnimation.ToString());
             return result;
         }

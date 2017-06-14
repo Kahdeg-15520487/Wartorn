@@ -161,6 +161,118 @@ namespace Wartorn
 
         public static class ExtensionMethod
         {
+            public static bool isRangedUnit(this UnitType ut)
+            {
+                switch (ut)
+                {
+                    case UnitType.Artillery:
+                    case UnitType.Rocket:
+                    case UnitType.Missile:
+                    case UnitType.Battleship:
+                        return true;
+                    default:
+                        return false;
+                }
+            }
+
+            public static bool isLandUnit(this UnitType ut)
+            {
+                switch (ut)
+                {
+                    case UnitType.None:
+                    case UnitType.Soldier:
+                    case UnitType.Mech:
+                    case UnitType.Recon:
+                    case UnitType.APC:
+                    case UnitType.Tank:
+                    case UnitType.HeavyTank:
+                    case UnitType.Artillery:
+                    case UnitType.Rocket:
+                    case UnitType.AntiAir:
+                    case UnitType.Missile:
+                        return true;
+                    default:
+                        return false;
+                }
+            }
+
+            public static bool isAirUnit(this UnitType ut)
+            {
+                switch (ut)
+                {
+                    case UnitType.TransportCopter:
+                    case UnitType.BattleCopter:
+                    case UnitType.Fighter:
+                    case UnitType.Bomber:
+                        return true;
+                    default:
+                        return false;
+                }
+            }
+
+            public static bool isNavalUnit(this UnitType ut)
+            {
+                switch (ut)
+                {
+                    case UnitType.Lander:
+                    case UnitType.Cruiser:
+                    case UnitType.Submarine:
+                    case UnitType.Battleship:
+                        return true;
+                    default:
+                        return false;
+                }
+            }
+
+            public static bool isBuilding(this TerrainType t)
+            {
+                switch (t)
+                {
+                    case TerrainType.MissileSilo:
+                    case TerrainType.MissileSiloLaunched:
+                    case TerrainType.City:
+                    case TerrainType.Factory:
+                    case TerrainType.AirPort:
+                    case TerrainType.Harbor:
+                    case TerrainType.Radar:
+                    case TerrainType.SupplyBase:
+                    case TerrainType.HQ:
+                        return true;
+                    default:
+                        return false;
+                }
+            }
+
+            public static bool isBuildingThatIsCapturable(this TerrainType t)
+            {
+                switch (t)
+                {
+                    case TerrainType.City:
+                    case TerrainType.Factory:
+                    case TerrainType.AirPort:
+                    case TerrainType.Harbor:
+                    case TerrainType.SupplyBase:
+                    case TerrainType.HQ:
+                        return true;
+                    default:
+                        return false;
+                }
+            }
+
+            public static bool isBuildingThatProduceUnit(this TerrainType t)
+            {
+                switch (t)
+                {
+                    case TerrainType.Factory:
+                    case TerrainType.AirPort:
+                    case TerrainType.Harbor:
+                        return true;
+                    default:
+                        break;
+                }
+                return false;
+            }
+
             public static string GetName(this UnitType unitType)
             {
                 switch (unitType)
@@ -1135,6 +1247,24 @@ namespace Wartorn
             public static double DistanceToOther(this Point p,Point other,bool isManhattan = false)
             {
                 return isManhattan ? Math.Abs(p.X - other.X) + Math.Abs(p.Y - other.Y) : Math.Sqrt((p.X - other.X) * (p.X - other.X) + (p.Y - other.Y) * (p.Y - other.Y));
+            }
+        }
+
+        public static class EnumerableExtension
+        {
+            public static T PickRandom<T>(this IEnumerable<T> source)
+            {
+                return source.PickRandom(1).Single();
+            }
+
+            public static IEnumerable<T> PickRandom<T>(this IEnumerable<T> source, int count)
+            {
+                return source.Shuffle().Take(count);
+            }
+
+            public static IEnumerable<T> Shuffle<T>(this IEnumerable<T> source)
+            {
+                return source.OrderBy(x => Guid.NewGuid());
             }
         }
     }

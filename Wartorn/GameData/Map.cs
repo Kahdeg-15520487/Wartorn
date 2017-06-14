@@ -80,6 +80,7 @@ namespace Wartorn.GameData
         }
         #endregion
 
+
         public MapCell[,] map { get; private set; }
         public Graph navigationGraph;
 
@@ -156,6 +157,27 @@ namespace Wartorn.GameData
             return map[x, y];
         }
 
+        #region building list
+
+        private List<Point> mapcellthatbuilding;
+
+        public IEnumerable<Point> GetOwnedBuilding(Owner owner)
+        {
+            foreach (var p in mapcellthatbuilding)
+            {
+                if (this[p].owner == owner)
+                {
+                    yield return p;
+                }
+            }
+        }
+
+        public void ChangeBuildingOwner(Point buildingposition, Owner owner)
+        {
+            this[mapcellthatbuilding.Find(p => { return p == buildingposition; })].owner = owner;
+        }
+
+        #endregion
         public void Clone(Map m)
         {
             map = m.map;
@@ -174,18 +196,40 @@ namespace Wartorn.GameData
             isProcessed = false;
 
             mapcellthathaveunit = new List<Point>();
+            mapcellthatbuilding = new List<Point>();
             for (int x = 0; x < Width; x++)
             {
                 for (int y = 0; y < Height; y++)
                 {
-                    if (map[x,y].unit!=null)
+                    Point p = new Point(x, y);
+                    
+                    
+                    if (this[p].terrain.isBuilding())
                     {
-                        mapcellthathaveunit.Add(new Point(x, y));
+                        mapcellthatbuilding.Add(p);
                     }
+                    if (this[p].unit != null)
+                    {
+                        mapcellthathaveunit.Add(p); 
+                    }
+                   
                 }
             }
-        }
 
+
+            //    mapcellthathaveunit = new List<Point>();
+            //    for (int x = 0; x < Width; x++)
+            //    {
+            //        for (int y = 0; y < Height; y++)
+            //        {
+            //            if (map[x,y].unit!=null)
+            //            {
+            //                mapcellthathaveunit.Add(new Point(x, y));
+            //            }
+            //        }
+            //    }
+            //
+        }
         public IEnumerator GetEnumerator()
         {
             return map.GetEnumerator();

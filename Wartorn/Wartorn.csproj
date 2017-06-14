@@ -63,10 +63,22 @@
     <ManifestKeyFile>Wartorn_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <GenerateManifests>true</GenerateManifests>
+    <GenerateManifests>false</GenerateManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>Wartorn_TemporaryKey.pfx</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetZone>LocalIntranet</TargetZone>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Drawing\DirectionArrowRenderer.cs" />
@@ -88,7 +100,10 @@
     <Compile Include="InputState.cs" />
     <Compile Include="PathFinding\Dijkstra.cs" />
     <Compile Include="PathFinding\DijkstraHelper.cs" />
+    <Compile Include="Screens\MainGameScreen\Client_Screen.cs" />
     <Compile Include="Screens\MainGameScreen\GameScreen - Backup.cs" />
+    <Compile Include="Screens\MainGameScreen\Room_Screen.cs" />
+    <Compile Include="Screens\MainGameScreen\SetupScreen.cs" />
     <Compile Include="Screens\TestConsole.cs" />
     <Compile Include="SpriteRectangle\BackgroundUnitSpriteSourceRectangle.cs" />
     <Compile Include="SpriteRectangle\BuildingSpriteSourceRectangle.cs" />
@@ -120,7 +135,6 @@
     <Compile Include="Screens\Campaign.cs" />
     <Compile Include="Screens\EditorScreen.cs" />
     <Compile Include="Screens\MainGameScreen\GameScreen.cs" />
-    <Compile Include="Screens\MainGameScreen\SetupScreen.cs" />
     <Compile Include="Screens\MainMenuScreen.cs" />
     <Compile Include="Screens\RedScreen.cs" />
     <Compile Include="Screens\TestAnimationScreen.cs" />
@@ -225,12 +239,17 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+    <None Include="Properties\app.manifest" />
     <None Include="Wartorn_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Client\Client.csproj">
+      <Project>{7adffba4-afd8-4cb4-a58b-097cf4d982aa}</Project>
+      <Name>Client</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Utility_Project\Utility_Project.csproj">
       <Project>{DB74E4D4-2EB9-4A34-9FCB-D12501AB5122}</Project>
       <Name>Utility_Project</Name>

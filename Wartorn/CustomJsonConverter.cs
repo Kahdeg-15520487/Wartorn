@@ -295,8 +295,9 @@ namespace Wartorn
                 UnitType unittype = UnitType.None;
                 GameData.Owner owner = GameData.Owner.None;
                 int hp = 0;
-
+                Guid guid=default(Guid);
                 bool gotUnittype = false;
+                bool gotGuid = false;
                 bool gotOwner = false;
                 bool gotHp = false;
 
@@ -326,12 +327,16 @@ namespace Wartorn
                             hp = serializer.Deserialize<int>(reader);
                             gotHp = true;
                             break;
+                        case "guid":
+                            guid = serializer.Deserialize<Guid>(reader);
+                            gotGuid = true;
+                            break;
                         default:
                             break;
                     }
                 }
 
-                if (!(gotUnittype && gotHp && gotOwner))
+                if (!(gotUnittype && gotHp && gotOwner&&gotGuid))
                 {
                     //throw new InvalidDataException("Not enought data");
                     return null;
