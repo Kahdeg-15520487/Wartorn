@@ -622,12 +622,6 @@ namespace Wartorn.Screens.MainGameScreen
             keyboardInputState = CONTENT_MANAGER.inputState.keyboardState;
             lastKeyboardInputState = CONTENT_MANAGER.lastInputState.keyboardState;
 
-            if (Utility.HelperFunction.IsKeyPress(Keys.Escape))
-            {
-                SCREEN_MANAGER.goto_screen("SetupScreen");
-                return;
-            }
-
             if (HelperFunction.IsKeyPress(Keys.OemTilde))
             {
                 console.IsVisible = !console.IsVisible;
@@ -1101,15 +1095,20 @@ namespace Wartorn.Screens.MainGameScreen
                             break;
 
                         case Command.Supply:
-                            map[selectedUnit].unit.UpdateActionPoint(Command.Supply);
+                            tempunit.UpdateActionPoint(Command.Supply);
                             Point north = selectedUnit.GetNearbyPoint(Direction.North);
                             Point south = selectedUnit.GetNearbyPoint(Direction.South);
                             Point east = selectedUnit.GetNearbyPoint(Direction.East);
                             Point west = selectedUnit.GetNearbyPoint(Direction.West);
-                            try { map[north].unit.Resupply(); } catch (Exception) { }
-                            try { map[south].unit.Resupply(); } catch (Exception) { }
-                            try { map[east].unit.Resupply(); } catch (Exception) { }
-                            try { map[west].unit.Resupply(); } catch (Exception) { }
+                            bool isSupplied = false;
+                            try { map[north].unit.Resupply(); isSupplied = true; } catch (Exception) { }
+                            try { map[south].unit.Resupply(); isSupplied = true; } catch (Exception) { }
+                            try { map[east].unit.Resupply(); isSupplied = true; } catch (Exception) { }
+                            try { map[west].unit.Resupply(); isSupplied = true; } catch (Exception) { }
+                            if (isSupplied == true)
+                            {
+                                tempunit.Ammo = (tempunit.Ammo - 1).Clamp(10, 0);
+                            }
                             break;
 
                         case Command.Move:
@@ -1118,6 +1117,49 @@ namespace Wartorn.Screens.MainGameScreen
 
                             //substract fuel
                             map[selectedUnit].unit.Fuel -= movementPath != null ? movementPath.Count : 0;
+                            break;
+
+                        case Command.Operate:
+                            //show target canvas
+                            canvas_TargetedMapCell.IsVisible = true;
+
+                            //change cursor to attack cursor
+                            cursor = CONTENT_MANAGER.attackCursor;
+                            cursorOffset = attackCursorOffset;
+
+                            //cause the missilesilo have a range of the whole map
+                            attackRange = new List<Point>();
+                            //only target the mapcellthathaveunit
+                            foreach (var guid in playerInfos[otherPlayer].ownedUnit)
+                            {
+                                attackRange.Add(map.FindUnit(guid));
+                            }
+
+                            if (HelperFunction.IsLeftMousePressed()
+                             && attackRange.Contains(selectedMapCell)
+                             && map[selectedMapCell].unit != null
+                             && map[selectedMapCell].unit.Owner != playerInfos[currentPlayer].owner)
+                            {
+                                tempunit.UpdateActionPoint(Command.Operate);
+
+                                //do attack stuff
+                                selectedTarget = selectedMapCell;
+                                Unit otherunit = map[selectedTarget].unit;
+
+                                otherunit.HitPoint = 0;
+                                
+                                if (otherunit.HitPoint <= 0)
+                                {
+                                    playerInfos[otherPlayer].ownedUnit.Remove(map[selectedTarget].unit.guid);
+                                    map.RemoveUnit(selectedTarget);
+                                }
+
+                                //hide target canvas
+                                canvas_TargetedMapCell.IsVisible = false;
+
+                                //end command
+                                goto finalise_command_execution;
+                            }
                             break;
 
                         default:
@@ -1291,10 +1333,7 @@ namespace Wartorn.Screens.MainGameScreen
             //      attack
             //nếu không thì
             //  attack
-            if ((tempunit.UnitType == UnitType.Artillery
-              || tempunit.UnitType == UnitType.Rocket
-              || tempunit.UnitType == UnitType.Missile
-              || tempunit.UnitType == UnitType.Battleship))
+            if (tempunit.UnitType.isRangedUnit())
             {
                 if (movingAnim != null)
                 {
@@ -1344,8 +1383,7 @@ namespace Wartorn.Screens.MainGameScreen
             //có drop unit đang chở unit khác và bên cạnh là ô đi được cho unit đó.
 
             //có capture nếu là lính và đang đứng trên building khác màu nè
-            if ((tempunit.UnitType == UnitType.Soldier
-             || tempunit.UnitType == UnitType.Mech)
+            if (tempunit.UnitType.isInfantryUnit()
              && map[selectedUnit].terrain.isBuildingThatIsCapturable()
              && tempmapcell.owner!= playerInfos[currentPlayer].owner)
             {
@@ -1353,9 +1391,39 @@ namespace Wartorn.Screens.MainGameScreen
             }
 
             //có supply nếu là apc và đang đứng cạnh 1 unit bạn nè
+            bool isFriendlyUnitNearby = false;
             if (tempunit.UnitType == UnitType.APC)
             {
+                if (tempunit.Ammo > 0)
+                {
+                    List<Point> templistpoint = new List<Point>();
+                    templistpoint.Add(selectedUnit.GetNearbyPoint(Direction.North));
+                    templistpoint.Add(selectedUnit.GetNearbyPoint(Direction.South));
+                    templistpoint.Add(selectedUnit.GetNearbyPoint(Direction.East));
+                    templistpoint.Add(selectedUnit.GetNearbyPoint(Direction.West));
+                    foreach (Point p in templistpoint)
+                    {
+                        if (map[p]!=null
+                         && map[p].unit!=null
+                         && map[p].unit.Owner == playerInfos[currentPlayer].owner)
+                        {
+                            isFriendlyUnitNearby = true;
+                        }
+                    }
+                }
+            }
+            if (isFriendlyUnitNearby)
+            {
+                temp += (int)Command.Supply;
+            }
 
+            //có operate nếu là lính và đang đứng trên missile silo hay radar
+            if (tempunit.UnitType.isInfantryUnit()
+             && tempmapcell.terrain == TerrainType.MissileSilo
+             //|| tempmapcell.terrain == TerrainType.Radar
+                )
+            {
+                temp += (int)Command.Operate;
             }
             
             return temp;
@@ -1943,7 +2011,7 @@ namespace Wartorn.Screens.MainGameScreen
             }
 
             //draw attackrange
-            if (currentGameState == GameState.UnitCommand && selectedCmd == Command.Attack)
+            if (currentGameState == GameState.UnitCommand && (selectedCmd == Command.Attack || selectedCmd == Command.Operate))
             {
                 DrawAttackRange(spriteBatch);
             }

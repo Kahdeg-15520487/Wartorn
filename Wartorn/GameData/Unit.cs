@@ -273,12 +273,21 @@ namespace Wartorn.GameData
                 return new CalculatedDamage(atkHP, 0, damage, 0);
             }
 
-            //calculate counter damage
-            counterDamage = defHP * GetBaseDamage(defender.unit.UnitType, attacker.unit.UnitType) / 100f * (1 - _DefenseStar[attacker.terrain] / 10f);
-            counterDamage = (float)Math.Round(counterDamage, MidpointRounding.AwayFromZero);
-            atkHP -= (int)counterDamage;
+            if ((attacker.unit.unitType.isRangedUnit() && defender.unit.unitType.isRangedUnit())
+             || (!attacker.unit.unitType.isRangedUnit() && !defender.unit.unitType.isRangedUnit()))
+            {
 
-            return new CalculatedDamage(atkHP, defHP, damage, counterDamage);
+                //calculate counter damage
+                counterDamage = defHP * GetBaseDamage(defender.unit.UnitType, attacker.unit.UnitType) / 100f * (1 - _DefenseStar[attacker.terrain] / 10f);
+                counterDamage = (float)Math.Round(counterDamage, MidpointRounding.AwayFromZero);
+                atkHP -= (int)counterDamage;
+
+                return new CalculatedDamage(atkHP, defHP, damage, counterDamage);
+            }
+            else
+            {
+                return new CalculatedDamage(atkHP, defHP, damage, 0);
+            }
         }
         #endregion
 
@@ -407,6 +416,12 @@ namespace Wartorn.GameData
                 case Command.Load:
                     break;
                 case Command.Drop:
+                    break;
+                case Command.Supply:
+                    actionpoint = 0;
+                    break;
+                case Command.Operate:
+                    actionpoint = 0;
                     break;
                 default:
                     break;

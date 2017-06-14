@@ -77,7 +77,7 @@ namespace Wartorn.Screens
 
         public override bool Init()
         {
-            map = new Map(20, 20);
+            map = new Map(20,20);
             mapArea = new Rectangle(0, 0, map.Width * Constants.MapCellWidth, map.Height * Constants.MapCellHeight);
             canvas = new Canvas();
             camera = new Camera(_device.Viewport);
@@ -87,7 +87,7 @@ namespace Wartorn.Screens
 
             InitUI();
             InitMap(TerrainType.Plain);
-
+            map.Clone(map);
             minimap = minimapgen.GenerateMapTexture(map);
             return base.Init();
         }
@@ -133,11 +133,18 @@ namespace Wartorn.Screens
 
             button_Save.MouseClick += (sender, e) =>
             {
+                if (!isMapPlayable())
+                {
+                    CONTENT_MANAGER.ShowMessageBox("Map is unplayable");
+                    return;
+                }
+
                 var savedata = MapData.SaveMap(map);
                 try
                 {
                     Directory.CreateDirectory(@"map/");
-                    File.WriteAllText(@"map/" + DateTime.Now.ToString("dd-MM-yyyy_HH-mm") + ".map", savedata);
+                    string mapname = CONTENT_MANAGER.ShowPromptBox("Please enter the map's name:");
+                    File.WriteAllText(@"map/" + mapname + ".map", savedata);
                 }
                 catch (Exception er)
                 {
@@ -147,7 +154,7 @@ namespace Wartorn.Screens
 
             button_Open.MouseClick += (sender, e) =>
             {
-                string path = CONTENT_MANAGER.ShowFileOpenDialog(CONTENT_MANAGER.LocalRootPath);
+                string path = CONTENT_MANAGER.ShowFileOpenDialog(CONTENT_MANAGER.LocalRootPath + @"\map\");
                 string content = string.Empty;
                 try
                 {
@@ -225,6 +232,42 @@ namespace Wartorn.Screens
             #endregion
 
             canvas.AddElement("canvas_Menu", canvas_Menu);
+        }
+
+        private bool isMapPlayable()
+        {
+            Dictionary<Owner, int> sidehq = new Dictionary<Owner, int>();
+            Dictionary<Owner, int> sidebuildingthatcanproduceunit = new Dictionary<Owner, int>();
+            foreach (Owner owner in Enum.GetValues(typeof(Owner)).Cast<Owner>().ToList())
+            {
+                sidehq.Add(owner, 0);
+                sidebuildingthatcanproduceunit.Add(owner, 0);
+                foreach (Point p in map.GetOwnedBuilding(owner))
+                {
+                    if (map[p].terrain == TerrainType.HQ)
+                    {
+                        sidehq[owner]++;
+                    }
+                    if (map[p].terrain.isBuildingThatProduceUnit())
+                    {
+                        sidebuildingthatcanproduceunit[owner]++;
+                    }
+                }
+            }
+            int sidethathavehq = 0;
+            int sidethathavebuildingproduceunit = 0;
+            foreach (Owner owner in Enum.GetValues(typeof(Owner)).Cast<Owner>().ToList())
+            {
+                if (sidehq[owner]>0)
+                {
+                    sidethathavehq++;
+                }
+                if (sidebuildingthatcanproduceunit[owner]>0)
+                {
+                    sidethathavebuildingproduceunit++;
+                }
+            }
+            return sidethathavehq >= 2 && sidethathavebuildingproduceunit >= 2;
         }
 
         private void InitTileSelectMenu()
@@ -392,7 +435,6 @@ namespace Wartorn.Screens
                 button.MouseClick += (sender, e) =>
                 {
                     currentlySelectedTerrain = TerrainSpriteSourceRectangle.GetTerrain(button.spriteSourceRectangle).ToTerrainType();
-                    CONTENT_MANAGER.ShowMessageBox(currentlySelectedTerrain.ToString());
                     switch (currentlySelectedTerrain)
                     {
                         case TerrainType.Coast:
@@ -788,8 +830,8 @@ namespace Wartorn.Screens
                         //check if the mapcell is free
                         if (map[selectedMapCell].unit == null)
                         {
-                            Unit temp = UnitCreationHelper.Create(currentlySelectedUnit, currentlySelectedOwner);
-                            map[selectedMapCell].unit = temp;
+                            Unit tempunit = UnitCreationHelper.Create(currentlySelectedUnit, currentlySelectedOwner);
+                            map.RegisterUnit(selectedMapCell, tempunit);
                             map.IsProcessed = false;
                         }
                     }
@@ -821,6 +863,8 @@ namespace Wartorn.Screens
                                 {
                                     map[selectedMapCell].terrainbase = currentlySelectedTerrainSprite;
                                 }
+                                map.RegisterBuilding(selectedMapCell);
+                                map.RemoveBuilding(selectedMapCell);
                                 map.IsProcessed = false;
                             }
                         }
@@ -923,11 +967,20 @@ namespace Wartorn.Screens
             //rotate through terrain sprite
             if (HelperFunction.IsKeyPress(Keys.D1))
             {
-                currentlySelectedTerrainSprite = currentlySelectedTerrainSprite.Next();
+                if (currentlySelectedTerrainSprite.Next().ToTerrainType() == TerrainType.Coast
+                 || currentlySelectedTerrainSprite.Next().ToTerrainType() == TerrainType.Cliff)
+                {
+                    currentlySelectedTerrainSprite = currentlySelectedTerrainSprite.Next();
+                }
             }
+            
             if (HelperFunction.IsKeyPress(Keys.D2))
             {
-                currentlySelectedTerrainSprite = currentlySelectedTerrainSprite.Previous();
+                if (currentlySelectedTerrainSprite.Previous().ToTerrainType() == TerrainType.Coast
+                 || currentlySelectedTerrainSprite.Previous().ToTerrainType() == TerrainType.Cliff)
+                {
+                    currentlySelectedTerrainSprite = currentlySelectedTerrainSprite.Previous();
+                }
             }
         }
 

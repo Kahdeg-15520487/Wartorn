@@ -29,7 +29,8 @@ namespace Wartorn.SpriteRectangle
         Drop,
         Rise,
         Dive,
-        Supply
+        Supply,
+        Oprt
     }
 
     public enum SpriteSheetCommandSlot
@@ -53,7 +54,7 @@ namespace Wartorn.SpriteRectangle
 
             SpriteSheetCommand c = SpriteSheetCommand.Wait;
 
-            for (int y = 0; y < 8; y++)
+            for (int y = 0; y < 9; y++)
             {
                 CommandSprite.Add(c, new Rectangle(112, y * 16, 48, 16));
                 c = c.Next();
@@ -99,6 +100,9 @@ namespace Wartorn.SpriteRectangle
                     break;
                 case Command.Supply:
                     result = SpriteSheetCommand.Supply;
+                    break;
+                case Command.Operate:
+                    result = SpriteSheetCommand.Oprt;
                     break;
                 default:
                     break;
@@ -181,6 +185,9 @@ namespace Wartorn.SpriteRectangle
                     break;
                 case SpriteSheetCommand.Supply:
                     result = Command.Supply;
+                    break;
+                case SpriteSheetCommand.Oprt:
+                    result = Command.Operate;
                     break;
                 default:
                     break;

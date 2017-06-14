@@ -82,11 +82,11 @@ namespace Wartorn.GameData
 
         #region building list
 
-        private List<Point> mapcellthatbuilding;
+        private List<Point> mapcellthathavebuilding;
 
         public IEnumerable<Point> GetOwnedBuilding(Owner owner)
         {
-            foreach (var p in mapcellthatbuilding)
+            foreach (var p in mapcellthathavebuilding)
             {
                 if (this[p].owner == owner)
                 {
@@ -97,7 +97,23 @@ namespace Wartorn.GameData
 
         public void ChangeBuildingOwner(Point buildingposition,Owner owner)
         {
-            this[mapcellthatbuilding.Find(p => { return p == buildingposition; })].owner = owner;
+            this[mapcellthathavebuilding.Find(p => { return p == buildingposition; })].owner = owner;
+        }
+
+        public void RegisterBuilding(Point position)
+        {
+            if (this[position].terrain.isBuilding())
+            {
+                mapcellthathavebuilding.Add(position);
+            }
+        }
+
+        public void RemoveBuilding(Point position)
+        {
+            if (mapcellthathavebuilding.Contains(position) && !this[position].terrain.isBuilding())
+            {
+                mapcellthathavebuilding.Remove(position);
+            }
         }
 
         #endregion
@@ -196,7 +212,7 @@ namespace Wartorn.GameData
             isProcessed = false;
 
             mapcellthathaveunit = new List<Point>();
-            mapcellthatbuilding = new List<Point>();
+            mapcellthathavebuilding = new List<Point>();
             for (int x = 0; x < Width; x++)
             {
                 for (int y = 0; y < Height; y++)
@@ -208,7 +224,7 @@ namespace Wartorn.GameData
                     }
                     if (this[p].terrain.isBuilding())
                     {
-                        mapcellthatbuilding.Add(p);
+                        mapcellthathavebuilding.Add(p);
                     }
                 }
             }

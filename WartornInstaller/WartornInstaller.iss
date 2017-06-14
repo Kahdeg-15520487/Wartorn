@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Wartorn"
-#define MyAppVersion "1.3"
+#define MyAppVersion "1.4"
 #define MyAppPublisher "Nhóm 3 lớp IT008.H22"
 #define MyAppURL "https://github.com/Kahdeg-15520487/Wartorn"
 #define MyAppExeName "Wartorn.exe"
@@ -54,7 +54,13 @@ Source: "..\Build\StatsBalancer.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Build\Wartorn.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Build\Content\*"; DestDir: "{app}\Content\"; Flags: ignoreversion createallsubdirs recursesubdirs
 Source: "..\Build\data\*"; DestDir: "{app}\data\"; Flags: ignoreversion createallsubdirs recursesubdirs
-Source: "..\Build\map\classic.map"; DestDir: "{app}\map\"
+Source: "..\Build\map\Test.map"; DestDir: "{app}\map\"; Flags: ignoreversion
+Source: "..\Build\map\Cancel.map"; DestDir: "{app}\map\"; Flags: ignoreversion
+Source: "..\Build\map\Sahara.map"; DestDir: "{app}\map\"; Flags: ignoreversion
+Source: "..\Build\map\Artic.map"; DestDir: "{app}\map\"; Flags: ignoreversion
+Source: "..\Build\map\PearlHarbor.map"; DestDir: "{app}\map\"; Flags: ignoreversion
+Source: "..\Build\map\MountainSide.map"; DestDir: "{app}\map\"; Flags: ignoreversion
+Source: "..\Build\map\RiverSide.map"; DestDir: "{app}\map\"; Flags: ignoreversion
 
 [Icons]
 Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"

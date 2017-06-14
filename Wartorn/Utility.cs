@@ -161,6 +161,18 @@ namespace Wartorn
 
         public static class ExtensionMethod
         {
+            public static bool isInfantryUnit(this UnitType ut)
+            {
+                switch (ut)
+                {
+                    case UnitType.Soldier:
+                    case UnitType.Mech:
+                        return true;
+                    default:
+                        return false;
+                }
+            }
+
             public static bool isRangedUnit(this UnitType ut)
             {
                 switch (ut)
