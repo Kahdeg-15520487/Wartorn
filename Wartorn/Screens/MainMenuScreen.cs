@@ -77,8 +77,17 @@ namespace Wartorn.Screens
 
             //TODO make button for main menu
             Button button_Campaign = new Button(ModeSelectDark, null, new Point(100, 275), 2);
+            button_Campaign.Depth = LayerDepth.GuiLower;
             Button button_MapEditor = new Button(ModeSelectDark, null, new Point(300, 275), 2);
+            button_MapEditor.Depth = LayerDepth.GuiLower;
             Button button_OtherGamemode = new Button(ModeSelectDark, null, new Point(500, 275), 2);
+            button_OtherGamemode.Depth = LayerDepth.GuiLower;
+            Label label_campaign = new Label("Single" + Environment.NewLine + "Player", new Point(130, 340), null, CONTENT_MANAGER.hackfont, 1f);
+            label_campaign.Origin = new Vector2(1, 1);
+            Label label_mapeditor = new Label("  Map" + Environment.NewLine + "Editor", new Point(335, 340), null, CONTENT_MANAGER.hackfont, 1f);
+            label_mapeditor.Origin = new Vector2(1, 1);
+            Label label_othergamemode = new Label(" Multi" + Environment.NewLine + " Player" + Environment.NewLine + "<not yet>", new Point(525, 340), null, CONTENT_MANAGER.hackfont, 1f);
+            label_othergamemode.Origin = new Vector2(1, 1);
 
             //bind action to ui event
             button_Campaign.MouseClick += (sender, e) =>
@@ -131,6 +140,9 @@ namespace Wartorn.Screens
             canvas.AddElement("button_Campaign", button_Campaign);
             canvas.AddElement("button_MapEditor", button_MapEditor);
             canvas.AddElement("button_OtherGameMode", button_OtherGamemode);
+            canvas.AddElement("label_campaign", label_campaign);
+            canvas.AddElement("label_mapeditor", label_mapeditor);
+            canvas.AddElement("label_othergamemode", label_othergamemode);
         }
 
         public override void Shutdown()

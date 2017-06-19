@@ -57,6 +57,8 @@ namespace Wartorn
                 }
             }
 
+            public float Depth { get; set; } = LayerDepth.GuiUpper;
+
             public Label()
             {
 
@@ -90,7 +92,7 @@ namespace Wartorn
 
             public override void Draw(SpriteBatch spriteBatch)
             {
-                spriteBatch.DrawString(font != null ? font : CONTENT_MANAGER.defaultfont, (string.IsNullOrEmpty(text)) ? "" : text, Position.ToVector2() - origin, foregroundColor, Rotation, Vector2.Zero, scale, SpriteEffects.None, LayerDepth.GuiUpper);
+                spriteBatch.DrawString(font != null ? font : CONTENT_MANAGER.defaultfont, (string.IsNullOrEmpty(text)) ? "" : text, Position.ToVector2() - origin, foregroundColor, Rotation, Vector2.Zero, scale, SpriteEffects.None, Depth);
                 DrawingHelper.DrawRectangle(rect, backgroundColor, true);
                 DrawingHelper.DrawRectangle(rect, borderColor, false);
             }

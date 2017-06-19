@@ -60,6 +60,8 @@ namespace Wartorn.Screens.MainGameScreen
             //declare ui elements
             Label label_playerinfo = new Label("kahdeg", new Point(10, 20), new Vector2(80, 30), CONTENT_MANAGER.arcadefont);
 
+            PictureBox picturebox_tutorial = new PictureBox(CONTENT_MANAGER.setuptutorial, Point.Zero, null, null);
+
             Button button_selectmap = new Button(UISpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetUI.Open), new Point(650, 20), 0.5f);
             Button button_exit = new Button(UISpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetUI.Exit), new Point(5, 5), 0.5f);
             Button button_start = new Button("Start", new Point(100, 50), null, CONTENT_MANAGER.arcadefont);
@@ -135,6 +137,7 @@ namespace Wartorn.Screens.MainGameScreen
             canvas.AddElement("button_selectmap", button_selectmap);
             canvas.AddElement("button_exit", button_exit);
             canvas.AddElement("button_start", button_start);
+            canvas.AddElement("picturebox_tutorial", picturebox_tutorial);
         }
 
         public override void Shutdown()

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -42,6 +43,10 @@ namespace Wartorn
             try
             {
                 File.WriteAllText(logfilename, message);
+                ProcessStartInfo startInfo = new ProcessStartInfo();
+                startInfo.FileName = "crashhandler.exe";
+                startInfo.Arguments = logfilename;
+                Process.Start(startInfo);
             }
             catch (Exception exx)
             {

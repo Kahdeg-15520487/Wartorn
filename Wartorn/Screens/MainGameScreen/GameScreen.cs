@@ -194,6 +194,8 @@ namespace Wartorn.Screens.MainGameScreen
         #region init ui
         private void InitUI()
         {
+            PictureBox picturebox_tutorial = new PictureBox(CONTENT_MANAGER.gametutorial, Point.Zero, null, null);
+
             //declare ui elements
             canvas_SelectedMapCell = new Canvas();
             InitCanvas_SelectedMapCellInfo();
@@ -236,6 +238,7 @@ namespace Wartorn.Screens.MainGameScreen
             //bind event
 
             //add to canvas
+            canvas.AddElement("picturebox_tutorial", picturebox_tutorial);
             canvas.AddElement("SelectedMapCell", canvas_SelectedMapCell);
             canvas.AddElement("TargetedMapCell", canvas_TargetedMapCell);
             canvas.AddElement("action", canvas_action);
@@ -622,9 +625,14 @@ namespace Wartorn.Screens.MainGameScreen
             keyboardInputState = CONTENT_MANAGER.inputState.keyboardState;
             lastKeyboardInputState = CONTENT_MANAGER.lastInputState.keyboardState;
 
-            if (HelperFunction.IsKeyPress(Keys.OemTilde))
+            //if (HelperFunction.IsKeyPress(Keys.OemTilde))
+            //{
+            //    console.IsVisible = !console.IsVisible;
+            //}
+
+            if (HelperFunction.IsKeyPress(Keys.F1))
             {
-                console.IsVisible = !console.IsVisible;
+                canvas.GetElementAs<PictureBox>("picturebox_tutorial").IsVisible = !canvas.GetElementAs<PictureBox>("picturebox_tutorial").IsVisible;
             }
 
             //update canvas
@@ -910,11 +918,12 @@ namespace Wartorn.Screens.MainGameScreen
                             //update movement path
                             movementPath = DijkstraHelper.FindPath(dijkstraGraph, selectedMapCell);
                             lastSelectedMapCell = selectedMapCell;
+                            //isMovePathCalculated = true;
                         }
                     }
 
                     //check if a tile is selected is in the movementRange
-                    if (HelperFunction.IsLeftMousePressed() && movementRange.Contains(selectedMapCell) && map[selectedMapCell].unit == null)
+                    if (HelperFunction.IsLeftMousePressed() && movementPath!=null && movementRange!=null && movementRange.Contains(selectedMapCell) && map[selectedMapCell].unit == null)
                     {
                         StartMovingUnitAnimation();
                         currentGameState = GameState.UnitMove;
@@ -1951,9 +1960,9 @@ namespace Wartorn.Screens.MainGameScreen
                 camera.Location += new Vector2(0, 1) * speed;
             }
 
-            Point clampMax = new Point(map.Width * Constants.MapCellWidth - 720, map.Height * Constants.MapCellHeight - 480);
+            Point clampMax = new Point(map.Width * Constants.MapCellWidth - 720 + 96, map.Height * Constants.MapCellHeight - 480 + 96);
 
-            camera.Location = new Vector2(camera.Location.X.Clamp(clampMax.X, 0), camera.Location.Y.Clamp(clampMax.Y, 0));
+            camera.Location = new Vector2(camera.Location.X.Clamp(clampMax.X, -96), camera.Location.Y.Clamp(clampMax.Y, -96));
         }
 
         #endregion

@@ -52,6 +52,8 @@ Source: "..\Build\soft_oal.dll"; DestDir: "{app}"; Flags: ignoreversion
 
 Source: "..\Build\StatsBalancer.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Build\Wartorn.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Build\crashhandler.exe"; DestDir: "{app}"; Flags: ignoreversion
+
 Source: "..\Build\Content\*"; DestDir: "{app}\Content\"; Flags: ignoreversion createallsubdirs recursesubdirs
 Source: "..\Build\data\*"; DestDir: "{app}\data\"; Flags: ignoreversion createallsubdirs recursesubdirs
 Source: "..\Build\map\Test.map"; DestDir: "{app}\map\"; Flags: ignoreversion

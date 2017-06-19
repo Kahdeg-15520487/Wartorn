@@ -154,6 +154,12 @@ namespace Wartorn.SpriteRectangle
                 goto end;
             }
 
+            if (t == TerrainType.Reef)
+            {
+                spritename.Append(TerrainType.Sea.ToString());
+                goto end;
+            }
+
             spritename.Append(t.ToString());
 
             end:

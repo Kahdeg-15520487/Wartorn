@@ -157,10 +157,10 @@ namespace Wartorn
             // TODO: Add your update logic here
             CONTENT_MANAGER.inputState = new InputState(Mouse.GetState(), Keyboard.GetState());
 
-            if (HelperFunction.IsKeyPress(Keys.F1))
-            {
-                SCREEN_MANAGER.goto_screen("TestAnimationScreen");
-            }
+            //if (HelperFunction.IsKeyPress(Keys.F1))
+            //{
+            //    SCREEN_MANAGER.goto_screen("TestAnimationScreen");
+            //}
 
             if (HelperFunction.IsKeyPress(Keys.F2))
             {
@@ -168,10 +168,10 @@ namespace Wartorn
                 CONTENT_MANAGER.ShowMessageBox("Unit stats reloaded");
             }
 
-            if (HelperFunction.IsKeyPress(Keys.F3))
-            {
-                SCREEN_MANAGER.goto_screen("TestConsole");
-            }
+            //if (HelperFunction.IsKeyPress(Keys.F3))
+            //{
+            //    SCREEN_MANAGER.goto_screen("TestConsole");
+            //}
 
             SCREEN_MANAGER.Update(gameTime);
 

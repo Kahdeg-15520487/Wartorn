@@ -261,5 +261,8 @@
     <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/GUI/endgame/Background7.png</File>
     <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/GUI/endgame/Background8.png</File>
     <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/GUI/endgame/Background1.png</File>
+    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/tutorial/gamescreentutorial.png</File>
+    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/tutorial/mapeditortutorial.png</File>
+    <File>G:/Workspace/c#/Wartorn/Wartorn/Content/sprite/tutorial/setupscreentutorial.png</File>
   </SourceFiles>
 </SourceFileCollection>

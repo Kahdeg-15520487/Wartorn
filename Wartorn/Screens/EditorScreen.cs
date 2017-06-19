@@ -101,6 +101,8 @@ namespace Wartorn.Screens
 
         private void InitEscapeMenu()
         {
+            PictureBox picturebox_tutorial = new PictureBox(CONTENT_MANAGER.mapeditortutorial, Point.Zero, null, null);
+
             //escape menu
             Canvas canvas_Menu = new Canvas();
             Button button_Undo = new Button(UISpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetUI.Undo), new Point(20, 20), 0.5f);
@@ -232,6 +234,7 @@ namespace Wartorn.Screens
             #endregion
 
             canvas.AddElement("canvas_Menu", canvas_Menu);
+            canvas.AddElement("picturebox_tutorial", picturebox_tutorial);
         }
 
         private bool isMapPlayable()

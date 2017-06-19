@@ -74,6 +74,10 @@ namespace Wartorn
 
         public static List<Texture2D> endgameBG;
 
+        public static Texture2D setuptutorial;
+        public static Texture2D gametutorial;
+        public static Texture2D mapeditortutorial;
+
         #region animation sprite sheet
         public static Dictionary<SpriteSheetUnit, AnimatedEntity> animationEntities;
         public static Dictionary<SpriteSheetUnit, Texture2D> animationSheets;
@@ -122,6 +126,10 @@ namespace Wartorn
             endgameBG.Add(Content.Load<Texture2D>(@"sprite\GUI\endgame\Background6"));
             endgameBG.Add(Content.Load<Texture2D>(@"sprite\GUI\endgame\Background7"));
             endgameBG.Add(Content.Load<Texture2D>(@"sprite\GUI\endgame\Background8"));
+
+            setuptutorial = Content.Load<Texture2D>(@"sprite\tutorial\setupscreentutorial");
+            gametutorial = Content.Load<Texture2D>(@"sprite\tutorial\gamescreentutorial");
+            mapeditortutorial = Content.Load<Texture2D>(@"sprite\tutorial\mapeditortutorial");
 
             LoadAnimationContent();
 
