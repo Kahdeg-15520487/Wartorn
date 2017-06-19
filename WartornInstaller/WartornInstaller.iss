@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Wartorn"
-#define MyAppVersion "1.4"
+#define MyAppVersion "1.5"
 #define MyAppPublisher "Nhóm 3 lớp IT008.H22"
 #define MyAppURL "https://github.com/Kahdeg-15520487/Wartorn"
 #define MyAppExeName "Wartorn.exe"
@@ -80,13 +80,17 @@ Root: "HKCR"; Subkey: "Software\kahdeg\Wartorn\"; ValueType: string; ValueName: 
 [Code]
 function InitializeSetup: Boolean;
 var
-V: Integer;
+V: Extended;
+NV: Extended;
 Version: String;
 begin
   if RegValueExists(HKEY_CLASSES_ROOT,'Software\kahdeg\Wartorn\', 'Version') then 
   begin
     RegQueryStringValue(HKEY_CLASSES_ROOT,'Software\kahdeg\Wartorn\', 'Version', Version);
-    MsgBox(ExpandConstant('Current version: '+Version +',' + '\n' + 'New version: '+'{#MyAppVersion}') , mbInformation, MB_OK);
+    V := StrToFloat(Version);
+    NV := StrToFloat(ExpandConstant('{#MyAppVersion}'));
+    if (V < NV) Then
+      MsgBox(ExpandConstant('Current version: '+Version +',' + #13#10 + 'New version: '+'{#MyAppVersion}') , mbInformation, MB_OK);
   end;
   Result:= True;
 end;
