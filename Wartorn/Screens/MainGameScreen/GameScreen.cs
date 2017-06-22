@@ -663,7 +663,7 @@ namespace Wartorn.Screens.MainGameScreen
             switch (currentGameState)
             {
                 #region GameState.TurnStart
-                //previous state: WaitForTurn
+                //previous state: TurnEnd
                 //bắt đầu lượt chơi
                 //next state: None
                 case GameState.TurnStart:
@@ -827,7 +827,7 @@ namespace Wartorn.Screens.MainGameScreen
                 #region GameState.TurnEnd
                 //previous state: None
                 //kết thúc lượt
-                //next state: WaitForTurn
+                //next state: TurnStart
                 case GameState.TurnEnd:
                     //kiểm tra thắng thua
                     if (map[playerInfos[currentPlayer].HQlocation].owner != playerInfos[currentPlayer].owner
@@ -1278,12 +1278,9 @@ namespace Wartorn.Screens.MainGameScreen
         #region Execute command
         private void ExecuteCommand(Command cmd)
         {
-            //CONTENT_MANAGER.ShowMessageBox(cmd.ToString());
             Unit tempunit = map[selectedUnit].unit;
 
             //substract action point
-            
-
             switch (cmd)
             {
                 case Command.Wait:

@@ -84,7 +84,6 @@
     <Compile Include="InputState.cs" />
     <Compile Include="PathFinding\Dijkstra.cs" />
     <Compile Include="PathFinding\DijkstraHelper.cs" />
-    <Compile Include="Screens\MainGameScreen\GameScreen - Backup.cs" />
     <Compile Include="Screens\MainGameScreen\EndGameScreen.cs" />
     <Compile Include="Screens\TestConsole.cs" />
     <Compile Include="SpriteRectangle\BackgroundUnitSpriteSourceRectangle.cs" />
