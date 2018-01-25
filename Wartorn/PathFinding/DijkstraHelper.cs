@@ -17,7 +17,7 @@ namespace Wartorn.PathFinding
     {
         public static Graph CalculateGraph(Map map,Unit unit,Point position)
         {
-            UnitInformation unitinfo = new UnitInformation(unit.UnitType);
+			UnitStat unitinfo = Unit._UnitStat[unit.UnitType];
 
             Graph graph = new Graph();
             graph.Source = position.toString();
@@ -78,7 +78,7 @@ namespace Wartorn.PathFinding
                 }
             }
 
-            graph.Dijkstra(position.toString(), unitinfo.Move + 1);
+            graph.Dijkstra(position.toString(), unitinfo.MovementRange + 1);
 
             return graph;            
         }

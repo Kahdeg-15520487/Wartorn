@@ -64,7 +64,7 @@ namespace Wartorn.Screens.MainGameScreen
         #endregion
 
         //debug console
-        UIClass.Console console;
+        //UIClass.Console console;
 
         //cursor
         Texture2D cursor;
@@ -230,10 +230,10 @@ namespace Wartorn.Screens.MainGameScreen
             label_whoseturn.Origin = new Vector2(1, 1);
             label_whoseturn.backgroundColor = Color.White;
 
-            console = new UIClass.Console(new Point(0, 0), new Vector2(720, 200), CONTENT_MANAGER.hackfont);
-            console.IsVisible = false;
-            console.SetVariable("player", currentPlayer);
-            console.SetVariable("changeTurn", new Action(this.ChangeTurn));
+            //console = new UIClass.Console(new Point(0, 0), new Vector2(720, 200), CONTENT_MANAGER.hackfont);
+            //console.IsVisible = false;
+            //console.SetVariable("player", currentPlayer);
+            //console.SetVariable("changeTurn", new Action(this.ChangeTurn));
 
             //bind event
 
@@ -244,7 +244,7 @@ namespace Wartorn.Screens.MainGameScreen
             canvas.AddElement("action", canvas_action);
             canvas.AddElement("unit", canvas_action_Unit);
             //canvas.AddElement("label_mousepos", label_mousepos);
-            canvas.AddElement("console", console);
+            //canvas.AddElement("console", console);
             canvas.AddElement("button_endTurn", button_endTurn);
             canvas.AddElement("label_money", label_money);
             canvas.AddElement("label_whoseturn", label_whoseturn);
@@ -469,7 +469,7 @@ namespace Wartorn.Screens.MainGameScreen
                 {
                     var temp = UnitSpriteSheetRectangle.GetUnitType(button.spriteSourceRectangle);
                     label_unitname.Text = temp.GetName();
-                    label_unitcost.Text = Unit._Cost[temp].ToString();
+                    label_unitcost.Text = Unit._UnitStat[temp].Cost.ToString();
                 };
                 button.MouseLeave += (sender, e) =>
                 {
@@ -531,7 +531,7 @@ namespace Wartorn.Screens.MainGameScreen
                 {
                     var temp = UnitSpriteSheetRectangle.GetUnitType(button.spriteSourceRectangle);
                     label_unitname.Text = temp.GetName();
-                    label_unitcost.Text = Unit._Cost[temp].ToString();
+                    label_unitcost.Text = Unit._UnitStat[temp].Cost.ToString();
                 };
                 button.MouseLeave += (sender, e) =>
                 {
@@ -587,7 +587,7 @@ namespace Wartorn.Screens.MainGameScreen
                 {
                     var temp = UnitSpriteSheetRectangle.GetUnitType(button.spriteSourceRectangle);
                     label_unitname.Text = temp.GetName();
-                    label_unitcost.Text = Unit._Cost[temp].ToString();
+                    label_unitcost.Text = Unit._UnitStat[temp].Cost.ToString();
                 };
                 button.MouseLeave += (sender, e) =>
                 {
@@ -694,7 +694,7 @@ namespace Wartorn.Screens.MainGameScreen
                                 default:
                                     break;
                             }
-                            tempu.Fuel -= lostfuel;
+                            tempu.Gas -= lostfuel;
                         }
                         else
                         {
@@ -720,10 +720,10 @@ namespace Wartorn.Screens.MainGameScreen
                                     default:
                                         break;
                                 }
-                                tempu.Fuel -= lostfuel;
+                                tempu.Gas -= lostfuel;
                             }
                         }
-                        if (tempu.Fuel <= 0)
+                        if (tempu.Gas <= 0)
                         {
                             playerInfos[currentPlayer].ownedUnit.Remove(tempu.guid);
                             map.RemoveUnit(tempoint);
@@ -750,8 +750,8 @@ namespace Wartorn.Screens.MainGameScreen
                             {
                                 case TerrainType.Factory:
                                     if (tempu.UnitType.isLandUnit()) {
-                                        if (tempu.Fuel < Unit._Gas[tempu.UnitType]
-                                        || tempu.Ammo < Unit._Ammo[tempu.UnitType])
+                                        if (tempu.Gas < Unit._UnitStat[tempu.UnitType].Gas
+                                        || tempu.Ammo < Unit._UnitStat[tempu.UnitType].Ammo)
                                         {
                                             tempu.Resupply();
                                             supplyandrepaircost += 300;
@@ -759,15 +759,15 @@ namespace Wartorn.Screens.MainGameScreen
                                         if (tempu.HitPoint<10)
                                         {
                                             tempu.Repair();
-                                            supplyandrepaircost += Unit._Cost[tempu.UnitType] / 10;
+                                            supplyandrepaircost += Unit._UnitStat[tempu.UnitType].Cost / 10;
                                         }
                                     }
                                     break;
                                 case TerrainType.AirPort:
                                     if (tempu.UnitType.isAirUnit())
                                     {
-                                        if (tempu.Fuel < Unit._Gas[tempu.UnitType]
-                                        || tempu.Ammo < Unit._Ammo[tempu.UnitType])
+                                        if (tempu.Gas < Unit._UnitStat[tempu.UnitType].Gas
+                                        || tempu.Ammo < Unit._UnitStat[tempu.UnitType].Ammo)
                                         {
                                             tempu.Resupply();
                                             supplyandrepaircost += 300;
@@ -775,15 +775,15 @@ namespace Wartorn.Screens.MainGameScreen
                                         if (tempu.HitPoint < 10)
                                         {
                                             tempu.Repair();
-                                            supplyandrepaircost += Unit._Cost[tempu.UnitType] / 10;
+                                            supplyandrepaircost += Unit._UnitStat[tempu.UnitType].Cost / 10;
                                         }
                                     }
                                     break;
                                 case TerrainType.Harbor:
                                     if (tempu.UnitType.isNavalUnit())
                                     {
-                                        if (tempu.Fuel < Unit._Gas[tempu.UnitType]
-                                        || tempu.Ammo < Unit._Ammo[tempu.UnitType])
+                                        if (tempu.Gas < Unit._UnitStat[tempu.UnitType].Gas
+                                        || tempu.Ammo < Unit._UnitStat[tempu.UnitType].Ammo)
                                         {
                                             tempu.Resupply();
                                             supplyandrepaircost += 300;
@@ -791,7 +791,7 @@ namespace Wartorn.Screens.MainGameScreen
                                         if (tempu.HitPoint < 10)
                                         {
                                             tempu.Repair();
-                                            supplyandrepaircost += Unit._Cost[tempu.UnitType] / 10;
+                                            supplyandrepaircost += Unit._UnitStat[tempu.UnitType].Cost / 10;
                                         }
                                     }
                                     break;
@@ -1125,7 +1125,7 @@ namespace Wartorn.Screens.MainGameScreen
                             map[selectedUnit].unit.UpdateActionPoint(Command.Move);
 
                             //substract fuel
-                            map[selectedUnit].unit.Fuel -= movementPath != null ? movementPath.Count : 0;
+                            map[selectedUnit].unit.Gas -= movementPath != null ? movementPath.Count : 0;
                             break;
 
                         case Command.Operate:
@@ -1189,9 +1189,9 @@ namespace Wartorn.Screens.MainGameScreen
                         selectedCmd = Command.None;
 
                         //update fuel
-                        int fuel = movementPath != null ? movementPath.Count : 0;
+                        int gas = movementPath != null ? movementPath.Count : 0;
 
-                        tempunit.Fuel = (tempunit.Fuel - fuel).Clamp(Unit._Gas[tempunit.UnitType], 0);
+                        tempunit.Gas = (tempunit.Gas - gas).Clamp(Unit._UnitStat[tempunit.UnitType].Gas, 0);
 
                         cursor = CONTENT_MANAGER.selectCursor;
                         cursorOffset = selectCursorOffset;
@@ -1235,9 +1235,9 @@ namespace Wartorn.Screens.MainGameScreen
                     if (selectedUnitTypeToBuild != UnitType.None)
                     {
                         //check if current player have enough fund
-                        if (playerInfos[currentPlayer].money >= Unit._Cost[selectedUnitTypeToBuild])
+                        if (playerInfos[currentPlayer].money >= Unit._UnitStat[selectedUnitTypeToBuild].Cost)
                         {
-                            playerInfos[currentPlayer].money -= Unit._Cost[selectedUnitTypeToBuild];
+                            playerInfos[currentPlayer].money -= Unit._UnitStat[selectedUnitTypeToBuild].Cost;
                             currentGameState = GameState.BuildingBuildUnit;
                         }
                         break;
@@ -1879,7 +1879,7 @@ namespace Wartorn.Screens.MainGameScreen
                 canvas_SelectedMapCell.GetElementAs<PictureBox>("picbox_SelectedMapCellHPbar").SourceRectangle = new Rectangle(0, 0, hp*10, 3);
                 canvas_SelectedMapCell.GetElementAs<Label>("label_SelectedMapCellHP").Text = hp.ToString();
 
-                canvas_SelectedMapCell.GetElementAs<Label>("label_SelectedMapCellUnitInfo_fuel").Text = tempmapcell.unit.Fuel.ToString();
+                canvas_SelectedMapCell.GetElementAs<Label>("label_SelectedMapCellUnitInfo_fuel").Text = tempmapcell.unit.Gas.ToString();
                 canvas_SelectedMapCell.GetElementAs<Label>("label_SelectedMapCellUnitInfo_ammo").Text = tempmapcell.unit.Ammo.ToString();
             }
             else
