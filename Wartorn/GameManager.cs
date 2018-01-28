@@ -42,7 +42,6 @@ namespace Wartorn
             CONTENT_MANAGER.Content = Content;
             IsMouseVisible = true;
             lastInputState = new InputState();
-
             graphics.PreferMultiSampling = true;
 
             JsonConvert.DefaultSettings = () =>
