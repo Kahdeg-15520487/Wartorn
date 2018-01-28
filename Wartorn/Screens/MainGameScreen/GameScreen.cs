@@ -183,7 +183,9 @@ namespace Wartorn.Screens.MainGameScreen {
 
 		#region init ui
 		private void InitUI() {
-			PictureBox picturebox_tutorial = new PictureBox(CONTENT_MANAGER.gametutorial, Point.Zero, null, null);
+			PictureBox picturebox_tutorial = new PictureBox(CONTENT_MANAGER.gametutorial, Point.Zero, null, null) {
+				IsVisible = CONTENT_MANAGER.IsTutorial
+			};
 
 			//declare ui elements
 			canvas_SelectedMapCell = new Canvas();
@@ -627,7 +629,20 @@ namespace Wartorn.Screens.MainGameScreen {
 				//bắt đầu lượt chơi
 				//next state: None
 				case GameState.TurnStart:
-					canvas.GetElementAs<Label>("label_whoseturn").Text = playerInfos[currentPlayer].owner.ToString();
+					var label_whoseturn = canvas.GetElementAs<Label>("label_whoseturn");
+					label_whoseturn.Text = playerInfos[currentPlayer].owner.ToString();
+					switch (playerInfos[currentPlayer].owner) {
+						case Owner.Red:
+							label_whoseturn.foregroundColor = Color.IndianRed;
+							break;
+						case Owner.Blue:
+							label_whoseturn.foregroundColor = Color.CadetBlue;
+							break;
+						case Owner.Green:
+							break;
+						case Owner.Yellow:
+							break;
+					}
 
 					#region trừ fuel cho các unit air và naval
 					foreach (var guid in playerInfos[currentPlayer].ownedUnit) {
@@ -1345,14 +1360,15 @@ finalise_command_execution:
 			Rectangle cmdslot = CommandSpriteSourceRectangle.GetSprite(cmds.Count, playerInfos[currentPlayer].owner);
 
 			canvas_action_Unit.GetElementAs<PictureBox>("commandslot").SourceRectangle = cmdslot;
-			Point cmdslotPosition = new Point(selectedUnit.X * Constants.MapCellWidth + 50, selectedUnit.Y * Constants.MapCellHeight);
+			//Point cmdslotPosition = new Point(selectedUnit.X * Constants.MapCellWidth + 50, selectedUnit.Y * Constants.MapCellHeight);
+			Point cmdslotPosition = new Point(selectedUnit.X * Constants.MapCellWidth - 2, selectedUnit.Y * Constants.MapCellHeight);
 			canvas_action_Unit.GetElementAs<PictureBox>("commandslot").Position = camera.TranslateFromWorldToScreen(cmdslotPosition.ToVector2()).ToPoint();
 
 			Button firstslot = canvas_action_Unit.GetElementAs<Button>("firstslot");
 			Button secondslot = canvas_action_Unit.GetElementAs<Button>("secondslot");
 			Button thirdslot = canvas_action_Unit.GetElementAs<Button>("thirdslot");
 
-			Point slotPosition = new Point(selectedUnit.X * Constants.MapCellWidth + 50 + 6, selectedUnit.Y * Constants.MapCellHeight + 8);
+			Point slotPosition = new Point(selectedUnit.X * Constants.MapCellWidth + 6, selectedUnit.Y * Constants.MapCellHeight + 8);
 			slotPosition = camera.TranslateFromWorldToScreen(slotPosition.ToVector2()).ToPoint();
 
 			firstslot.Position = slotPosition;
@@ -1360,14 +1376,14 @@ finalise_command_execution:
 			firstslot.rect = new Rectangle(firstslot.Position, firstslot.spriteSourceRectangle.Size);
 
 			if (cmds.Count > 1) {
-				slotPosition = new Point(selectedUnit.X * Constants.MapCellWidth + 50 + 6, selectedUnit.Y * Constants.MapCellHeight + 16 + 8);
+				slotPosition = new Point(selectedUnit.X * Constants.MapCellWidth + 6, selectedUnit.Y * Constants.MapCellHeight + 16 + 8);
 				slotPosition = camera.TranslateFromWorldToScreen(slotPosition.ToVector2()).ToPoint();
 				secondslot.Position = slotPosition;
 				secondslot.spriteSourceRectangle = CommandSpriteSourceRectangle.GetSprite(cmds[1]);
 				secondslot.rect = new Rectangle(secondslot.Position, secondslot.spriteSourceRectangle.Size);
 			}
 			if (cmds.Count > 2) {
-				slotPosition = new Point(selectedUnit.X * Constants.MapCellWidth + 50 + 6, selectedUnit.Y * Constants.MapCellHeight + 32 + 8);
+				slotPosition = new Point(selectedUnit.X * Constants.MapCellWidth + 6, selectedUnit.Y * Constants.MapCellHeight + 32 + 8);
 				slotPosition = camera.TranslateFromWorldToScreen(slotPosition.ToVector2()).ToPoint();
 				thirdslot.Position = slotPosition;
 				thirdslot.spriteSourceRectangle = CommandSpriteSourceRectangle.GetSprite(cmds[2]);

@@ -91,7 +91,9 @@ namespace Wartorn.Screens {
 		#region InitUI
 
 		private void InitEscapeMenu() {
-			PictureBox picturebox_tutorial = new PictureBox(CONTENT_MANAGER.mapeditortutorial, Point.Zero, null, null);
+			PictureBox picturebox_tutorial = new PictureBox(CONTENT_MANAGER.mapeditortutorial, Point.Zero, null, null) {
+				IsVisible = CONTENT_MANAGER.IsTutorial
+			};
 
 			//escape menu
 			Canvas canvas_Menu = new Canvas();

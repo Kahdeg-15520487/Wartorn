@@ -41,6 +41,7 @@ namespace Wartorn
                 {
                     this.comboBox1.Items.Add(item);
                 }
+				comboBox1.SelectedIndex = 0;
             }
         }
 

@@ -34,19 +34,9 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "..\Build\IronPython.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\Build\IronPython.Modules.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\Build\IronPython.SQLite.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\Build\IronPython.Wpf.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\Build\Microsoft.Dynamic.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\Build\Microsoft.Scripting.AspNet.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\Build\Microsoft.Scripting.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\Build\Microsoft.Scripting.Metadata.dll"; DestDir: "{app}"; Flags: ignoreversion
-
 Source: "..\Build\MonoGame.Framework.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Build\Utility_Project.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Build\Newtonsoft.Json.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\Build\NVorbis.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\Build\OpenTK.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Build\SDL2.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Build\soft_oal.dll"; DestDir: "{app}"; Flags: ignoreversion
 

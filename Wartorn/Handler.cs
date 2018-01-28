@@ -49,6 +49,10 @@ namespace Wartorn
         {
             frm.ShowInTaskbar = false;
             frm.Opacity = 0;
+
+			MessageEventArgs messageEventArgs = new MessageEventArgs("Choose your language:|en|vi");
+			ShowDropdownBoxMainThread(messageEventArgs);
+			CONTENT_MANAGER.Language = messageEventArgs.message;
         }
 
         private static void MessageShow(object sender, MessageEventArgs e)
