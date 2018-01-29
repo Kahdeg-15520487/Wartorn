@@ -27,11 +27,12 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Wartorn.PathFinding.Dijkstras;
 using Wartorn.PathFinding;
+using Fclp;
 
 namespace Wartorn {
 	//singleton to store common data
 	public static class CONTENT_MANAGER {
-		public static bool IsTutorial = true;
+		public static bool IsTutorial = false;
 		public static string Language = "en";
 
 		public static Game gameinstance;
@@ -270,6 +271,15 @@ namespace Wartorn {
 
 		#endregion
 		#endregion
+		
+		public static string MapName { get; private set; } = null;
+
+		public static void ParseArguments(string[] args) {
+			var p = new FluentCommandLineParser();
+			p.Setup<string>('m')
+				.Callback(x => MapName = x);
+			p.Parse(args);
+		}
 
 		public static string LocalRootPath = Path.GetDirectoryName(Assembly.GetAssembly(typeof(Program)).Location);
 

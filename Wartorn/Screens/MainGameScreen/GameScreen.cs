@@ -28,7 +28,6 @@ using Newtonsoft.Json.Linq;
 using Wartorn.PathFinding.Dijkstras;
 using Wartorn.PathFinding;
 
-
 namespace Wartorn.Screens.MainGameScreen {
 	enum GameState {
 		None,
@@ -131,6 +130,7 @@ namespace Wartorn.Screens.MainGameScreen {
 
 		//game state
 		GameState currentGameState = GameState.TurnStart;
+		bool isDrawTargetRange = false;
 		#endregion
 
 		public GameScreen(GraphicsDevice device) : base(device, "GameScreen") {
@@ -162,8 +162,7 @@ namespace Wartorn.Screens.MainGameScreen {
 		}
 
 		public override bool Init() {
-			//TODO
-			//do something to handshake player
+			//TODO: multiplayer : do something to handshake player
 
 			camera = new Camera(_device.Viewport);
 			canvas = new Canvas();
@@ -648,8 +647,11 @@ namespace Wartorn.Screens.MainGameScreen {
 					foreach (var guid in playerInfos[currentPlayer].ownedUnit) {
 						int lostfuel = 0;
 						var tempoint = map.FindUnit(guid);
+						if (tempoint.X == -1) {
+							continue;
+						}
 						var tempu = map[tempoint].unit;
-						if (tempu.UnitType.isAirUnit()) {
+						if (tempu.UnitType.IsAirUnit()) {
 							switch (tempu.UnitType) {
 								case UnitType.BattleCopter:
 									lostfuel = 2;
@@ -669,7 +671,7 @@ namespace Wartorn.Screens.MainGameScreen {
 							tempu.Gas -= lostfuel;
 						}
 						else {
-							if (tempu.UnitType.isNavalUnit()) {
+							if (tempu.UnitType.IsNavalUnit()) {
 								switch (tempu.UnitType) {
 									case UnitType.Lander:
 										lostfuel = 1;
@@ -714,7 +716,7 @@ namespace Wartorn.Screens.MainGameScreen {
 							var tempu = tempmapcell.unit;
 							switch (tempmapcell.terrain) {
 								case TerrainType.Factory:
-									if (tempu.UnitType.isLandUnit()) {
+									if (tempu.UnitType.IsLandUnit()) {
 										if (tempu.Gas < Unit._UnitStat[tempu.UnitType].Gas
 										|| tempu.Ammo < Unit._UnitStat[tempu.UnitType].Ammo) {
 											tempu.Resupply();
@@ -727,7 +729,7 @@ namespace Wartorn.Screens.MainGameScreen {
 									}
 									break;
 								case TerrainType.AirPort:
-									if (tempu.UnitType.isAirUnit()) {
+									if (tempu.UnitType.IsAirUnit()) {
 										if (tempu.Gas < Unit._UnitStat[tempu.UnitType].Gas
 										|| tempu.Ammo < Unit._UnitStat[tempu.UnitType].Ammo) {
 											tempu.Resupply();
@@ -740,7 +742,7 @@ namespace Wartorn.Screens.MainGameScreen {
 									}
 									break;
 								case TerrainType.Harbor:
-									if (tempu.UnitType.isNavalUnit()) {
+									if (tempu.UnitType.IsNavalUnit()) {
 										if (tempu.Gas < Unit._UnitStat[tempu.UnitType].Gas
 										|| tempu.Ammo < Unit._UnitStat[tempu.UnitType].Ammo) {
 											tempu.Resupply();
@@ -765,7 +767,11 @@ namespace Wartorn.Screens.MainGameScreen {
 
 					//reset actionpoint cho tất cả các unit phe mình
 					foreach (var guid in playerInfos[currentPlayer].ownedUnit) {
-						map[map.FindUnit(guid)].unit.UpdateActionPoint(Command.None);
+						var temp = map.FindUnit(guid);
+						if (temp.X == -1) {
+							continue;
+						}
+						map[temp].unit.UpdateActionPoint(Command.None);
 					}
 					//set animation cho tất cả các unit thành idle
 					foreach (var p in map.mapcellthathaveunit) {
@@ -955,6 +961,9 @@ namespace Wartorn.Screens.MainGameScreen {
 						canvas_action_Unit.IsVisible = false;
 
 						currentGameState = GameState.UnitSelected;
+						selectedCmd = Command.None;
+
+						isDrawTargetRange = false;
 						break;
 					}
 
@@ -975,6 +984,8 @@ namespace Wartorn.Screens.MainGameScreen {
 							//change cursor to attack cursor
 							cursor = CONTENT_MANAGER.attackCursor;
 							cursorOffset = attackCursorOffset;
+
+							isDrawTargetRange = true;
 
 							if (HelperFunction.IsLeftMousePressed()
 							 && attackRange.Contains(selectedMapCell)
@@ -1010,7 +1021,7 @@ namespace Wartorn.Screens.MainGameScreen {
 
 						case Command.Capture:
 
-							if (map[selectedUnit].terrain.isBuildingThatIsCapturable()
+							if (map[selectedUnit].terrain.IsBuildingThatIsCapturable()
 							 && map[selectedUnit].owner != playerInfos[currentPlayer].owner
 							 && tempunit.CapturePoint == 0) {
 								map[selectedUnit].unit.CapturePoint = 20;
@@ -1027,9 +1038,51 @@ namespace Wartorn.Screens.MainGameScreen {
 							goto finalise_command_execution;
 
 						case Command.Load:
+							//show load range like attack range
+							//select unit to load in
+							//if not select, return to previous command
+							//if selected a unit, move unit from mapcell into the carrier
+							//end command
+
+							isDrawTargetRange = false;
+
+							Func<Point, bool> filter;
+							if (tempunit.UnitType == UnitType.APC || tempunit.UnitType == UnitType.TransportCopter) {
+								filter = (Point p) => (map[p].unit != null && map[p].unit.UnitType.IsInfantryUnit());
+							}
+							else {
+								filter = (Point p) => (map[p].unit != null && map[p].unit.UnitType.IsLandUnit());
+							}
+
+							//filter unit that the carrier can take
+							attackRange = selectedUnit.GetNearbyPoints(Direction.North, Direction.East, Direction.South, Direction.West).Where(filter).ToList();
+
+							isDrawTargetRange = true;
+
+							if (HelperFunction.IsLeftMousePressed()
+							 && attackRange.Contains(selectedMapCell)
+							 && map[selectedMapCell].unit != null
+							 && map[selectedMapCell].unit.Owner == playerInfos[currentPlayer].owner) {
+								tempunit.UpdateActionPoint(Command.Load);
+
+								//do load unit stuff
+								selectedTarget = selectedMapCell;
+
+								tempunit.carryingUnit = map[selectedTarget].unit;
+								map.RemoveUnit(selectedTarget);
+
+								//end command
+								goto finalise_command_execution;
+							}
+
 							break;
 
 						case Command.Drop:
+							//show load range like attack range
+							//select unit to load in
+							//if not select, return to previous command
+							//if selected a unit, move unit from mapcell into the carrier
+							//end command
 							break;
 
 						case Command.Rise:
@@ -1052,7 +1105,8 @@ namespace Wartorn.Screens.MainGameScreen {
 							if (isSupplied == true) {
 								tempunit.Ammo = (tempunit.Ammo - 1).Clamp(10, 0);
 							}
-							break;
+							//end command
+							goto finalise_command_execution;
 
 						case Command.Move:
 							//substract actionpoint
@@ -1076,7 +1130,7 @@ namespace Wartorn.Screens.MainGameScreen {
 							foreach (var guid in playerInfos[otherPlayer].ownedUnit) {
 								attackRange.Add(map.FindUnit(guid));
 							}
-
+							isDrawTargetRange = true;
 							if (HelperFunction.IsLeftMousePressed()
 							 && attackRange.Contains(selectedMapCell)
 							 && map[selectedMapCell].unit != null
@@ -1116,7 +1170,9 @@ finalise_command_execution:
 						if (tempunit.ActionPoint == 0) {
 							tempunit.Animation.PlayAnimation(AnimationName.done.ToString());
 						}
+
 						selectedCmd = Command.None;
+						isDrawTargetRange = false;
 
 						//update fuel
 						int gas = movementPath != null ? movementPath.Count : 0;
@@ -1190,10 +1246,7 @@ finalise_command_execution:
 					//goto none
 					currentGameState = GameState.None;
 					break;
-				#endregion
-
-				default:
-					break;
+					#endregion
 			}
 
 			UpdateAnimation(gameTime);
@@ -1202,43 +1255,9 @@ finalise_command_execution:
 
 		#region Update game logic
 
-		#region Execute command
-		private void ExecuteCommand(Command cmd) {
-			Unit tempunit = map[selectedUnit].unit;
-
-			//substract action point
-			switch (cmd) {
-				case Command.Wait:
-					break;
-				case Command.Attack:
-					break;
-				case Command.Capture:
-					break;
-				case Command.Load:
-					break;
-				case Command.Drop:
-					break;
-				case Command.Rise:
-					break;
-				case Command.Dive:
-					break;
-				case Command.Supply:
-					break;
-				case Command.Move:
-					break;
-				default:
-					break;
-			}
-
-			if (tempunit.ActionPoint == 0) {
-				tempunit.Animation.PlayAnimation(AnimationName.done.ToString());
-			}
-		}
-		#endregion
-
 		#region calculate vision
 		private void CalculateVision() {
-			foreach (Guid id in playerInfos[currentPlayer].ownedUnit) {
+			foreach (string id in playerInfos[currentPlayer].ownedUnit) {
 
 			}
 		}
@@ -1260,7 +1279,7 @@ finalise_command_execution:
 			//      attack
 			//nếu không thì
 			//  attack
-			if (tempunit.UnitType.isRangedUnit()) {
+			if (tempunit.UnitType.IsRangedUnit()) {
 				if (movingAnim != null) {
 					//không attack
 				}
@@ -1293,17 +1312,9 @@ finalise_command_execution:
 				}
 			}
 
-			//có load nếu bên cạnh transport unit nè
-			//target select the transport unit
-			//like goto the mapcell that is next to the transporter
-			//then select command load and then select said transporter
-			//then you are loaded in said transporter
-
-			//có drop unit đang chở unit khác và bên cạnh là ô đi được cho unit đó.
-
 			//có capture nếu là lính và đang đứng trên building khác màu nè
-			if (tempunit.UnitType.isInfantryUnit()
-			 && map[selectedUnit].terrain.isBuildingThatIsCapturable()
+			if (tempunit.UnitType.IsInfantryUnit()
+			 && map[selectedUnit].terrain.IsBuildingThatIsCapturable()
 			 && tempmapcell.owner != playerInfos[currentPlayer].owner) {
 				temp += (int)Command.Capture;
 			}
@@ -1331,11 +1342,43 @@ finalise_command_execution:
 			}
 
 			//có operate nếu là lính và đang đứng trên missile silo hay radar
-			if (tempunit.UnitType.isInfantryUnit()
+			if (tempunit.UnitType.IsInfantryUnit()
 			 && tempmapcell.terrain == TerrainType.MissileSilo
 				//|| tempmapcell.terrain == TerrainType.Radar
 				) {
 				temp += (int)Command.Operate;
+			}
+
+			//check for carrying unit
+			//get surrounding cell
+			var surroundingMapCell = map.GetMapCells(selectedUnit.GetNearbyPoints(Direction.North, Direction.South, Direction.East, Direction.West));
+
+			//add loading command if the carrier
+			//    doesn't carry any unit,
+			//    the surrounding mapcell have atleast a unit
+			if (tempunit.UnitType.IsCarrierUnit()
+				&& tempunit.carryingUnit == null
+				&& surroundingMapCell
+				   .Any(x => x.unit != null)) {
+				switch (tempunit.UnitType) {
+					//apc and t-copter can only carry infantry unit
+					case UnitType.APC:
+					case UnitType.TransportCopter:
+						surroundingMapCell.Any(x => x.unit != null && x.unit.UnitType.IsInfantryUnit());
+						break;
+					//lander can only carry land unit
+					case UnitType.Lander:
+						surroundingMapCell.Any(x => x.unit != null && x.unit.UnitType.IsLandUnit());
+						break;
+				}
+				temp += (int)Command.Load;
+			}
+
+			if (tempunit.UnitType.IsCarrierUnit()
+				&& tempunit.carryingUnit != null
+				&& surroundingMapCell
+				   .Any(x => x.unit == null)) {
+				temp += (int)Command.Drop;
 			}
 
 			return temp;
@@ -1596,7 +1639,7 @@ finalise_command_execution:
 			MapCell spawnlocation = map[location];
 			if (spawnlocation != null
 			  && spawnlocation.unit == null) {
-				Unit temp = UnitCreationHelper.Create(unittype, owner.owner);
+				Unit temp = UnitCreationHelper.Instantiate(unittype, owner.owner);
 				playerInfos[currentPlayer].ownedUnit.Add(temp.guid);
 				map.RegisterUnit(location, temp);
 				return true;
@@ -1610,6 +1653,10 @@ finalise_command_execution:
 		#region Update function helper
 
 		private void UpdateCanvas_TargetedMapCell() {
+			if (attackRange == null) {
+				return;
+			}
+
 			if (!attackRange.Contains(selectedMapCell)) {
 				return;
 			}
@@ -1676,7 +1723,7 @@ finalise_command_execution:
 			//update the SelectedMapCell border
 			canvas_SelectedMapCell.GetElementAs<PictureBox>("picbox_SelectedMapCellBorder").SourceRectangle = SelectedMapCellBorderSpriteSourceRectangle.GetSpriteRectangle(tempmapcell.owner);
 
-			if (tempmapcell.terrain.isBuildingThatIsCapturable()
+			if (tempmapcell.terrain.IsBuildingThatIsCapturable()
 			 && tempmapcell.owner != playerInfos[currentPlayer].owner
 			 && tempmapcell.unit != null
 			 && (tempmapcell.unit.UnitType == UnitType.Soldier
@@ -1820,6 +1867,7 @@ finalise_command_execution:
 			if (currentGameState == GameState.BuildingSelected) {
 				//CONTENT_MANAGER.spriteBatch.DrawString(CONTENT_MANAGER.defaultfont, canvas_action_Factory.GetElementAs<Label>("label_unitname").Position.toString(), new Vector2(100, 140), Color.Red);
 			}
+			CONTENT_MANAGER.spriteBatch.DrawString(CONTENT_MANAGER.defaultfont, currentGameState.ToString() + Environment.NewLine + selectedCmd.ToString(), new Vector2(100, 140), Color.Red);
 
 			//draw canvas_SelectedMapCell
 			//DrawCanvas_SelectedMapCell();
@@ -1855,7 +1903,8 @@ finalise_command_execution:
 			}
 
 			//draw attackrange
-			if (currentGameState == GameState.UnitCommand && (selectedCmd == Command.Attack || selectedCmd == Command.Operate)) {
+			//if (currentGameState == GameState.UnitCommand && (selectedCmd == Command.Attack || selectedCmd == Command.Operate)) {
+			if (isDrawTargetRange) {
 				DrawAttackRange(spriteBatch);
 			}
 

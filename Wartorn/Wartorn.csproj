@@ -90,6 +90,7 @@
     <Compile Include="InputState.cs" />
     <Compile Include="PathFinding\Dijkstra.cs" />
     <Compile Include="PathFinding\DijkstraHelper.cs" />
+    <Compile Include="RandomIDGenerator.cs" />
     <Compile Include="Screens\MainGameScreen\EndGameScreen.cs" />
     <Compile Include="Screens\TestConsole.cs" />
     <Compile Include="SpriteRectangle\BackgroundUnitSpriteSourceRectangle.cs" />
@@ -140,6 +141,7 @@
     <Compile Include="Storage\SessionStorage.cs" />
     <Compile Include="UIClass\Button.cs" />
     <Compile Include="UIClass\Console.cs" />
+    <Compile Include="UIClass\MessageBox.cs" />
     <Compile Include="UIClass\InputBox.cs" />
     <Compile Include="UIClass\Label.cs" />
     <Compile Include="Program.cs" />
@@ -151,6 +153,9 @@
     <Compile Include="Utility.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="FluentCommandLineParser, Version=1.4.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentCommandLineParser.1.4.3\lib\net35\FluentCommandLineParser.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>

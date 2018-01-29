@@ -179,8 +179,8 @@ namespace Wartorn.GameData {
 				return new CalculatedDamage(atkHP, 0, damage, 0);
 			}
 
-			if ((attacker.unit.unitType.isRangedUnit() && defender.unit.unitType.isRangedUnit())
-			 || (!attacker.unit.unitType.isRangedUnit() && !defender.unit.unitType.isRangedUnit())) {
+			if ((attacker.unit.unitType.IsRangedUnit() && defender.unit.unitType.IsRangedUnit())
+			 || (!attacker.unit.unitType.IsRangedUnit() && !defender.unit.unitType.IsRangedUnit())) {
 
 				//calculate counter damage
 				counterDamage = defHP * GetBaseDamage(defender.unit.UnitType, attacker.unit.UnitType) / 100f * (1 - _DefenseStar[attacker.terrain] / 10f);
@@ -213,8 +213,9 @@ namespace Wartorn.GameData {
 		public int Ammo { get { return ammo; } set { ammo = value; } }
 		public int CapturePoint { get; set; }
 		public Owner Owner { get; set; }
-		public readonly Guid guid;
+		public readonly string guid;
 
+		public Unit carryingUnit = null;
 		#endregion
 
 		#region submarine dive
@@ -226,6 +227,13 @@ namespace Wartorn.GameData {
 		}
 		#endregion
 
+		/// <summary>
+		/// regular unit creating
+		/// </summary>
+		/// <param name="unittype"></param>
+		/// <param name="anim"></param>
+		/// <param name="owner"></param>
+		/// <param name="hp"></param>
 		public Unit(UnitType unittype, AnimatedEntity anim, Owner owner, int hp = 10) {
 			unitType = unittype;
 			animation = anim;
@@ -234,7 +242,23 @@ namespace Wartorn.GameData {
 			gas = _UnitStat[unitType].Gas;
 			ammo = _UnitStat[unitType].Ammo;
 			actionpoint = _UnitStat[unitType].ActionPoint;
-			guid = Guid.NewGuid();
+			guid = RandomIdGenerator.GetBase62(10);
+		}
+
+		/// <summary>
+		/// use for instantiating a unit from data
+		/// </summary>
+		/// <param name="other"></param>
+		internal Unit(string guid, UnitType unittype, AnimatedEntity anim, Owner owner, int gas, int ammo, int hp) {
+
+			unitType = unittype;
+			animation = anim;
+			Owner = owner;
+			hitPoint = hp;
+			this.gas = gas;
+			this.ammo = ammo;
+			actionpoint = _UnitStat[unitType].ActionPoint;
+			this.guid = guid;
 		}
 
 		public string GetUnitName() {
@@ -307,8 +331,10 @@ namespace Wartorn.GameData {
 					isdiving = false;
 					break;
 				case Command.Load:
+					actionpoint = 0;
 					break;
 				case Command.Drop:
+					actionpoint = 0;
 					break;
 				case Command.Supply:
 					actionpoint = 0;
@@ -354,20 +380,45 @@ namespace Wartorn.GameData {
 	}
 
 	public static class UnitCreationHelper {
-		public static Unit Create(UnitType unittype, Owner owner, int hp = 10, AnimationName startingAnimation = AnimationName.idle) {
-			AnimatedEntity animEntity = new AnimatedEntity(Vector2.Zero, Vector2.Zero, Color.White, LayerDepth.Unit);
-			animEntity.LoadContent(CONTENT_MANAGER.animationSheets[unittype.GetSpriteSheetUnit(owner)]);
 
-			#region declare animation frame
+		/// <summary>
+		/// instantiate a unit for animating purpose
+		/// </summary>
+		public static Unit Instantiate(UnitType unitType, Owner owner) {
+			AnimatedEntity animEntity = CreateAnim(unitType, owner);
+
+			var result = new Unit(unitType, animEntity, owner);
+			result.Animation.PlayAnimation(AnimationName.idle.ToString());
+			return result;
+		}
+
+		/// <summary>
+		/// instantiate a unit to use in game
+		/// </summary>
+		public static Unit Instantiate(UnitType unitType, Owner owner, int hp, int gas, int ammo, string id) {
+			AnimatedEntity animEntity = CreateAnim(unitType, owner);
+
+			var result = new Unit(id, unitType, animEntity, owner, gas, ammo, hp);
+			result.Animation.PlayAnimation(AnimationName.idle.ToString());
+			return result;
+		}
+
+		/// <summary>
+		/// create an animated entity from the given <paramref name="unitType"/> and <paramref name="owner"/>
+		/// </summary>
+		public static AnimatedEntity CreateAnim(UnitType unitType,Owner owner) {
+			AnimatedEntity animatedEntity = new AnimatedEntity(Vector2.Zero, Vector2.Zero, Color.White, LayerDepth.Unit);
+			animatedEntity.LoadContent(CONTENT_MANAGER.animationSheets[unitType.GetSpriteSheetUnit(owner)]);
+
 			Animation idle;
 			Animation right;
 			Animation up;
 			Animation down;
 			Animation done;
-			switch (unittype) {
+			switch (unitType) {
 				case UnitType.TransportCopter:
 				case UnitType.BattleCopter:
-					animEntity.Origin = new Vector2(8, 16);
+					animatedEntity.Origin = new Vector2(8, 16);
 					idle = new Animation("idle", true, 3, string.Empty);
 					for (int i = 0; i < 3; i++) {
 						idle.AddKeyFrame(i * 64, 0, 64, 64);
@@ -394,7 +445,7 @@ namespace Wartorn.GameData {
 
 				case UnitType.Fighter:
 				case UnitType.Bomber:
-					animEntity.Origin = new Vector2(8, 16);
+					animatedEntity.Origin = new Vector2(8, 16);
 
 					idle = new Animation("idle", true, 4, string.Empty);
 					for (int i = 0; i < 4; i++) {
@@ -444,13 +495,10 @@ namespace Wartorn.GameData {
 					done.AddKeyFrame(0, 192, 48, 48);
 					break;
 			}
-			#endregion
 
-			animEntity.AddAnimation(idle, right, up, down, done);
+			animatedEntity.AddAnimation(idle, right, up, down, done);
 
-			var result = new Unit(unittype, animEntity, owner, hp);
-			result.Animation.PlayAnimation(startingAnimation.ToString());
-			return result;
+			return animatedEntity;
 		}
 	}
 }

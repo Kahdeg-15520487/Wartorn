@@ -40,8 +40,8 @@ namespace Wartorn.Drawing
 
         public MovingUnitAnimation(Unit unit,List<Point> movementPath,Point startingPoint)
         {
-            movingUnit = UnitCreationHelper.Create(unit.UnitType, unit.Owner);
-            movingUnit.Animation.Depth = LayerDepth.Unit + 0.01f;
+            movingUnit = UnitCreationHelper.Instantiate(unit.UnitType, unit.Owner);
+            movingUnit.Animation.Depth = LayerDepth.Unit + 0.001f;
             this.movementPath = movementPath;
             movingUnitPosition = startingPoint;
 

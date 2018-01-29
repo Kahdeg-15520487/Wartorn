@@ -51,9 +51,9 @@ namespace Wartorn.GameData
         /// </summary>
         /// <param name="guid"></param>
         /// <returns></returns>
-        public Point FindUnit(Guid guid)
+        public Point FindUnit(string guid)
         {
-            Point result = Point.Zero;
+            Point result = new Point(-1,-1);
             foreach (Point p in mapcellthathaveunit)
             {
                 if (this[p].unit.guid == guid)
@@ -102,7 +102,7 @@ namespace Wartorn.GameData
 
         public void RegisterBuilding(Point position)
         {
-            if (this[position].terrain.isBuilding())
+            if (this[position].terrain.IsBuilding())
             {
                 mapcellthathavebuilding.Add(position);
             }
@@ -110,7 +110,7 @@ namespace Wartorn.GameData
 
         public void RemoveBuilding(Point position)
         {
-            if (mapcellthathavebuilding.Contains(position) && !this[position].terrain.isBuilding())
+            if (mapcellthathavebuilding.Contains(position) && !this[position].terrain.IsBuilding())
             {
                 mapcellthathavebuilding.Remove(position);
             }
@@ -150,7 +150,7 @@ namespace Wartorn.GameData
                 }
                 catch (Exception e)
                 {
-                    return null;
+					return null;
                 }
             }
             set
@@ -188,11 +188,45 @@ namespace Wartorn.GameData
         {
             map = new MapCell[w, h];
         }
+		public Map(Map other) {
+			map = other.map;
+			navigationGraph = new Graph();
 
-        public MapCell getMapCell(int x,int y)
+			if (other.navigationGraph != null) {
+				navigationGraph.Vertices = new Dictionary<string, Dictionary<string, int>>(other.navigationGraph.Vertices);
+			}
+			else {
+				this.GenerateNavigationMap();
+			}
+			weather = other.weather;
+			theme = other.theme;
+			isProcessed = false;
+
+			mapcellthathaveunit = new List<Point>();
+			mapcellthathavebuilding = new List<Point>();
+			for (int x = 0; x < Width; x++) {
+				for (int y = 0; y < Height; y++) {
+					Point p = new Point(x, y);
+					if (this[p].unit != null) {
+						mapcellthathaveunit.Add(p);
+					}
+					if (this[p].terrain.IsBuilding()) {
+						mapcellthathavebuilding.Add(p);
+					}
+				}
+			}
+		}
+
+        public MapCell GetMapCell(int x,int y)
         {
-            return map[x, y];
+            return this[x, y];
         }
+
+		public IEnumerable<MapCell> GetMapCells(IEnumerable<Point> ps) {
+			foreach (var p in ps) {
+				yield return this[p];
+			}
+		}
 
         public void Clone(Map m)
         {
@@ -222,7 +256,7 @@ namespace Wartorn.GameData
                     {
                         mapcellthathaveunit.Add(p);
                     }
-                    if (this[p].terrain.isBuilding())
+                    if (this[p].terrain.IsBuilding())
                     {
                         mapcellthathavebuilding.Add(p);
                     }

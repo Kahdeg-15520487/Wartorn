@@ -9,197 +9,172 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Wartorn
-{
-    public partial class Handler : Form
-    {
-        private bool allowshowdisplay = false;
-        //the thread that the game run on
-        private Thread GameThread = null;
+namespace Wartorn {
+	public partial class Handler : Form {
+		public string[] Args {
+			set {
+				CONTENT_MANAGER.ParseArguments(value);
+			}
+		}
 
-        //this is a hack-ish solution to allow the gamethread to call winform function;
-        //reference to this form, the background handler
-        private static Handler frm;
-        //delegate represent the function that open a file dialog
-        public delegate void MainThreadOperation(MessageEventArgs e);
+		private bool allowshowdisplay = false;
+		//the thread that the game run on
+		private Thread GameThread = null;
 
-        public Handler()
-        {
-            frm = this;
-            InitializeComponent();
-        }
+		//this is a hack-ish solution to allow the gamethread to call winform function;
+		//reference to this form, the background handler
+		private static Handler frm;
+		//delegate represent the function that open a file dialog
+		public delegate void MainThreadOperation(MessageEventArgs e);
 
-        static void StartGame(object handler)
-        {
-            using (var game = new GameManager())
-            {
-                Constants.Width = 720;
-                Constants.Height = 480;
-                CONTENT_MANAGER.messagebox += MessageShow;
-                CONTENT_MANAGER.fileopendialog += OpenFile;
-                CONTENT_MANAGER.promptbox += InputBox;
-                CONTENT_MANAGER.dropdownbox += DropdownBox;
-                CONTENT_MANAGER.getclipboard += GetClipboard;
-                CONTENT_MANAGER.setclipboard += SetClipboard;
-                game.Run();
-            }
-        }
+		public Handler() {
+			frm = this;
+			InitializeComponent();
+		}
 
-        private void OnFormLoad(object sender, EventArgs e)
-        {
-            frm.ShowInTaskbar = false;
-            frm.Opacity = 0;
+		static void StartGame(object handler) {
+			using (var game = new GameManager()) {
+				Constants.Width = 720;
+				Constants.Height = 480;
+				CONTENT_MANAGER.messagebox += MessageShow;
+				CONTENT_MANAGER.fileopendialog += OpenFile;
+				CONTENT_MANAGER.promptbox += InputBox;
+				CONTENT_MANAGER.dropdownbox += DropdownBox;
+				CONTENT_MANAGER.getclipboard += GetClipboard;
+				CONTENT_MANAGER.setclipboard += SetClipboard;
+				game.Run();
+			}
+		}
 
-			MessageEventArgs messageEventArgs = new MessageEventArgs("Choose your language:|en|vi");
-			ShowDropdownBoxMainThread(messageEventArgs);
-			CONTENT_MANAGER.Language = messageEventArgs.message;
-        }
+		private void OnFormLoad(object sender, EventArgs e) {
+			frm.ShowInTaskbar = false;
+			frm.Opacity = 0;
 
-        private static void MessageShow(object sender, MessageEventArgs e)
-        {
-            DialogResult result = MessageBox.Show(e.message);
-            e.message = result.ToString();
-        }
+			//MessageEventArgs messageEventArgs = new MessageEventArgs("Choose your language:|en|vi");
+			//ShowDropdownBoxMainThread(messageEventArgs);
+			//CONTENT_MANAGER.Language = messageEventArgs.message;
+		}
 
-        #region Open file dialog
-        private static void OpenFile(object sender, MessageEventArgs e)
-        {
-            MainThreadOperation temp = OpenFileMainThread;
-            frm.Invoke(temp, e);
-        }
+		private static void MessageShow(object sender, MessageEventArgs e) {
+			DialogResult result = MessageBox.Show(e.message);
+			e.message = result.ToString();
+		}
 
-        private static void OpenFileMainThread(MessageEventArgs e)
-        {
-            var filedialog = new OpenFileDialog();
-            filedialog.InitialDirectory = e.message;
-            try
-            {
-                if (filedialog.ShowDialog() == DialogResult.OK)
-                {
-                    try
-                    {
-                        e.message = filedialog.FileName;
-                    }
-                    catch (Exception er)
-                    {
-                        e.message = string.Empty;
-                        Utility.HelperFunction.Log(er);
-                    }
-                }
-            }
-            catch (Exception err)
-            {
-                e.message = string.Empty;
-                Utility.HelperFunction.Log(err);
-                throw;
-            }
-        }
-        #endregion
+		#region Open file dialog
+		private static void OpenFile(object sender, MessageEventArgs e) {
+			MainThreadOperation temp = OpenFileMainThread;
+			frm.Invoke(temp, e);
+		}
 
-        #region InputDialog
+		private static void OpenFileMainThread(MessageEventArgs e) {
+			var filedialog = new OpenFileDialog();
+			filedialog.InitialDirectory = e.message;
+			try {
+				if (filedialog.ShowDialog() == DialogResult.OK) {
+					try {
+						e.message = filedialog.FileName;
+					}
+					catch (Exception er) {
+						e.message = string.Empty;
+						Utility.HelperFunction.Log(er);
+					}
+				}
+			}
+			catch (Exception err) {
+				e.message = string.Empty;
+				Utility.HelperFunction.Log(err);
+				throw;
+			}
+		}
+		#endregion
 
-        private static void InputBox(object sender, MessageEventArgs e)
-        {
-            MainThreadOperation temp = ShowInputBoxMainThread;
-            frm.Invoke(temp, e);
-        }
+		#region InputDialog
 
-        private static void ShowInputBoxMainThread(MessageEventArgs e)
-        {
-            InputDialog inputDialog = new InputDialog();
-            inputDialog.Prompt = e.message;
-            var result = inputDialog.ShowDialog();
-            if (result == DialogResult.OK)
-            {
-                e.message = inputDialog.Input;
-            }
-            else
-            {
-                e.message = result.ToString();
-            }
-        }
-        #endregion
+		private static void InputBox(object sender, MessageEventArgs e) {
+			MainThreadOperation temp = ShowInputBoxMainThread;
+			frm.Invoke(temp, e);
+		}
 
-        #region DropdownDialog
+		private static void ShowInputBoxMainThread(MessageEventArgs e) {
+			InputDialog inputDialog = new InputDialog();
+			inputDialog.Prompt = e.message;
+			var result = inputDialog.ShowDialog();
+			if (result == DialogResult.OK) {
+				e.message = inputDialog.Input;
+			}
+			else {
+				e.message = result.ToString();
+			}
+		}
+		#endregion
 
-        private static void DropdownBox(object sender, MessageEventArgs e)
-        {
-            MainThreadOperation temp = ShowDropdownBoxMainThread;
-            frm.Invoke(temp, e);
-        }
+		#region DropdownDialog
 
-        private static void ShowDropdownBoxMainThread(MessageEventArgs e)
-        {
-            DropdownDialog dropdownDialog = new DropdownDialog();
-            var options = e.message.Split('|').ToList();
-            dropdownDialog.Prompt = options[0];
-            options.RemoveAt(0);
-            dropdownDialog.Options = options;
-            var result = dropdownDialog.ShowDialog();
-            if (result == DialogResult.OK)
-            {
-                e.message = dropdownDialog.Selected;
-            }
-            else
-            {
-                e.message = result.ToString();
-            }
-        }
+		private static void DropdownBox(object sender, MessageEventArgs e) {
+			MainThreadOperation temp = ShowDropdownBoxMainThread;
+			frm.Invoke(temp, e);
+		}
 
-        #endregion
+		private static void ShowDropdownBoxMainThread(MessageEventArgs e) {
+			DropdownDialog dropdownDialog = new DropdownDialog();
+			var options = e.message.Split('|').ToList();
+			dropdownDialog.Prompt = options[0];
+			options.RemoveAt(0);
+			dropdownDialog.Options = options;
+			var result = dropdownDialog.ShowDialog();
+			if (result == DialogResult.OK) {
+				e.message = dropdownDialog.Selected;
+			}
+			else {
+				e.message = result.ToString();
+			}
+		}
 
-        #region GetClipboard
+		#endregion
 
-        private static void GetClipboard(object sender, MessageEventArgs e)
-        {
-            MainThreadOperation temp = GetClipboardMainThread;
-            frm.Invoke(temp, e);
-        }
+		#region GetClipboard
 
-        private static void GetClipboardMainThread(MessageEventArgs e)
-        {
-            e.message = Clipboard.GetText();
-        }
+		private static void GetClipboard(object sender, MessageEventArgs e) {
+			MainThreadOperation temp = GetClipboardMainThread;
+			frm.Invoke(temp, e);
+		}
 
-        #endregion
+		private static void GetClipboardMainThread(MessageEventArgs e) {
+			e.message = Clipboard.GetText();
+		}
 
-        #region SetClipboard
+		#endregion
 
-        private static void SetClipboard(object sender, MessageEventArgs e)
-        {
-            MainThreadOperation temp = SetClipboardMainThread;
-            frm.Invoke(temp, e);
-        }
+		#region SetClipboard
 
-        private static void SetClipboardMainThread(MessageEventArgs e)
-        {
-            Clipboard.SetText(e.message);
-        }
+		private static void SetClipboard(object sender, MessageEventArgs e) {
+			MainThreadOperation temp = SetClipboardMainThread;
+			frm.Invoke(temp, e);
+		}
 
-        #endregion
+		private static void SetClipboardMainThread(MessageEventArgs e) {
+			Clipboard.SetText(e.message);
+		}
 
-        private void Handler_Shown(object sender, EventArgs e)
-        {
-            //MessageBox.Show("lala");
-            if (GameThread != null)
-            {
+		#endregion
 
-            }
-            else
-            {
-                GameThread = new Thread(StartGame);
-                GameThread.Start();
-            }
-        }
-    }
+		private void Handler_Shown(object sender, EventArgs e) {
+			//MessageBox.Show("lala");
+			if (GameThread != null) {
 
-    public class MessageEventArgs : EventArgs
-    {
-        public string message = string.Empty;
-        public MessageEventArgs() { }
-        public MessageEventArgs(string e)
-        {
-            message = e;
-        }
-    }
+			}
+			else {
+				GameThread = new Thread(StartGame);
+				GameThread.Start();
+			}
+		}
+	}
+
+	public class MessageEventArgs : EventArgs {
+		public string message = string.Empty;
+		public MessageEventArgs() { }
+		public MessageEventArgs(string e) {
+			message = e;
+		}
+	}
 }

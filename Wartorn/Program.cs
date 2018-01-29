@@ -25,11 +25,13 @@ namespace Wartorn
         /// The main entry point for the application.
         /// </summary>
         [STAThread, SecurityPermission(SecurityAction.Demand, Flags = SecurityPermissionFlag.ControlAppDomain)]
-        static void Main()
+        static void Main(string[] args)
         {
             AppDomain currentDomain = AppDomain.CurrentDomain;
             currentDomain.UnhandledException += CurrentDomain_UnhandledException;
-            Application.Run(new Handler());
+			var handler = new Handler();
+			handler.Args = args;
+			Application.Run(handler);
         }
 
         private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)

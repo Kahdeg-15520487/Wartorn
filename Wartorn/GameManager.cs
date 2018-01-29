@@ -23,6 +23,7 @@ using Wartorn.SpriteRectangle;
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Fclp;
 
 namespace Wartorn
 {
@@ -69,7 +70,6 @@ namespace Wartorn
         /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
             TerrainSpriteSourceRectangle.LoadSprite();
             UISpriteSheetSourceRectangle.LoadSprite();
             UnitSpriteSheetRectangle.LoadSprite();
@@ -125,10 +125,18 @@ namespace Wartorn
             //SCREEN_MANAGER.add_screen(new TestConsole(GraphicsDevice));
             SCREEN_MANAGER.add_screen(new Screens.MainGameScreen.EndGameScreen(GraphicsDevice));
 
-            //SCREEN_MANAGER.goto_screen("TestAnimationScreen");
-            //SCREEN_MANAGER.goto_screen("SetupScreen");
-            SCREEN_MANAGER.goto_screen("MainMenuScreen");
-            //SCREEN_MANAGER.goto_screen("EditorScreen");
+			//SCREEN_MANAGER.goto_screen("TestAnimationScreen");
+			//SCREEN_MANAGER.goto_screen("SetupScreen");
+			if (string.IsNullOrEmpty(CONTENT_MANAGER.MapName)) {
+				SCREEN_MANAGER.goto_screen("MainMenuScreen");
+			}
+			else {
+				SCREEN_MANAGER.goto_screen("SetupScreen");
+				var setupscreen = ((Screens.MainGameScreen.SetupScreen)SCREEN_MANAGER.get_screen("SetupScreen"));
+				setupscreen.LoadMap(Path.Combine(CONTENT_MANAGER.LocalRootPath, "map", CONTENT_MANAGER.MapName));
+				setupscreen.SetUpSessionDataAndLaunchMainGame();
+			}
+			//SCREEN_MANAGER.goto_screen("EditorScreen");
 
             SCREEN_MANAGER.Init();
         }
@@ -139,7 +147,6 @@ namespace Wartorn
         /// </summary>
         protected override void UnloadContent()
         {
-            // TODO: Unload any non ContentManager content here
             Environment.Exit(0);
         }
 
@@ -152,8 +159,7 @@ namespace Wartorn
         {
             //if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
             //    Exit();
-
-            // TODO: Add your update logic here
+			
             CONTENT_MANAGER.inputState = new InputState(Mouse.GetState(), Keyboard.GetState());
 
             //if (HelperFunction.IsKeyPress(Keys.F1))
@@ -187,7 +193,6 @@ namespace Wartorn
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
             CONTENT_MANAGER.spriteBatch.Begin(SpriteSortMode.FrontToBack);
             {
                 SCREEN_MANAGER.Draw(gameTime);

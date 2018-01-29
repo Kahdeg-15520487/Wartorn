@@ -164,7 +164,7 @@ namespace Wartorn.Screens {
 
 			button_ChangeMapSize.MouseClick += (sender, e) => {
 				int x, y;
-				string input = CONTENT_MANAGER.ShowPromptBox("Nhap chieu rong cua map:");
+				string input = CONTENT_MANAGER.ShowPromptBox("Please input map's width:");
 				if (!int.TryParse(input, out x)) {
 					CONTENT_MANAGER.ShowMessageBox("Please input number");
 					return;
@@ -175,7 +175,7 @@ namespace Wartorn.Screens {
 					return;
 				}
 
-				input = CONTENT_MANAGER.ShowPromptBox("Nhap chieu cao cua map:");
+				input = CONTENT_MANAGER.ShowPromptBox("Please input map's height:");
 				if (!int.TryParse(input, out y)) {
 					CONTENT_MANAGER.ShowMessageBox("Please input number");
 					return;
@@ -554,8 +554,7 @@ namespace Wartorn.Screens {
 			#endregion
 
 			#region unit button
-
-			//TODO make the unit button
+			
 			Button button_soldier = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Soldier), new Point(10, 230), 0.75f);
 			Button button_mech = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Mech), new Point(50, 230), 0.75f);
 			Button button_recon = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Recon), new Point(90, 230), 0.75f);
@@ -754,7 +753,7 @@ namespace Wartorn.Screens {
 					if (selectedMapCell != null) {
 						//check if the mapcell is free
 						if (map[selectedMapCell].unit == null) {
-							Unit tempunit = UnitCreationHelper.Create(currentlySelectedUnit, currentlySelectedOwner);
+							Unit tempunit = UnitCreationHelper.Instantiate(currentlySelectedUnit, currentlySelectedOwner);
 							map.RegisterUnit(selectedMapCell, tempunit);
 							map.IsProcessed = false;
 						}

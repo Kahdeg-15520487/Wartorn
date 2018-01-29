@@ -4,118 +4,109 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Wartorn.GameData
-{
-    public enum TerrainType
-    {
-        //terrain
-        Reef,
-        Sea,
-        River,
-        Coast,
-        Cliff,
-        Road,
-        Bridge,
-        Plain,
-        Forest,
-        Mountain,
+namespace Wartorn.GameData {
+	public enum TerrainType {
+		//terrain
+		Reef,
+		Sea,
+		River,
+		Coast,
+		Cliff,
+		Road,
+		Bridge,
+		Plain,
+		Forest,
+		Mountain,
 
-        //neutral
-        MissileSilo,
-        MissileSiloLaunched,
+		//neutral
+		MissileSilo,
+		MissileSiloLaunched,
 
-        //building
-        City,
-        Factory,
-        AirPort,
-        Harbor,
-        Radar,
-        SupplyBase,
-        HQ
-    }
-    
-    public enum UnitType
-    {
-        None,
+		//building
+		City,
+		Factory,
+		AirPort,
+		Harbor,
+		Radar,
+		SupplyBase,
+		HQ
+	}
 
-        //land
-        Soldier,
-        Mech,
-        Recon,
-        APC,
-        Tank,
-        HeavyTank,
-        Artillery,
-        Rocket,
-        AntiAir,
-        Missile,
+	public enum UnitType {
+		None,
 
-        //air
-        TransportCopter,
-        BattleCopter,
-        Fighter,
-        Bomber,
+		//land
+		Soldier,
+		Mech,
+		Recon,
+		APC,
+		Tank,
+		HeavyTank,
+		Artillery,
+		Rocket,
+		AntiAir,
+		Missile,
 
-        //sea
-        Lander,
-        Cruiser,
-        Submarine,
-        Battleship
-    }
+		//air
+		TransportCopter,
+		BattleCopter,
+		Fighter,
+		Bomber,
 
-    public enum MovementType
-    {
-        None,
-        Soldier,
-        Mech,
-        Tires,
-        Track,
-        Air,
-        Ship,
-        Lander
-    }
+		//sea
+		Lander,
+		Cruiser,
+		Submarine,
+		Battleship
+	}
 
-    public enum Weather
-    {
-        Sunny,
-        Rain,
-        Snow
-    }
+	public enum MovementType {
+		None,
+		Soldier,
+		Mech,
+		Tires,
+		Track,
+		Air,
+		Ship,
+		Lander
+	}
 
-    public enum Theme
-    {
-        Normal,
-        Tropical,
-        Desert
-    }
+	public enum Weather {
+		Sunny,
+		Rain,
+		Snow
+	}
 
-    public enum Owner
-    {
-        None,
-        Red,
-        Blue,
-        Green,
-        Yellow
-    }
+	public enum Theme {
+		Normal,
+		Tropical,
+		Desert
+	}
 
-    public enum GameMode
-    {
-        campaign
-    }
+	public enum Owner {
+		None,
+		Red,
+		Blue,
+		Green,
+		Yellow
+	}
 
-    [Flags]
-    public enum Command
-    {
-        None = 0,
-        Wait = 1,
-        Attack = 2,
-        Capture = 4,
-        Load = 8,
-        Drop = 16,
-        Rise = 32,
-        Dive = 64,
-        Supply = 128,
-        Move = 256,
-        Operate = 512
-    }
+	public enum GameMode {
+		campaign
+	}
+
+	[Flags]
+	public enum Command {
+		None = 0,
+		Wait = 1 << 0,
+		Attack = 1 << 1,
+		Capture = 1 << 2,
+		Load = 1 << 3,
+		Drop = 1 << 4,
+		Rise = 1 << 5,
+		Dive = 1 << 6,
+		Supply = 1 << 7,
+		Move = 1 << 8,
+		Operate = 1 << 9
+	}
 }

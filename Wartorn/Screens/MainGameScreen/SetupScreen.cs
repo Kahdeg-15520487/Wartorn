@@ -24,147 +24,132 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Microsoft.Xna.Framework.Content;
 
-namespace Wartorn.Screens.MainGameScreen
-{
-    class SetupScreen : Screen
-    {
-        SessionData sessiondata;
-        Canvas canvas;
+namespace Wartorn.Screens.MainGameScreen {
+	class SetupScreen : Screen {
+		SessionData sessiondata;
+		Canvas canvas;
 
-        Map map = null;
+		Map map = null;
 
-        MiniMapGenerator minimapgen;
-        Texture2D minimap;
+		MiniMapGenerator minimapgen;
+		Texture2D minimap;
 
-        string mapdata;
+		string mapdata;
 
-        public SetupScreen(GraphicsDevice device) : base(device, "SetupScreen")
-        {
+		public SetupScreen(GraphicsDevice device) : base(device, "SetupScreen") {
 
-        }
+		}
 
-        public override bool Init()
-        {
-            canvas = new Canvas();
-            sessiondata = new SessionData();
+		public override bool Init() {
+			canvas = new Canvas();
+			sessiondata = new SessionData();
 
-            InitUI();
+			InitUI();
 
-            minimapgen = new MiniMapGenerator(_device, CONTENT_MANAGER.spriteBatch);
+			minimapgen = new MiniMapGenerator(_device, CONTENT_MANAGER.spriteBatch);
 
-            return base.Init();
-        }
+			return base.Init();
+		}
 
-        private void InitUI()
-        {
-            //declare ui elements
-            Label label_playerinfo = new Label("kahdeg", new Point(10, 20), new Vector2(80, 30), CONTENT_MANAGER.arcadefont);
+		private void InitUI() {
+			//declare ui elements
+			Label label_playerinfo = new Label("kahdeg", new Point(10, 20), new Vector2(80, 30), CONTENT_MANAGER.arcadefont);
 
 			PictureBox picturebox_tutorial = new PictureBox(CONTENT_MANAGER.setuptutorial, Point.Zero, null, null) {
 				IsVisible = CONTENT_MANAGER.IsTutorial
 			};
 
-            Button button_selectmap = new Button(UISpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetUI.Open), new Point(650, 20), 0.5f);
-            Button button_exit = new Button(UISpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetUI.Exit), new Point(5, 5), 0.5f);
-            Button button_start = new Button("Start", new Point(100, 50), null, CONTENT_MANAGER.arcadefont);
+			Button button_selectmap = new Button(UISpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetUI.Open), new Point(650, 20), 0.5f);
+			Button button_exit = new Button(UISpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetUI.Exit), new Point(5, 5), 0.5f);
+			Button button_start = new Button("Start", new Point(100, 50), null, CONTENT_MANAGER.arcadefont);
 
-            //bind event
-            button_selectmap.MouseClick += (sender, e) =>
-            {
-                string path = CONTENT_MANAGER.ShowFileOpenDialog(CONTENT_MANAGER.LocalRootPath + @"\map\");
-                string content = string.Empty;
-                try
-                {
-                    content = File.ReadAllText(path);
-                }
-                catch (Exception er)
-                {
-                    Utility.HelperFunction.Log(er);
-                }
+			//bind event
+			button_selectmap.MouseClick += (sender, e) => {
 
-                if (!string.IsNullOrEmpty(content))
-                {
-                    mapdata = content;
-                    var temp = Storage.MapData.LoadMap(content);
-                    if (temp != null)
-                    {
-                        minimap = minimapgen.GenerateMapTexture(temp);
-                        map = new Map();
-                        map.Clone(temp);
-                    }
-                }
-            };
-            button_exit.MouseClick += (sender, e) =>
-            {
-                SCREEN_MANAGER.goto_screen("MainMenuScreen");
-            };
-            button_start.MouseClick += (sender, e) =>
-            {
-                if (map == null)
-                {
-                    return;
-                }
-                sessiondata = new SessionData();
-                sessiondata.map = new Map();
-                sessiondata.map.Clone(Storage.MapData.LoadMap(mapdata));
-                sessiondata.gameMode = GameMode.campaign;
-                sessiondata.playerInfos = new PlayerInfo[2];
-                sessiondata.playerInfos[0] = new PlayerInfo(0, Owner.Red);
-                sessiondata.playerInfos[1] = new PlayerInfo(1, Owner.Blue);
+				string path = CONTENT_MANAGER.ShowFileOpenDialog(Path.Combine(CONTENT_MANAGER.LocalRootPath, "map"));
+				LoadMap(path);
+				minimap = minimapgen.GenerateMapTexture(map);
+			};
+			button_exit.MouseClick += (sender, e) => {
+				SCREEN_MANAGER.goto_screen("MainMenuScreen");
+			};
+			button_start.MouseClick += (sender, e) => {
+				SetUpSessionDataAndLaunchMainGame();
+			};
 
-                foreach (var p in map.GetOwnedBuilding(Owner.Red))
-                {
-                    if (map[p].terrain == TerrainType.HQ && map[p].owner == Owner.Red)
-                    {
-                        sessiondata.playerInfos[0].HQlocation = p;
-                        break;
-                    }
-                }
+			//add to canvas
+			canvas.AddElement("label_playerinfo", label_playerinfo);
+			canvas.AddElement("button_selectmap", button_selectmap);
+			canvas.AddElement("button_exit", button_exit);
+			canvas.AddElement("button_start", button_start);
+			canvas.AddElement("picturebox_tutorial", picturebox_tutorial);
+		}
 
-                foreach (var p in map.GetOwnedBuilding(Owner.Blue))
-                {
-                    if (map[p].terrain == TerrainType.HQ && map[p].owner == Owner.Blue)
-                    {
-                        sessiondata.playerInfos[1].HQlocation = p;
-                        break;
-                    }
-                }
+		public void LoadMap(string path) {
+			string content = string.Empty;
+			try {
+				content = File.ReadAllText(path);
+			}
+			catch (Exception er) {
+				Utility.HelperFunction.Log(er);
+			}
 
-                ((GameScreen)SCREEN_MANAGER.get_screen("GameScreen")).InitSession(sessiondata);
-                SCREEN_MANAGER.goto_screen("GameScreen");
-            };
+			if (!string.IsNullOrEmpty(content)) {
+				mapdata = content;
+				var temp = Storage.MapData.LoadMap(content);
+				if (temp != null) {
+					map = new Map(temp);
+				}
+			}
+		}
 
-            //add to canvas
-            canvas.AddElement("label_playerinfo", label_playerinfo);
-            canvas.AddElement("button_selectmap", button_selectmap);
-            canvas.AddElement("button_exit", button_exit);
-            canvas.AddElement("button_start", button_start);
-            canvas.AddElement("picturebox_tutorial", picturebox_tutorial);
-        }
+		public void SetUpSessionDataAndLaunchMainGame() {
+			if (map == null) {
+				return;
+			}
+			sessiondata = new SessionData {
+				map = new Map(MapData.LoadMap(mapdata)),
+				gameMode = GameMode.campaign,
+				playerInfos = new PlayerInfo[2] { new PlayerInfo(0, Owner.Red), new PlayerInfo(1, Owner.Blue) }
+			};
 
-        public override void Shutdown()
-        {
-            sessiondata.playerInfos = null;
-            sessiondata.map = null;
-            map = null;
-            minimap?.Dispose();
-            minimap = null;
-        }
+			foreach (var p in map.GetOwnedBuilding(Owner.Red)) {
+				if (map[p].terrain == TerrainType.HQ && map[p].owner == Owner.Red) {
+					sessiondata.playerInfos[0].HQlocation = p;
+					break;
+				}
+			}
 
-        public override void Update(GameTime gameTime)
-        {
-            canvas.Update(CONTENT_MANAGER.inputState, CONTENT_MANAGER.lastInputState);
-        }
+			foreach (var p in map.GetOwnedBuilding(Owner.Blue)) {
+				if (map[p].terrain == TerrainType.HQ && map[p].owner == Owner.Blue) {
+					sessiondata.playerInfos[1].HQlocation = p;
+					break;
+				}
+			}
 
-        public override void Draw(GameTime gameTime)
-        {
-            canvas.Draw(CONTENT_MANAGER.spriteBatch);
-            if (minimap != null)
-            {
-                CONTENT_MANAGER.spriteBatch.Draw(minimap, new Vector2(100, 100), Color.White);
-            }
-        }
-    }
+				((GameScreen)SCREEN_MANAGER.get_screen("GameScreen")).InitSession(sessiondata);
+			SCREEN_MANAGER.goto_screen("GameScreen");
+		}
+
+		public override void Shutdown() {
+			sessiondata.playerInfos = null;
+			sessiondata.map = null;
+			map = null;
+			minimap?.Dispose();
+			minimap = null;
+		}
+
+		public override void Update(GameTime gameTime) {
+			canvas.Update(CONTENT_MANAGER.inputState, CONTENT_MANAGER.lastInputState);
+		}
+
+		public override void Draw(GameTime gameTime) {
+			canvas.Draw(CONTENT_MANAGER.spriteBatch);
+			if (minimap != null) {
+				CONTENT_MANAGER.spriteBatch.Draw(minimap, new Vector2(100, 100), Color.White);
+			}
+		}
+	}
 
 
 }

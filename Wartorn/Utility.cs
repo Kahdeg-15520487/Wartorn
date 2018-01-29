@@ -161,7 +161,7 @@ namespace Wartorn
 
         public static class ExtensionMethod
         {
-            public static bool isInfantryUnit(this UnitType ut)
+            public static bool IsInfantryUnit(this UnitType ut)
             {
                 switch (ut)
                 {
@@ -173,7 +173,7 @@ namespace Wartorn
                 }
             }
 
-            public static bool isRangedUnit(this UnitType ut)
+            public static bool IsRangedUnit(this UnitType ut)
             {
                 switch (ut)
                 {
@@ -187,11 +187,10 @@ namespace Wartorn
                 }
             }
 
-            public static bool isLandUnit(this UnitType ut)
+            public static bool IsLandUnit(this UnitType ut)
             {
                 switch (ut)
                 {
-                    case UnitType.None:
                     case UnitType.Soldier:
                     case UnitType.Mech:
                     case UnitType.Recon:
@@ -208,7 +207,7 @@ namespace Wartorn
                 }
             }
 
-            public static bool isAirUnit(this UnitType ut)
+            public static bool IsAirUnit(this UnitType ut)
             {
                 switch (ut)
                 {
@@ -222,7 +221,7 @@ namespace Wartorn
                 }
             }
 
-            public static bool isNavalUnit(this UnitType ut)
+            public static bool IsNavalUnit(this UnitType ut)
             {
                 switch (ut)
                 {
@@ -234,9 +233,20 @@ namespace Wartorn
                     default:
                         return false;
                 }
-            }
+			}
 
-            public static bool isBuilding(this TerrainType t)
+			public static bool IsCarrierUnit(this UnitType ut) {
+				switch (ut) {
+					case UnitType.APC:
+					case UnitType.TransportCopter:
+					case UnitType.Lander:
+						return true;
+					default:
+						return false;
+				}
+			}
+
+			public static bool IsBuilding(this TerrainType t)
             {
                 switch (t)
                 {
@@ -255,7 +265,7 @@ namespace Wartorn
                 }
             }
 
-            public static bool isBuildingThatIsCapturable(this TerrainType t)
+            public static bool IsBuildingThatIsCapturable(this TerrainType t)
             {
                 switch (t)
                 {
@@ -293,7 +303,7 @@ namespace Wartorn
                         return "H-Tank";
 
                     case UnitType.Artillery:
-                        return "Arty";
+                        return "Artill";
 
                     case UnitType.TransportCopter:
                         return "T-Copter";
@@ -1136,7 +1146,14 @@ namespace Wartorn
                 return output;
             }
 
-            public static string toString(this Point p)
+			public static IEnumerable<Point> GetNearbyPoints(this Point p,params Direction[] dirs) {
+				foreach (var d in dirs) {
+					yield return GetNearbyPoint(p, d);
+				}
+			}
+
+
+			public static string toString(this Point p)
             {
                 return string.Format("{0}:{1}", p.X, p.Y);
             }

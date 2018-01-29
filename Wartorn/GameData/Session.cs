@@ -16,14 +16,14 @@ namespace Wartorn.GameData
         public Owner owner;
         public int money;
         public Vector2 lastCameraLocation;
-        public List<Guid> ownedUnit;
+        public List<string> ownedUnit;
         public Point HQlocation;
         public PlayerInfo(int playerid,Owner owner,int startingmoney = 0)
         {
             playerId = playerid;
             this.owner = owner;
             money = startingmoney;
-            ownedUnit = new List<Guid>();
+            ownedUnit = new List<string>();
         }
     }
 

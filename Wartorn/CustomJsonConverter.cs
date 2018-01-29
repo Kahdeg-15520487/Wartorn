@@ -221,7 +221,7 @@ namespace Wartorn {
 							break;
 						case "lower":
 							//terrainUpper = (SpriteSheetTerrain)(serializer.Deserialize<int>(reader));
-							terrainLower= serializer.Deserialize<string>(reader).ToEnum<SpriteSheetTerrain>();
+							terrainLower = serializer.Deserialize<string>(reader).ToEnum<SpriteSheetTerrain>();
 							break;
 						case "upper":
 							//terrainLower = (SpriteSheetTerrain)(serializer.Deserialize<int>(reader));
@@ -253,21 +253,28 @@ namespace Wartorn {
 			public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer) {
 				Unit temp = (Unit)value;
 				writer.WriteStartObject();
+				writer.WritePropertyName("id");
+				serializer.Serialize(writer, temp.guid);
 				writer.WritePropertyName("UnitType");
 				serializer.Serialize(writer, temp.UnitType);
 				writer.WritePropertyName("Owner");
 				serializer.Serialize(writer, (int)temp.Owner);
-				writer.WritePropertyName("HP");
+				writer.WritePropertyName("hp");
 				serializer.Serialize(writer, temp.HitPoint);
-				writer.WritePropertyName("guid");
-				serializer.Serialize(writer, temp.guid);
+				writer.WritePropertyName("gas");
+				serializer.Serialize(writer, temp.Gas);
+				writer.WritePropertyName("ammo");
+				serializer.Serialize(writer, temp.Ammo);
 				writer.WriteEndObject();
 			}
 
 			public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer) {
 				UnitType unittype = UnitType.None;
 				Owner owner = Owner.None;
+				string id = string.Empty;
 				int hp = 0;
+				int gas = 0;
+				int ammo = 0;
 
 				bool gotUnittype = false;
 				bool gotOwner = false;
@@ -283,6 +290,9 @@ namespace Wartorn {
 						continue;
 					}
 					switch (propertyName) {
+						case "id":
+							id = serializer.Deserialize<string>(reader);
+							break;
 						case "UnitType":
 							unittype = serializer.Deserialize<UnitType>(reader);
 							gotUnittype = true;
@@ -292,8 +302,16 @@ namespace Wartorn {
 							owner = serializer.Deserialize<string>(reader).ToEnum<Owner>();
 							gotOwner = true;
 							break;
-						case "HP":
+						case "hp":
 							hp = serializer.Deserialize<int>(reader);
+							gotHp = true;
+							break;
+						case "gas":
+							gas = serializer.Deserialize<int>(reader);
+							gotHp = true;
+							break;
+						case "ammo":
+							ammo = serializer.Deserialize<int>(reader);
 							gotHp = true;
 							break;
 						default:
@@ -306,7 +324,7 @@ namespace Wartorn {
 					return null;
 				}
 
-				return UnitCreationHelper.Create(unittype, owner, hp);
+				return UnitCreationHelper.Instantiate(unittype, owner, hp, gas, ammo, id);
 			}
 		}
 		#endregion
