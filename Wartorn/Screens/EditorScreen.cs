@@ -220,7 +220,7 @@ namespace Wartorn.Screens {
 					if (map[p].terrain == TerrainType.HQ) {
 						sidehq[owner]++;
 					}
-					if (map[p].terrain.isBuildingThatProduceUnit()) {
+					if (map[p].terrain.IsBuildingThatProduceUnit()) {
 						sidebuildingthatcanproduceunit[owner]++;
 					}
 				}

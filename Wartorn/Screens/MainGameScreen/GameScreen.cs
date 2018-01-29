@@ -39,6 +39,7 @@ namespace Wartorn.Screens.MainGameScreen {
 		UnitCommand,
 		BuildingSelected,
 		BuildingBuildUnit,
+		CameraPan
 	}
 
 	class GameScreen : Screen {
@@ -970,6 +971,7 @@ namespace Wartorn.Screens.MainGameScreen {
 
 					Unit tempunit = map[selectedUnit].unit;
 					Point selectedTarget;
+					Func<Point, bool> filter;
 
 					switch (selectedCmd) {
 						case Command.Wait:
@@ -1046,7 +1048,6 @@ namespace Wartorn.Screens.MainGameScreen {
 
 							isDrawTargetRange = false;
 
-							Func<Point, bool> filter;
 							if (tempunit.UnitType == UnitType.APC || tempunit.UnitType == UnitType.TransportCopter) {
 								filter = (Point p) => (map[p].unit != null && map[p].unit.UnitType.IsInfantryUnit());
 							}
@@ -1068,7 +1069,13 @@ namespace Wartorn.Screens.MainGameScreen {
 								//do load unit stuff
 								selectedTarget = selectedMapCell;
 
+								//reset action point for the unit
+								map[selectedTarget].unit.UpdateActionPoint(Command.None);
+
+								//move the unit into the carrier
 								tempunit.carryingUnit = map[selectedTarget].unit;
+
+								//remove the unit from the map
 								map.RemoveUnit(selectedTarget);
 
 								//end command
@@ -1077,12 +1084,49 @@ namespace Wartorn.Screens.MainGameScreen {
 
 							break;
 
-						case Command.Drop:
-							//show load range like attack range
-							//select unit to load in
-							//if not select, return to previous command
-							//if selected a unit, move unit from mapcell into the carrier
-							//end command
+						case Command.Drop: {
+								//show load range like attack range
+								//load range include free mapcell north,south,west,east to the carrier
+								//select mapcell to drop out
+								//if not select, return to previous command
+								//if selected a unit, move unit from the carrier into the selected mapcell
+								//end command
+
+								isDrawTargetRange = false;
+
+								//create filter
+								//free mapcell north,south,west,east to the carrier
+								//the carried unit can stand on
+								if (tempunit.UnitType == UnitType.APC || tempunit.UnitType == UnitType.TransportCopter) {
+									filter = (Point p) => (map[p].unit == null && tempunit.UnitType.GetMovementType().IsTraversable(map[p].terrain));
+								}
+								else {
+									filter = (Point p) => (map[p].terrain == TerrainType.Coast || map[p].terrain == TerrainType.Harbor);
+								}
+
+								//filter unit that the carrier can take
+								attackRange = selectedUnit.GetNearbyPoints(Direction.North, Direction.East, Direction.South, Direction.West).Where(filter).ToList();
+
+								isDrawTargetRange = true;
+
+								if (HelperFunction.IsLeftMousePressed()
+								 && attackRange.Contains(selectedMapCell)
+								 && map[selectedMapCell].unit == null) {
+									tempunit.UpdateActionPoint(Command.Drop);
+
+									//do drop unit stuff
+									selectedTarget = selectedMapCell;
+
+									//add the unit into the map
+									map.RegisterUnit(selectedTarget, tempunit.carryingUnit);
+
+									//remove the unit from the carrier
+									tempunit.carryingUnit = null;
+
+									//end command
+									goto finalise_command_execution;
+								}
+							}
 							break;
 
 						case Command.Rise:
@@ -1599,7 +1643,7 @@ finalise_command_execution:
 			return (
 				//check if the currently selected have 
 				//a building that can produce unit
-				temp.terrain.isBuildingThatProduceUnit()
+				temp.terrain.IsBuildingThatProduceUnit()
 			 //check if there is no unit currently standing on said building
 			 && temp.unit == null
 			 //check if this building is belong tu the current player
