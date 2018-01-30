@@ -33,6 +33,10 @@ namespace Wartorn {
 				return CONTENT_MANAGER.inputState.mouseState.LeftButton == ButtonState.Released && CONTENT_MANAGER.lastInputState.mouseState.LeftButton == ButtonState.Pressed;
 			}
 
+			public static bool IsLeftMouseHold() {
+				return CONTENT_MANAGER.inputState.mouseState.LeftButton == ButtonState.Pressed && CONTENT_MANAGER.lastInputState.mouseState.LeftButton == ButtonState.Pressed;
+			}
+
 			public static bool IsRightMousePressed() {
 				return CONTENT_MANAGER.inputState.mouseState.RightButton == ButtonState.Released && CONTENT_MANAGER.lastInputState.mouseState.RightButton == ButtonState.Pressed;
 			}

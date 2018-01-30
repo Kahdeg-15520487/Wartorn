@@ -39,6 +39,7 @@ Source: "..\Build\Utility_Project.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Build\Newtonsoft.Json.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Build\SDL2.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Build\soft_oal.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Build\FluentCommandLineParser.dll"; DestDir: "{app}"; Flags: ignoreversion
 
 Source: "..\Build\StatsBalancer.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Build\Wartorn.exe"; DestDir: "{app}"; Flags: ignoreversion

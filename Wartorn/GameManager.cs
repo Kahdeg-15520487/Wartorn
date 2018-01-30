@@ -192,12 +192,12 @@ namespace Wartorn
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-
-            CONTENT_MANAGER.spriteBatch.Begin(SpriteSortMode.FrontToBack);
-            {
-                SCREEN_MANAGER.Draw(gameTime);
-            }
-            CONTENT_MANAGER.spriteBatch.End();
+			            
+			CONTENT_MANAGER.BeginSpriteBatch();
+			{
+				SCREEN_MANAGER.Draw(gameTime);
+			}
+			CONTENT_MANAGER.EndSpriteBatch();
 
             base.Draw(gameTime);
         }

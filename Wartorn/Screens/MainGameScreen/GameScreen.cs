@@ -816,12 +816,22 @@ namespace Wartorn.Screens.MainGameScreen {
 				//next state: UnitSelected
 				//            BuildingSelected
 				//            TurnEnd
+				//            CameraPan
 				case GameState.None:
 					if (isGoingToEndTurn) {
 						isGoingToEndTurn = false;
 						currentGameState = GameState.TurnEnd;
 						break;
 					}
+
+					//if (HelperFunction.IsLeftMouseHold()) {
+					//	currentGameState = GameState.CameraPan;
+					//	break;
+					//}
+
+					MemoryStream mem = new MemoryStream();
+					CONTENT_MANAGER.attackCursor.SaveAsPng(mem, CONTENT_MANAGER.attackCursor.Width, CONTENT_MANAGER.attackCursor.Height);
+					System.Drawing.Image image = System.Drawing.Image.FromStream(mem);
 
 					if (HelperFunction.IsLeftMousePressed()) {
 						if (SelectUnit()) {
@@ -1217,6 +1227,7 @@ finalise_command_execution:
 
 						selectedCmd = Command.None;
 						isDrawTargetRange = false;
+						//isDrawFrame = true;
 
 						//update fuel
 						int gas = movementPath != null ? movementPath.Count : 0;
@@ -1289,6 +1300,18 @@ finalise_command_execution:
 
 					//goto none
 					currentGameState = GameState.None;
+					break;
+				#endregion
+
+				#region GameState.CameraPan
+				case GameState.CameraPan:
+					if (HelperFunction.IsLeftMousePressed()) {
+						currentGameState = GameState.None;
+						break;
+					}
+
+
+
 					break;
 					#endregion
 			}
@@ -1751,6 +1774,7 @@ finalise_command_execution:
 				case GameState.TurnStart:
 				case GameState.BuildingSelected:
 				case GameState.BuildingBuildUnit:
+				case GameState.CameraPan:
 					tempmapcell = map[selectedMapCell];
 					break;
 
@@ -1863,6 +1887,33 @@ finalise_command_execution:
 			}
 		}
 
+		private void MoveCamera(Direction direction, int speed = 10) {
+			switch (direction) {
+				case Direction.NorthWest:
+					break;
+				case Direction.North:
+					camera.Location += new Vector2(0, -1) * speed;
+					break;
+				case Direction.NorthEast:
+					break;
+				case Direction.West:
+					camera.Location += new Vector2(-1, 0) * speed;
+					break;
+				case Direction.Center:
+					break;
+				case Direction.East:
+					camera.Location += new Vector2(1, 0) * speed;
+					break;
+				case Direction.SouthWest:
+					break;
+				case Direction.South:
+					camera.Location += new Vector2(0, 1) * speed;
+					break;
+				case Direction.SouthEast:
+					break;
+			}
+		}
+
 		private void MoveCamera(KeyboardState keyboardInputState, MouseState mouseInputState) {
 			int speed = 10;
 
@@ -1874,22 +1925,22 @@ finalise_command_execution:
 			if (keyboardInputState.IsKeyDown(Keys.Left)
 				 || keyboardInputState.IsKeyDown(Keys.A)
 				 || (mouseInputState.Position.X.Between(50, 10) && isEnableEdgeScrolling)) {
-				camera.Location += new Vector2(-1, 0) * speed;
+				MoveCamera(Direction.West, speed);
 			}
 			if (keyboardInputState.IsKeyDown(Keys.Right)
 				|| keyboardInputState.IsKeyDown(Keys.D)
 				|| (mouseInputState.Position.X.Between(710, 670) && isEnableEdgeScrolling)) {
-				camera.Location += new Vector2(1, 0) * speed;
+				MoveCamera(Direction.East, speed);
 			}
 			if (keyboardInputState.IsKeyDown(Keys.Up)
 				|| keyboardInputState.IsKeyDown(Keys.W)
 				|| (mouseInputState.Position.Y.Between(50, 10) && isEnableEdgeScrolling)) {
-				camera.Location += new Vector2(0, -1) * speed;
+				MoveCamera(Direction.North, speed);
 			}
 			if (keyboardInputState.IsKeyDown(Keys.Down)
 				|| keyboardInputState.IsKeyDown(Keys.S)
 				|| (mouseInputState.Position.Y.Between(470, 430) && isEnableEdgeScrolling)) {
-				camera.Location += new Vector2(0, 1) * speed;
+				MoveCamera(Direction.South, speed);
 			}
 
 			Point clampMax = new Point(map.Width * Constants.MapCellWidth - 720 + 96, map.Height * Constants.MapCellHeight - 480 + 96);
@@ -1900,7 +1951,22 @@ finalise_command_execution:
 		#endregion
 
 		#region Draw
+		private bool isDrawFrame = false;
+		private int framecount = 0;
+		RenderTarget2D renderTarget;
 		public override void Draw(GameTime gameTime) {
+
+			if (isDrawFrame) {
+				renderTarget = new RenderTarget2D(
+					CONTENT_MANAGER.gameinstance.GraphicsDevice,
+					CONTENT_MANAGER.gameinstance.GraphicsDevice.PresentationParameters.BackBufferWidth,
+					CONTENT_MANAGER.gameinstance.GraphicsDevice.PresentationParameters.BackBufferHeight,
+					false,
+					CONTENT_MANAGER.gameinstance.GraphicsDevice.PresentationParameters.BackBufferFormat,
+					DepthFormat.Depth24);
+				CONTENT_MANAGER.gameinstance.GraphicsDevice.SetRenderTarget(renderTarget);
+			}
+
 			DrawMap(CONTENT_MANAGER.spriteBatch, gameTime);
 
 			//draw the guibackground
@@ -1920,12 +1986,23 @@ finalise_command_execution:
 			//draw the minimap
 			//CONTENT_MANAGER.spriteBatch.Draw(minimap, minimapbound, null, Color.White, 0f, Vector2.Zero, SpriteEffects.None, LayerDepth.GuiBackground);
 			//CONTENT_MANAGER.spriteBatch.Draw(CONTENT_MANAGER.SelectedMapCell_HPbar, Vector2.Zero, new Rectangle(0, 0, 100, 3), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.GuiUpper);
+
+			if (isDrawFrame) {
+				CONTENT_MANAGER.EndSpriteBatch();
+				using (var fs = new FileStream(framecount++.ToString() + ".png", FileMode.CreateNew)) {
+					renderTarget.SaveAsPng(fs, renderTarget.Width, renderTarget.Height);
+				}
+				renderTarget.Dispose();
+				isDrawFrame = false;
+				CONTENT_MANAGER.gameinstance.GraphicsDevice.SetRenderTarget(null);
+				CONTENT_MANAGER.BeginSpriteBatch();
+			}
 		}
 
 		private void DrawMap(SpriteBatch spriteBatch, GameTime gameTime) {
-			spriteBatch.End();
+			CONTENT_MANAGER.EndSpriteBatch();
 
-			spriteBatch.Begin(SpriteSortMode.FrontToBack, transformMatrix: camera.TransformMatrix);
+			CONTENT_MANAGER.BeginSpriteBatchWithCamera(camera);
 
 			//render the map
 			MapRenderer.Render(map, spriteBatch, gameTime);
@@ -1955,9 +2032,9 @@ finalise_command_execution:
 			//draw the cursor
 			spriteBatch.Draw(cursor, new Vector2(selectedMapCell.X * Constants.MapCellWidth, selectedMapCell.Y * Constants.MapCellHeight), null, Color.White, 0f, cursorOffset, 1f, SpriteEffects.None, LayerDepth.GuiUpper);
 
-			spriteBatch.End();
+			CONTENT_MANAGER.EndSpriteBatch();
 
-			spriteBatch.Begin(SpriteSortMode.FrontToBack);
+			CONTENT_MANAGER.BeginSpriteBatch();
 		}
 
 		private void DrawMovementRange(SpriteBatch spriteBatch) {

@@ -271,7 +271,20 @@ namespace Wartorn {
 
 		#endregion
 		#endregion
-		
+
+
+
+		public static void BeginSpriteBatch() {
+			spriteBatch.Begin(SpriteSortMode.FrontToBack);
+		}
+		public static void BeginSpriteBatchWithCamera(Camera camera) {
+			spriteBatch.Begin(SpriteSortMode.FrontToBack, transformMatrix: camera.TransformMatrix);
+		}
+
+		public static void EndSpriteBatch() {
+			spriteBatch.End();
+		}
+
 		public static string MapName { get; private set; } = null;
 
 		public static void ParseArguments(string[] args) {
