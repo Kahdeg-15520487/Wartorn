@@ -8,7 +8,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-using Wartorn.Utility.Drawing;
 using Wartorn.SpriteRectangle;
 
 using Newtonsoft.Json;

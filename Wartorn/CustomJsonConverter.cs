@@ -14,7 +14,6 @@ using Wartorn.Storage;
 using Wartorn.GameData;
 using Wartorn.UIClass;
 using Wartorn.Utility;
-using Wartorn.Utility.Drawing;
 using Wartorn.Screens;
 using Wartorn.Drawing;
 using Wartorn.Drawing.Animation;

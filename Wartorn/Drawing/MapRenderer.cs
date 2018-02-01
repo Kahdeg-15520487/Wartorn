@@ -33,15 +33,15 @@ namespace Wartorn.Drawing
                     tempmapcell = map[i, j];
                     if (tempmapcell.terrainbase != SpriteSheetTerrain.None)
                     {
-                        spriteBatch.Draw(CONTENT_MANAGER.spriteSheet, curpos, TerrainSpriteSourceRectangle.GetSpriteRectangle(tempmapcell.terrainbase), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.TerrainBase);
+                        spriteBatch.Draw(CONTENT_MANAGER.Sprites["spriteSheet"], curpos, TerrainSpriteSourceRectangle.GetSpriteRectangle(tempmapcell.terrainbase), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.TerrainBase);
                     }
                     if (tempmapcell.terrainLower != SpriteSheetTerrain.None)
                     {
-                        spriteBatch.Draw(CONTENT_MANAGER.spriteSheet, curpos, TerrainSpriteSourceRectangle.GetSpriteRectangle(tempmapcell.terrainLower), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.TerrainLower);
+                        spriteBatch.Draw(CONTENT_MANAGER.Sprites["spriteSheet"], curpos, TerrainSpriteSourceRectangle.GetSpriteRectangle(tempmapcell.terrainLower), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.TerrainLower);
                     }
                     if (tempmapcell.terrainUpper != SpriteSheetTerrain.None)
                     {
-                        spriteBatch.Draw(CONTENT_MANAGER.spriteSheet, curpos, TerrainSpriteSourceRectangle.GetSpriteRectangle(tempmapcell.terrainUpper), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.TerrainUpper);
+                        spriteBatch.Draw(CONTENT_MANAGER.Sprites["spriteSheet"], curpos, TerrainSpriteSourceRectangle.GetSpriteRectangle(tempmapcell.terrainUpper), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.TerrainUpper);
                     }
 
                     if (tempmapcell.unit != null)
@@ -51,8 +51,8 @@ namespace Wartorn.Drawing
                         if (tempmapcell.unit.Animation.IsPlaying)
                         {
                             Point hpPos = new Point((int)curpos.X + 36, (int)curpos.Y + 36);
-                            spriteBatch.DrawString(CONTENT_MANAGER.arcadefont, tempmapcell.unit.HitPoint.ToString(), hpPos.ToVector2(), tempmapcell.unit.Owner == Owner.Red ? Color.Blue : Color.Red, 0f, Vector2.Zero, 0.75f, SpriteEffects.None, LayerDepth.GuiUpper);
-                            spriteBatch.Draw(CONTENT_MANAGER.blank8x8, new Rectangle(hpPos, new Point(12, 12)), null, Color.White, 0f, Vector2.Zero, SpriteEffects.None, LayerDepth.GuiUpper - 0.01f);
+                            spriteBatch.DrawString(CONTENT_MANAGER.Fonts["arcadefont"], tempmapcell.unit.HitPoint.ToString(), hpPos.ToVector2(), tempmapcell.unit.Owner == Owner.Red ? Color.Blue : Color.Red, 0f, Vector2.Zero, 0.75f, SpriteEffects.None, LayerDepth.GuiUpper);
+                            spriteBatch.Draw(CONTENT_MANAGER.Sprites["blank8x8"], new Rectangle(hpPos, new Point(12, 12)), null, Color.White, 0f, Vector2.Zero, SpriteEffects.None, LayerDepth.GuiUpper - 0.01f);
                         }
                     }
                 }
@@ -77,15 +77,15 @@ namespace Wartorn.Drawing
                     {
                         if (tempmapcell.terrainbase != SpriteSheetTerrain.None)
                         {
-                            spriteBatch.Draw(CONTENT_MANAGER.spriteSheet, curpos, TerrainSpriteSourceRectangle.GetSpriteRectangle(tempmapcell.terrainbase), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.TerrainBase);
+                            spriteBatch.Draw(CONTENT_MANAGER.Sprites["spriteSheet"], curpos, TerrainSpriteSourceRectangle.GetSpriteRectangle(tempmapcell.terrainbase), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.TerrainBase);
                         }
                         if (tempmapcell.terrainLower != SpriteSheetTerrain.None)
                         {
-                            spriteBatch.Draw(CONTENT_MANAGER.spriteSheet, curpos, TerrainSpriteSourceRectangle.GetSpriteRectangle(tempmapcell.terrainLower), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.TerrainLower);
+                            spriteBatch.Draw(CONTENT_MANAGER.Sprites["spriteSheet"], curpos, TerrainSpriteSourceRectangle.GetSpriteRectangle(tempmapcell.terrainLower), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.TerrainLower);
                         }
                         if (tempmapcell.terrainUpper != SpriteSheetTerrain.None)
                         {
-                            spriteBatch.Draw(CONTENT_MANAGER.spriteSheet, curpos, TerrainSpriteSourceRectangle.GetSpriteRectangle(tempmapcell.terrainUpper), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.TerrainUpper);
+                            spriteBatch.Draw(CONTENT_MANAGER.Sprites["spriteSheet"], curpos, TerrainSpriteSourceRectangle.GetSpriteRectangle(tempmapcell.terrainUpper), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.TerrainUpper);
                         }
 
                         if (tempmapcell.unit != null)

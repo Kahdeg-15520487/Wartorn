@@ -17,7 +17,6 @@ using Wartorn.Storage;
 using Wartorn.GameData;
 using Wartorn.UIClass;
 using Wartorn.Utility;
-using Wartorn.Utility.Drawing;
 using Wartorn.Screens;
 using Wartorn.Drawing;
 using Wartorn.Drawing.Animation;
@@ -159,7 +158,7 @@ namespace Wartorn.Screens.MainGameScreen {
 		}
 
 		private void LoadContent() {
-			cursor = CONTENT_MANAGER.selectCursor;
+			cursor = CONTENT_MANAGER.Sprites[@"Cursor\Select_Cursor"];
 		}
 
 		public override bool Init() {
@@ -183,7 +182,7 @@ namespace Wartorn.Screens.MainGameScreen {
 
 		#region init ui
 		private void InitUI() {
-			PictureBox picturebox_tutorial = new PictureBox(CONTENT_MANAGER.gametutorial, Point.Zero, null, null) {
+			PictureBox picturebox_tutorial = new PictureBox(CONTENT_MANAGER.Sprites[@"tutorial\gamescreentutorial_en"], Point.Zero, null, null) {
 				IsVisible = CONTENT_MANAGER.IsTutorial
 			};
 
@@ -202,25 +201,25 @@ namespace Wartorn.Screens.MainGameScreen {
 			canvas_action_Unit.IsVisible = false;
 			InitCanvas_Unit();
 
-			Label label_mousepos = new Label(" ", new Point(0, 0), new Vector2(80, 20), CONTENT_MANAGER.defaultfont);
+			Label label_mousepos = new Label(" ", new Point(0, 0), new Vector2(80, 20), CONTENT_MANAGER.Fonts["defaultfont"]);
 
-			Button button_endTurn = new Button("End Turn", new Point(630, 10), new Vector2(100, 30), CONTENT_MANAGER.hackfont);
-			button_endTurn.Origin = new Vector2(20, 0);
+			Button button_endTurn = new Button("End Turn", new Point(630, 10), new Vector2(100, 30), CONTENT_MANAGER.Fonts["hackfont"]);
+			//button_endTurn.Origin = new Vector2(20, 0);
 
 			button_endTurn.MouseClick += (sender, e) => {
 				isGoingToEndTurn = true;
 
 			};
 
-			Label label_money = new Label(" ", new Point(550, 15), new Vector2(80, 40), CONTENT_MANAGER.hackfont);
+			Label label_money = new Label(" ", new Point(550, 15), new Vector2(80, 40), CONTENT_MANAGER.Fonts["hackfont"]);
 			label_money.Origin = new Vector2(1, 1);
-			label_money.backgroundColor = Color.White;
+			label_money.BackgroundColor = Color.White;
 
-			Label label_whoseturn = new Label(" ", new Point(470, 15), new Vector2(50, 30), CONTENT_MANAGER.hackfont);
+			Label label_whoseturn = new Label(" ", new Point(470, 15), new Vector2(50, 30), CONTENT_MANAGER.Fonts["hackfont"]);
 			label_whoseturn.Origin = new Vector2(1, 1);
-			label_whoseturn.backgroundColor = Color.White;
+			label_whoseturn.BackgroundColor = Color.White;
 
-			//console = new UIClass.Console(new Point(0, 0), new Vector2(720, 200), CONTENT_MANAGER.hackfont);
+			//console = new UIClass.Console(new Point(0, 0), new Vector2(720, 200), CONTENT_MANAGER.Fonts["hackfont"]);
 			//console.IsVisible = false;
 			//console.SetVariable("player", currentPlayer);
 			//console.SetVariable("changeTurn", new Action(this.ChangeTurn));
@@ -242,11 +241,11 @@ namespace Wartorn.Screens.MainGameScreen {
 
 		private void InitCanvas_Unit() {
 			//declare ui elements
-			PictureBox commandslot = new PictureBox(CONTENT_MANAGER.commandspritesheet, Point.Zero, CommandSpriteSourceRectangle.GetSprite(playerInfos[currentPlayer].owner == GameData.Owner.Red ? SpriteSheetCommandSlot.oneslotred : SpriteSheetCommandSlot.oneslotblue), null, depth: LayerDepth.GuiBackground);
+			PictureBox commandslot = new PictureBox(CONTENT_MANAGER.Sprites[@"GUI\commandspritesheet"], Point.Zero, CommandSpriteSourceRectangle.GetSprite(playerInfos[currentPlayer].owner == GameData.Owner.Red ? SpriteSheetCommandSlot.oneslotred : SpriteSheetCommandSlot.oneslotblue), null, depth: LayerDepth.GuiBackground);
 
-			Button firstslot = new Button(CONTENT_MANAGER.commandspritesheet, Rectangle.Empty, Point.Zero);
-			Button secondslot = new Button(CONTENT_MANAGER.commandspritesheet, Rectangle.Empty, Point.Zero);
-			Button thirdslot = new Button(CONTENT_MANAGER.commandspritesheet, Rectangle.Empty, Point.Zero);
+			Button firstslot = new Button(CONTENT_MANAGER.Sprites[@"GUI\commandspritesheet"], Rectangle.Empty, Point.Zero);
+			Button secondslot = new Button(CONTENT_MANAGER.Sprites[@"GUI\commandspritesheet"], Rectangle.Empty, Point.Zero);
+			Button thirdslot = new Button(CONTENT_MANAGER.Sprites[@"GUI\commandspritesheet"], Rectangle.Empty, Point.Zero);
 
 			firstslot.ButtonColorPressed = Color.White;
 			secondslot.ButtonColorPressed = Color.White;
@@ -254,15 +253,15 @@ namespace Wartorn.Screens.MainGameScreen {
 
 			//bind event
 			firstslot.MouseClick += (sender, e) => {
-				selectedCmd = CommandSpriteSourceRectangle.GetCommand(firstslot.spriteSourceRectangle);
+				selectedCmd = CommandSpriteSourceRectangle.GetCommand(firstslot.SpriteSourceRectangle);
 				//CONTENT_MANAGER.ShowMessageBox(selectedCmd);
 			};
 			secondslot.MouseClick += (sender, e) => {
-				selectedCmd = CommandSpriteSourceRectangle.GetCommand(secondslot.spriteSourceRectangle);
+				selectedCmd = CommandSpriteSourceRectangle.GetCommand(secondslot.SpriteSourceRectangle);
 				//CONTENT_MANAGER.ShowMessageBox(selectedCmd);
 			};
 			thirdslot.MouseClick += (sender, e) => {
-				selectedCmd = CommandSpriteSourceRectangle.GetCommand(thirdslot.spriteSourceRectangle);
+				selectedCmd = CommandSpriteSourceRectangle.GetCommand(thirdslot.SpriteSourceRectangle);
 				//CONTENT_MANAGER.ShowMessageBox(selectedCmd);
 			};
 
@@ -275,35 +274,35 @@ namespace Wartorn.Screens.MainGameScreen {
 
 		private void InitCanvas_SelectedMapCellInfo() {
 			//declare ui elements
-			PictureBox picbox_SelectedMapCellBorder = new PictureBox(CONTENT_MANAGER.SelectedMapCell_border, new Point(175, 364), Rectangle.Empty, Vector2.Zero, depth: LayerDepth.GuiBackground);
+			PictureBox picbox_SelectedMapCellBorder = new PictureBox(CONTENT_MANAGER.Sprites[@"GUI\selected_cell_info\SC_Border"], new Point(175, 364), Rectangle.Empty, Vector2.Zero, depth: LayerDepth.GuiBackground);
 
-			PictureBox picbox_terrainType = new PictureBox(CONTENT_MANAGER.background_terrain, new Point(183, 385), Rectangle.Empty, Vector2.Zero, depth: LayerDepth.GuiBackground + 0.01f);
-			Label label_terrainType = new Label(" ", new Point(186, 370), new Vector2(50, 20), CONTENT_MANAGER.hackfont);
+			PictureBox picbox_terrainType = new PictureBox(CONTENT_MANAGER.Sprites[@"GUI\background\background_terrain"], new Point(183, 385), Rectangle.Empty, Vector2.Zero, depth: LayerDepth.GuiBackground + 0.01f);
+			Label label_terrainType = new Label(" ", new Point(186, 370), new Vector2(50, 20), CONTENT_MANAGER.Fonts["hackfont"]);
 			label_terrainType.Origin = new Vector2(-3, 2);
 			label_terrainType.Scale = 0.75f;
-			PictureBox picbox_unitType = new PictureBox(CONTENT_MANAGER.background_unit, new Point(183, 385), Rectangle.Empty, Vector2.Zero, depth: LayerDepth.GuiBackground + 0.02f);
-			Label label_unitType = new Label(" ", new Point(183, 464), new Vector2(80, 20), CONTENT_MANAGER.hackfont);
+			PictureBox picbox_unitType = new PictureBox(CONTENT_MANAGER.Sprites[@"GUI\background\background_unit"], new Point(183, 385), Rectangle.Empty, Vector2.Zero, depth: LayerDepth.GuiBackground + 0.02f);
+			Label label_unitType = new Label(" ", new Point(183, 464), new Vector2(80, 20), CONTENT_MANAGER.Fonts["hackfont"]);
 			label_unitType.Origin = new Vector2(-3, 2);
 			label_unitType.Scale = 0.75f;
 
-			PictureBox picbox_SelectedMapCellCapturePoint = new PictureBox(CONTENT_MANAGER.SelectedMapCell_capturePoint, new Point(262, 385), Rectangle.Empty, Vector2.Zero, depth: LayerDepth.GuiLower);
-			Label label_SelectedMapCellCapturePoint = new Label(" ", new Point(262, 385), new Vector2(50, 20), CONTENT_MANAGER.hackfont);
+			PictureBox picbox_SelectedMapCellCapturePoint = new PictureBox(CONTENT_MANAGER.Sprites[@"GUI\selected_cell_info\SC_Cap_Point"], new Point(262, 385), Rectangle.Empty, Vector2.Zero, depth: LayerDepth.GuiLower);
+			Label label_SelectedMapCellCapturePoint = new Label(" ", new Point(262, 385), new Vector2(50, 20), CONTENT_MANAGER.Fonts["hackfont"]);
 			label_SelectedMapCellCapturePoint.Origin = new Vector2(-20, 0);
 
-			PictureBox picbox_SelectedMapCellDefenseStar = new PictureBox(CONTENT_MANAGER.SelectedMapCell_defenseStar, new Point(265, 371), Rectangle.Empty, Vector2.Zero, depth: LayerDepth.GuiLower);
+			PictureBox picbox_SelectedMapCellDefenseStar = new PictureBox(CONTENT_MANAGER.Sprites[@"GUI\selected_cell_info\SC_Def_Star"], new Point(265, 371), Rectangle.Empty, Vector2.Zero, depth: LayerDepth.GuiLower);
 
-			PictureBox picbox_SelectedMapCellUnitInfo = new PictureBox(CONTENT_MANAGER.SelectedMapCell_unitInfo, new Point(181, 453), Rectangle.Empty, Vector2.Zero, depth: LayerDepth.GuiLower + 0.01f);
-			PictureBox picbox_SelectedMapCellLoadedUnit = new PictureBox(CONTENT_MANAGER.SelectedMapCell_loadedUnit, new Point(181, 435), Rectangle.Empty, Vector2.Zero, depth: LayerDepth.GuiLower);
+			PictureBox picbox_SelectedMapCellUnitInfo = new PictureBox(CONTENT_MANAGER.Sprites[@"GUI\selected_cell_info\SC_Unit_info"], new Point(181, 453), Rectangle.Empty, Vector2.Zero, depth: LayerDepth.GuiLower + 0.01f);
+			PictureBox picbox_SelectedMapCellLoadedUnit = new PictureBox(CONTENT_MANAGER.Sprites[@"GUI\selected_cell_info\SC_Loaded"], new Point(181, 435), Rectangle.Empty, Vector2.Zero, depth: LayerDepth.GuiLower);
 
-			PictureBox picbox_SelectedMapCellHPbar = new PictureBox(CONTENT_MANAGER.SelectedMapCell_HPbar, new Point(198, 458), null, Vector2.Zero, depth: LayerDepth.GuiUpper);
+			PictureBox picbox_SelectedMapCellHPbar = new PictureBox(CONTENT_MANAGER.Sprites[@"GUI\selected_cell_info\SC_HP_bar"], new Point(198, 458), null, Vector2.Zero, depth: LayerDepth.GuiUpper);
 
-			Label label_SelectedMapCellHP = new Label(" ", new Point(301, 455), new Vector2(20, 20), CONTENT_MANAGER.hackfont);
+			Label label_SelectedMapCellHP = new Label(" ", new Point(301, 455), new Vector2(20, 20), CONTENT_MANAGER.Fonts["hackfont"]);
 			label_SelectedMapCellHP.Origin = new Vector2(1, 2);
 			label_SelectedMapCellHP.Scale = 0.6f;
-			Label label_SelectedMapCellUnitInfo_fuel = new Label(" ", new Point(263, 465), new Vector2(20, 20), CONTENT_MANAGER.hackfont);
+			Label label_SelectedMapCellUnitInfo_fuel = new Label(" ", new Point(263, 465), new Vector2(20, 20), CONTENT_MANAGER.Fonts["hackfont"]);
 			label_SelectedMapCellUnitInfo_fuel.Origin = new Vector2(-3, 2);
 			label_SelectedMapCellUnitInfo_fuel.Scale = 0.75f;
-			Label label_SelectedMapCellUnitInfo_ammo = new Label(" ", new Point(294, 465), new Vector2(20, 20), CONTENT_MANAGER.hackfont);
+			Label label_SelectedMapCellUnitInfo_ammo = new Label(" ", new Point(294, 465), new Vector2(20, 20), CONTENT_MANAGER.Fonts["hackfont"]);
 			label_SelectedMapCellUnitInfo_ammo.Origin = new Vector2(-3, 2);
 			label_SelectedMapCellUnitInfo_ammo.Scale = 0.75f;
 
@@ -336,24 +335,24 @@ namespace Wartorn.Screens.MainGameScreen {
 
 		private void InitCanvas_TargetedMapCellInfo() {
 			//declare ui elements
-			PictureBox picbox_TargetedMapCellBorder = new PictureBox(CONTENT_MANAGER.SelectedMapCell_border, new Point(319, 364), Rectangle.Empty, Vector2.Zero, depth: LayerDepth.GuiBackground);
+			PictureBox picbox_TargetedMapCellBorder = new PictureBox(CONTENT_MANAGER.Sprites[@"GUI\selected_cell_info\SC_Border"], new Point(319, 364), Rectangle.Empty, Vector2.Zero, depth: LayerDepth.GuiBackground);
 
-			PictureBox picbox_terrainType = new PictureBox(CONTENT_MANAGER.background_terrain, new Point(327, 385), Rectangle.Empty, Vector2.Zero, depth: LayerDepth.GuiBackground + 0.01f);
-			Label label_terrainType = new Label(" ", new Point(330, 370), new Vector2(50, 20), CONTENT_MANAGER.hackfont);
+			PictureBox picbox_terrainType = new PictureBox(CONTENT_MANAGER.Sprites[@"GUI\background\background_terrain"], new Point(327, 385), Rectangle.Empty, Vector2.Zero, depth: LayerDepth.GuiBackground + 0.01f);
+			Label label_terrainType = new Label(" ", new Point(330, 370), new Vector2(50, 20), CONTENT_MANAGER.Fonts["hackfont"]);
 			label_terrainType.Origin = new Vector2(-3, 2);
 			label_terrainType.Scale = 0.75f;
-			PictureBox picbox_unitType = new PictureBox(CONTENT_MANAGER.background_unit, new Point(327, 385), Rectangle.Empty, Vector2.Zero, depth: LayerDepth.GuiBackground + 0.02f);
-			Label label_unitType = new Label(" ", new Point(330, 464), new Vector2(80, 20), CONTENT_MANAGER.hackfont);
+			PictureBox picbox_unitType = new PictureBox(CONTENT_MANAGER.Sprites[@"GUI\background\background_unit"], new Point(327, 385), Rectangle.Empty, Vector2.Zero, depth: LayerDepth.GuiBackground + 0.02f);
+			Label label_unitType = new Label(" ", new Point(330, 464), new Vector2(80, 20), CONTENT_MANAGER.Fonts["hackfont"]);
 			label_unitType.Origin = new Vector2(-3, 2);
 			label_unitType.Scale = 0.75f;
 
-			PictureBox picbox_TargetedMapCellDefenseStar = new PictureBox(CONTENT_MANAGER.SelectedMapCell_defenseStar, new Point(409, 371), Rectangle.Empty, Vector2.Zero, depth: LayerDepth.GuiLower);
+			PictureBox picbox_TargetedMapCellDefenseStar = new PictureBox(CONTENT_MANAGER.Sprites[@"GUI\selected_cell_info\SC_Def_Star"], new Point(409, 371), Rectangle.Empty, Vector2.Zero, depth: LayerDepth.GuiLower);
 
-			PictureBox picbox_TargetedMapCellUnitInfo = new PictureBox(CONTENT_MANAGER.SelectedMapCell_unitInfo, new Point(325, 453), Rectangle.Empty, Vector2.Zero, depth: LayerDepth.GuiLower + 0.01f);
+			PictureBox picbox_TargetedMapCellUnitInfo = new PictureBox(CONTENT_MANAGER.Sprites[@"GUI\selected_cell_info\SC_Unit_info"], new Point(325, 453), Rectangle.Empty, Vector2.Zero, depth: LayerDepth.GuiLower + 0.01f);
 
-			PictureBox picbox_TargetedMapCellHPbar = new PictureBox(CONTENT_MANAGER.SelectedMapCell_HPbar, new Point(342, 458), null, Vector2.Zero, depth: LayerDepth.GuiUpper);
+			PictureBox picbox_TargetedMapCellHPbar = new PictureBox(CONTENT_MANAGER.Sprites[@"GUI\selected_cell_info\SC_HP_bar"], new Point(342, 458), null, Vector2.Zero, depth: LayerDepth.GuiUpper);
 
-			Label label_TargetedMapCellHP = new Label(" ", new Point(445, 455), new Vector2(20, 20), CONTENT_MANAGER.hackfont);
+			Label label_TargetedMapCellHP = new Label(" ", new Point(445, 455), new Vector2(20, 20), CONTENT_MANAGER.Fonts["hackfont"]);
 			label_TargetedMapCellHP.Origin = new Vector2(1, 2);
 			label_TargetedMapCellHP.Scale = 0.6f;
 
@@ -403,28 +402,28 @@ namespace Wartorn.Screens.MainGameScreen {
 			canvas_action_Factory = new Canvas();
 			canvas_action_Factory.IsVisible = false;
 
-			PictureBox picturebox_buymenu = new PictureBox(CONTENT_MANAGER.buymenu_factory, new Point(574, 300), BuyMenuFactorySpriteSourceRectangle.GetSpriteRectangle(playerInfos[currentPlayer].owner), Vector2.Zero, depth: LayerDepth.GuiBackground);
+			PictureBox picturebox_buymenu = new PictureBox(CONTENT_MANAGER.Sprites[@"GUI\selected_cell_info\SC_Buy_F"], new Point(574, 300), BuyMenuFactorySpriteSourceRectangle.GetSpriteRectangle(playerInfos[currentPlayer].owner), Vector2.Zero, depth: LayerDepth.GuiBackground);
 
-			Label label_unitname = new Label(" ", new Point(583, 309), new Vector2(100, 30), CONTENT_MANAGER.hackfont);
+			Label label_unitname = new Label(" ", new Point(583, 309), new Vector2(100, 30), CONTENT_MANAGER.Fonts["hackfont"]);
 			label_unitname.Origin = new Vector2(1, 1);
-			Label label_unitcost = new Label(" ", new Point(583, 343), new Vector2(100, 30), CONTENT_MANAGER.hackfont);
+			Label label_unitcost = new Label(" ", new Point(583, 343), new Vector2(100, 30), CONTENT_MANAGER.Fonts["hackfont"]);
 			label_unitcost.Origin = new Vector2(1, 1);
 
 			//hàng 1
-			Button button_Soldier = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Soldier, playerInfos[currentPlayer].owner), new Point(584, 378), 0.5f);
-			Button button_Mech = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Mech, playerInfos[currentPlayer].owner), new Point(618, 378), 0.5f);
-			Button button_Recon = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Recon, playerInfos[currentPlayer].owner), new Point(652, 378), 0.5f);
-			Button button_APC = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.APC, playerInfos[currentPlayer].owner), new Point(686, 378), 0.5f);
+			Button button_Soldier = new Button(CONTENT_MANAGER.Sprites["unitSpriteSheet"], UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Soldier, playerInfos[currentPlayer].owner), new Point(584, 378), 0.5f);
+			Button button_Mech = new Button(CONTENT_MANAGER.Sprites["unitSpriteSheet"], UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Mech, playerInfos[currentPlayer].owner), new Point(618, 378), 0.5f);
+			Button button_Recon = new Button(CONTENT_MANAGER.Sprites["unitSpriteSheet"], UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Recon, playerInfos[currentPlayer].owner), new Point(652, 378), 0.5f);
+			Button button_APC = new Button(CONTENT_MANAGER.Sprites["unitSpriteSheet"], UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.APC, playerInfos[currentPlayer].owner), new Point(686, 378), 0.5f);
 
 			//hàng 2
-			Button button_Tank = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Tank, playerInfos[currentPlayer].owner), new Point(584, 412), 0.5f);
-			Button button_H_Tank = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.HeavyTank, playerInfos[currentPlayer].owner), new Point(618, 412), 0.5f);
-			Button button_Artillery = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Artillery, playerInfos[currentPlayer].owner), new Point(652, 412), 0.5f);
-			Button button_Rocket = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Rocket, playerInfos[currentPlayer].owner), new Point(686, 412), 0.5f);
+			Button button_Tank = new Button(CONTENT_MANAGER.Sprites["unitSpriteSheet"], UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Tank, playerInfos[currentPlayer].owner), new Point(584, 412), 0.5f);
+			Button button_H_Tank = new Button(CONTENT_MANAGER.Sprites["unitSpriteSheet"], UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.HeavyTank, playerInfos[currentPlayer].owner), new Point(618, 412), 0.5f);
+			Button button_Artillery = new Button(CONTENT_MANAGER.Sprites["unitSpriteSheet"], UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Artillery, playerInfos[currentPlayer].owner), new Point(652, 412), 0.5f);
+			Button button_Rocket = new Button(CONTENT_MANAGER.Sprites["unitSpriteSheet"], UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Rocket, playerInfos[currentPlayer].owner), new Point(686, 412), 0.5f);
 
 			//hàng 3
-			Button button_AntiAir = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.AntiAir, playerInfos[currentPlayer].owner), new Point(584, 446), 0.5f);
-			Button button_Missile = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Missile, playerInfos[currentPlayer].owner), new Point(618, 446), 0.5f);
+			Button button_AntiAir = new Button(CONTENT_MANAGER.Sprites["unitSpriteSheet"], UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.AntiAir, playerInfos[currentPlayer].owner), new Point(584, 446), 0.5f);
+			Button button_Missile = new Button(CONTENT_MANAGER.Sprites["unitSpriteSheet"], UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Missile, playerInfos[currentPlayer].owner), new Point(618, 446), 0.5f);
 
 			List<Button> tempbuttonlist = new List<Button>();
 			tempbuttonlist.Add(button_Soldier);
@@ -443,10 +442,10 @@ namespace Wartorn.Screens.MainGameScreen {
 				button.isDrawRect = true;
 				button.ButtonColorPressed = Color.White;
 				button.MouseClick += (sender, e) => {
-					selectedUnitTypeToBuild = UnitSpriteSheetRectangle.GetUnitType(button.spriteSourceRectangle);
+					selectedUnitTypeToBuild = UnitSpriteSheetRectangle.GetUnitType(button.SpriteSourceRectangle);
 				};
 				button.MouseEnter += (sender, e) => {
-					var temp = UnitSpriteSheetRectangle.GetUnitType(button.spriteSourceRectangle);
+					var temp = UnitSpriteSheetRectangle.GetUnitType(button.SpriteSourceRectangle);
 					label_unitname.Text = temp.GetName();
 					label_unitcost.Text = Unit._UnitStat[temp].Cost.ToString();
 				};
@@ -476,18 +475,18 @@ namespace Wartorn.Screens.MainGameScreen {
 			canvas_action_Airport = new Canvas();
 			canvas_action_Airport.IsVisible = false;
 
-			PictureBox picturebox_buymenu = new PictureBox(CONTENT_MANAGER.buymenu_airport_harbor, new Point(574, 300), BuyMenuAirportHarborSpriteSourceRectangle.GetSpriteRectangle(playerInfos[currentPlayer].owner), Vector2.Zero, depth: LayerDepth.GuiBackground);
+			PictureBox picturebox_buymenu = new PictureBox(CONTENT_MANAGER.Sprites[@"GUI\selected_cell_info\SC_Buy_A_H"], new Point(574, 300), BuyMenuAirportHarborSpriteSourceRectangle.GetSpriteRectangle(playerInfos[currentPlayer].owner), Vector2.Zero, depth: LayerDepth.GuiBackground);
 
-			Label label_unitname = new Label(" ", new Point(583, 309), new Vector2(100, 30), CONTENT_MANAGER.hackfont);
+			Label label_unitname = new Label(" ", new Point(583, 309), new Vector2(100, 30), CONTENT_MANAGER.Fonts["hackfont"]);
 			label_unitname.Origin = new Vector2(1, 1);
-			Label label_unitcost = new Label(" ", new Point(583, 343), new Vector2(100, 30), CONTENT_MANAGER.hackfont);
+			Label label_unitcost = new Label(" ", new Point(583, 343), new Vector2(100, 30), CONTENT_MANAGER.Fonts["hackfont"]);
 			label_unitcost.Origin = new Vector2(1, 1);
 
 			//hàng 1
-			Button button_transportcopter = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.TransportCopter, playerInfos[currentPlayer].owner), new Point(584, 378), 0.5f);
-			Button button_battlecopter = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.BattleCopter, playerInfos[currentPlayer].owner), new Point(618, 378), 0.5f);
-			Button button_fighter = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Fighter, playerInfos[currentPlayer].owner), new Point(652, 378), 0.5f);
-			Button button_bomber = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Bomber, playerInfos[currentPlayer].owner), new Point(686, 378), 0.5f);
+			Button button_transportcopter = new Button(CONTENT_MANAGER.Sprites["unitSpriteSheet"], UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.TransportCopter, playerInfos[currentPlayer].owner), new Point(584, 378), 0.5f);
+			Button button_battlecopter = new Button(CONTENT_MANAGER.Sprites["unitSpriteSheet"], UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.BattleCopter, playerInfos[currentPlayer].owner), new Point(618, 378), 0.5f);
+			Button button_fighter = new Button(CONTENT_MANAGER.Sprites["unitSpriteSheet"], UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Fighter, playerInfos[currentPlayer].owner), new Point(652, 378), 0.5f);
+			Button button_bomber = new Button(CONTENT_MANAGER.Sprites["unitSpriteSheet"], UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Bomber, playerInfos[currentPlayer].owner), new Point(686, 378), 0.5f);
 
 			List<Button> tempbuttonlist = new List<Button>();
 			tempbuttonlist.Add(button_transportcopter);
@@ -500,10 +499,10 @@ namespace Wartorn.Screens.MainGameScreen {
 			foreach (Button button in tempbuttonlist) {
 				button.ButtonColorPressed = Color.White;
 				button.MouseClick += (sender, e) => {
-					selectedUnitTypeToBuild = UnitSpriteSheetRectangle.GetUnitType(button.spriteSourceRectangle);
+					selectedUnitTypeToBuild = UnitSpriteSheetRectangle.GetUnitType(button.SpriteSourceRectangle);
 				};
 				button.MouseEnter += (sender, e) => {
-					var temp = UnitSpriteSheetRectangle.GetUnitType(button.spriteSourceRectangle);
+					var temp = UnitSpriteSheetRectangle.GetUnitType(button.SpriteSourceRectangle);
 					label_unitname.Text = temp.GetName();
 					label_unitcost.Text = Unit._UnitStat[temp].Cost.ToString();
 				};
@@ -527,18 +526,18 @@ namespace Wartorn.Screens.MainGameScreen {
 			canvas_action_Harbor = new Canvas();
 			canvas_action_Harbor.IsVisible = false;
 
-			PictureBox picturebox_buymenu = new PictureBox(CONTENT_MANAGER.buymenu_airport_harbor, new Point(574, 300), BuyMenuAirportHarborSpriteSourceRectangle.GetSpriteRectangle(playerInfos[currentPlayer].owner), Vector2.Zero, depth: LayerDepth.GuiBackground);
+			PictureBox picturebox_buymenu = new PictureBox(CONTENT_MANAGER.Sprites[@"GUI\selected_cell_info\SC_Buy_A_H"], new Point(574, 300), BuyMenuAirportHarborSpriteSourceRectangle.GetSpriteRectangle(playerInfos[currentPlayer].owner), Vector2.Zero, depth: LayerDepth.GuiBackground);
 
-			Label label_unitname = new Label(" ", new Point(583, 309), new Vector2(100, 30), CONTENT_MANAGER.hackfont);
+			Label label_unitname = new Label(" ", new Point(583, 309), new Vector2(100, 30), CONTENT_MANAGER.Fonts["hackfont"]);
 			label_unitname.Origin = new Vector2(1, 1);
-			Label label_unitcost = new Label(" ", new Point(583, 343), new Vector2(100, 30), CONTENT_MANAGER.hackfont);
+			Label label_unitcost = new Label(" ", new Point(583, 343), new Vector2(100, 30), CONTENT_MANAGER.Fonts["hackfont"]);
 			label_unitcost.Origin = new Vector2(1, 1);
 
 			//hàng 1
-			Button button_lander = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Lander, playerInfos[currentPlayer].owner), new Point(584, 378), 0.5f);
-			Button button_cruiser = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Cruiser, playerInfos[currentPlayer].owner), new Point(618, 378), 0.5f);
-			Button button_submarine = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Submarine, playerInfos[currentPlayer].owner), new Point(652, 378), 0.5f);
-			Button button_battleship = new Button(CONTENT_MANAGER.unitSpriteSheet, UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Battleship, playerInfos[currentPlayer].owner), new Point(686, 378), 0.5f);
+			Button button_lander = new Button(CONTENT_MANAGER.Sprites["unitSpriteSheet"], UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Lander, playerInfos[currentPlayer].owner), new Point(584, 378), 0.5f);
+			Button button_cruiser = new Button(CONTENT_MANAGER.Sprites["unitSpriteSheet"], UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Cruiser, playerInfos[currentPlayer].owner), new Point(618, 378), 0.5f);
+			Button button_submarine = new Button(CONTENT_MANAGER.Sprites["unitSpriteSheet"], UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Submarine, playerInfos[currentPlayer].owner), new Point(652, 378), 0.5f);
+			Button button_battleship = new Button(CONTENT_MANAGER.Sprites["unitSpriteSheet"], UnitSpriteSheetRectangle.GetSpriteRectangle(UnitType.Battleship, playerInfos[currentPlayer].owner), new Point(686, 378), 0.5f);
 
 			List<Button> tempbuttonlist = new List<Button>();
 			tempbuttonlist.Add(button_lander);
@@ -551,10 +550,10 @@ namespace Wartorn.Screens.MainGameScreen {
 			foreach (Button button in tempbuttonlist) {
 				button.ButtonColorPressed = Color.White;
 				button.MouseClick += (sender, e) => {
-					selectedUnitTypeToBuild = UnitSpriteSheetRectangle.GetUnitType(button.spriteSourceRectangle);
+					selectedUnitTypeToBuild = UnitSpriteSheetRectangle.GetUnitType(button.SpriteSourceRectangle);
 				};
 				button.MouseEnter += (sender, e) => {
-					var temp = UnitSpriteSheetRectangle.GetUnitType(button.spriteSourceRectangle);
+					var temp = UnitSpriteSheetRectangle.GetUnitType(button.SpriteSourceRectangle);
 					label_unitname.Text = temp.GetName();
 					label_unitcost.Text = Unit._UnitStat[temp].Cost.ToString();
 				};
@@ -586,9 +585,9 @@ namespace Wartorn.Screens.MainGameScreen {
 		}
 
 		public override void Update(GameTime gameTime) {
-			mouseInputState = CONTENT_MANAGER.inputState.mouseState;
+			mouseInputState = CONTENT_MANAGER.currentInputState.mouseState;
 			lastMouseInputState = CONTENT_MANAGER.lastInputState.mouseState;
-			keyboardInputState = CONTENT_MANAGER.inputState.keyboardState;
+			keyboardInputState = CONTENT_MANAGER.currentInputState.keyboardState;
 			lastKeyboardInputState = CONTENT_MANAGER.lastInputState.keyboardState;
 
 			//if (HelperFunction.IsKeyPress(Keys.OemTilde))
@@ -601,7 +600,7 @@ namespace Wartorn.Screens.MainGameScreen {
 			}
 
 			//update canvas
-			canvas.Update(CONTENT_MANAGER.inputState, CONTENT_MANAGER.lastInputState);
+			canvas.Update(gameTime, CONTENT_MANAGER.currentInputState, CONTENT_MANAGER.lastInputState);
 			//((Label)canvas["label_mousepos"]).Text = mouseInputState.Position.ToString();
 			canvas.GetElementAs<Label>("label_money").Text = " " + playerInfos[currentPlayer].money + Environment.NewLine + "+" + incomeThisTurn;
 			UpdateCanvas_SelectedMapCell();
@@ -633,10 +632,10 @@ namespace Wartorn.Screens.MainGameScreen {
 					label_whoseturn.Text = playerInfos[currentPlayer].owner.ToString();
 					switch (playerInfos[currentPlayer].owner) {
 						case Owner.Red:
-							label_whoseturn.foregroundColor = Color.IndianRed;
+							label_whoseturn.ForegroundColor = Color.IndianRed;
 							break;
 						case Owner.Blue:
-							label_whoseturn.foregroundColor = Color.CadetBlue;
+							label_whoseturn.ForegroundColor = Color.CadetBlue;
 							break;
 						case Owner.Green:
 							break;
@@ -828,15 +827,11 @@ namespace Wartorn.Screens.MainGameScreen {
 					//	currentGameState = GameState.CameraPan;
 					//	break;
 					//}
-
-					MemoryStream mem = new MemoryStream();
-					CONTENT_MANAGER.attackCursor.SaveAsPng(mem, CONTENT_MANAGER.attackCursor.Width, CONTENT_MANAGER.attackCursor.Height);
-					System.Drawing.Image image = System.Drawing.Image.FromStream(mem);
-
+					
 					if (HelperFunction.IsLeftMousePressed()) {
 						if (SelectUnit()) {
 							//get information of currently selected unit...
-							CONTENT_MANAGER.yes1.Play();
+							CONTENT_MANAGER.Sounds[@"yessir\yes1"].Play();
 							selectedUnit = selectedMapCell;
 							origin = selectedMapCell;
 							MapCell temp = map[selectedUnit];
@@ -964,7 +959,7 @@ namespace Wartorn.Screens.MainGameScreen {
 					//check if <cancel> is pressed
 					if (HelperFunction.IsRightMousePressed()) {
 						//change cursor back
-						cursor = CONTENT_MANAGER.selectCursor;
+						cursor = CONTENT_MANAGER.Sprites[@"Cursor\Select_Cursor"];
 						cursorOffset = selectCursorOffset;
 
 						RevertMovingUnitAnimation();
@@ -994,7 +989,7 @@ namespace Wartorn.Screens.MainGameScreen {
 							canvas_TargetedMapCell.IsVisible = true;
 
 							//change cursor to attack cursor
-							cursor = CONTENT_MANAGER.attackCursor;
+							cursor = CONTENT_MANAGER.Sprites[@"Cursor\Attack_Cursor"];
 							cursorOffset = attackCursorOffset;
 
 							isDrawTargetRange = true;
@@ -1175,7 +1170,7 @@ namespace Wartorn.Screens.MainGameScreen {
 							canvas_TargetedMapCell.IsVisible = true;
 
 							//change cursor to attack cursor
-							cursor = CONTENT_MANAGER.attackCursor;
+							cursor = CONTENT_MANAGER.Sprites[@"Cursor\Attack_Cursor"];
 							cursorOffset = attackCursorOffset;
 
 							//cause the missilesilo have a range of the whole map
@@ -1218,7 +1213,7 @@ namespace Wartorn.Screens.MainGameScreen {
 finalise_command_execution:
 					{
 						//change cursor back
-						cursor = CONTENT_MANAGER.selectCursor;
+						cursor = CONTENT_MANAGER.Sprites[@"Cursor\Select_Cursor"];
 						cursorOffset = selectCursorOffset;
 
 						if (tempunit.ActionPoint == 0) {
@@ -1234,7 +1229,7 @@ finalise_command_execution:
 
 						tempunit.Gas = (tempunit.Gas - gas).Clamp(Unit._UnitStat[tempunit.UnitType].Gas, 0);
 
-						cursor = CONTENT_MANAGER.selectCursor;
+						cursor = CONTENT_MANAGER.Sprites[@"Cursor\Select_Cursor"];
 						cursorOffset = selectCursorOffset;
 
 						attackRange = null;
@@ -1482,22 +1477,22 @@ finalise_command_execution:
 			slotPosition = camera.TranslateFromWorldToScreen(slotPosition.ToVector2()).ToPoint();
 
 			firstslot.Position = slotPosition;
-			firstslot.spriteSourceRectangle = CommandSpriteSourceRectangle.GetSprite(cmds[0]);
-			firstslot.rect = new Rectangle(firstslot.Position, firstslot.spriteSourceRectangle.Size);
+			firstslot.SpriteSourceRectangle = CommandSpriteSourceRectangle.GetSprite(cmds[0]);
+			firstslot.rect = new Rectangle(firstslot.Position, firstslot.SpriteSourceRectangle.Size);
 
 			if (cmds.Count > 1) {
 				slotPosition = new Point(selectedUnit.X * Constants.MapCellWidth + 6, selectedUnit.Y * Constants.MapCellHeight + 16 + 8);
 				slotPosition = camera.TranslateFromWorldToScreen(slotPosition.ToVector2()).ToPoint();
 				secondslot.Position = slotPosition;
-				secondslot.spriteSourceRectangle = CommandSpriteSourceRectangle.GetSprite(cmds[1]);
-				secondslot.rect = new Rectangle(secondslot.Position, secondslot.spriteSourceRectangle.Size);
+				secondslot.SpriteSourceRectangle = CommandSpriteSourceRectangle.GetSprite(cmds[1]);
+				secondslot.rect = new Rectangle(secondslot.Position, secondslot.SpriteSourceRectangle.Size);
 			}
 			if (cmds.Count > 2) {
 				slotPosition = new Point(selectedUnit.X * Constants.MapCellWidth + 6, selectedUnit.Y * Constants.MapCellHeight + 32 + 8);
 				slotPosition = camera.TranslateFromWorldToScreen(slotPosition.ToVector2()).ToPoint();
 				thirdslot.Position = slotPosition;
-				thirdslot.spriteSourceRectangle = CommandSpriteSourceRectangle.GetSprite(cmds[2]);
-				thirdslot.rect = new Rectangle(thirdslot.Position, thirdslot.spriteSourceRectangle.Size);
+				thirdslot.SpriteSourceRectangle = CommandSpriteSourceRectangle.GetSprite(cmds[2]);
+				thirdslot.rect = new Rectangle(thirdslot.Position, thirdslot.SpriteSourceRectangle.Size);
 			}
 		}
 
@@ -1508,9 +1503,9 @@ finalise_command_execution:
 			canvas_action_Unit.GetElementAs<Button>("secondslot").rect = Rectangle.Empty;
 			canvas_action_Unit.GetElementAs<Button>("thirdslot").rect = Rectangle.Empty;
 
-			canvas_action_Unit.GetElementAs<Button>("firstslot").spriteSourceRectangle = Rectangle.Empty;
-			canvas_action_Unit.GetElementAs<Button>("secondslot").spriteSourceRectangle = Rectangle.Empty;
-			canvas_action_Unit.GetElementAs<Button>("thirdslot").spriteSourceRectangle = Rectangle.Empty;
+			canvas_action_Unit.GetElementAs<Button>("firstslot").SpriteSourceRectangle = Rectangle.Empty;
+			canvas_action_Unit.GetElementAs<Button>("secondslot").SpriteSourceRectangle = Rectangle.Empty;
+			canvas_action_Unit.GetElementAs<Button>("thirdslot").SpriteSourceRectangle = Rectangle.Empty;
 		}
 		#endregion
 
@@ -1534,7 +1529,7 @@ finalise_command_execution:
 			Unit tempunit = map[selectedUnit].unit;
 
 			//play sfx
-			CONTENT_MANAGER.moving_out.Play();
+			CONTENT_MANAGER.Sounds[@"speech\moving_out"].Play();
 
 			//we gonna move unit by moving a clone of it then teleport it to the destination
 			destination = selectedMapCell;
@@ -1627,9 +1622,9 @@ finalise_command_execution:
 				}
 				else {
 					if (!uiname.Contains("label")) {
-						Rectangle temp = canvas_action_Factory.GetElementAs<Button>(uiname).spriteSourceRectangle;
+						Rectangle temp = canvas_action_Factory.GetElementAs<Button>(uiname).SpriteSourceRectangle;
 						UnitType tempunittype = UnitSpriteSheetRectangle.GetUnitType(temp);
-						canvas_action_Factory.GetElementAs<Button>(uiname).spriteSourceRectangle = UnitSpriteSheetRectangle.GetSpriteRectangle(tempunittype, owner);
+						canvas_action_Factory.GetElementAs<Button>(uiname).SpriteSourceRectangle = UnitSpriteSheetRectangle.GetSpriteRectangle(tempunittype, owner);
 					}
 				}
 			}
@@ -1639,9 +1634,9 @@ finalise_command_execution:
 				}
 				else {
 					if (!uiname.Contains("label")) {
-						Rectangle temp = canvas_action_Airport.GetElementAs<Button>(uiname).spriteSourceRectangle;
+						Rectangle temp = canvas_action_Airport.GetElementAs<Button>(uiname).SpriteSourceRectangle;
 						UnitType tempunittype = UnitSpriteSheetRectangle.GetUnitType(temp);
-						canvas_action_Airport.GetElementAs<Button>(uiname).spriteSourceRectangle = UnitSpriteSheetRectangle.GetSpriteRectangle(tempunittype, owner);
+						canvas_action_Airport.GetElementAs<Button>(uiname).SpriteSourceRectangle = UnitSpriteSheetRectangle.GetSpriteRectangle(tempunittype, owner);
 					}
 				}
 			}
@@ -1651,9 +1646,9 @@ finalise_command_execution:
 				}
 				else {
 					if (!uiname.Contains("label")) {
-						Rectangle temp = canvas_action_Harbor.GetElementAs<Button>(uiname).spriteSourceRectangle;
+						Rectangle temp = canvas_action_Harbor.GetElementAs<Button>(uiname).SpriteSourceRectangle;
 						UnitType tempunittype = UnitSpriteSheetRectangle.GetUnitType(temp);
-						canvas_action_Harbor.GetElementAs<Button>(uiname).spriteSourceRectangle = UnitSpriteSheetRectangle.GetSpriteRectangle(tempunittype, owner);
+						canvas_action_Harbor.GetElementAs<Button>(uiname).SpriteSourceRectangle = UnitSpriteSheetRectangle.GetSpriteRectangle(tempunittype, owner);
 					}
 				}
 			}
@@ -1971,13 +1966,13 @@ finalise_command_execution:
 
 			//draw the guibackground
 			//CONTENT_MANAGER.spriteBatch.Draw(guibackground, new Vector2(0, 0), null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.GuiBackground);
-			canvas.Draw(CONTENT_MANAGER.spriteBatch);
+			canvas.Draw(CONTENT_MANAGER.spriteBatch,gameTime);
 
-			//CONTENT_MANAGER.spriteBatch.DrawString(CONTENT_MANAGER.defaultfont, currentGameState.ToString(), new Vector2(100, 100), Color.Red);
+			//CONTENT_MANAGER.spriteBatch.DrawString(CONTENT_MANAGER.Fonts["defaultfont"], currentGameState.ToString(), new Vector2(100, 100), Color.Red);
 			if (currentGameState == GameState.BuildingSelected) {
-				//CONTENT_MANAGER.spriteBatch.DrawString(CONTENT_MANAGER.defaultfont, canvas_action_Factory.GetElementAs<Label>("label_unitname").Position.toString(), new Vector2(100, 140), Color.Red);
+				//CONTENT_MANAGER.spriteBatch.DrawString(CONTENT_MANAGER.Fonts["defaultfont"], canvas_action_Factory.GetElementAs<Label>("label_unitname").Position.toString(), new Vector2(100, 140), Color.Red);
 			}
-			CONTENT_MANAGER.spriteBatch.DrawString(CONTENT_MANAGER.defaultfont, currentGameState.ToString() + Environment.NewLine + selectedCmd.ToString(), new Vector2(100, 140), Color.Red);
+			CONTENT_MANAGER.spriteBatch.DrawString(CONTENT_MANAGER.Fonts["defaultfont"], currentGameState.ToString() + Environment.NewLine + selectedCmd.ToString(), new Vector2(100, 140), Color.Red);
 
 			//draw canvas_SelectedMapCell
 			//DrawCanvas_SelectedMapCell();
@@ -2040,7 +2035,7 @@ finalise_command_execution:
 		private void DrawMovementRange(SpriteBatch spriteBatch) {
 			if (movementRange != null) {
 				foreach (Point dest in movementRange) {
-					spriteBatch.Draw(CONTENT_MANAGER.moveOverlay, new Vector2(dest.X * Constants.MapCellWidth, dest.Y * Constants.MapCellHeight), null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.GuiBackground);
+					spriteBatch.Draw(CONTENT_MANAGER.Sprites[@"MoveOverlay"], new Vector2(dest.X * Constants.MapCellWidth, dest.Y * Constants.MapCellHeight), null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.GuiBackground);
 				}
 			}
 		}
@@ -2048,7 +2043,7 @@ finalise_command_execution:
 		private void DrawAttackRange(SpriteBatch spriteBatch) {
 			if (attackRange != null) {
 				foreach (Point p in attackRange) {
-					spriteBatch.Draw(CONTENT_MANAGER.attackOverlay, new Vector2(p.X * Constants.MapCellWidth, p.Y * Constants.MapCellHeight), null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.GuiBackground);
+					spriteBatch.Draw(CONTENT_MANAGER.Sprites[@"AttackOverlay"], new Vector2(p.X * Constants.MapCellWidth, p.Y * Constants.MapCellHeight), null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.GuiBackground);
 				}
 			}
 		}

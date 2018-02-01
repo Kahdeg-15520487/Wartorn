@@ -69,7 +69,7 @@ namespace Wartorn.Drawing
 
             for (int i = 1; i < movementPath.Count; i++)
             {
-                spriteBatch.Draw(CONTENT_MANAGER.directionarrow, new Vector2(movementPath[i].X * Constants.MapCellWidth, movementPath[i].Y * Constants.MapCellHeight), rects[i - 1], Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.GuiLower);
+                spriteBatch.Draw(CONTENT_MANAGER.Sprites["directionarrow"], new Vector2(movementPath[i].X * Constants.MapCellWidth, movementPath[i].Y * Constants.MapCellHeight), rects[i - 1], Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.GuiLower);
             }
         }
     }

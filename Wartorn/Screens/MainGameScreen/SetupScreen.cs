@@ -14,7 +14,7 @@ using Wartorn.Storage;
 using Wartorn.GameData;
 using Wartorn.UIClass;
 using Wartorn.Utility;
-using Wartorn.Utility.Drawing;
+
 using Wartorn.Screens;
 using Wartorn.Drawing;
 using Wartorn.Drawing.Animation;
@@ -53,15 +53,15 @@ namespace Wartorn.Screens.MainGameScreen {
 
 		private void InitUI() {
 			//declare ui elements
-			Label label_playerinfo = new Label("kahdeg", new Point(10, 20), new Vector2(80, 30), CONTENT_MANAGER.arcadefont);
+			Label label_playerinfo = new Label("kahdeg", new Point(10, 20), new Vector2(80, 30), CONTENT_MANAGER.Fonts["arcadefont"]);
 
-			PictureBox picturebox_tutorial = new PictureBox(CONTENT_MANAGER.setuptutorial, Point.Zero, null, null) {
+			PictureBox picturebox_tutorial = new PictureBox(CONTENT_MANAGER.Sprites[@"tutorial\setupscreentutorial_en"], Point.Zero, null, null) {
 				IsVisible = CONTENT_MANAGER.IsTutorial
 			};
 
-			Button button_selectmap = new Button(UISpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetUI.Open), new Point(650, 20), 0.5f);
-			Button button_exit = new Button(UISpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetUI.Exit), new Point(5, 5), 0.5f);
-			Button button_start = new Button("Start", new Point(100, 50), null, CONTENT_MANAGER.arcadefont);
+			Button button_selectmap = new Button(CONTENT_MANAGER.Sprites["UIspriteSheet"], UISpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetUI.Open), new Point(650, 20), 0.5f);
+			Button button_exit = new Button(CONTENT_MANAGER.Sprites["UIspriteSheet"], UISpriteSheetSourceRectangle.GetSpriteRectangle(SpriteSheetUI.Exit), new Point(5, 5), 0.5f);
+			Button button_start = new Button("Start", new Point(100, 50), new Vector2(40, 20), CONTENT_MANAGER.Fonts["arcadefont"]);
 
 			//bind event
 			button_selectmap.MouseClick += (sender, e) => {
@@ -140,11 +140,11 @@ namespace Wartorn.Screens.MainGameScreen {
 		}
 
 		public override void Update(GameTime gameTime) {
-			canvas.Update(CONTENT_MANAGER.inputState, CONTENT_MANAGER.lastInputState);
+			canvas.Update(gameTime, CONTENT_MANAGER.currentInputState, CONTENT_MANAGER.lastInputState);
 		}
 
 		public override void Draw(GameTime gameTime) {
-			canvas.Draw(CONTENT_MANAGER.spriteBatch);
+			canvas.Draw(CONTENT_MANAGER.spriteBatch, gameTime);
 			if (minimap != null) {
 				CONTENT_MANAGER.spriteBatch.Draw(minimap, new Vector2(100, 100), Color.White);
 			}

@@ -85,7 +85,7 @@
 //            map[position].unit = UnitCreationHelper.Create(currentUnit, currentColor);
 //            map[position].unit.Animation.PlayAnimation(AnimationName.idle.ToString());
 
-//            console = new UIClass.Console(new Point(0, 0), new Vector2(720, 200), CONTENT_MANAGER.hackfont);
+//            console = new UIClass.Console(new Point(0, 0), new Vector2(720, 200), CONTENT_MANAGER.Fonts["hackfont"]);
 //            console.IsVisible = false;
 
 //            console.SetVariable("map", map);
@@ -327,7 +327,7 @@
 //        {
 //            DrawMap(CONTENT_MANAGER.spriteBatch, gameTime);
 
-//            CONTENT_MANAGER.spriteBatch.DrawString(CONTENT_MANAGER.arcadefont, currentColor.ToString() + Environment.NewLine + currentUnit.ToString() + Environment.NewLine + currentAnimation.ToString(), new Vector2(100, 0), Color.White);
+//            CONTENT_MANAGER.spriteBatch.DrawString(CONTENT_MANAGER.Fonts["arcadefont"], currentColor.ToString() + Environment.NewLine + currentUnit.ToString() + Environment.NewLine + currentAnimation.ToString(), new Vector2(100, 0), Color.White);
             
 //            if (console.IsVisible)
 //            {
@@ -347,7 +347,7 @@
 //            MapRenderer.Render(map, spriteBatch, gameTime);
 
 //            //draw cursor
-//            spriteBatch.Draw(CONTENT_MANAGER.selectCursor, new Vector2(selectedMapCell.X * Constants.MapCellWidth, selectedMapCell.Y * Constants.MapCellHeight), null, Color.White, 0f, new Vector2(6, 6), 1f, SpriteEffects.None, LayerDepth.GuiUpper);
+//            spriteBatch.Draw(CONTENT_MANAGER.Sprites["selectCursor"], new Vector2(selectedMapCell.X * Constants.MapCellWidth, selectedMapCell.Y * Constants.MapCellHeight), null, Color.White, 0f, new Vector2(6, 6), 1f, SpriteEffects.None, LayerDepth.GuiUpper);
 
 //            //draw moving animation
 //            if (isMovingUnitAnimPlaying)

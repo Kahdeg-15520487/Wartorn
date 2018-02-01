@@ -96,7 +96,7 @@ namespace Wartorn.Drawing.Animation
             origin = Vector2.Zero;
             rotation = 0;
             scale = 1;
-            depth = LayerDepth.BackGround;
+            depth = LayerDepth.Unit + 0.001f;
             flipEffect = SpriteEffects.None;
             tintColor = Color.White;
         }

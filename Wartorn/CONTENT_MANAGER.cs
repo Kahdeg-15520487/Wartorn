@@ -16,8 +16,6 @@ using Wartorn.ScreenManager;
 using Wartorn.Storage;
 using Wartorn.GameData;
 using Wartorn.UIClass;
-using Wartorn.Utility;
-using Wartorn.Utility.Drawing;
 using Wartorn.Screens;
 using Wartorn.Drawing;
 using Wartorn.Drawing.Animation;
@@ -36,7 +34,7 @@ namespace Wartorn {
 		public static string Language = "en";
 
 		public static Game gameinstance;
-
+		/*
 		#region resources
 		public static ContentManager Content;
 
@@ -271,7 +269,73 @@ namespace Wartorn {
 
 		#endregion
 		#endregion
+		*/
 
+		#region resources
+		public static ContentManager Content;
+
+		public static SpriteBatch spriteBatch;
+
+		public static Dictionary<string, SpriteFont> Fonts = new Dictionary<string, SpriteFont>();
+
+		public static Dictionary<string, Texture2D> Sprites = new Dictionary<string, Texture2D>();
+		//public static Dictionary<string, SpriteSheetMap> SpriteSheets = new Dictionary<string, SpriteSheetMap>();
+
+		public static Dictionary<string, SoundEffect> Sounds = new Dictionary<string, SoundEffect>();
+
+		public static Dictionary<string, AnimatedEntity> animationEntities;
+		public static Dictionary<string, Texture2D> animationSheets;
+		public static List<Animation> animationTypes;
+
+		/// <summary>
+		/// load font, all font is put inside folder font
+		/// </summary>
+		/// <param name="fontList">fonts to load</param>
+		public static void LoadFont(params string[] fontList) {
+			foreach (var font in fontList) {
+				Fonts.Add(font, Content.Load<SpriteFont>(string.Format(@"font\{0}", font)));
+			}
+		}
+
+		/// <summary>
+		/// load sprite, all sprite is put inside folder sprite
+		/// </summary>
+		/// <param name="sprites">sprite to load</param>
+		public static void LoadSprites(params string[] sprites) {
+			foreach (var sprite in sprites) {
+				Sprites.Add(sprite, Content.Load<Texture2D>(string.Format(@"sprite\{0}", sprite)));
+			}
+		}
+
+		/// <summary>
+		/// load in a spritesheet with given <paramref name="width"/> and <paramref name="height"/> of a sprite<para/>
+		/// all spritesheet is put inside folder sprite
+		/// </summary>
+		/// <param name="spriteSheet">spritesheet to load</param>
+		/// <param name="width">width of a sprite</param>
+		/// <param name="height">height of a sprite</param>
+		//public static SpriteSheetMap LoadSpriteSheet(string spriteSheet, int width = 0, int height = 0) {
+		//	var spm = new SpriteSheetMap(spriteSheet, Content.Load<Texture2D>(string.Format(@"sprite\{0}", spriteSheet)), width, height);
+		//	SpriteSheets.Add(spriteSheet, spm);
+		//	return spm;
+		//}
+
+		public static void LoadAnimationContent(params string[] animationList) {
+			//string delimit = "Yellow";
+			animationEntities = new Dictionary<string, AnimatedEntity>();
+			animationSheets = new Dictionary<string, Texture2D>();
+			animationTypes = new List<Animation>();
+		}
+
+
+		public static void LoadSound(params string[] soundlist) {
+			//menu_select = Content.Load<SoundEffect>(@"sound\sfx\menu_select");
+			foreach (var sound in soundlist) {
+				Sounds.Add(sound, Content.Load<SoundEffect>(string.Format(@"sound\{0}", sound)));
+			}
+		}
+
+		#endregion
 
 
 		public static void BeginSpriteBatch() {
@@ -299,7 +363,7 @@ namespace Wartorn {
 		public static RasterizerState antialiasing = new RasterizerState { MultiSampleAntiAlias = true };
 
 		private static InputState _inputState;
-		public static InputState inputState {
+		public static InputState currentInputState {
 			get {
 				return _inputState;
 			}
@@ -310,57 +374,80 @@ namespace Wartorn {
 		}
 		public static InputState lastInputState { get; private set; }
 
-		public static event EventHandler<MessageEventArgs> messagebox;
-		public static event EventHandler<MessageEventArgs> fileopendialog;
-		public static event EventHandler<MessageEventArgs> promptbox;
-		public static event EventHandler<MessageEventArgs> dropdownbox;
-		public static event EventHandler<MessageEventArgs> getclipboard;
-		public static event EventHandler<MessageEventArgs> setclipboard;
+		//todo make internal messagebox
+		public static void ShowMessageBox(object message) {
 
-		public static string ShowMessageBox(string message) {
-			MessageEventArgs e = new MessageEventArgs(message);
-			messagebox?.Invoke(null, e);
-			return e.message;
 		}
 
-		public static string ShowMessageBox(object message) {
-			MessageEventArgs e = new MessageEventArgs(message.ToString());
-			messagebox?.Invoke(null, e);
-			return e.message;
+		//todo make internal messagebox
+		public static string ShowPromptBox(object message) {
+			return string.Empty;
 		}
 
-		public static string ShowFileOpenDialog(string rootpath) {
-			MessageEventArgs e = new MessageEventArgs(rootpath);
-			fileopendialog?.Invoke(null, e);
-			return e.message;
+		//todo make internal file browser
+		public static string ShowFileOpenDialog(object message) {
+			return string.Empty;
 		}
 
-		public static string ShowPromptBox(string prompt) {
-			MessageEventArgs e = new MessageEventArgs(prompt);
-			promptbox?.Invoke(null, e);
-			return e.message;
+		public static string ShowDropdownBox(object message) {
+			return string.Empty;
 		}
 
-		public static string ShowDropdownBox(string prompt) {
-			MessageEventArgs e = new MessageEventArgs(prompt);
-			dropdownbox?.Invoke(null, e);
-			return e.message;
+		public static void Log(object message) {
+
 		}
 
-		public static string GetClipboard() {
-			MessageEventArgs e = new MessageEventArgs();
-			getclipboard?.Invoke(null, e);
-			return e.message;
-		}
+		//public static event EventHandler<MessageEventArgs> messagebox;
+		//public static event EventHandler<MessageEventArgs> fileopendialog;
+		//public static event EventHandler<MessageEventArgs> promptbox;
+		//public static event EventHandler<MessageEventArgs> dropdownbox;
+		//public static event EventHandler<MessageEventArgs> getclipboard;
+		//public static event EventHandler<MessageEventArgs> setclipboard;
 
-		public static void SetClipboard(string text) {
-			MessageEventArgs e = new MessageEventArgs(text);
-			setclipboard?.Invoke(null, e);
-		}
+		//public static string ShowMessageBox(string message) {
+		//	MessageEventArgs e = new MessageEventArgs(message);
+		//	messagebox?.Invoke(null, e);
+		//	return e.message;
+		//}
+
+		//public static string ShowMessageBox(object message) {
+		//	MessageEventArgs e = new MessageEventArgs(message.ToString());
+		//	messagebox?.Invoke(null, e);
+		//	return e.message;
+		//}
+
+		//public static string ShowFileOpenDialog(string rootpath) {
+		//	MessageEventArgs e = new MessageEventArgs(rootpath);
+		//	fileopendialog?.Invoke(null, e);
+		//	return e.message;
+		//}
+
+		//public static string ShowPromptBox(string prompt) {
+		//	MessageEventArgs e = new MessageEventArgs(prompt);
+		//	promptbox?.Invoke(null, e);
+		//	return e.message;
+		//}
+
+		//public static string ShowDropdownBox(string prompt) {
+		//	MessageEventArgs e = new MessageEventArgs(prompt);
+		//	dropdownbox?.Invoke(null, e);
+		//	return e.message;
+		//}
+
+		//public static string GetClipboard() {
+		//	MessageEventArgs e = new MessageEventArgs();
+		//	getclipboard?.Invoke(null, e);
+		//	return e.message;
+		//}
+
+		//public static void SetClipboard(string text) {
+		//	MessageEventArgs e = new MessageEventArgs(text);
+		//	setclipboard?.Invoke(null, e);
+		//}
 
 		public static void ShowFPS(GameTime gameTime) {
 			int frameRate = (int)(1 / gameTime.ElapsedGameTime.TotalSeconds);
-			spriteBatch.DrawString(defaultfont, frameRate.ToString(), new Vector2(0, 0), Color.Black);
+			spriteBatch.DrawString(Fonts["defaultfont"], frameRate.ToString(), new Vector2(0, 0), Color.Black);
 		}
 	}
 }

@@ -4,24 +4,18 @@
   <Platform>DesktopGL</Platform>
   <Config />
   <SourceFiles>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/ui_sprite_sheet.png</File>
     <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/GUI/intro.mp4</File>
     <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/GUI/Startscreen.png</File>
     <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/GUI/Title.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/GUI/menufont.spritefont</File>
     <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/GUI/Select_screen.png</File>
     <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/GUI/Startscreen_Airstrike.png</File>
     <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/GUI/Startscreen_Battleship.png</File>
     <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/GUI/Startscreen_Wartorn.png</File>
     <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/showtile.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/terrain.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/building.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/defaultfont.spritefont</File>
     <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/blank8x8.png</File>
     <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/GUI/placeholdergui.png</File>
     <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/GUI/Mode_select_dark.png</File>
     <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/GUI/Mode_select_light.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/unit.png</File>
     <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Red/AntiAir.png</File>
     <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Red/APC.png</File>
     <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Red/Artillery.png</File>
@@ -96,11 +90,9 @@
     <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/Cursor/Select_Cursor.png</File>
     <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/AttackOverlay.png</File>
     <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/MoveOverlay.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/hackfont.spritefont</File>
     <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/directionarrow.png</File>
     <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/GUI/commandspritesheet.png</File>
     <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/GUI/selected_cell_info/SC_Border.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/GUI/selected_cell_info/SC_Buy_A_H.png</File>
     <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/GUI/selected_cell_info/SC_Buy_F.png</File>
     <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/GUI/selected_cell_info/SC_Cap_Point.png</File>
     <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/GUI/selected_cell_info/SC_Def_Star.png</File>
@@ -131,5 +123,23 @@
     <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/tutorial/gamescreentutorial_en.png</File>
     <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/tutorial/mapeditortutorial_en.png</File>
     <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/tutorial/setupscreentutorial_en.png</File>
+    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/spriteSheet.png</File>
+    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/unitSpriteSheet.png</File>
+    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/buildingSpriteSheet.png</File>
+    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/UIspriteSheet.png</File>
+    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/GUI/selected_cell_info/SC_Buy_A_H.png</File>
+    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/font/defaultfont.spritefont</File>
+    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/font/hackfont.spritefont</File>
+    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/GUI/background/BG_Desert.png</File>
+    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/GUI/background/BG_Normal.png</File>
+    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/GUI/background/BG_Rain.png</File>
+    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/GUI/background/BG_Snow.png</File>
+    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/GUI/background/BG_Tropical.png</File>
+    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/GUI/background/BLUE_Unit.png</File>
+    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/GUI/background/GREEN_Unit.png</File>
+    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/GUI/background/RED_Unit.png</File>
+    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/GUI/background/YELLOW_Unit.png</File>
+    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/GUI/commandspritesheet/commandspritesheet.png</File>
+    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/font/arcadefont.spritefont</File>
   </SourceFiles>
 </SourceFileCollection>

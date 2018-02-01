@@ -14,7 +14,7 @@
 //using Wartorn.GameData;
 //using Wartorn.UIClass;
 //using Wartorn.Utility;
-//using Wartorn.Utility.Drawing;
+//
 //using Wartorn.Screens;
 //using Wartorn.Drawing;
 //using Wartorn.Drawing.Animation;
@@ -46,8 +46,8 @@
 
 //        private void InitUI()
 //        {
-//            console = new Console(new Point(0, 50), new Vector2(400, 200), CONTENT_MANAGER.hackfont);
-//            Label lbl_test = new Label("", new Point(100, 0), new Vector2(80, 30), CONTENT_MANAGER.defaultfont);
+//            console = new Console(new Point(0, 50), new Vector2(400, 200), CONTENT_MANAGER.Fonts["hackfont"]);
+//            Label lbl_test = new Label("", new Point(100, 0), new Vector2(80, 30), CONTENT_MANAGER.Fonts["defaultfont"]);
 
 //            console.CommandSubmitted += (sender, e) =>
 //            {
