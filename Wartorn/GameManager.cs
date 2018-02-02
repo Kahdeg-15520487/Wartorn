@@ -125,7 +125,6 @@ namespace Wartorn {
 				@"GUI\Mode_select_light",
 				@"GUI\placeholdergui",
 				@"GUI\Select_screen",
-				@"GUI\Startscreen",
 				@"GUI\Startscreen_Airstrike",
 				@"GUI\Startscreen_Battleship",
 				@"GUI\Startscreen_Wartorn",
@@ -260,11 +259,13 @@ namespace Wartorn {
 			SCREEN_MANAGER.add_screen(new Screens.MainGameScreen.GameScreen(GraphicsDevice));
 			//SCREEN_MANAGER.add_screen(new TestConsole(GraphicsDevice));
 			SCREEN_MANAGER.add_screen(new Screens.MainGameScreen.EndGameScreen(GraphicsDevice));
+			SCREEN_MANAGER.add_screen(new FileBrowsingScreen(GraphicsDevice));
 
 			//SCREEN_MANAGER.goto_screen("TestAnimationScreen");
 			//SCREEN_MANAGER.goto_screen("SetupScreen");
 			if (string.IsNullOrEmpty(CONTENT_MANAGER.MapName)) {
-				SCREEN_MANAGER.goto_screen("MainMenuScreen");
+				//SCREEN_MANAGER.goto_screen("MainMenuScreen");
+				SCREEN_MANAGER.goto_screen("FileBrowsingScreen");
 			}
 			else {
 				SCREEN_MANAGER.goto_screen("SetupScreen");

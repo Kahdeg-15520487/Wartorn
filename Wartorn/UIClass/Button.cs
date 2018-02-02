@@ -150,7 +150,15 @@ namespace Wartorn.UIClass
 
         public Vector2 TextOffset { get; set; }
 
-        public Button()
+		/// <summary>
+		/// Offset of the text inside the button
+		/// </summary>
+		public Vector2 Origin {
+			get { return origin; }
+			set { origin = value; }
+		}
+
+		public Button()
         {
             Init();
         }

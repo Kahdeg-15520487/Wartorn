@@ -38,7 +38,9 @@ namespace Wartorn.UIClass {
             set
             {
                 texture2D = value;
-                Size = value.Bounds.Size.ToVector2();
+				if (value != null) {
+					Size = value.Bounds.Size.ToVector2();
+				}
             }
         }
 

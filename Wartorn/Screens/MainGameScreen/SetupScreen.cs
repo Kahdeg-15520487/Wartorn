@@ -127,7 +127,7 @@ namespace Wartorn.Screens.MainGameScreen {
 				}
 			}
 
-				((GameScreen)SCREEN_MANAGER.get_screen("GameScreen")).InitSession(sessiondata);
+			((GameScreen)SCREEN_MANAGER.get_screen("GameScreen")).InitSession(sessiondata);
 			SCREEN_MANAGER.goto_screen("GameScreen");
 		}
 

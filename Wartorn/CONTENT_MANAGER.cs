@@ -349,7 +349,7 @@ namespace Wartorn {
 			spriteBatch.End();
 		}
 
-		public static string MapName { get; private set; } = null;
+		public static string MapName { get; internal set; } = null;
 
 		public static void ParseArguments(string[] args) {
 			var p = new FluentCommandLineParser();
