@@ -130,7 +130,7 @@ namespace Wartorn.Drawing
                     }
 
                     draw:
-                    spriteBatch.Draw(CONTENT_MANAGER.blank8x8, new Vector2(x * 8, y * 8), color);
+                    spriteBatch.Draw(CONTENT_MANAGER.Sprites["blank8x8"], new Vector2(x * 8, y * 8), color);
                 }
 
             spriteBatch.End();

@@ -2,8 +2,8 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Wartorn"
-#define MyAppVersion "1.5"
-#define MyAppPublisher "Nhóm 3 lớp IT008.H22"
+#define MyAppVersion "1.6"
+#define MyAppPublisher ""
 #define MyAppURL "https://github.com/Kahdeg-15520487/Wartorn"
 #define MyAppExeName "Wartorn.exe"
 
@@ -35,15 +35,12 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 
 [Files]
 Source: "..\Build\MonoGame.Framework.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\Build\Utility_Project.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Build\Newtonsoft.Json.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Build\SDL2.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Build\soft_oal.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Build\FluentCommandLineParser.dll"; DestDir: "{app}"; Flags: ignoreversion
 
-Source: "..\Build\StatsBalancer.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Build\Wartorn.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\Build\crashhandler.exe"; DestDir: "{app}"; Flags: ignoreversion
 
 Source: "..\Build\Content\*"; DestDir: "{app}\Content\"; Flags: ignoreversion createallsubdirs recursesubdirs
 Source: "..\Build\data\*"; DestDir: "{app}\data\"; Flags: ignoreversion createallsubdirs recursesubdirs

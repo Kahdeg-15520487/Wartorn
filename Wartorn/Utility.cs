@@ -26,19 +26,19 @@ namespace Wartorn {
 			}
 
 			public static bool IsKeyPress(Keys k) {
-				return CONTENT_MANAGER.inputState.keyboardState.IsKeyUp(k) && CONTENT_MANAGER.lastInputState.keyboardState.IsKeyDown(k);
+				return CONTENT_MANAGER.currentInputState.keyboardState.IsKeyUp(k) && CONTENT_MANAGER.lastInputState.keyboardState.IsKeyDown(k);
 			}
 
 			public static bool IsLeftMousePressed() {
-				return CONTENT_MANAGER.inputState.mouseState.LeftButton == ButtonState.Released && CONTENT_MANAGER.lastInputState.mouseState.LeftButton == ButtonState.Pressed;
+				return CONTENT_MANAGER.currentInputState.mouseState.LeftButton == ButtonState.Released && CONTENT_MANAGER.lastInputState.mouseState.LeftButton == ButtonState.Pressed;
 			}
 
 			public static bool IsLeftMouseHold() {
-				return CONTENT_MANAGER.inputState.mouseState.LeftButton == ButtonState.Pressed && CONTENT_MANAGER.lastInputState.mouseState.LeftButton == ButtonState.Pressed;
+				return CONTENT_MANAGER.currentInputState.mouseState.LeftButton == ButtonState.Pressed && CONTENT_MANAGER.lastInputState.mouseState.LeftButton == ButtonState.Pressed;
 			}
 
 			public static bool IsRightMousePressed() {
-				return CONTENT_MANAGER.inputState.mouseState.RightButton == ButtonState.Released && CONTENT_MANAGER.lastInputState.mouseState.RightButton == ButtonState.Pressed;
+				return CONTENT_MANAGER.currentInputState.mouseState.RightButton == ButtonState.Released && CONTENT_MANAGER.lastInputState.mouseState.RightButton == ButtonState.Pressed;
 			}
 
 			public static void Log(Exception e) {
@@ -465,12 +465,13 @@ namespace Wartorn {
 				}
 			}
 
-			public static SpriteSheetUnit GetSpriteSheetUnit(this UnitType ut, GameData.Owner owner) {
-				StringBuilder result = new StringBuilder();
-				result.Append(owner.ToString());
-				result.Append("_");
-				result.Append(ut.ToString());
-				return result.ToString().ToEnum<SpriteSheetUnit>();
+			public static SpriteSheetUnit GetSpriteSheetUnit(this UnitType ut, Owner owner) {
+				return string.Format("{0}_{1}",owner,ut).ToEnum<SpriteSheetUnit>();
+			}
+
+			public static string GetSpriteSheetUnitContentPath(this SpriteSheetUnit spriteSheetUnit) {
+				var temp = spriteSheetUnit.ToString().Split('_');
+				return string.Format(@"Animation\{0}\{1}", temp[0], temp[1]);
 			}
 
 			public static TerrainType ToTerrainType(this SpriteSheetTerrain t) {

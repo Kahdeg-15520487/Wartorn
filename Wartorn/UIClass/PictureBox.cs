@@ -1,13 +1,28 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Wartorn.UIClass
-{
+using Wartorn.ScreenManager;
+using Wartorn.Storage;
+using Wartorn.GameData;
+using Wartorn.UIClass;
+using Wartorn.Utility;
+using Wartorn.CustomJsonConverter;
+using Wartorn.Screens;
+using Wartorn.Drawing;
+using Wartorn.Drawing.Animation;
+
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+
+namespace Wartorn.UIClass {
     class PictureBox : UIObject
     {
         private Texture2D texture2D;
@@ -23,6 +38,9 @@ namespace Wartorn.UIClass
             set
             {
                 texture2D = value;
+				if (value != null) {
+					Size = value.Bounds.Size.ToVector2();
+				}
             }
         }
 
@@ -38,6 +56,7 @@ namespace Wartorn.UIClass
             set
             {
                 sourceRectangle = value;
+                Size = value.Size.ToVector2();
             }
         }
 
@@ -58,47 +77,21 @@ namespace Wartorn.UIClass
             this.sourceRectangle = sourceRectangle;
         }
 
-        public override void Draw(SpriteBatch spriteBatch)
+		public PictureBox(Point position, Rectangle? sourceRectangle, Vector2? origin, float rotation = 0f, float scale = 1f, float depth = 0f) {
+			Texture2D = null;
+			Position = position;
+			Rotation = rotation;
+			Scale = scale;
+			Depth = depth;
+			this.origin = origin ?? Vector2.Zero;
+			this.sourceRectangle = sourceRectangle;
+		}
+
+		public Vector2 VectorScale { get; set; } = new Vector2(1, 1);
+
+        public override void Draw(SpriteBatch spriteBatch,GameTime gameTime)
         {
             spriteBatch.Draw(texture2D, Position.ToVector2(), sourceRectangle, Color.White, Rotation, origin, Scale, SpriteEffects.None, Depth);
-        }
-
-        public override Vector2 Size
-        {
-            get
-            {
-                return base.Size;
-            }
-
-            set
-            {
-                base.Size = value;
-            }
-        }
-        public override float Scale
-        {
-            get
-            {
-                return base.Scale;
-            }
-
-            set
-            {
-                base.Scale = value;
-            }
-        }
-        public override Point Position
-        {
-            get
-            {
-                return base.Position;
-            }
-
-            set
-            {
-                base.Position = value;
-            }
-        }
-        
+        }        
     }
 }

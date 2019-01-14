@@ -40,7 +40,7 @@
     <DefineConstants>DEBUG;TRACE;LINUX</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <LangVersion>6</LangVersion>
+    <LangVersion>default</LangVersion>
     <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
@@ -51,6 +51,7 @@
     <DefineConstants>TRACE;LINUX</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>default</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>Icon.ico</ApplicationIcon>
@@ -72,26 +73,17 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Drawing\DirectionArrowRenderer.cs" />
-    <Compile Include="Drawing\Gif.cs" />
     <Compile Include="Drawing\MovingUnitAnimation.cs" />
-    <Compile Include="Dialog\DropdownDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Dialog\DropdownDialog.Designer.cs">
-      <DependentUpon>DropdownDialog.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Dialog\InputDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Dialog\InputDialog.Designer.cs">
-      <DependentUpon>InputDialog.cs</DependentUpon>
-    </Compile>
     <Compile Include="CustomJsonConverter.cs" />
+    <Compile Include="Drawing\TextRenderer.cs" />
+    <Compile Include="Drawing\TextureRenderer.cs" />
     <Compile Include="GameData\GameStatePacket.cs" />
     <Compile Include="InputState.cs" />
     <Compile Include="PathFinding\Dijkstra.cs" />
     <Compile Include="PathFinding\DijkstraHelper.cs" />
     <Compile Include="RandomIDGenerator.cs" />
+    <Compile Include="Screens\FileBrowsingScreen.cs" />
+    <Compile Include="Screens\LanguageChoosingScreen.cs" />
     <Compile Include="Screens\MainGameScreen\EndGameScreen.cs" />
     <Compile Include="Screens\TestConsole.cs" />
     <Compile Include="SpriteRectangle\BackgroundUnitSpriteSourceRectangle.cs" />
@@ -112,12 +104,6 @@
     <Compile Include="GameData\Unit.cs" />
     <Compile Include="GameManager.cs" />
     <Compile Include="Drawing\PrimitiveBatch.cs" />
-    <Compile Include="Handler.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Handler.Designer.cs">
-      <DependentUpon>Handler.cs</DependentUpon>
-    </Compile>
     <Compile Include="ScreenManager\Screen.cs" />
     <Compile Include="ScreenManager\ScreenManager.cs" />
     <Compile Include="Screens\BlueScreen.cs" />
@@ -142,6 +128,8 @@
     <Compile Include="Storage\SessionStorage.cs" />
     <Compile Include="UIClass\Button.cs" />
     <Compile Include="UIClass\Console.cs" />
+    <Compile Include="UIClass\Grid.cs" />
+    <Compile Include="UIClass\ListView.cs" />
     <Compile Include="UIClass\MessageBox.cs" />
     <Compile Include="UIClass\InputBox.cs" />
     <Compile Include="UIClass\Label.cs" />
@@ -166,11 +154,19 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="license.txt">
+    <Content Include="data\defensestartable.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="data\dmgtable.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="data\traversecosttable.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="data\unitstat.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="SDL2.dll">
@@ -179,36 +175,48 @@
     <Content Include="soft_oal.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <EmbeddedResource Include="Dialog\DropdownDialog.resx">
-      <DependentUpon>DropdownDialog.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Handler.resx">
-      <DependentUpon>Handler.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Icon.ico" />
     <Content Include="OpenTK.dll.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <EmbeddedResource Include="Dialog\InputDialog.resx">
-      <DependentUpon>InputDialog.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <MonoGameContentReference Include="Content\Content.mgcb" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="map\Artic.map">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="map\Cancel.map">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="map\classic.map">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="map\MountainSide.map">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="map\PearlHarbor.map">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="map\RiverSide.map">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="map\Sahara.map">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="map\Test.map">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="map\testmissile.map">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\app.manifest" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Utility_Project\Utility_Project.csproj">
-      <Project>{DB74E4D4-2EB9-4A34-9FCB-D12501AB5122}</Project>
-      <Name>Utility_Project</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">

@@ -8,9 +8,8 @@ using Newtonsoft.Json;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Wartorn.Utility.Drawing;
-using Wartorn.PathFinding.Dijkstras;
 using Wartorn.Utility;
+using Wartorn.PathFinding.Dijkstras;
 
 namespace Wartorn.GameData
 {

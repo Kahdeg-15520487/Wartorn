@@ -408,7 +408,9 @@ namespace Wartorn.GameData {
 		/// </summary>
 		public static AnimatedEntity CreateAnim(UnitType unitType,Owner owner) {
 			AnimatedEntity animatedEntity = new AnimatedEntity(Vector2.Zero, Vector2.Zero, Color.White, LayerDepth.Unit);
-			animatedEntity.LoadContent(CONTENT_MANAGER.animationSheets[unitType.GetSpriteSheetUnit(owner)]);
+			//todo load spritesheet
+			var tt = unitType.GetSpriteSheetUnit(owner).GetSpriteSheetUnitContentPath();
+			animatedEntity.LoadContent(CONTENT_MANAGER.Sprites[tt]);
 
 			Animation idle;
 			Animation right;

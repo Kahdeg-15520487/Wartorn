@@ -51,19 +51,19 @@ namespace Wartorn.Screens
         private void LoadContent()
         {
             // cái này là cái background lúc vào menu
-            SelectScreenBackground = CONTENT_MANAGER.Content.Load<Texture2D>(@"sprite\GUI\Select_screen");
+            SelectScreenBackground = CONTENT_MANAGER.Sprites[@"GUI\Select_screen"];
             maxXoffset = 1000;
             maxYoffset = 1000;
 
             //cái này là cái tựa đề tên game, để vẽ đè lên cái background ở trên
-            TitleBackground = CONTENT_MANAGER.Content.Load<Texture2D>(@"sprite\GUI\Title");
+            TitleBackground = CONTENT_MANAGER.Sprites[@"GUI\Title"];
 
             //cái này là cái hinh dung cho button
-            ModeSelectDark = CONTENT_MANAGER.Content.Load<Texture2D>(@"sprite\GUI\Mode_select_dark");
-            ModeSelectLight = CONTENT_MANAGER.Content.Load<Texture2D>(@"sprite\GUI\Mode_select_light");
+            ModeSelectDark = CONTENT_MANAGER.Sprites[@"GUI\Mode_select_dark"];
+            ModeSelectLight = CONTENT_MANAGER.Sprites[@"GUI\Mode_select_light"];
 
             //cái này là cái font sử dụng trong menu
-            menufont = CONTENT_MANAGER.Content.Load<SpriteFont>(@"sprite\GUI\menufont");
+            menufont = CONTENT_MANAGER.Fonts["arcadefont"];
         }
 
         private void InitUI()
@@ -71,8 +71,8 @@ namespace Wartorn.Screens
             //declare ui element
 
             //khai báo 1 cái label để hiển thị fps
-            Label label_fps = new Label(" ", new Point(0, 0), new Vector2(100, 50), CONTENT_MANAGER.defaultfont);
-            label_fps.foregroundColor = Color.DarkBlue;
+            Label label_fps = new Label(" ", new Point(0, 0), new Vector2(100, 50), CONTENT_MANAGER.Fonts["defaultfont"]);
+            label_fps.ForegroundColor = Color.DarkBlue;
             label_fps.IsVisible = false;
 
             //TODO make button for main menu
@@ -82,11 +82,11 @@ namespace Wartorn.Screens
             button_MapEditor.Depth = LayerDepth.GuiLower;
             Button button_OtherGamemode = new Button(ModeSelectDark, null, new Point(500, 275), 2);
             button_OtherGamemode.Depth = LayerDepth.GuiLower;
-            Label label_campaign = new Label("Single" + Environment.NewLine + "Player", new Point(130, 340), null, CONTENT_MANAGER.hackfont, 1f);
+            Label label_campaign = new Label("Single" + Environment.NewLine + "Player", new Point(130, 340), null, CONTENT_MANAGER.Fonts["hackfont"], 1f);
             label_campaign.Origin = new Vector2(1, 1);
-            Label label_mapeditor = new Label("  Map" + Environment.NewLine + "Editor", new Point(335, 340), null, CONTENT_MANAGER.hackfont, 1f);
+            Label label_mapeditor = new Label("  Map" + Environment.NewLine + "Editor", new Point(335, 340), null, CONTENT_MANAGER.Fonts["hackfont"], 1f);
             label_mapeditor.Origin = new Vector2(1, 1);
-            Label label_othergamemode = new Label(" Multi" + Environment.NewLine + " Player" + Environment.NewLine + "<not yet>", new Point(525, 340), null, CONTENT_MANAGER.hackfont, 1f);
+            Label label_othergamemode = new Label(" Multi" + Environment.NewLine + " Player" + Environment.NewLine + "<not yet>", new Point(525, 340), null, CONTENT_MANAGER.Fonts["hackfont"], 1f);
             label_othergamemode.Origin = new Vector2(1, 1);
 
             //bind action to ui event
@@ -101,7 +101,7 @@ namespace Wartorn.Screens
                 }
                 else
                 {
-                    SCREEN_MANAGER.goto_screen("SetupScreen");
+                    SCREEN_MANAGER.goto_screen("FileBrowsingScreen");
                 }
             };
 
@@ -152,7 +152,7 @@ namespace Wartorn.Screens
 
         public override void Update(GameTime gameTime)
         {
-            canvas.Update(CONTENT_MANAGER.inputState, CONTENT_MANAGER.lastInputState);
+            canvas.Update(gameTime,CONTENT_MANAGER.currentInputState, CONTENT_MANAGER.lastInputState);
         }
 
         public override void Draw(GameTime gameTime)
@@ -161,7 +161,7 @@ namespace Wartorn.Screens
 
             CONTENT_MANAGER.spriteBatch.Draw(TitleBackground, new Vector2(0,-20), null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, LayerDepth.BackGround);
 
-            canvas.Draw(CONTENT_MANAGER.spriteBatch);
+            canvas.Draw(CONTENT_MANAGER.spriteBatch,gameTime);
             CONTENT_MANAGER.ShowFPS(gameTime);
         }
 

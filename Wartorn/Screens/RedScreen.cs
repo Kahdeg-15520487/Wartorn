@@ -28,7 +28,7 @@ namespace Wartorn.Screens
 
         public override void Update(GameTime gameTime)
         {
-            var inputState = CONTENT_MANAGER.inputState;
+            var inputState = CONTENT_MANAGER.currentInputState;
             var lastInputState = CONTENT_MANAGER.lastInputState;
 
             if (Utility.HelperFunction.IsKeyPress(Keys.E))
