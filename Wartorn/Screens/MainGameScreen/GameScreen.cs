@@ -1972,7 +1972,8 @@ finalise_command_execution:
 			if (currentGameState == GameState.BuildingSelected) {
 				//CONTENT_MANAGER.spriteBatch.DrawString(CONTENT_MANAGER.Fonts["defaultfont"], canvas_action_Factory.GetElementAs<Label>("label_unitname").Position.toString(), new Vector2(100, 140), Color.Red);
 			}
-			CONTENT_MANAGER.spriteBatch.DrawString(CONTENT_MANAGER.Fonts["defaultfont"], currentGameState.ToString() + Environment.NewLine + selectedCmd.ToString(), new Vector2(100, 140), Color.Red);
+
+            //CONTENT_MANAGER.spriteBatch.DrawString(CONTENT_MANAGER.Fonts["defaultfont"], currentGameState.ToString() + Environment.NewLine + selectedCmd.ToString(), new Vector2(100, 140), Color.Red);
 
 			//draw canvas_SelectedMapCell
 			//DrawCanvas_SelectedMapCell();

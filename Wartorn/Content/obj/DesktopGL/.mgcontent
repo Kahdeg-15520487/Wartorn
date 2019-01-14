@@ -4,142 +4,142 @@
   <Platform>DesktopGL</Platform>
   <Config />
   <SourceFiles>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/GUI/intro.mp4</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/GUI/Startscreen.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/GUI/Title.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/GUI/Select_screen.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/GUI/Startscreen_Airstrike.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/GUI/Startscreen_Battleship.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/GUI/Startscreen_Wartorn.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/showtile.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/blank8x8.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/GUI/placeholdergui.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/GUI/Mode_select_dark.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/GUI/Mode_select_light.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Red/AntiAir.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Red/APC.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Red/Artillery.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Red/BattleCopter.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Red/Battleship.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Red/Bomber.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Red/Fighter.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Red/HeavyTank.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Red/Lander.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Red/Mech.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Red/Missile.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Red/Recon.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Red/Rocket.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Red/Soldier.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Red/Submarine.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Red/Tank.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Red/TransportCopter.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Blue/AntiAir.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Blue/APC.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Blue/Artillery.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Blue/BattleCopter.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Blue/Battleship.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Blue/Bomber.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Blue/Fighter.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Blue/HeavyTank.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Blue/Lander.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Blue/Mech.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Blue/Recon.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Blue/Rocket.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Blue/Soldier.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Blue/Tank.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Blue/TransportCopter.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Blue/Missile.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Blue/Submarine.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Green/AntiAir.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Green/APC.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Green/Artillery.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Green/BattleCopter.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Green/Battleship.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Green/Bomber.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Green/Fighter.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Green/HeavyTank.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Green/Lander.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Green/Mech.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Green/Missile.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Green/Recon.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Green/Rocket.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Green/Soldier.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Green/Tank.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Green/TransportCopter.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Green/Submarine.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Yellow/AntiAir.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Yellow/APC.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Yellow/Artillery.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Yellow/BattleCopter.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Yellow/Battleship.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Yellow/Bomber.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Yellow/Fighter.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Yellow/HeavyTank.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Yellow/Lander.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Yellow/Mech.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Yellow/Missile.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Yellow/Recon.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Yellow/Rocket.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Yellow/Soldier.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Yellow/Submarine.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Yellow/Tank.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Yellow/TransportCopter.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/Cursor/Attack_Bubble.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/Cursor/Attack_Cursor.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/Cursor/Damage_Number.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/Cursor/Select_Cursor.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/AttackOverlay.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/MoveOverlay.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/directionarrow.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/GUI/commandspritesheet.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/GUI/selected_cell_info/SC_Border.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/GUI/selected_cell_info/SC_Buy_F.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/GUI/selected_cell_info/SC_Cap_Point.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/GUI/selected_cell_info/SC_Def_Star.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/GUI/selected_cell_info/SC_HP_bar.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/GUI/selected_cell_info/SC_Loaded.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/GUI/selected_cell_info/SC_Unit_info.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/GUI/background/background_terrain.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/GUI/background/background_unit.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Blue/Cruiser.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Green/Cruiser.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Red/Cruiser.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Yellow/Cruiser.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/Cursor/Buy_Cursor.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/GUI/endgame/Background2.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/GUI/endgame/Background3.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/GUI/endgame/Background4.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/GUI/endgame/Background5.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/GUI/endgame/Background6.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/GUI/endgame/Background7.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/GUI/endgame/Background8.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/GUI/endgame/Background1.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sound/sfx/menu_select.ogg</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sound/yessir/yes1.ogg</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sound/speech/moving_out.ogg</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/tutorial/gamescreentutorial_vi.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/tutorial/mapeditortutorial_vi.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/tutorial/setupscreentutorial_vi.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/tutorial/gamescreentutorial_en.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/tutorial/mapeditortutorial_en.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/tutorial/setupscreentutorial_en.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/spriteSheet.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/unitSpriteSheet.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/buildingSpriteSheet.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/UIspriteSheet.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/GUI/selected_cell_info/SC_Buy_A_H.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/font/defaultfont.spritefont</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/font/hackfont.spritefont</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/GUI/background/BG_Desert.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/GUI/background/BG_Normal.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/GUI/background/BG_Rain.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/GUI/background/BG_Snow.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/GUI/background/BG_Tropical.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/GUI/background/BLUE_Unit.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/GUI/background/GREEN_Unit.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/GUI/background/RED_Unit.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/GUI/background/YELLOW_Unit.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/sprite/GUI/commandspritesheet/commandspritesheet.png</File>
-    <File>C:/Users/MINH-LAPTOP/Documents/Visual Studio 2017/Workspace/Wartorn/Wartorn/Content/font/arcadefont.spritefont</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/GUI/intro.mp4</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/GUI/Startscreen.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/GUI/Title.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/GUI/Select_screen.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/GUI/Startscreen_Airstrike.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/GUI/Startscreen_Battleship.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/GUI/Startscreen_Wartorn.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/showtile.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/blank8x8.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/GUI/placeholdergui.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/GUI/Mode_select_dark.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/GUI/Mode_select_light.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Red/AntiAir.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Red/APC.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Red/Artillery.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Red/BattleCopter.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Red/Battleship.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Red/Bomber.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Red/Fighter.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Red/HeavyTank.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Red/Lander.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Red/Mech.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Red/Missile.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Red/Recon.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Red/Rocket.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Red/Soldier.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Red/Submarine.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Red/Tank.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Red/TransportCopter.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Blue/AntiAir.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Blue/APC.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Blue/Artillery.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Blue/BattleCopter.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Blue/Battleship.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Blue/Bomber.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Blue/Fighter.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Blue/HeavyTank.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Blue/Lander.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Blue/Mech.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Blue/Recon.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Blue/Rocket.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Blue/Soldier.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Blue/Tank.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Blue/TransportCopter.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Blue/Missile.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Blue/Submarine.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Green/AntiAir.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Green/APC.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Green/Artillery.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Green/BattleCopter.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Green/Battleship.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Green/Bomber.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Green/Fighter.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Green/HeavyTank.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Green/Lander.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Green/Mech.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Green/Missile.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Green/Recon.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Green/Rocket.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Green/Soldier.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Green/Tank.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Green/TransportCopter.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Green/Submarine.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Yellow/AntiAir.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Yellow/APC.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Yellow/Artillery.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Yellow/BattleCopter.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Yellow/Battleship.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Yellow/Bomber.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Yellow/Fighter.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Yellow/HeavyTank.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Yellow/Lander.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Yellow/Mech.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Yellow/Missile.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Yellow/Recon.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Yellow/Rocket.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Yellow/Soldier.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Yellow/Submarine.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Yellow/Tank.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Yellow/TransportCopter.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/Cursor/Attack_Bubble.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/Cursor/Attack_Cursor.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/Cursor/Damage_Number.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/Cursor/Select_Cursor.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/AttackOverlay.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/MoveOverlay.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/directionarrow.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/GUI/commandspritesheet.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/GUI/selected_cell_info/SC_Border.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/GUI/selected_cell_info/SC_Buy_F.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/GUI/selected_cell_info/SC_Cap_Point.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/GUI/selected_cell_info/SC_Def_Star.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/GUI/selected_cell_info/SC_HP_bar.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/GUI/selected_cell_info/SC_Loaded.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/GUI/selected_cell_info/SC_Unit_info.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/GUI/background/background_terrain.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/GUI/background/background_unit.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Blue/Cruiser.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Green/Cruiser.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Red/Cruiser.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/Animation/Yellow/Cruiser.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/Cursor/Buy_Cursor.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/GUI/endgame/Background2.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/GUI/endgame/Background3.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/GUI/endgame/Background4.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/GUI/endgame/Background5.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/GUI/endgame/Background6.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/GUI/endgame/Background7.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/GUI/endgame/Background8.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/GUI/endgame/Background1.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sound/sfx/menu_select.ogg</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sound/yessir/yes1.ogg</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sound/speech/moving_out.ogg</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/tutorial/gamescreentutorial_vi.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/tutorial/mapeditortutorial_vi.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/tutorial/setupscreentutorial_vi.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/tutorial/gamescreentutorial_en.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/tutorial/mapeditortutorial_en.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/tutorial/setupscreentutorial_en.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/spriteSheet.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/unitSpriteSheet.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/buildingSpriteSheet.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/UIspriteSheet.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/GUI/selected_cell_info/SC_Buy_A_H.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/font/defaultfont.spritefont</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/font/hackfont.spritefont</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/GUI/background/BG_Desert.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/GUI/background/BG_Normal.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/GUI/background/BG_Rain.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/GUI/background/BG_Snow.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/GUI/background/BG_Tropical.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/GUI/background/BLUE_Unit.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/GUI/background/GREEN_Unit.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/GUI/background/RED_Unit.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/GUI/background/YELLOW_Unit.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/sprite/GUI/commandspritesheet/commandspritesheet.png</File>
+    <File>C:/Users/DELL/Documents/Workspace/Wartorn/Wartorn/Content/font/arcadefont.spritefont</File>
   </SourceFiles>
 </SourceFileCollection>

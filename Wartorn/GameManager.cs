@@ -264,8 +264,8 @@ namespace Wartorn {
 			//SCREEN_MANAGER.goto_screen("TestAnimationScreen");
 			//SCREEN_MANAGER.goto_screen("SetupScreen");
 			if (string.IsNullOrEmpty(CONTENT_MANAGER.MapName)) {
-				//SCREEN_MANAGER.goto_screen("MainMenuScreen");
-				SCREEN_MANAGER.goto_screen("FileBrowsingScreen");
+				SCREEN_MANAGER.goto_screen("MainMenuScreen");
+				//SCREEN_MANAGER.goto_screen("FileBrowsingScreen");
 			}
 			else {
 				SCREEN_MANAGER.goto_screen("SetupScreen");
